@@ -1,0 +1,165 @@
+@charset "UTF-8";
+
+.details {
+    background: #f4f4f4;
+    padding: 0px;
+}
+
+#testimgfile{
+	width:100%;
+	height:138px;
+	background-image: url( '../../images/detailsboxbg.jpg' );
+	background-repeat: no-repeat;
+	padding-left: 15px;
+}
+
+#detail-bg-box, #map-container{
+	padding: 0px;
+}
+
+#detail-bg-box{
+	margin-bottom: 38px;
+}
+
+
+
+
+#selbox {
+	/* width: 230px; */
+	width: 100%;
+	padding: .8em 1.5em;
+	border: 1px solid #999 !important;
+	font-family: inherit;
+	background: url('../../images/arrow.jpg') no-repeat 95% 50%;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: white;
+    height: 60px;
+    margin: 39px 0px 0px 5px;
+    border-radius: 60px;
+}
+
+#selbox::-ms-expand {
+    display: none;
+}
+
+#selbox:focus, #searchInput:focus, #topSearchBtn:focus {outline:none;}
+
+#topSearchBtn{
+	border: 1px solid #999;
+    border-radius: 60px;
+    background: #fff;
+    width: 120px;
+    height: 60px;
+    text-align: center;
+    padding: 0px;
+    padding: .8em 1.5em;
+    margin: 39px 0px 0px 5px;
+    
+}
+
+#searchIcon{
+	margin-left: 10px;
+}
+
+/* #cateOne{
+	margin-left: 60px;
+} */
+
+#searchInput{
+	border: 1px solid #999;
+    border-radius: 60px;
+    background: #fff;
+    width: 230px;
+    width: 100%;
+    height: 60px;
+    padding: 0px;
+    padding: .8em 1.5em;
+	margin: 39px 0px 0px 5px;
+	appearance: none;
+}
+
+#details{
+	padding: 0px !important;
+}
+
+#maplist{
+	padding: 15px 0px 126px !important;
+}
+
+@media screen and (max-width: 1280px) {
+
+	#left-container {
+		padding:0px !important;
+	}
+	.nec-sec{
+		margin-top: 15px;
+	    height: 60px;
+    }
+    
+	#searchBox{
+		width: 100% !important;
+		padding: 10px;
+	}
+	#searchInput, #selbox{
+		margin: 39px 0px 0px 0px;
+	}
+	
+	#testimgfile{
+		padding-left: 0px;
+		background-position-x: right;
+	    background-position-y: bottom;
+	    background-color: #FFFCF1;
+	    height: 100%;
+    	padding-bottom: 50px;
+	}
+	
+	
+}
+
+@media (max-width: 768px){
+	.nav-icon-lg {
+		height: 59px !important;
+	}
+    	
+	#searchBox{
+		width: 100% !important;
+		padding: 10px;
+	}
+	
+	#searchInput, #selbox{
+		margin: 39px 0px 0px 0px;
+	}
+	
+	#testimgfile{
+		padding-left: 0px;
+		background-position-x: right;
+	    background-position-y: bottom;
+	    background-color: #FFFCF1;
+	    height: 100%;
+    	padding-bottom: 50px;
+	}
+	
+}
+
+#searchCon{
+	padding: 0px !important;
+	
+	
+}
+
+
+    
+#mapform{
+	background: #fff;
+	padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+#map{
+	width:100%;
+	height:350px;
+
+}

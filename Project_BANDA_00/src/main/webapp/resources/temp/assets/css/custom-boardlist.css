@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.button-menu {
+	background-color: #f4f4f4;
+	padding-top:20px;
+}
+
+.button-menu .container {
+	padding: 30px;
+}
+
+#searchinputBox {
+	position: relative;
+}
+
+#searchinput {
+	width:100px !important; 
+	margin-right: 0px !important;
+}
+
+input[id=searchinput] {
+	margin-right: 5px !important;
+}
+
+.explore-top i {
+	color: #e16a70;
+}
+
+.story-body {
+	position: relative; 
+	top:200px;
+}

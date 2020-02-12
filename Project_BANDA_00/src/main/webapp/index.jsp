@@ -33,5 +33,8 @@
 	<a href="mypageFollw.do">mypageFollw</a>
 	<br>
 	<a href="mypagePets.do">mypagePets</a>
+	<br>
+	<a href="index_go.do">real_index</a>
+	
 </body>
 </html>

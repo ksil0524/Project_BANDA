@@ -3,7 +3,13 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="JY-mapper">
 
-
+	<select id = "jy_login" resultType="accountVo" parameterType="accountVo">
+		SELECT * FROM ACCOUNT WHERE ID=#{id} AND PASSWORD=#{password} 
+	</select>
+	
+	<select id = "main_selectList" resultType="accountVo" parameterType="String">
+		SELECT * FROM FOLLOW WHERE FR_ID = #{id}
+	</select>
 
 </mapper>
 

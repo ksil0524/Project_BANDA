@@ -7,21 +7,74 @@
 var isLogin = 0;
 
 function loginChk(){
-	var email = $("#login-email").val();
-	var pw = $("#login-password").val();
-	//alert("email: " + email + "  pw: " + pw);
+	var email = $("#login-email").val().trim();
+	var pw = $("#login-password").val().trim();
+	
+	var login_set = {
+			"id":email,
+			"password":pw			
+	};
+	
+	console.log(login_set);
+	
+	$.ajax({
 		
-	if(email =="test" && pw=="test"){
-		isLogin = 1;
-		$(".closeBtn").hide();
-		$("#logincontent").hide();
-		$("#header").toggleClass('hide');
-		$("#content").hide();
+		url : "jy_login.do",
+		type : "post",
+		data : JSON.stringify(login_set),
+		contentType: "application/json",
+		dataType:"json",
+		success : function(msg){
+			
+			if(msg.chk){
+			isLogin = 1;
+			$(".closeBtn").hide();
+			$("#logincontent").hide();
+			$("#header").toggleClass('hide');
+			$("#content").hide();
+			$("#loginchk").css("display","none");
+			
+			location.href = "index.jsp";
+			
+			} else {
+				$("#loginchk").css("display","block");
+				return;
+			}
+			
+		},
+		error:function(request,status,error){
+			
+			alert("통신실패");
+			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+		}
 		
 		
-	}else{
-		return;
-	}
+	});
+}
+
+function logout(){
+	
+	$.ajax({
+		
+		url : "jy_logout.do",
+		type : "post",
+		success : function(data){
+			
+			if(data.chk){
+				isLogin = 0;
+				alert("로그아웃성공");
+				location.href = "index.do";
+			} 
+			
+		},
+		error : function(request,status,error){
+			
+			alert("통신실패");
+			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+		}
+		
+	});
 }
 
 function joinUser(){

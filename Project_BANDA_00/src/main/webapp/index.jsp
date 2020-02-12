@@ -33,5 +33,8 @@
 	<a href="mypageFollw.do">mypageFollw</a>
 	<br>
 	<a href="mypagePets.do">mypagePets</a>
+	
+	<br><a href="mypage_allselect.do">mypage_allselect</a> <!-- 성일 -->
+	
 </body>
 </html>

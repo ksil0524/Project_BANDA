@@ -1,9 +1,16 @@
 package com.mvc.banda;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mvc.banda.biz.BandaBiz;
+import com.mvc.banda.model.vo.AccountVo;
 
 @Controller
 public class BandaController {
@@ -14,7 +21,22 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 김성일 파트  시작 >  
 	
-	
+	@RequestMapping("/mypage_allselect.do")
+	public String mypage_allselect(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(60*60);
+		
+		String id = "bomi";
+		
+		AccountVo accvo = biz.mypage_allselect(id);
+		System.out.println(accvo);
+		
+		session.setAttribute("accvo", accvo);
+		System.out.println("mypage_allselect");
+		
+		return "temp/mypagePets";
+	}
 	
 	
 	

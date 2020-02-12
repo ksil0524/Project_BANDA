@@ -30,3 +30,21 @@ input[id=searchinput] {
 	position: relative; 
 	top:200px;
 }
+
+thead th {
+	padding-top: 0.75em !important;
+    text-align: center !important;
+}
+
+.td_notice, .td_date, .td_view {
+	text-align: center !important;
+}
+
+.td_notice {
+	font-weight: 700;
+}
+
+.td_title a {
+	color: #333333;
+	text-decoration: none;
+}

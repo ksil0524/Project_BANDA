@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,8 +33,10 @@
 	<a href="mypageFollw.do">mypageFollw</a>
 	<br>
 	<a href="mypagePets.do">mypagePets</a>
-	<br>
-	<a href="index_go.do">real_index</a>
+	
+	<br><a href="mypage_allselect.do">mypage_allselect</a> <!-- 성일 -->
+	
+	<br><a href="index_go.do">real_index</a><!-- 주예 -->
 	
 </body>
 </html>

@@ -41,7 +41,11 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 김성일 파트  시작 >  
 	
-	
+	public AccountVo mypage_allselect(String id) {
+		
+		return si_dao.mypage_allselect(id);
+		
+	}
 	
 	
 	

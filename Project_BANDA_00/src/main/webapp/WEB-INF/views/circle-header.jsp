@@ -91,7 +91,7 @@
 						</div>
 					</div>
 					<div id="logOut">
-						<div ><i class="fas fa-sign-out-alt"></i></div>
+						<button onclick = "logout();" style = "background : none;"><i class="fas fa-sign-out-alt"></i></button>
 					</div>
 					
 					<!-- 닫혔을때 열기 버튼  -->

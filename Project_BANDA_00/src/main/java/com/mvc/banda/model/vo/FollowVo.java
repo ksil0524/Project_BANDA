@@ -30,7 +30,11 @@ public class FollowVo {
 	public void setFd_id(String fd_id) {
 		this.fd_id = fd_id;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "FollowVo [fr_id=" + fr_id + ", fd_id=" + fd_id + "]";
+	}
 	
 	
 }

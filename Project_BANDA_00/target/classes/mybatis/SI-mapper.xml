@@ -2,10 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="SI-mapper">
-
-
-
-
+	<resultMap type="accountVo" id="accountVoMap">
+		<result property="id" column="ID"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+	</resultMap>
+	
+	<select id="acc_selectone" parameterType="String" resultMap="accountVoMap">
+		SELECT * FROM ACCOUNT WHERE ID = #{id}
+	</select>
+	
+	<select id="pet_selectlist" parameterType="String" resultType="petVo">
+		SELECT * FROM PET WHERE ID = #{id}
+	</select>
+	
+	<select id="feed_selectlist" parameterType="String" resultType="feedVo">
+		SELECT * FROM FEED WHERE ID = #{id}
+	</select>
+	
+	
 </mapper>
 
 

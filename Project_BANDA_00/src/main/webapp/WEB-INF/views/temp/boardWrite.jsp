@@ -73,12 +73,12 @@
 			<form action="" method="post">
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
-			      <label for="country">게시판선택</label>
+			      <label for="boardtab">게시판선택</label>
 			    </div>
 			    <div class="col-75">
-			      <select id="boardtab" name="boardtab">
-			        <option value="free">무료나눔</option>
-			        <option value="trade">물물교환</option>
+			      <select id="boardtab" name="board_cate">
+			        <option value="sh">무료나눔</option>
+			        <option value="ex">물물교환</option>
 			      </select>
 			    </div>
 			  </div>
@@ -87,7 +87,7 @@
 			      <label for="title">제목</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="title" name="title" placeholder="제목을 입력하세요..">
+			      <input type="text" id="title" name="board_title" placeholder="제목을 입력하세요">
 			    </div>
 			  </div> 
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
@@ -95,7 +95,7 @@
 			      <label for="content">내용</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="content" name="content" placeholder="내용을 입력하세요.." style="height:200px"></textarea>
+			      <textarea id="content" name="board_content" placeholder="내용을 입력하세요" style="height:200px"></textarea>
 			    </div>
 			  </div>
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
@@ -103,15 +103,7 @@
 			      <label for="hashtag">해시태그</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="hashtag" name="hashtag" placeholder="해시태그를 입력하세요..">
-			    </div>
-			  </div>
-			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
-			    <div class="col-25">
-			      <label for="hashtag">반려동물태그</label>
-			    </div>
-			    <div class="col-75">
-			      <input type="text" id="hashtag" name="hashtag" placeholder="반려동물 태그를 입력하세요..">
+			      <input type="text" id="hashtag" name="board_hash" placeholder="해시태그를 입력하세요">
 			    </div>
 			  </div>
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
@@ -119,13 +111,13 @@
 			      <label for="content">첨부파일</label>
 			    </div>
 			    <div class="custom-file col-75 ">
-			      <input type="file" class="custom-file-input" id="customFile" name="customFile">
+			      <input type="file" class="custom-file-input" id="customFile" name="board_file">
 			      <label class="custom-file-label" for="customFile"></label>
 			    </div>
 			  </div>
 			  <div class="row btns" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <input type="submit" value="작성">
-			    <input type="button" value="목록" onclick="location.href='boardListFree.do'">
+			    <input type="button" value="목록" onclick="javascript:history.back()">
 			  </div>
 			  </form>
 		  </div><!--/ board-form -->

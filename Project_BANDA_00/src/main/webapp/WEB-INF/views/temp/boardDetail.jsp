@@ -144,8 +144,8 @@
                <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/15.jpg" class="img-responsive img-circle" alt="Image"/>
               </div>
               <div class="comment-text">
-               <strong><a href="">Vanessa Wells</a></strong>
-               <p>Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p> <span>on December 5th, 2016</span>
+               <strong><a href="">Vanessa Wells</a></strong> <span>on December 5th, 2016</span>
+               <p>Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p> 
               </div>
              </li><!--/ li -->
              <li>
@@ -153,8 +153,8 @@
                <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/14.jpg" class="img-responsive img-circle" alt="Image"/>
               </div>
               <div class="comment-text">
-               <strong><a href="">Sean Coleman</a></strong>
-               <p class="">Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
+               <strong><a href="">Sean Coleman</a></strong> <span class="date sub-text">on December 5th, 2016</span>
+               <p class="">Hello this is a test comment.</p> 
               </div>
              </li><!--/ li -->
              <li>
@@ -162,8 +162,8 @@
                <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/13.jpeg" class="img-responsive img-circle" alt="Image"/>
               </div>
               <div class="comment-text">
-               <strong><a href="">Anna Morgan</a></strong>
-               <p class="">Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
+               <strong><a href="">Anna Morgan</a></strong> <span class="date sub-text">on December 5th, 2016</span>
+               <p class="">Hello this is a test comment.</p> 
               </div>
              </li><!--/ li -->
              <li>
@@ -171,8 +171,8 @@
                <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/3.jpg" class="img-responsive img-circle" alt="Image"/>
               </div>
               <div class="comment-text">
-               <strong><a href="">Allison Fowler</a></strong>
-               <p class="">Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
+               <strong><a href="">Allison Fowler</a></strong> <span class="date sub-text">on December 5th, 2016</span>
+               <p class="">Hello this is a test comment.</p> 
               </div>
              </li><!--/ li -->
              <li>
@@ -180,8 +180,8 @@
                <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/7.jpg" class="img-responsive img-circle" alt="Image"/>
               </div>
               <div class="comment-text">
-               <strong><a href="">한국인</a></strong>
-               <p class="">쿨거래원합니다</p> <span class="date sub-text">on December 5th, 2016</span>
+               <strong><a href="">한국인</a></strong> <span class="date sub-text">on December 5th, 2016</span>
+               <p class="">쿨거래원합니다</p> 
               </div>
              </li><!--/ li -->
             </ul><!--/ comment-list -->
@@ -192,13 +192,13 @@
 			   <table style="width: 800px;">
 		   	    <tr>
 		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
-		   	     <td><input class="form-control input-sm" type="text" placeholder="Write your comment..."/></td>
+		   	     <td><input class="form-control input-sm" type="text" placeholder="댓글을 입력하세요"/></td>
 		   	     <td style="width: 50px;"><a href="#"><i class="fas fa-edit"></i></a></td>
 		   	    </tr>
 		   	   </table>  
 			 </div><!--/ comment-put -->
 			 <div class="list-btn">
-		       <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListFree.do'">목록</button>
+		       <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="javascript:history.back()">목록</button>
 		     </div><!--/ list-btn -->
 	  	   </div><!--/ comment-bottom -->
 		   

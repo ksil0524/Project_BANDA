@@ -105,6 +105,10 @@ table, tbody, tr {
 	background-color: transpert; 
 	border: none;
 }
+
+.img-comment-list {
+	height: auto !important;
+}
   
 /* Scrollbar styles */        
 /* Hide scrollbar for Chrome, Safari and Opera */

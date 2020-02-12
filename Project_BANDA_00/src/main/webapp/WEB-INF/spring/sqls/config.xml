@@ -13,8 +13,6 @@
 		<typeAlias type="com.mvc.banda.model.vo.LikesVo" alias="likesVo"/>
 		<typeAlias type="com.mvc.banda.model.vo.MapVo" alias="mapVo"/>
 		<typeAlias type="com.mvc.banda.model.vo.PetVo" alias="petVo"/>
-
-
 	</typeAliases>
 	<!-- resource: src/main/resource와 연결 -->
 	<mappers>

@@ -10,6 +10,7 @@ import com.mvc.banda.dao.JY_dao;
 import com.mvc.banda.dao.NK_dao;
 import com.mvc.banda.dao.SI_dao;
 import com.mvc.banda.dao.UJ_dao;
+import com.mvc.banda.model.vo.AccountVo;
 
 @Service
 public class BandaBiz {
@@ -40,7 +41,11 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 김성일 파트  시작 >  
 	
-	
+	public AccountVo mypage_allselect(String id) {
+		
+		return si_dao.mypage_allselect(id);
+		
+	}
 	
 	
 	
@@ -75,6 +80,18 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 최주예 파트  시작 >  
+	
+			//login
+			public AccountVo jy_login(AccountVo vo) {
+				
+				return jy_dao.jy_login(vo);
+			}
+			
+			//main_selectList
+			public AccountVo main_selectList(String id) {
+				
+				return jy_dao.main_selectList(id);
+			}
 	
 	
 	

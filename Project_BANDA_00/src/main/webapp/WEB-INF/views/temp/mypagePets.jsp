@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,6 +10,9 @@
 	Styles
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+	%>
 </head>
 <body>
 
@@ -72,7 +77,7 @@
                   -o-background-size: cover;">
           <div class="story-body text-center">
            <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>puppy</h4>
+           <h4><%=accvo.getPet_list().get(0).getP_Name() %></h4>
           </div>		  
 		 </div>
 
@@ -193,16 +198,14 @@
 			<!-- 저장된 프로필 보기 -->
 			<div id="mypetsDetail" class="cardbox" style="display:none; border:1px solid #F4F4F4; background-color: #F4F4F4; box-shadow: 2px 2px 2px 2px lightgray; height: 712px;">
 			  <form action="" method="">
-			  
 			  <div class="row">
-			    
 			    <div class="col-65">
 			      <div class="row">    
 			      	<div class="col-35">
 			      		<label for="name">이름</label>
 			    	</div>
 			   		<div class="col-65">
-			      		<input type="text" id="name" name="name" value="멍순이" disabled="disabled">
+			      		<input type="text" id="name" name="name" value="<%=accvo.getPet_list().get(0).getP_Name() %>" disabled="disabled">
 			        </div>
 			      </div>
 			      
@@ -211,7 +214,7 @@
 			      		<label for="birth">출생</label>
 			    	</div>
 			   		<div class="col-65">
-			      		<input type="date" id="birth" name="birth" value="2018-9-17" disabled="disabled">
+			      		<input type="date" id="birth" name="birth" value="<%=accvo.getPet_list().get(0).getP_birth() %>" disabled="disabled" >
 			        </div>
 			      </div>
 			      
@@ -255,7 +258,7 @@
 			      <label for="species">종</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="species" name="species" value="시바견" disabled="disabled">
+			      <input type="text" id="species" name="species" value="<%=accvo.getPet_list().get(0).getP_kind() %>" disabled="disabled">
 			    </div>
 			  </div> 
 			  
@@ -264,7 +267,7 @@
 			      <label for="like">좋아요</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="like" name="like" value="간식" disabled="disabled">
+			      <input type="text" id="like" name="like" value="<%=accvo.getPet_list().get(0).getP_like() %>" disabled="disabled">
 			    </div>
 			  </div> 
 			  
@@ -273,7 +276,7 @@
 			      <label for="hate">싫어요</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="hate" name="hate" value="목욕" disabled="disabled">
+			      <input type="text" id="hate" name="hate" value="<%=accvo.getPet_list().get(0).getP_hate() %>" disabled="disabled">
 			    </div>
 			  </div> 
 			  
@@ -282,7 +285,7 @@
 			      <label for="introduce">소개</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="introduce" name="introduce" style="height:200px" disabled="disabled">강아지 소개입니다.</textarea>
+			      <textarea id="introduce" name="introduce" style="height:200px" disabled="disabled"><%=accvo.getPet_list().get(0).getP_about() %></textarea>
 			    </div>
 			  </div>
 			  
@@ -293,9 +296,7 @@
 			<!-- 저장된 프로필  수정-->
 			<div id="mypetsUpdate" class="cardbox" style="display:none; border:1px solid #F4F4F4; background-color: #F4F4F4; box-shadow: 2px 2px 2px 2px lightgray; height: 712px;">
 			  <form action="" method="">
-			  
 			  <div class="row">
-			    
 			    <div class="col-65">
 			      <div class="row">    
 			      	<div class="col-35">
@@ -305,7 +306,6 @@
 			      		<input type="text" id="name" name="name" value="멍순이" >
 			        </div>
 			      </div>
-			      
 			      <div class="row">    
 			      	<div class="col-35">
 			      		<label for="birth">출생</label>
@@ -314,7 +314,6 @@
 			      		<input type="date" id="birth" name="birth" value="2018-9-17">
 			        </div>
 			      </div>
-			      
 			      <div class="row">
 			    	<div class="col-35">
 			      		<label for="category1">카테고리1</label>
@@ -326,7 +325,6 @@
 			      	  </select>
 			        </div>
 			  	  </div>
-			      
 			      <div class="row">
 			    	<div class="col-35">
 			      		<label for="category2">카테고리2</label>
@@ -338,18 +336,13 @@
 			      	  </select>
 			        </div>
 			  	  </div>
-			      
 			    </div> <!--/ col-65 -->
-			    
 				<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
 			     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
 			      <img src="<%=request.getContextPath() %>/resources/temp/assets/img/icon/testDog.jpg">
 			    </div> <!--/ col-35 -->
-			    
-			    
 			  </div><!--/ row -->
 			  </form>
-			
 			  <div class="row">
 			    <div class="col-25">
 			      <label for="species">종</label>
@@ -358,7 +351,6 @@
 			      <input type="text" id="species" name="species" value="시바견" >
 			    </div>
 			  </div> 
-			  
 			  <div class="row">
 			    <div class="col-25">
 			      <label for="like">좋아요</label>
@@ -367,7 +359,6 @@
 			      <input type="text" id="like" name="like" value="간식">
 			    </div>
 			  </div> 
-			  
 			  <div class="row">
 			    <div class="col-25">
 			      <label for="hate">싫어요</label>
@@ -376,7 +367,6 @@
 			      <input type="text" id="hate" name="hate" value="목욕">
 			    </div>
 			  </div> 
-			  
 			  <div class="row">
 			    <div class="col-25">
 			      <label for="introduce">소개</label>
@@ -385,11 +375,7 @@
 			      <textarea id="introduce" name="introduce" style="height:200px">강아지 소개입니다.</textarea>
 			    </div>
 			  </div>
-			  
-			  
 			</div><!--/ container -->
-			
-			
 			
 			<div id="subBtn" class="row btns">
 			    <input id="submitBtn" type="submit" value="저장">

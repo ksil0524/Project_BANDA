@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -126,7 +127,8 @@ public class BandaController {
 	
 			//메인 리스트 출력
 			@RequestMapping("/main_selectList.do")
-			public String main_selectList() {
+			public String main_selectList(Model model) {
+				
 				
 				if(session.getAttribute("vo") != null) {
 					
@@ -137,6 +139,8 @@ public class BandaController {
 					
 					System.out.println("세션존재");
 					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
+					
+					model.addAttribute("vo", vo2);
 					
 				} else {
 					System.out.println("세션없음");

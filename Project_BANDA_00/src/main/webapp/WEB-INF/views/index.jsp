@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page import = "com.mvc.banda.model.vo.AccountVo" %>
+<%@ page import = "com.mvc.banda.model.vo.FeedVo" %>
+<%@ page import = "java.util.*" %>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -35,17 +41,72 @@
 	<!-- Header -->
 	<jsp:include page="./circle-header.jsp"></jsp:include>
 	
+	
+	<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
+	
 		<!-- Main -->
 			<div id="main">
 				<div class="inner">
 					<div class="columns">
-						<!-- Column 1 (horizontal, vertical, horizontal, vertical) -->
+						
+						<!-- 피드이미지 -->
+<%
+
+	List feed = new ArrayList();
+
+	if(session.getAttribute("vo") != null){
+		AccountVo main_vo = (AccountVo)request.getAttribute("vo");
+		//System.out.println(main_vo);	
+		
+		List<FeedVo> feed_list = (List)main_vo.getFeed_list();
+
+		
+		for(FeedVo l : feed_list){
+			
+			List feed_image = new ArrayList();//전체
+			List feed_file = new ArrayList();//이미지만
+			
+			//feed image -> no입력
+			feed_image.add(l.getFeed_no());
+			
+			String file_n = l.getFeed_file();
+			String[] f = file_n.split("@");
+			
+			feed_image.add(f[1]);	
+			
+			feed.add(feed_image);
+
+	}	
+				
+
+}	
+%>
+					<c:forEach items = "<%=feed %>" var = "list">
+					<c:set var = "file" value = "${list.get(1)}"/>
+					<c:set var = "file_length" value = "${fn:length(file)}"/>
+					<c:set var = "file_type" value = "${fn:substring(file, file_length-3 , file_length)}" />
+					<c:choose>
+					<c:when test = "${file_type ne 'mp4'}">	
 						<div id="imgfit">
+							
 							<a data-toggle="modal" data-target="#myModal">
 								<img class="testexplorebox" 
-						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/pic01.jpg') no-repeat; background-size: cover; background-position: center center;">
+						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}') no-repeat; background-size: cover; background-position: center center;">
 			               	</a>
 		                </div>
+		            </c:when>
+		            <c:otherwise>
+		           		<div id="imgfit">
+							<a data-toggle="modal" data-target="#myModal">
+								<video class="testexplorebox"
+						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;" autoplay>
+						  		  		<source src="<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}" type="video/mp4"> 
+						  		</video>
+			               	</a>
+		                </div>		            
+		            </c:otherwise>
+		            </c:choose>
+		            </c:forEach>
 
 
 					</div>

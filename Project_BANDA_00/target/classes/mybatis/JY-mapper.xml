@@ -3,12 +3,38 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="JY-mapper">
 
+	<resultMap type = "followVo" id = "followVo" >
+		<result property="fr_id" column="FR_ID" />
+		<result property="fd_id" column="FD_ID" />
+	</resultMap>
+	
+	<resultMap type = "feedVo" id = "feedVo" >
+		<result property="feed_no" column="FEED_NO" />
+		<result property="id" column="ID" />
+		<result property="feed_content" column="FEED_CONTENT" />
+		<result property="feed_ptag" column="FEED_PTAG" />
+		<result property="feed_hteg" column="FEED_HTAG" />
+		<result property="feed_regdate" column="FEED_REGDATE" />
+		<result property="feed_file" column="FEED_FILE" />
+	</resultMap>
+	
+
 	<select id = "jy_login" resultType="accountVo" parameterType="accountVo">
 		SELECT * FROM ACCOUNT WHERE ID=#{id} AND PASSWORD=#{password} 
 	</select>
 	
-	<select id = "main_selectList" resultType="accountVo" parameterType="String">
+	<select id = "main_selectList" resultMap="followVo" parameterType="String">
 		SELECT * FROM FOLLOW WHERE FR_ID = #{id}
+	</select>
+	
+	<select id = "main_selectList_feed" resultMap="feedVo"  parameterType="java.util.HashMap">
+	
+	SELECT * FROM FEED WHERE ID IN 
+	
+		<foreach item = "item" index = "index" collection = "name" open = "(" close = ")" separator = ",">
+			#{item}
+		</foreach>
+
 	</select>
 
 </mapper>

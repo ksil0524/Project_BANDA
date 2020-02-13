@@ -64,7 +64,7 @@ function logout(){
 			if(data.chk){
 				isLogin = 0;
 				alert("로그아웃성공");
-				location.href = "index.do";
+				location.href = "index.jsp";
 			} 
 			
 		},
@@ -110,6 +110,22 @@ function close(){
 
 (function($) {
 
+	var session = $("#hidden_session").val();
+	console.log(session);
+
+	if(session == 'AccountVo') {
+		
+		isLogin = 1;
+		$(".closeBtn").hide();
+		$("#logincontent").hide();
+		$("#header").toggleClass('hide');
+		$("#content").hide();
+		$("#loginchk").css("display","none");
+		
+	} else {
+		
+	}
+	
 	skel.breakpoints({
 		xlarge:	'(max-width: 1680px)',
 		large:	'(max-width: 1280px)',
@@ -236,5 +252,6 @@ $(document).ready(function(){
        });
        
        $('#back-to-top').tooltip('show');
+       // 하기싫습니다.......집에 보내주세요....... 우리조원은 왜 학원을 안나오는 걸까요....
 
 });

@@ -37,6 +37,7 @@ function loginChk(){
 			$("#header").toggleClass('hide');
 			$("#content").hide();
 			$("#loginchk").css("display","none");
+			location.href = "index.jsp";
 			
 			} else {
 				$("#loginchk").css("display","block");
@@ -113,7 +114,6 @@ function close(){
 (function($) {
 	$("#header").toggleClass('hide');
 	$("#content").hide();
-	isLogin=1;
 	
 	skel.breakpoints({
 		xlarge:	'(max-width: 1680px)',

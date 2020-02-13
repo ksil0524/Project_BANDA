@@ -36,10 +36,11 @@
                                 </div>
                                 <div class="error"></div>
                                 <div class="form loginBox">
-                                    <form id="loginForm" method="" action="" accept-charset="UTF-8">
+                                    <form id="loginForm" method="/login.do" action="post" accept-charset="UTF-8">
                                     <input id="login-email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="login-password" class="form-control" type="password" placeholder="Password" name="password">
                                     <input id="login-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="loginChk()">
+                                 
                                     <input id="joinBtn" class="btn btn-default btn-login" type="button" value="Join" onclick="joinUser()">
                                     </form>
                                 </div>
@@ -53,7 +54,7 @@
                                 </div>
                                 <div class="error"></div> 
                                 <div class="form loginBox">
-                                    <form id="joinForm" method="" action="" accept-charset="UTF-8">
+                                    <form id="joinForm" method="/register.do" action="post" accept-charset="UTF-8">
                                     <input id="email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="id" class="form-control" type="text" placeholder="Id" name="id">
                                     <input id="password" class="form-control" type="password" placeholder="Password" name="password">

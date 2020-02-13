@@ -6,6 +6,8 @@
 
 var isLogin = 1;
 
+
+
 function loginChk(){
 	
 	var email = $("#login-email").val().trim();
@@ -193,6 +195,7 @@ function close(){
 				});
 
 			});
+			
 		// Footer.
 			$footer.each( function() {
 
@@ -216,6 +219,25 @@ function close(){
 			location.href="../index.jsp";
 		})
 		
+		// 재호
+		$("#searchBtn").click(function(){
+			
+			var text = $("#searchform #searchinput").val();
+			
+			if(text == null || text == ""){
+				alert("검색어를 입력해주세요");
+			} else {
+				alert(text);
+			}
+			
+
+			
+   
+       })
+		
 	});
+	
+	
+
 
 })(jQuery);

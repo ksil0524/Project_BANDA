@@ -143,7 +143,11 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정재호 파트  시작 >  
 	
-	
+	@RequestMapping("/search_feedlist.do")
+	public String search_feedlist() {
+		
+		return "index";
+	}
 	
 	
 	

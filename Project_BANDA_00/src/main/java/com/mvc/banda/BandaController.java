@@ -195,7 +195,8 @@ public class BandaController {
 	
 			//메인 리스트 출력
 			@RequestMapping("/main_selectList.do")
-			public String main_selectList() {
+			public String main_selectList(Model model) {
+				
 				
 				if(session.getAttribute("vo") != null) {
 					
@@ -206,6 +207,8 @@ public class BandaController {
 					
 					System.out.println("세션존재");
 					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
+					
+					model.addAttribute("vo", vo2);
 					
 				} else {
 					System.out.println("세션없음");

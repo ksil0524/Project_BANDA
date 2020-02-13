@@ -1,5 +1,8 @@
 package com.mvc.banda.dao;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +27,41 @@ public class JY_dao {
 	//main_selectList
 	public AccountVo main_selectList(String id) {
 		
-		System.out.println(id);
 		List<FollowVo> follow_list = null;
+		List<FeedVo> feed_list = null;
+		List<String> follow_name = new ArrayList<String>();
 		
-		try {
-			follow_list = sqlSession.selectList(NAMESPACE+"main_selectList", id);
-		} catch (Exception e) {
-			e.printStackTrace();
+		follow_list = follow_list(id);
+		
+		for(int i = 0; i<follow_list.size();i++) {
+			follow_name.add(follow_list.get(i).getFd_id());
 		}
-		System.out.println(follow_list.get(0).getFd_id());
+			
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("name", follow_name);
+			
+		feed_list = feed_list(m);
+			
+		AccountVo vo = new AccountVo();
+		vo.setId(id);
+		vo.setFeed_list(feed_list);
+			
+		//System.out.println(vo);
 		
-		return null;
+		return vo;
+	}
+	
+	//아이디에 해당하는 followVo 반환
+	public List<FollowVo> follow_list(String id){
+		
+		return sqlSession.selectList(NAMESPACE+"main_selectList", id);
+		
+	}
+	
+	//feed list 반환
+	public List<FeedVo> feed_list(Map<String, Object> m){
+		
+		return sqlSession.selectList(NAMESPACE+"main_selectList_feed", m);
 	}
 
 }

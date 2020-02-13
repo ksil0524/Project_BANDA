@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
 			<header id="header">
 				<div class="inner" style="position:relative;">
 					<div class="closeBtn">
@@ -86,15 +88,31 @@
 							<a href="mypageFollw.do" id="menuBtn4" class="" style="color:#ec3d6e;"><i class="fas fa-user"></i></a>
 							
 						</div>
+						
 						<div id="searchinputBox">
-							<input type="text" id="searchinput"><div id="searchBtn" onclick="" ><i class="fas fa-search"></i></div>
+						  
+						  <form action="search_feedlist.do" id="searchform" method="get">
+						    
+						  <div>
+					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
+					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
+					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
+					      </div>
+					        
+							<input type="text" id="searchinput" value="">
+							<div id="searchBtn" class="searchBtn" onclick="#"><i class="fas fa-search"></i></div>
+							
+						  </form>
+							
 						</div>
-					</div>
+				      
+						
+					</div>				
 					<div id="logOut">
 						<button onclick = "logout();" style = "background : none;"><i class="fas fa-sign-out-alt"></i></button>
 					</div>
 					
 					<!-- 닫혔을때 열기 버튼  -->
-					<a href="#" class="button hidden" onclick=""><span>Let's Go</span></a>
+					<a href="#" class="button hidden"><span>Let's Go</span></a>
 				</div>
 			</header>

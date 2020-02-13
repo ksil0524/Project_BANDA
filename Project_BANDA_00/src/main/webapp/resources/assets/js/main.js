@@ -6,6 +6,7 @@
 
 var isLogin = 0;
 
+
 function loginChk(){
 	var email = $("#login-email").val().trim();
 	var pw = $("#login-password").val().trim();

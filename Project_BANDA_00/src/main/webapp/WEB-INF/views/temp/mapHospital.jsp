@@ -68,15 +68,29 @@
 					<div class="row">
 						<div id="searchBox" style="width: 1070px;">
 							<span id="cateOne" class="col-lg-3 col-xs-12" style="text-align: left;">
-								<select id="selbox" class="w3-select w3-border" name="option">
+								<select id="selbox" class="w3-select w3-border" name="city">
 									<option value="" disabled selected>&nbsp;&nbsp;Choose your option</option>
-									<option value="1">Option 1</option>
-									<option value="2">Option 2</option>
-									<option value="3">Option 3</option>
+										<option value="서울">서울</option>
+										<option value="충남">충남</option>
+										<option value="인천">인천</option>
+										<option value="부산">부산</option>
+										<option value="울산">울산</option>
+										<option value="제주">제주</option>
+										<option value="광주">광주</option>
+										<option value="대전">대전</option>
+										<option value="대구">대구</option>
+										<option value="강원">강원</option>
+										<option value="전북">전북</option>
+										<option value="경북">경북</option>
+										<option value="전남">전남</option>
+										<option value="세종시">세종시</option>
+										<option value="경남">경남</option>
+										<option value="경기">경기</option>
+										<option value="충북">충북</option>
 								</select>
 							</span>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
-								<select id="selbox" class="w3-select w3-border" name="option">
+								<select id="selbox" class="w3-select w3-border" name="district">
 									<option value="" disabled selected>&nbsp;&nbsp;Choose your option</option>
 									<option value="1">Option 1</option>
 									<option value="2">Option 2</option>
@@ -87,7 +101,7 @@
 								<input id="searchInput" type="text" class="">
 							</span>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
-								<button id="topSearchBtn" >Search<i id="searchIcon" class="fas fa-search"></i></button>
+								<button id="topSearchBtn" onclick="sub()">Search<i id="searchIcon" class="fas fa-search"></i></button>
 							</span>
 						</div><!-- 1070 -->
 					</div><!-- row -->
@@ -183,6 +197,7 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Map Script -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-map.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0d9f5c75a037bb611cbdea021d1a56f"></script>
 	<!-- Auto Script -->
 	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

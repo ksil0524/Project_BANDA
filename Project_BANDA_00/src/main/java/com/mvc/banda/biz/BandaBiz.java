@@ -1,5 +1,7 @@
 package com.mvc.banda.biz;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,7 +103,18 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 주희진 파트  시작 >  
-	
+	public List<String> map_autocompleteAjax(String keyword){
+		/*
+		 * 검색어 자동완성
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200213
+		*/
+		
+		return hj_dao.map_autocompleteAjax(keyword);
+		
+	}
 	
 	
 	

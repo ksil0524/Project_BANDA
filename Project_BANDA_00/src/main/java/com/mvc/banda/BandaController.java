@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -154,22 +155,28 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 주희진 파트  시작 >  
 	
-	@RequestMapping(value="/autocompleteAjax.do", method=RequestMethod.POST)
+	@RequestMapping(value="/map_autocompleteAjax.do", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> autocompleteAjax(HttpSession session, String value){
+	public Map<String, Object> map_autocompleteAjax(HttpSession session, String keyword){
+		/*
+		 * 검색어 자동완성
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200213
+		*/
 		
 		/* Test Code */
-		System.out.println("검색어 value: " + value);
+		System.out.println("검색어 value: " + keyword);
 		
-		List<String> list = new ArrayList<String>(); 
-		list.add("1"); 
-		list.add("2");
-		list.add("3");
-		 
+		List<String> list = biz.map_autocompleteAjax(keyword); 
+		/*
+		 * list.add("1"); list.add("2"); list.add("3");
+		 */
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("success", true);
-		/* Test Code */
+		/* Test Code end*/
 		
 		return map;
 	}

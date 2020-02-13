@@ -13,9 +13,17 @@
 	position: relative;
 }
 
-#searchinput {
+#searchSelect {
+	display: inline-block !important;
 	width:100px !important; 
 	margin-right: 0px !important;
+	background: #fffefe !important;
+}
+
+#searchKeyword {
+	display: inline-block !important;
+	width: 362px !important;
+	background: #fffefe !important;
 }
 
 input[id=searchinput] {

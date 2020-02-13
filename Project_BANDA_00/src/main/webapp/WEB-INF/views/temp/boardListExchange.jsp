@@ -65,12 +65,12 @@
 	  <div class="container">
 	  	<!-- 검색창 부분 -->
 	  	<span id="searchinputBox">
-		  	<select id="searchinput">
+		  	<select id="searchSelect">
 		  		<option>제목</option>
 		  		<option>내용</option>
 		  		<option>글쓴이</option>
 		  	</select>
-			<input type="text" id="searchinput" placeholder="검색어를 입력하세요" style="width: 362px !important;"/>
+			<input type="text" id="searchKeyword" placeholder="검색어를 입력하세요" />
 			<div id="searchBtn" onclick=""><i class="fas fa-search" style="width: 25px; height: 25px;"></i></div>
 		</span>
 	  	<!-- -------- -->
@@ -81,9 +81,9 @@
 	 
 
 	 <!-- ==============================================
-	 News Feed Section
+	 Board List Section
 	 =============================================== --> 
-	 <section class="newsfeed">
+	 <section class="boardlist">
 	  <div class="container">
 	  
 	   <!-- 공지사항 부분 -->	   

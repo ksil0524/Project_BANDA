@@ -65,7 +65,22 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정유진 파트  시작 >  
 	
+	//login
+	public AccountVo login(AccountVo vo) {
+
+		
+		
+		return uj_dao.login(vo);
+	}
 	
+	public int register(AccountVo vo) {
+		
+		
+		return uj_dao.register(vo);
+		
+	}
+
+
 	
 	
 	
@@ -94,8 +109,9 @@ public class BandaBiz {
 				
 				return jy_dao.main_selectList(id);
 			}
-	
-	
+
+
+
 	
 	
 	

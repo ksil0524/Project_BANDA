@@ -3,8 +3,13 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="UJ-mapper">
 
-
-
+	<select id = "login" resultType="accountVo" parameterType="accountVo">
+		SELECT * 
+		FROM ACCOUNT 
+		WHERE ID=#{id} 
+	</select>
+	
+	
 
 
 

@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,6 +71,69 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정유진 파트  시작 >  
 	
+	//login
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+	
+	
+	//login
+	@ResponseBody
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	public Map<String, Boolean> login(@RequestBody AccountVo vo) {
+		
+		AccountVo vo1 = biz.login(vo);
+		Boolean chk = false;
+		
+		if(passwordEncoder.matches(vo.getPassword(), vo1.getPassword())) {
+			session.setAttribute("login", vo1);
+			session.setMaxInactiveInterval(60*60);
+			chk = true;
+			
+		} 
+		
+		
+		Map<String, Boolean> m = new HashMap<String, Boolean>();
+		m.put("chk", chk);
+		
+		return m;
+	}
+	
+	//logout
+	@ResponseBody
+	@RequestMapping(value = "/logout.do", method = RequestMethod.POST)
+	public Map<String, Boolean> logout() {
+		
+		session.invalidate();
+		System.out.println("로그아웃성공");
+
+		Map<String, Boolean> m = new HashMap<String, Boolean>();
+		m.put("chk", true);
+		
+		return m;
+	}
+	
+	
+	@RequestMapping("/register.do")
+	public String register(AccountVo vo) {
+		
+		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+		System.out.println("test:"+vo.getPassword());
+		
+		if(biz.register(vo)>0) {
+			return "redirect:login.do";
+		}else {
+			return "redirect:";
+		}
+		
+		
+		
+	
+	}
+	
+	
+
+
 	
 	
 	

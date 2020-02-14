@@ -1,4 +1,7 @@
 
+/***********************************
+ 검색어
+ ***********************************/
 $(function(){
 	
 	/* 검색어 자동완성 */
@@ -32,10 +35,85 @@ $(function(){
 		select:function(event, ui){
 		
 		}
+	}); //autocomplete
+	
+	/*city select*/
+	$("#city_selbox").change(function(){
+		var cityname = $(this).val();
+		alert(cityname);
+		$.getJSON("resources/assets/json/administrativeArea.json",function(data){
+			$.each(data, function(key, val){
+				if(key=="district"){
+					
+					var list = val;
+					var result = Object.keys(list).map(function(key) {
+						  return [list[key]];
+						});
+
+						console.log(result);
+						//한단계씩 안으로 [] + 
+						console.log("test! " + result[0].__proto__.length);
+						
+						//object 까기 
+						var sJson = JSON.stringify(list);
+						console.log("st :"+sJson);
+						
+					
+					for(var i=0; i<list.length; i++){
+						console.log(i + " = " +list[i].name);
+						if(list[i].name==cityname){
+							console.log("list[i].value : " + list[i].value);
+							var testlist = list[i].value;
+							for(var j=0; j<testlist.length; j++){
+								$("#dist_selbox").append("<option value='"+testlist[j]+"'>"+testlist[j]+"</option>");
+							}
+							return;
+						}
+						//$("#dist_selbox").append("<option value='"+list[i]+"'>"+list[i]+"</option>");
+					}
+				}
+				/*if(key=="district")*/
+			});
+		});
+		
 	});
 	
+	/*city select box default set*/
+	city_selbox_set();
+	
+	function city_selbox_set(){
+		$.getJSON("resources/assets/json/administrativeArea.json",function(data){
+			$.each(data, function(key, val){
+				if(key=="city"){
+					var list = val;
+					for(var i=0; i<list.length; i++){
+						console.log(i + " = " +list[i]);
+						$("#city_selbox").append("<option value='"+(i+1)+"'>"+list[i]+"</option>");
+					}
+					
+					aff();
+				}
+				/*if(key=="district")*/
+			});
+		});
+	}
+
 });//function
 
+/***********************************
+  select box
+***********************************/
+function aff(){
+	var x, i, j, selElmnt, a, b, c;
+	x=$(".custom-select");
+	  selElmnt = x[0].getElementsByTagName("select")[0];
+	 console.log("selElmnt: "+ selElmnt.innerHTML);
+	
+}
+
+/***********************************
+ Map
+***********************************/
 $(function(){
 	/* Map */
 	// 지도를 표시할 div 

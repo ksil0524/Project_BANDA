@@ -26,6 +26,9 @@
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/custom.css" />
 		
+		<!-- Bootstrap core CSS -->
+ 		 <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
+		
 		<!-- favicon -->
 		<link rel="icon" href="/favicon.ico"> 
 
@@ -53,33 +56,86 @@
 <%
 
 	List feed = new ArrayList();
+	List<FeedVo> feed_list = new ArrayList();
+	String str[] = null;
 
 	if(session.getAttribute("vo") != null){
-		AccountVo main_vo = (AccountVo)request.getAttribute("vo");
+		
+		if(request.getAttribute("fvo") != null){
+			
+		AccountVo main_vo = (AccountVo)request.getAttribute("fvo");
 		//System.out.println(main_vo);	
 		
-		List<FeedVo> feed_list = (List)main_vo.getFeed_list();
+		feed_list = (List)main_vo.getFeed_list();
 
 		
 		for(FeedVo l : feed_list){
 			
 			List feed_image = new ArrayList();//전체
-			List feed_file = new ArrayList();//이미지만
 			
 			//feed image -> no입력
 			feed_image.add(l.getFeed_no());
 			
 			String file_n = l.getFeed_file();
-			String[] f = file_n.split("@");
+			str = file_n.split("@");
 			
-			feed_image.add(f[1]);	
+			feed_image.add(str[1]);	
 			
 			feed.add(feed_image);
 
-	}	
-				
-
-}	
+		}	
+		
+		for(FeedVo f : feed_list){
+			System.out.println(f);
+		}
+		
+	} else {
+		
+		feed_list = (List)request.getAttribute("frvo");	
+		
+		for(FeedVo f : feed_list){
+			
+			List rfeed_image = new ArrayList();
+			List rfeed_file = new ArrayList();
+			
+			rfeed_image.add(f.getFeed_no());
+			
+			str = f.getFeed_file().split("@");
+			rfeed_image.add(str[1]);
+			
+			feed.add(rfeed_image);
+			
+		}
+		
+		for(FeedVo f : feed_list){
+			System.out.println(f);
+		}
+		
+	}
+		
+} else {
+	
+		feed_list = (List)request.getAttribute("frvo");	
+		
+		for(FeedVo f : feed_list){
+			
+			List rfeed_image = new ArrayList();
+			List rfeed_file = new ArrayList();
+			
+			rfeed_image.add(f.getFeed_no());
+			
+			str = f.getFeed_file().split("@");
+			rfeed_image.add(str[1]);
+			
+			feed.add(rfeed_image);
+			
+		}
+		
+		for(FeedVo f : feed_list){
+			System.out.println(f);
+		}	
+		
+}
 %>
 					<c:forEach items = "<%=feed %>" var = "list">
 					<c:set var = "file" value = "${list.get(1)}"/>
@@ -99,7 +155,7 @@
 		           		<div id="imgfit">
 							<a data-toggle="modal" data-target="#myModal">
 								<video class="testexplorebox"
-						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;" autoplay>
+						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;" autoplay loop>
 						  		  		<source src="<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}" type="video/mp4"> 
 						  		</video>
 			               	</a>
@@ -117,27 +173,98 @@
 	 =============================================== -->
      <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-       <div class="modal-content">
+       <div class="modal-content" style = "width:160%;margin-left:-28%;margin-top:-20%">
         <div class="modal-body">
 		
-         <div class="row">
-		 
-          <div class="col-md-8 modal-image">
-           <img class="img-responsive" src="<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg" alt="Image"/>
-          </div><!--/ col-md-8 -->
+         <div class="row" style = "float:left">
+		
+		<!-- --------------------------------------------------------------------------------------------------------------- --> 
+		<!-- 이미지 -->
+	    <div class="container" style = "width:60%;height:auto;float:left">
+	
+		    <div class="row" style = "width:150%">
+					
+			<div class="col-lg-9">
+		
+		        <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+		         
+		          <div class="carousel-inner" role="listbox">
+		          
+		          <!-- 진짜이미지 -->
+		            <div class="carousel-item active">
+		              <img class="d-block img-fluid" src="<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg" alt="First slide">
+		            </div>
+		            <div class="carousel-item">
+		              <img class="d-block img-fluid" src="<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg" alt="Second slide">
+		            </div>
+		            <div class="carousel-item">
+		              <img class="d-block img-fluid" src="<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg" alt="Third slide">
+		            </div>
+		          </div>
+		          
+		          <!-- 앞 -->
+		          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		            <span class="sr-only">Previous</span>
+		          </a>
+		          
+		           <!-- 뒤 -->
+		          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		            <span class="sr-only">Next</span>
+		          </a>
+		        </div>
+		        
+		        <!-- 좋아요 -->
+		        <div style = "float:left">
+			 	 <a class="modal-like" href="#"><i class="fa fa-heart" style = "float:left;padding-top:15%;color:rgb(5,203,149)"></i></a>
+			 	 <a href = "#" style = "color:rgb(5,203,149)">122</a>
+			 	</div>
+		      
+		       </div>
+					
+			</div>
+		
+		</div>
+		<!-- --------------------------------------------------------------------------------------------------------------- --> 
+          
+          
           <div class="col-md-4 modal-meta">
            <div class="modal-meta-top">
+           
+           <!-- x -->
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 			 <span aria-hidden="true">×</span><span class="sr-only">Close</span>
 			</button><!--/ button -->
-            <div class="img-poster clearfix">
+			
+			<!-- 작성자 -->
+            <div class="img-poster clearfix" style = "padding-top:10%">
              <a href=""><img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/18.jpg" alt="Image"/></a>
              <strong><a href="">Benjamin</a></strong>
-             <span>12 minutes ago</span><br/>
 		     <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
             </div><!--/ img-poster -->
-			  
+			 
+			<!-- 내용 -->
+			<div style = "height:20vh">
             <ul class="img-comment-list">
+             <li>
+              <div class="comment-img">
+               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/17.jpeg" class="img-responsive img-circle" alt="Image"/>
+              </div>
+              <div class="comment-text">
+               <strong><a href="">Anthony McCartney</a></strong>
+               <p style = "font-size : 8px;color:rgb(5,203,149)">feed_ptag</p>
+               <p style = "font-size : 8px;color:rgb(5,203,149)">feed_htag</p>
+               <p>Hello this is a test comment.</p> 
+               <span class="date sub-text">on December 5th, 2016</span>
+              </div>
+             </li><!--/ li -->
+            </ul><!--/ comment-list -->
+            </div>
+            
+            <!-- 댓글 -->
+            <div style = "height:38vh">
+             <ul class="img-comment-list">
              <li>
               <div class="comment-img">
                <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/17.jpeg" class="img-responsive img-circle" alt="Image"/>
@@ -147,61 +274,28 @@
                <p>Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
               </div>
              </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/15.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Vanessa Wells</a></strong>
-               <p>Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p> <span>on December 5th, 2016</span>
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/14.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Sean Coleman</a></strong>
-               <p class="">Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/13.jpeg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Anna Morgan</a></strong>
-               <p class="">Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/3.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Allison Fowler</a></strong>
-               <p class="">Hello this is a test comment.</p> <span class="date sub-text">on December 5th, 2016</span>
-              </div>
-             </li><!--/ li -->
             </ul><!--/ comment-list -->
+            </div>
 			  
             <div class="modal-meta-bottom">
 			 <ul>
-			  <li><a class="modal-like" href="#"><i class="fa fa-heart"></i></a><span class="modal-one"> 786,286</span> | 
-			      <a class="modal-comment" href="#"><i class="fa fa-comments"></i></a><span> 786,286</span> </li>
+			  
+			  <!-- 댓글쓰기 -->
 			  <li>
-			   <span class="thumb-xs">
-				<img class="img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image">
-			   </span>
-			   <div class="comment-body">
-				 <input class="form-control input-sm" type="text" placeholder="Write your comment...">
+			   <div class="comment-body" style = "width:105%">
+				 <input class="form-control input-sm" type="text" placeholder="Write your comment..." style = "float:left">
+				 <div style = "float:left;margin-left:5%;margin-top:8%">
+				 	<a class="modal-comment" href="#"><i class="fa fa-comments" style = "float:left"></i></a>
+				 </div>
 			   </div><!--/ comment-body -->	
-              </li>				
+              </li>
+              				
              </ul>				
             </div><!--/ modal-meta-bottom -->
 			  
            </div><!--/ modal-meta-top -->
           </div><!--/ col-md-4 -->
+          <!-- --------------------------------------------------------------------------------------------------------------- --> 
 		  
          </div><!--/ row -->
         </div><!--/ modal-body -->
@@ -284,6 +378,8 @@
 			<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/js/main.js"></script>
+			<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+  			<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
 
 	</body>
 </html>

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.FeedVo;
+import com.mvc.banda.model.vo.FollowVo;
 
 @Controller
 public class BandaController {
@@ -202,18 +204,35 @@ public class BandaController {
 					
 					AccountVo vo = (AccountVo)session.getAttribute("vo");
 					String id = vo.getId();
-					
-					System.out.println(id);
-					
 					System.out.println("세션존재");
-					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
 					
-					model.addAttribute("vo", vo2);
+					List<FollowVo> fvo = biz.main_selectFollow(id);
+
+					if(fvo.size() != 0) {
+						System.out.println("로그인성공/ 팔로우 있음");
+						
+						AccountVo vo2 = (AccountVo)biz.main_selectList(id);
+						//System.out.println(vo2);
+						
+						model.addAttribute("fvo", vo2);
+						
+					} else {
+						
+						System.out.println("로그인성공/ 팔로우 없음");
+						List<FeedVo> fvo2 = biz.main_selectListN();
+						
+						model.addAttribute("frvo",fvo2);
+					}
+
 					
 				} else {
+					
 					System.out.println("세션없음");
+					List<FeedVo> fvo = biz.main_selectListN();
+					
+					model.addAttribute("frvo",fvo);
+					
 				}
-
 				
 				return "index";
 			}

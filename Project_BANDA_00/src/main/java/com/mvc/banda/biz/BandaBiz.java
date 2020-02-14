@@ -13,6 +13,8 @@ import com.mvc.banda.dao.NK_dao;
 import com.mvc.banda.dao.SI_dao;
 import com.mvc.banda.dao.UJ_dao;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.FeedVo;
+import com.mvc.banda.model.vo.FollowVo;
 
 @Service
 public class BandaBiz {
@@ -104,16 +106,24 @@ public class BandaBiz {
 				return jy_dao.jy_login(vo);
 			}
 			
-			//main_selectList
+			//main_selectList - 로그인시
 			public AccountVo main_selectList(String id) {
 				
 				return jy_dao.main_selectList(id);
 			}
 
+			//main_selectListN - 비로그인/ 팔로우없을떄
+			public List<FeedVo> main_selectListN() {
+				
+				return jy_dao.main_selectListN();
+			}
+			
+			//main_selectFollow - 로그인시 팔로우 판단
+			public List<FollowVo> main_selectFollow(String id) {
+				return jy_dao.main_selectFollow(id);
+			}
 
 
-	
-	
 	
 	// < 최주예 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

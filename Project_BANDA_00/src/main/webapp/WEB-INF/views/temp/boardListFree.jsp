@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>       
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,94 +110,56 @@
 		   	  	<th>조회수</th>
 		   	  </tr>
 	   	  	</thead>
-	   	  	<tbody>
-	   	  	  <tr>
-	   	  	  	<td class="td_notice">공지</td>
-	   	  	  	<td class="td_title"><a href="boardDetail.do">거래 전 주의사항</a></td>
-	   	  	  	<td class="td_writer">BANDA</td>
-	   	  	  	<td class="td_date">2020-01-01</td>
-	   	  	  	<td class="td_view">100</td>
-	   	  	  </tr>
-	   	  	</tbody>
+	   	  	<c:choose>
+	   	  	  <c:when test="${not empty listShareNotice}">
+	   	  	   <c:forEach items="${listShareNotice }" var="listShNotice">	   	  	
+		   	  	<tbody>
+		   	  	  <tr>
+		   	  	  	<td class="td_notice" style="font-weight: 700;">공지</td>
+		   	  	  	<td class="td_title"><a href="boardDetail_test.do?board_no=${listShNotice.board_no }">${listShNotice.board_title }</a></td>
+		   	  	  	<td class="td_writer">${listShNotice.id }</td>
+		   	  	  	<td class="td_date"><fmt:formatDate value="${listShNotice.board_regdate }" pattern="yyyy-MM-dd"/></td>
+		   	  	  	<td class="td_view">100</td>
+		   	  	  </tr>
+		   	  	</tbody>
+	   	  	   </c:forEach>	   	  	
+	   	  	  </c:when>	   	  	
+	   	  	</c:choose>
 	   	  </table>
 	   	</div><!--/ upper-notice -->
 	   </div><!--/ div row -->
 	   <!--/ 공지사항 부분 -->
 	  
-	   <div class="row">
-	   
-	    <div class="col-lg-4">
-		 <a href="boardDetail.do">
-		 <div class="explorebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/14.jpg') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">
-		  <div class="explore-top">
-		   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-		   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
-          </div>		
-
-          <div class="story-body">
-           <h3>TITLE</h3>
-           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>Clifford Graham</h4>
-           <p>2020-01-01</p>
-          </div>  
-		 </div>
-		 </a>
-		</div><!--/ col-lg-4 -->
-	   
-	    <div class="col-lg-4">
-		 <a href="boardDetail.do">
-		 <div class="explorebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/18.jpg') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">
-		  <div class="explore-top">
-		   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-		   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
-          </div>		
-
-          <div class="story-body">
-           <h3>TITLE</h3>
-           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>Clifford Graham</h4>
-           <p>2020-01-01</p>
-          </div>  			  
-		 </div>
-		 </a>
-		</div><!--/ col-lg-4 -->
-	   
-	    <div class="col-lg-4">
-		 <a href="boardDetail.do">
-		 <div class="explorebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/15.jpg') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">
-		  <div class="explore-top">
-		   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-		   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
-          </div>		
-
-          <div class="story-body">
-           <h3>TITLE</h3>
-           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>Clifford Graham</h4>
-           <p>2020-01-01</p>
-          </div>  	  
-		 </div>
-		 </a>
-		</div><!--/ col-lg-4 -->
+	   <div class="row">   
+	     <c:choose>
+	       <c:when test="${not empty listShare }">
+	         <c:forEach items="${listShare}" var="listSh">
+			    <div class="col-lg-4">
+				 <a href="boardDetail_test.do?board_no=${listSh.board_no }">
+				 <div class="explorebox" 
+				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/${listSh.board_file }') no-repeat;
+				          background-size: cover;
+		                  background-position: center center;
+		                  -webkit-background-size: cover;
+		                  -moz-background-size: cover;
+		                  -o-background-size: cover;">
+				  <div class="explore-top">
+				   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
+				   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
+		          </div>		
 		
+		          <div class="story-body">
+		           <h3>${listSh.board_title }</h3>
+		           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
+		           <h4>${listSh.id }</h4>
+		           <p><fmt:formatDate value="${listSh.board_regdate }" pattern="yyyy-MM-dd"/></p>
+		          </div>  
+				 </div>
+				 </a>
+				</div><!--/ col-lg-4 -->
+			 </c:forEach>
+		   </c:when>
+		 </c:choose>
 	   </div><!--/ row -->
 	   
 	   <div class="row">

@@ -260,7 +260,31 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 하나경 파트  시작 >  
 	
+	//무료나눔
+	@RequestMapping(value="/boardListFree_test.do")
+	public String listShare(Model model) {
+//		logger.info("BOARD SHARE LIST");		
+		model.addAttribute("listShareNotice", biz.selectListShNotice());
+		model.addAttribute("listShare", biz.selectListSh());
+		return "temp/boardListFree";
+	}
+
+	//물물교환
+	@RequestMapping(value="/boardListExchange_test.do")
+	public String listExchange(Model model) {
+//		logger.info("BOARD EXCHANGE LIST");
+		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
+		model.addAttribute("listExchange", biz.selectListEx());
+		return "temp/boardListExchange";
+	}
 	
+	//게시글 상세
+	@RequestMapping(value="/boardDetail_test.do")
+	public String boardDetail(Model model, int board_no) {
+//		logger.info("BOARD DETAIL");
+		model.addAttribute("detail", biz.selectOneBoard(board_no));
+		return "temp/boardDetail";
+	}	
 	
 	
 	

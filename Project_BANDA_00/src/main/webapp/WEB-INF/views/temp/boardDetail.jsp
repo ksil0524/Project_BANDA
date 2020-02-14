@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,6 +79,7 @@
             <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
 	         <a class="dropdown-item" href="#">수정</a>
 			 <a class="dropdown-item" href="#">삭제</a>
+			 <a class="dropdown-item" href="#">공지등록</a>
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->
@@ -82,15 +87,15 @@
            <!-- 게시글 정보 - 제목, 글쓴이, 작성일자, 조회수 -->
            <div class="detail-info" style="margin-top: 10px; margin-bottom: 10px; padding-left: 10px;">
            <!-- TITLE -->
-            <span class="detail-title">[댕댕이] 장난감 무료나눔 </span>   
+            <span class="detail-title">${detail.board_title }</span>   
            <!-- END title -->
             <div class="media m-0">
              <div class="d-flex mr-3">
 			  <a href="#"><img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/18.jpg" alt="User"></a>
 			 </div>
              <div class="media-body">
-              <p class="m-0">Benjamin Robinson</p>
-			  <small><span>2020-02-05-Wed</span></small>
+              <p class="m-0">${detail.id }</p>
+			  <small><span><fmt:formatDate value="${detail.board_regdate }" pattern="yyyy-MM-dd"/></span></small>
 			  <div class="detail-view">
 			 	<i class="fas fa-eye"></i><span> 786,286</span>
 			  </div>
@@ -104,16 +109,12 @@
 		    <div class="cardbox-img">
 		      <img class="img-responsive" src="<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg" alt="MaterialImg">
 		    </div>
-		    <div class="cardbox-content" style="">
-		     <div class="cardbox-text" style="">
-		       	현수야 똥싸지마라
+		    <div class="cardbox-content">
+		     <div class="cardbox-text">
+		       	${detail.board_content }
 		     </div>
 		     <div class="cardbox-hashtag">
-		      <p>
-		       <a href="#"><span class="boardtag tagtext">현수야</span></a>
-		       <a href="#"><span class="boardtag tagtext">피곤해죽겠다</span></a>
-		       <a href="#"><span class="boardtag tagtext">뿍뿍</span></a>
-		      </p>
+		      <p id="pHash"></p>
 		     </div><!--/ cardbox-hashtag -->
 		    </div>
           </div><!--/ cardbox-item -->
@@ -224,6 +225,19 @@
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+		<script type="text/javascript">
+		var hashtags = '${detail.board_hash }';
+		var hash = hashtags.split(",");
+		var inner ='';
+		      
+		console.log(hash);
+		      
+		for(var i=0 ; i<hash.length ; i++) {
+			inner += '<a href="#" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';
+		}
+		document.getElementById("pHash").innerHTML = inner;
+		      
+	</script>
 	
     <!-- ==============================================
 	HEADER CIRCLE Scripts

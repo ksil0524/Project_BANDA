@@ -10,7 +10,7 @@
 	<br>
 	<a href="index.do">index</a>	
 	<br>
-	<a href="boardDetail.do">boardDetail</a>		
+	<a href="boardDetail.do">boardDetail</a>	
 	<br>
 	<a href="boardListExchange.do">boardListExchange</a>	
 	<br>

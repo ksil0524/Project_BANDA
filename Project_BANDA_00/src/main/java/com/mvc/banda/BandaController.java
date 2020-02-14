@@ -65,8 +65,7 @@ public class BandaController {
 		System.out.println("change_pet");
 		
 		PetVo selectpet = biz.mypage_selectPet(pno);		
-		
-		
+				
 		Map<String, PetVo> resMap = new HashMap<String, PetVo>();
 		resMap.put("petVo", selectpet);
 		

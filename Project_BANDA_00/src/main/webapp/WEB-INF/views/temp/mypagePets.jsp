@@ -30,40 +30,7 @@
 		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	%>
-	
-	
-			      
-
-	 <script type="text/javascript">
-
-	 	$(function(){
-	 		
-		var pettt = <%=accvo.getPet_list()%>;
-	 		
-	 		
-	 	});
-	 </script>
-	
-	
-	
-	<!--  
-	selectbox 설정 : 불러온 petVo의 species 에 맞게 view_category2 가 변하게 수정하게 하는 script 부분
-  -->					  	  
-  <script type="text/javascript">
-	
-  	$(function(){
-  		
-  		var viewVal = $("#view_category2 option:selected").val();
-  		
-  		var speciesVal = species_list[viewVal];
-  		
-  		$("#view_category2 option:selected").text(speciesVal);
-  		
-  	});
-  	
-  </script>
-  
+	%>	  	  
 	
 	
 </head>
@@ -141,46 +108,151 @@
 		 </c:if>
 <script type="text/javascript">
 	
-function change_div(ele){
-	
-	var pno = ele;
-	console.log(pno);
-	
-	$.ajax({
+	function change_div(ele){
 		
-		type:"post",
-		url:"change_pet.do",
-		data:JSON.stringify(pno),
-		//data:{"pno" : pno},
-		contentType:"application/json",
-		dataType:"json",
-		success : function(data){
-			
-			console.log("success");
-			var petVo = data.petVo;
-			console.log(petVo);
-			console.log(petVo.p_Name);
-			
-			$("#detailname").val(petVo.p_Name);
-			$("#detailbirth").val(petVo.p_birth);
-			$("#detailspecies").val(petVo.p_kind);
-			$("#detaillike").val(petVo.p_like);
-			$("#detailhate").val(petVo.p_hate);
-			$("#detailabout").val(petVo.p_about);
-			$("#detailimage").html("");
-			$("#detailimage").append("<img>")
-			
-			
-			
-		},
-		error : function(){
-			console.log("fail");
-		}
+		var pno = ele;
+		console.log(pno);
 		
-	});
+		$.ajax({
+			
+			type:"post",
+			url:"change_pet.do",
+			data:JSON.stringify(pno),
+			//data:{"pno" : pno},
+			contentType:"application/json",
+			dataType:"json",
+			success : function(data){
+				console.log("success");	
+				
+				var class_list = ['선택','포유류','조류','파충류,양서류','어류','절지류','기타'];
+				var species_list = ['선택','개','고양이','패럿','기니피그','다람쥐,하늘다람쥐','햄스터','토끼','고슴도치','돼지','말','영장류','원숭이','여우','너구리','사자','새','닭,병아리','오리','메추라기','십자매','거북','도마뱀','뱀','개구리,도롱뇽','물고기','새우','가재','게','거미','기타곤충','달팽이','문어','해파리','기타','기타','기타','기타','기타','기타'];
+				var petVo = data.petVo;
+				var path = "<%=request.getContextPath()%>";
+				
+				console.log(path);
+				console.log(petVo);
+				console.log(petVo.p_Name);
+				
+				var birth = new Date(petVo.p_birth);
+				
+				var s_birth = getFormatDate(birth);
+				
+				
+				$("#detailname").val(petVo.p_Name);
+				$("#detailbirth").val(s_birth);
+				$("#detailspecies").val(petVo.p_kind);
+				$("#detaillike").val(petVo.p_like);
+				$("#detailhate").val(petVo.p_hate);
+				$("#detailabout").val(petVo.p_about);
+				$("#detailimage").prop("src",path+"/resources/images/filemanager/pet/pet_profile/"+petVo.p_no+"/image.jpg");
+				
+				$("#view_category1").html("");
+				$("#view_category1").append($("<option>").val(petVo.class_no).text(class_list[petVo.class_no]));
+				
+				$("#view_category2").html("");
+				$("#view_category2").append($("<option>").val(petVo.species_no).text(species_list[petVo.species_no]));
+
+				
+				//------------------------------------------------------------------------------------------------
+				
+				$("#updatename").val(petVo.p_Name);
+				$("#updatebirth").val(s_birth);
+				$("#updatespecies").val(petVo.p_kind);
+				$("#updatelike").val(petVo.p_like);
+				$("#updatehate").val(petVo.p_hate);
+				$("#updateabout").val(petVo.p_about);
+				$("#updateimage").prop("src",path+"/resources/images/filemanager/pet/pet_profile/"+petVo.p_no+"/image.jpg");
+				
+				for(var i=0; i<7 ; i++){
+					$("#update_category1 option:eq("+i+")").removeProp("selected");
+				}
+				
+				$("#update_category1 option:eq("+petVo.class_no+")").prop("selected","selected");
+				
+				
+				if(petVo.class_no == 0){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('0').text("대분류를 선택해주세요."));
+				}else if(petVo.class_no == 1){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('1').text("개"));
+					$("#update_category2").append($("<option>").val('2').text("고양이"));
+					$("#update_category2").append($("<option>").val('3').text("패럿"));
+					$("#update_category2").append($("<option>").val('4').text("기니피그"));
+					$("#update_category2").append($("<option>").val('5').text("다람쥐,하늘다람쥐"));
+					$("#update_category2").append($("<option>").val('6').text("햄스터"));
+					$("#update_category2").append($("<option>").val('7').text("토끼"));
+					$("#update_category2").append($("<option>").val('8').text("고슴도치"));
+					$("#update_category2").append($("<option>").val('9').text("돼지"));
+					$("#update_category2").append($("<option>").val('10').text("말"));
+					$("#update_category2").append($("<option>").val('11').text("영장류"));
+					$("#update_category2").append($("<option>").val('12').text("원숭이"));
+					$("#update_category2").append($("<option>").val('13').text("여우"));
+					$("#update_category2").append($("<option>").val('14').text("너구리"));
+					$("#update_category2").append($("<option>").val('15').text("사자"));
+					$("#update_category2").append($("<option>").val('34').text("기타"));
+				}else if(petVo.class_no == 2){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('16').text("앵무새"));
+					$("#update_category2").append($("<option>").val('17').text("닭, 병아리"));
+					$("#update_category2").append($("<option>").val('18').text("오리"));
+					$("#update_category2").append($("<option>").val('19').text("메추라기"));
+					$("#update_category2").append($("<option>").val('20').text("십자매"));
+					$("#update_category2").append($("<option>").val('35').text("기타"));
+				}else if(petVo.class_no == 3){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('21').text("거북"));
+					$("#update_category2").append($("<option>").val('22').text("도마뱀"));
+					$("#update_category2").append($("<option>").val('23').text("뱀"));
+					$("#update_category2").append($("<option>").val('24').text("개구리, 도롱뇽"));
+					$("#update_category2").append($("<option>").val('36').text("기타"));
+				}else if(petVo.class_no == 4){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('25').text("물고기"));
+					$("#update_category2").append($("<option>").val('37').text("기타"));
+				}else if(petVo.class_no == 5){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('26').text("새우"));
+					$("#update_category2").append($("<option>").val('27').text("가재"));
+					$("#update_category2").append($("<option>").val('28').text("게"));
+					$("#update_category2").append($("<option>").val('29').text("거미"));
+					$("#update_category2").append($("<option>").val('38').text("기타"));
+				}else if(petVo.class_no == 6){
+					$("#update_category2").html(" ");
+					$("#update_category2").append($("<option>").val('31').text("달팽이"));
+					$("#update_category2").append($("<option>").val('32').text("문어"));
+					$("#update_category2").append($("<option>").val('33').text("해파리"));
+					$("#update_category2").append($("<option>").val('39').text("기타"));
+				}
+				
+				console.log(petVo.species_no);
+				var length = $("#update_category2 option").length;
+				console.log(length);
+				for(var i=0; i<length; i++){
+					if( $("#update_category2 option:eq("+i+")").val() == petVo.species_no ){
+						$("#update_category2 option:eq("+i+")").attr("selected","selected");
+					}
+				}
+				
+
+			},
+			error : function(){
+				console.log("fail");
+			}
+			
+		});
+		
+	}
 	
+	function getFormatDate(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;
+	}
 	
-}
 	
 </script>
 		 
@@ -285,7 +357,7 @@ function change_div(ele){
 			      <label for="introduce">ABOUT</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="introduce" name="introduce" placeholder="소개를 입력하세요.." style="height:200px"></textarea>
+			      <textarea id="about" name="about" placeholder="소개를 입력하세요.." style="height:200px"></textarea>
 			    </div>
 			  </div>
 			</div><!--/ container -->
@@ -316,7 +388,7 @@ function change_div(ele){
 					      		<label for="birth">BIRTH</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="detailbirth" name="detailbirth" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>" disabled="disabled" >
+					      		<input type="text" id="detailbirth" name="detailbirth" value="" disabled="disabled" >
 					        </div>
 					      </div>
 					      
@@ -326,51 +398,26 @@ function change_div(ele){
 					      	</div>
 					      	<div class="col-65">
 					      	  <select id="view_category1" name="view_category1" disabled="disabled">
-					      	  
-					      	  <c:choose>
-					      	  	<c:when test="${pet.class_no == 1 }">
-					        		<option value="1" selected="selected">포유류</option>
-					      	  	</c:when>
-					      	  	<c:when test="${pet.class_no == 2 }">
-					        		<option value="1" selected="selected">조류</option>
-					      	  	</c:when>
-					      	  	<c:when test="${pet.class_no == 3 }">
-					        		<option value="1" selected="selected">파충류,양서류</option>
-					      	  	</c:when>
-					      	  	<c:when test="${pet.class_no == 4 }">
-					        		<option value="1" selected="selected">어류</option>
-					      	  	</c:when>
-					      	  	<c:when test="${pet.class_no == 5 }">
-					        		<option value="1" selected="selected">절지류</option>
-					      	  	</c:when>
-					      	  	<c:when test="${pet.class_no == 6 }">
-					        		<option value="1" selected="selected">기타</option>
-					      	  	</c:when>
-					      	  </c:choose>
-					      	  
+	
 					      	  </select>
 					        </div>
 					  	  </div>
-					  	  
-					  	  
-
-					  	  
 					      <div class="row">
 					    	<div class="col-35">
 					      		<label for="view_category2">SPECIES</label>
 					      	</div>
 					      	<div class="col-65">
 					      	  <select id="view_category2" name="view_category2" disabled="disabled">
-					        	<option value="" selected="selected"></option>
+					      	  
 					      	  </select>
 					        </div>
 					  	  </div>
 					      
 					    </div> <!--/ col-65 -->
 					    
-						<div id ="detailimage" class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
+						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
 					     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
-					      <img src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile//image.jpg" style="width: 90%; height: 90%; border-radius: 70%;">
+					      <img id="detailimage" src="" style="width: 90%; height: 90%; border-radius: 70%;">
 					    </div> <!--/ col-35 -->
 					    
 					    
@@ -427,7 +474,7 @@ function change_div(ele){
 					      		<label for="name">NAME</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="name" name="name" value="" >
+					      		<input type="text" id="updatename" name="updatename" value="" >
 					        </div>
 					      </div>
 					      <div class="row">    
@@ -435,7 +482,7 @@ function change_div(ele){
 					      		<label for="birth">BIRTH</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="date" id="birth" name="birth" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>">
+					      		<input type="date" id="updatebirth" name="updatebirth" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>">
 					        </div>
 					      </div>
 					      <div class="row">
@@ -450,8 +497,7 @@ function change_div(ele){
 							    <option value="3">파충류,양서류</option>
 							    <option value="4">어류</option>
 							    <option value="5">절지류</option>
-							    <option value="6">기타</option>		
-					      	  </select>
+							    <option value="6">기타</option>						      	  </select>
 					        </div>
 					  	  </div>
 					      <div class="row">
@@ -460,14 +506,14 @@ function change_div(ele){
 					      	</div>
 					      	<div class="col-65">
 					      	  <select id="update_category2" name="update_category2" >
-					        	<option value="0">대분류를 선택해주세요</option>
+					      	  
 					      	  </select>
 					        </div>
 					  	  </div>
 					    </div> <!--/ col-65 -->
 						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
 					     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
-					      <img src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile//image.jpg" style="width: 95%; height: 95%">
+					      <img id="updateimage" src="" style="width: 90%; height: 90%; border-radius: 70%;">
 					    </div> <!--/ col-35 -->
 					  </div><!--/ row -->
 					  </form>
@@ -476,7 +522,7 @@ function change_div(ele){
 					      <label for="species">KIND</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="species" name="species" value="" >
+					      <input type="text" id="updatespecies" name="updatespecies" value="" >
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -484,7 +530,7 @@ function change_div(ele){
 					      <label for="like">LIKE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="like" name="like" value="">
+					      <input type="text" id="updatelike" name="updatelike" value="">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -492,7 +538,7 @@ function change_div(ele){
 					      <label for="hate">HATE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="hate" name="hate" value="">
+					      <input type="text" id="updatehate" name="updatehate" value="">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -500,7 +546,7 @@ function change_div(ele){
 					      <label for="introduce">ABOUT</label>
 					    </div>
 					    <div class="col-75">
-					      <textarea id="introduce" name="introduce" style="height:200px"></textarea>
+					      <textarea id="updateabout" name="updateabout" style="height:200px"></textarea>
 					    </div>
 					  </div>
 					</div><!--/ container -->

@@ -21,6 +21,9 @@
 		SELECT * FROM FEED WHERE ID = #{id}
 	</select>
 	
+	<select id="pet_selectOne" parameterType="int" resultType="petVo">
+		SELECT * FROM PET WHERE P_NO = #{p_no}
+	</select>
 	
 </mapper>
 

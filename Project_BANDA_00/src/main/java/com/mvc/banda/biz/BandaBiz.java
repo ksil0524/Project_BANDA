@@ -13,6 +13,7 @@ import com.mvc.banda.dao.NK_dao;
 import com.mvc.banda.dao.SI_dao;
 import com.mvc.banda.dao.UJ_dao;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.PetVo;
 
 @Service
 public class BandaBiz {
@@ -46,6 +47,12 @@ public class BandaBiz {
 	public AccountVo mypage_allselect(String id) {
 		
 		return si_dao.mypage_allselect(id);
+		
+	}
+	
+	public PetVo mypage_selectPet(int pno) {
+		
+		return si_dao.pet_selectOne(pno);
 		
 	}
 	
@@ -131,6 +138,10 @@ public class BandaBiz {
 		return hj_dao.map_autocompleteAjax(keyword);
 		
 	}
+
+
+
+
 	
 	
 	

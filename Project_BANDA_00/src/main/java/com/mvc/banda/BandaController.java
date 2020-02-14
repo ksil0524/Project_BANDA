@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.PetVo;
 
 @Controller
 public class BandaController {
@@ -44,7 +45,7 @@ public class BandaController {
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(60*60);
 		
-		String id = "bomi";
+		String id = "user06";
 		
 		AccountVo accvo = biz.mypage_allselect(id);
 		System.out.println(accvo);
@@ -53,6 +54,23 @@ public class BandaController {
 		System.out.println("mypage_allselect");
 		
 		return "temp/mypagePets";
+	}
+	
+	
+	
+	@RequestMapping("/change_pet.do")
+	@ResponseBody
+	public Map<String, PetVo> change_pet(@RequestBody int pno){
+		
+		System.out.println("change_pet");
+		
+		PetVo selectpet = biz.mypage_selectPet(pno);		
+		
+		
+		Map<String, PetVo> resMap = new HashMap<String, PetVo>();
+		resMap.put("petVo", selectpet);
+		
+		return resMap;
 	}
 	
 	

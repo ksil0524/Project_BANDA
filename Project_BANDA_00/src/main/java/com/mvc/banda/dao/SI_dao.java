@@ -84,6 +84,22 @@ public class SI_dao {
 	public List<FollowVo> follow_selectlist(String id){
 		return null;
 	}
+
+	public PetVo pet_selectOne(int p_no) {
+
+		PetVo pet = null;
+		
+		try {
+			
+			pet = sqlSession.selectOne(NAMESPACE+"pet_selectOne", p_no);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : pet_selectOne");
+			e.printStackTrace();	
+		}
+		
+		return pet;
+	}
 	
 	
 	

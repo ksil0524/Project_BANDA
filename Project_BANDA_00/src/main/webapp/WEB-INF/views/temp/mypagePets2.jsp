@@ -1,5 +1,3 @@
-<%@page import="com.mvc.banda.model.vo.PetVo"%>
-<%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.mvc.banda.model.vo.AccountVo"%>
@@ -36,10 +34,9 @@
 			      
 
 	 <script type="text/javascript">
-
+	 	
 	 	$(function(){
 	 		
-		var pettt = <%=accvo.getPet_list()%>;
 	 		
 	 		
 	 	});
@@ -130,59 +127,15 @@
 		                  -webkit-background-size: cover;
 		                  -moz-background-size: cover;
 		                  -o-background-size: cover;"
-		                  onclick="change_div(this.id)" id="${pet.p_no }">
-		           <div class="pet_no" id="pet_no" style="display: none">${pet.p_no }</div>
-		           <div class="story-body text-center">
+		                  onclick="#" id="storybox${i }">
+		          <div class="story-body text-center">
 		           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
 		           <h4>${pet.p_Name }</h4>
 		          </div>		  
 				</div>
 		 	</c:forEach>
 		 </c:if>
-<script type="text/javascript">
-	
-function change_div(ele){
-	
-	var pno = ele;
-	console.log(pno);
-	
-	$.ajax({
-		
-		type:"post",
-		url:"change_pet.do",
-		data:JSON.stringify(pno),
-		//data:{"pno" : pno},
-		contentType:"application/json",
-		dataType:"json",
-		success : function(data){
-			
-			console.log("success");
-			var petVo = data.petVo;
-			console.log(petVo);
-			console.log(petVo.p_Name);
-			
-			$("#detailname").val(petVo.p_Name);
-			$("#detailbirth").val(petVo.p_birth);
-			$("#detailspecies").val(petVo.p_kind);
-			$("#detaillike").val(petVo.p_like);
-			$("#detailhate").val(petVo.p_hate);
-			$("#detailabout").val(petVo.p_about);
-			$("#detailimage").html("");
-			$("#detailimage").append("<img>")
-			
-			
-			
-		},
-		error : function(){
-			console.log("fail");
-		}
-		
-	});
-	
-	
-}
-	
-</script>
+		 
 		 
 		</div><!--/ col-lg-3 -->
 	    <div class="col-lg-6">
@@ -292,11 +245,11 @@ function change_div(ele){
 			
 			
 <!-- testtest -->			
-<%
-	List<PetVo> pet_list = accvo.getPet_list();
-%>
+			<c:if test="<%=accvo.getPet_list() != null %>">
+				<c:forEach var="pet" items="<%=accvo.getPet_list() %>">
 				
 				<div>
+					
 						<!-- 저장된 프로필 보기 -->
 					<div id="mypetsDetail" class="cardbox" style="display:none; border:1px solid #F4F4F4; background-color: #F4F4F4; box-shadow: 2px 2px 2px 2px lightgray; height: 712px;">
 					  <form action="" method="">
@@ -307,7 +260,7 @@ function change_div(ele){
 					      		<label for="name">NAME</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="detailname" name="detailname" value="hi" disabled="disabled">
+					      		<input type="text" id="name" name="name" value="${pet.p_Name }" disabled="disabled">
 					        </div>
 					      </div>
 					      
@@ -316,7 +269,7 @@ function change_div(ele){
 					      		<label for="birth">BIRTH</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="detailbirth" name="detailbirth" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>" disabled="disabled" >
+					      		<input type="text" id="birth" name="birth" value="<fmt:formatDate value="${pet.p_birth }" pattern="yyyy-MM-dd"/>" disabled="disabled" >
 					        </div>
 					      </div>
 					      
@@ -361,16 +314,16 @@ function change_div(ele){
 					      	</div>
 					      	<div class="col-65">
 					      	  <select id="view_category2" name="view_category2" disabled="disabled">
-					        	<option value="" selected="selected"></option>
+					        	<option value="${pet.species_no }" selected="selected"></option>
 					      	  </select>
 					        </div>
 					  	  </div>
 					      
 					    </div> <!--/ col-65 -->
 					    
-						<div id ="detailimage" class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
+						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
 					     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
-					      <img src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile//image.jpg" style="width: 90%; height: 90%; border-radius: 70%;">
+					      <img src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile/${pet.p_no }/image.jpg" style="width: 90%; height: 90%; border-radius: 70%;">
 					    </div> <!--/ col-35 -->
 					    
 					    
@@ -382,7 +335,7 @@ function change_div(ele){
 					      <label for="species">KIND</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="detailspecies" name="detailspecies" value="" disabled="disabled">
+					      <input type="text" id="species" name="species" value="${pet.p_kind }" disabled="disabled">
 					    </div>
 					  </div> 
 					  
@@ -391,7 +344,7 @@ function change_div(ele){
 					      <label for="like">LIKE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="detaillike" name="detaillike" value="" disabled="disabled">
+					      <input type="text" id="like" name="like" value="${pet.p_like }" disabled="disabled">
 					    </div>
 					  </div> 
 					  
@@ -400,7 +353,7 @@ function change_div(ele){
 					      <label for="hate">HATE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="detailhate" name="detailhate" value="" disabled="disabled">
+					      <input type="text" id="hate" name="hate" value="${pet.p_hate }" disabled="disabled">
 					    </div>
 					  </div> 
 					  
@@ -409,7 +362,7 @@ function change_div(ele){
 					      <label for="introduce">ABOUT</label>
 					    </div>
 					    <div class="col-75">
-					      <textarea id="detailabout" name="detailabout" style="height:200px" disabled="disabled"></textarea>
+					      <textarea id="introduce" name="introduce" style="height:200px" disabled="disabled">${pet.p_about }</textarea>
 					    </div>
 					  </div>
 					  
@@ -427,7 +380,7 @@ function change_div(ele){
 					      		<label for="name">NAME</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="name" name="name" value="" >
+					      		<input type="text" id="name" name="name" value="${pet.p_Name }" >
 					        </div>
 					      </div>
 					      <div class="row">    
@@ -435,7 +388,7 @@ function change_div(ele){
 					      		<label for="birth">BIRTH</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="date" id="birth" name="birth" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>">
+					      		<input type="date" id="birth" name="birth" value="<fmt:formatDate value="${pet.p_birth }" pattern="yyyy-MM-dd"/>">
 					        </div>
 					      </div>
 					      <div class="row">
@@ -467,7 +420,7 @@ function change_div(ele){
 					    </div> <!--/ col-65 -->
 						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
 					     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
-					      <img src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile//image.jpg" style="width: 95%; height: 95%">
+					      <img src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile/${pet.p_no }/image.jpg" style="width: 95%; height: 95%">
 					    </div> <!--/ col-35 -->
 					  </div><!--/ row -->
 					  </form>
@@ -476,7 +429,7 @@ function change_div(ele){
 					      <label for="species">KIND</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="species" name="species" value="" >
+					      <input type="text" id="species" name="species" value="${pet.p_kind }" >
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -484,7 +437,7 @@ function change_div(ele){
 					      <label for="like">LIKE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="like" name="like" value="">
+					      <input type="text" id="like" name="like" value="${pet.p_like }">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -492,7 +445,7 @@ function change_div(ele){
 					      <label for="hate">HATE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="hate" name="hate" value="">
+					      <input type="text" id="hate" name="hate" value="${pet.p_hate }">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -500,7 +453,7 @@ function change_div(ele){
 					      <label for="introduce">ABOUT</label>
 					    </div>
 					    <div class="col-75">
-					      <textarea id="introduce" name="introduce" style="height:200px"></textarea>
+					      <textarea id="introduce" name="introduce" style="height:200px">${pet.p_about }</textarea>
 					    </div>
 					  </div>
 					</div><!--/ container -->
@@ -512,6 +465,9 @@ function change_div(ele){
 					
 				</div>
 				
+				</c:forEach>
+
+			</c:if>
 			
 			
 			
@@ -634,6 +590,7 @@ function change_div(ele){
     <!-- ==============================================
 	HEADER CIRCLE Scripts
 	=============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->

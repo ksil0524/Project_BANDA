@@ -66,10 +66,10 @@
 			
 		AccountVo main_vo = (AccountVo)request.getAttribute("fvo");
 
-
+/*
 	if(session.getAttribute("vo1") != null){
 		AccountVo main_vo = (AccountVo)request.getAttribute("vo1");
-
+*/
 		//System.out.println(main_vo);	
 		
 		feed_list = (List)main_vo.getFeed_list();

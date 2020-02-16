@@ -1,9 +1,30 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+
+     <!-- ==============================================
+	 Scripts
+	 =============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	%>	  	  
+		
+
 
 </head>
 <body>
@@ -107,10 +128,51 @@
 	  <div class="container-fluid">
 	   <div class="row">
 	   
+	   <script type="text/javascript">
+	   
+	  		function readURL3(input) {
+		   	 if (input.files && input.files[0]) {
+		   	  var reader = new FileReader();
+							   	  
+		   	  reader.onload = function (e) {
+		   		  $('#profile_img').attr('src', e.target.result);  
+		   		  $("#profile_img").attr('src', e.target.result);
+		
+		   	  }
+		   	  
+		   	  reader.readAsDataURL(input.files[0]);
+		   	  }
+		   	}	
+	   
+
+	  		function changeprofileimg(){
+	  			
+	   			$("#profile_img").click();
+	   			
+	   		};
+	   			
+	   			
+	   		function changeprofileimginp(){
+	   				
+	   			
+	   			
+	   			
+	   			readURL3(this);
+	   				
+	   		};
+	   			
+
+	   </script>
+	   
+	   
+	   <form:form action="mypage_pet_update.do" method="post" enctype="multipart/form-data">
+	   	<input type="file" id="profile_img" name="profile_img" src="" style="display: none;" onchange="changeprofileimginp();" accept=".jpg .JPG">
+	   </form:form>
+	   
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-		     <a href="#"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/13.jpeg" alt="Image"></a>
+		     <a href="changeprofileimg();"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image"></a>
 		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
@@ -145,10 +207,10 @@
 	   <div class="row">
 	    <div class="col-lg-12">
 		 
-          <div class="details-box row">
+          <div class="details-box row" style="margin-bottom: 200px;">
 		   <div class="col-lg-9" style="width: 1140px;">
            <div class="content-box">
-		     <h4 style="margin-bottom: 50px;margin-top: 30px;text-align: center;">ID.   Anna Morgan <i class="fa fa-check"></i></h4>
+		     <h4 style="margin-bottom: 50px;margin-top: 30px;text-align: center;">ID.   <%=accvo.getId() %> <i class="fa fa-check"></i></h4>
              <table id="tprofile">
              	<col width="300px;">
              	<col width="300px;">
@@ -157,7 +219,7 @@
             			<p style="font-size: 20pt;">EMAIL</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag">KSIL0524@NAVER.COM</span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><%=accvo.getEmail() %></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -165,7 +227,7 @@
             			<p style="font-size: 20pt;">PHONE</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag">010-1234-1234</span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><%=accvo.getPhone() %></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -173,7 +235,7 @@
             			<p style="font-size: 20pt;">PASSWORD</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag">**********</span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><%=accvo.getPassword() %></span><p>
              		</td>
              	</tr>
              </table>
@@ -187,7 +249,7 @@
             			<p style="font-size: 20pt;">EMAIL</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" name="#" value="KSIL0524@NAVER.COM"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" name="#" value="<%=accvo.getEmail() %>"></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -195,7 +257,7 @@
             			<p style="font-size: 20pt;">PHONE</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" name="#" value="010-1234-1234"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" name="#" value="<%=accvo.getPhone() %>"></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -203,7 +265,7 @@
             			<p style="font-size: 20pt;">PASSWORD</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" name="#" value="12341234"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" name="#" value=""></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -211,7 +273,7 @@
             			<p style="font-size: 20pt;">PASSWORD CHECK</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" name="#" value="12341234"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" name="#" value=""></span><p>
              		</td>
              	</tr>
              </table>
@@ -224,7 +286,7 @@
            </div><!--/ media -->
 		   </div> 
 		   <div class="col-lg-3" style="width: 1140px; margin-top: 30px;">
-           <div class="follow-box" style="text-align: center;">
+           <div class="follow-box" style="text-align: center; margin-top: 50px; margin-bottom: 70px;">
 		    <button class="kafe-btn kafe-btn-mint" onclick="conform();"><i class="fa fa-check"></i>수   정</button>
 		    <button class="kafe-btn kafe-btn-mint"><i class="fa fa-check"></i>회원 탈퇴</button>
            </div><!--/ dropdown -->
@@ -238,13 +300,7 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 		   
-     <!-- ==============================================
-	 Scripts
-	 =============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+
 	
     <!-- ==============================================
 	HEADER CIRCLE Scripts

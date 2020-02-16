@@ -2,7 +2,13 @@
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,13 +24,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.PetVo;
 
 @Controller
 public class BandaController {
@@ -44,7 +54,7 @@ public class BandaController {
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(60*60);
 		
-		String id = "bomi";
+		String id = "user06";
 		
 		AccountVo accvo = biz.mypage_allselect(id);
 		System.out.println(accvo);
@@ -54,6 +64,185 @@ public class BandaController {
 		
 		return "temp/mypagePets";
 	}
+	
+	
+	
+	@RequestMapping("/change_pet.do")
+	@ResponseBody
+	public Map<String, PetVo> change_pet(@RequestBody int pno){
+		
+		System.out.println("change_pet");
+		
+		PetVo selectpet = biz.mypage_selectPet(pno);		
+				
+		Map<String, PetVo> resMap = new HashMap<String, PetVo>();
+		resMap.put("petVo", selectpet);
+		
+		return resMap;
+	}
+	
+	@RequestMapping(value = "/mypage_pet_update.do", method=RequestMethod.POST)
+	public String mypage_pet_update(HttpServletRequest request, Model model, PetVo petVo, @RequestParam String p_birthtmp, MultipartFile updateimgInp) throws IllegalStateException, IOException {
+		
+		System.out.println("mypage_pet_update");
+		
+		Date date = null;
+		
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(p_birthtmp);
+			System.out.println(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		petVo.setP_birth(date);
+		
+		int res = biz.mypage_pet_update(petVo);
+		
+		///////////////////////////////////////////////
+		
+		String filename = updateimgInp.getOriginalFilename();
+		
+		System.out.println("filename : "+filename);
+		
+		//파일을 새로 업로드 하지 않았다면 바로 return
+		if(filename == "") {
+			return "redirect:mypage_allselect.do";
+		}
+			
+		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+petVo.getP_no());
+		
+		System.out.println(savepath);
+		
+		File updateimg = new File(savepath+"\\"+filename);
+		
+		updateimgInp.transferTo(updateimg);
+		
+		//파일 이름 바꿔주기 작업
+		//image.jpg 가져오기
+		File imagefile = new File(savepath+"\\image.jpg");
+		//image.jpg 삭제
+		imagefile.delete();
+		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
+		updateimg.renameTo(imagefile);
+		//업로드한 이미지 삭제
+		updateimg.delete();
+		
+		return "redirect:mypage_allselect.do";
+	}
+	
+	/*
+	 * 파일 관리 참고용
+	 File folder = new File(newpath);
+
+         if (!folder.exists()) {
+            try{
+                folder.mkdir(); //폴더 생성합니다.
+                System.out.println("폴더가 생성되었습니다.");
+                 } 
+                 catch(Exception e){
+                e.getStackTrace();
+            }        
+               }else {
+            System.out.println("이미 폴더가 생성되어 있습니다.");
+         }
+	 */
+	
+	
+	@RequestMapping(value="/mypage_pet_insert.do", method = RequestMethod.POST)
+	public String mypage_pet_insert(HttpServletRequest request, Model model, PetVo petVo, @RequestParam String p_birthtmp, MultipartFile insertimgInp) throws IllegalStateException, IOException {
+		
+		System.out.println("mypage_pet_insert");
+		
+		Date date = null;
+		
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(p_birthtmp);
+			System.out.println(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		petVo.setP_birth(date);
+		
+		System.out.println(petVo);
+		
+		int res = biz.mypage_pet_insert(petVo);
+		
+		////////////////////////////////////////////////////
+		
+		if(res > 0) {
+			
+			int lastpno = biz.getLastPetSeq();
+			
+			System.out.println("lastpno : "+lastpno);
+			
+			PetVo vo = biz.mypage_selectPet(lastpno);
+			
+			System.out.println("vo : "+vo);
+			
+			String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+vo.getP_no());
+			
+			System.out.println("savepath : "+savepath);
+			
+			File folder = new File(savepath);
+
+	         if (!folder.exists()) {
+	            try{
+	                folder.mkdir(); //폴더 생성합니다.
+	                System.out.println("폴더가 생성되었습니다.");
+	                 } 
+	                 catch(Exception e){
+	                e.getStackTrace();
+	            }        
+	               }else {
+	            System.out.println("이미 폴더가 생성되어 있습니다.");
+	         }
+
+	         String filename = insertimgInp.getOriginalFilename();
+	         
+	         File insertimg = new File(savepath+"\\"+filename);
+	         insertimgInp.transferTo(insertimg);
+	         
+	       //파일 이름 바꿔주기 작업
+	 		//image.jpg 만들긴
+	 		File imagefile = new File(savepath+"\\image.jpg");
+	 		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
+	 		insertimg.renameTo(imagefile);
+	 		//업로드한 이미지 삭제
+	 		insertimg.delete();
+
+	 		
+	 		return "redirect:mypage_allselect.do";
+	 		
+	 		
+		}else {
+			
+			System.out.println("error : controller - mypage_pet_insert");
+			
+	 		return "redirect:mypage_allselect.do";
+
+		}
+		
+	}
+	
+	@RequestMapping("/mypage_accountpage.do")
+	public String mypage_accountpage(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(60*60);
+		
+		String id = "user06";
+		
+		AccountVo accvo = biz.mypage_allselect(id);
+		System.out.println(accvo);
+		
+		session.setAttribute("accvo", accvo);
+		System.out.println("mypage_allselect");
+		
+		return "temp/mypageAccount";
+	}
+	
 	
 	
 	

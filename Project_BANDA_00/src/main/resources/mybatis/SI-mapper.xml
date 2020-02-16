@@ -21,6 +21,24 @@
 		SELECT * FROM FEED WHERE ID = #{id}
 	</select>
 	
+	<select id="pet_selectOne" parameterType="int" resultType="petVo">
+		SELECT * FROM PET WHERE P_NO = #{p_no}
+	</select>
+	
+	<update id="pet_update" parameterType="petVo">
+		UPDATE PET SET 
+		CLASS_NO = #{class_no}, SPECIES_NO = #{species_no}, P_NAME = #{p_Name}, P_KIND = #{p_kind}, 
+		P_BIRTH = #{p_birth}, P_LIKE = #{p_like}, P_HATE = #{p_hate}, P_ABOUT = #{p_about} 
+		WHERE P_NO = #{p_no}
+	</update>
+	
+	<insert id="pet_insert" parameterType="petVo">
+		INSERT INTO PET VALUES(PET_SEQ.NEXTVAL, #{class_no}, #{species_no}, #{id}, #{p_Name}, #{p_kind}, #{p_birth}, #{p_character}, #{p_like}, #{p_hate}, #{p_about})
+	</insert>
+	
+	<select id="getLastPetSeq" resultType="_int">
+		SELECT LAST_NUMBER FROM USER_SEQUENCES  WHERE SEQUENCE_NAME = 'PET_SEQ'
+	</select>
 	
 </mapper>
 

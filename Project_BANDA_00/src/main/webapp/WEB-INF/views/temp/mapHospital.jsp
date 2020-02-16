@@ -76,11 +76,9 @@
 										<option value="tt2">tt2</option>
 									
 								</select> -->
-								<div id="cateOne" class="col-lg-3 col-xs-12" style="text-align: left;">
-								  <div class="custom-select">
+								<div id="cateOne" class="custom-select col-lg-3 col-xs-12" style="text-align: left;">
 								  <select id="city_selbox" class="w3-select w3-border" name="city">
 								  </select>
-								  </div>
 								</div>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
 								<select id="dist_selbox" class="w3-select w3-border" name="district">

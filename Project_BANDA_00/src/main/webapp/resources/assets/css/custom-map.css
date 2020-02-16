@@ -182,7 +182,7 @@
 }
 
 .custom-select select {
-  /* display: none;  */
+  display: none; 
 }
 
 .select-selected {

@@ -7,6 +7,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +33,24 @@
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	%>	  	  
+	
+	<script type="text/javascript">
+			   			  	
+	    function readURL2(input) {
+	   	 if (input.files && input.files[0]) {
+	   	  var reader = new FileReader();
+						   	  
+	   	  reader.onload = function (e) {
+	   		  $('#updateimage').attr('src', e.target.result);  
+	   		  $("#updateimgInp").attr('src', e.target.result);
+	
+	   	  }
+	   	  
+	   	  reader.readAsDataURL(input.files[0]);
+	   	  }
+	   	}
+			   			  	
+	</script>
 	
 	
 </head>
@@ -155,6 +175,8 @@
 				
 				//------------------------------------------------------------------------------------------------
 				
+				
+				$("#updatepno").val(petVo.p_no);
 				$("#updatename").val(petVo.p_Name);
 				$("#updatebirth").val(s_birth);
 				$("#updatespecies").val(petVo.p_kind);
@@ -162,6 +184,8 @@
 				$("#updatehate").val(petVo.p_hate);
 				$("#updateabout").val(petVo.p_about);
 				$("#updateimage").prop("src",path+"/resources/images/filemanager/pet/pet_profile/"+petVo.p_no+"/image.jpg");
+				//$("#updateimgInp").val("image.jpg");
+				$("#updateimgInp").prop("src",path+"/resources/images/filemanager/pet/pet_profile/"+petVo.p_no+"/image.jpg");
 				
 				for(var i=0; i<7 ; i++){
 					$("#update_category1 option:eq("+i+")").removeProp("selected");
@@ -259,18 +283,19 @@
 		</div><!--/ col-lg-3 -->
 	    <div class="col-lg-6">
 			
+			<form:form action="mypage_pet_insert.do" method="post" enctype="multipart/form-data" modelAttribute="petVo">				
 			<div id="mypetsInsert" class="cardbox" style="border:1px solid #F4F4F4; background-color: #F4F4F4; box-shadow: 2px 2px 2px 2px lightgray; height: 712px;">
-			  <form action="" method="">
-			  
+			  <input type="hidden" value="<%=accvo.getId()%>" name="id">
+			  <input type="hidden" value="-" name="p_character" id="character">
+					  
 			  <div class="row">
-			    
 			    <div class="col-65">
 			      <div class="row">    
 			      	<div class="col-35">
 			      		<label for="name">NAME</label>
 			    	</div>
 			   		<div class="col-65">
-			      		<input type="text" id="name" name="name" placeholder="이름을 입력하세요..">
+			      		<input type="text" id="name" name="p_Name" placeholder="이름을 입력하세요..">
 			        </div>
 			      </div>
 			      
@@ -279,7 +304,7 @@
 			      		<label for="birth">BIRTH</label>
 			    	</div>
 			   		<div class="col-65">
-			      		<input type="date" id="birth" name="birth" placeholder="이름을 입력하세요..">
+			      		<input type="date" id="birth" name="p_birthtmp" placeholder="이름을 입력하세요..">
 			        </div>
 			      </div>
 			      
@@ -288,7 +313,7 @@
 			      		<label for="category1">CLASS</label>
 			      	</div>
 			      	<div class="col-65">
-			      	  <select id="category1" name="category1">
+			      	  <select id="category1" name="class_no">
 			      	  	<option value="0">선택해주세요</option>
 			        	<option value="1">포유류</option>
 					    <option value="2">조류</option>
@@ -307,7 +332,7 @@
 			      		<label for="category2">SPECIES</label>
 			      	</div>
 			      	<div class="col-65">
-			      	  <select id="category2" name="category2">
+			      	  <select id="category2" name="species_no">
 					    <option value="0" selected="selected">대분류를 선택해주세요</option>
 			      	  </select>
 			        </div>
@@ -316,21 +341,20 @@
 			    </div> <!--/ col-65 -->
 			    
 				<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
-			      <input type="file" id="imgInp" style="display: none;">
+			      <input type="file" id="imgInp" name="insertimgInp" style="display: none;">
 			     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
 			      <img id="image_section" style="width: 90%; height: 90%; border-radius: 70%;" src="<%=request.getContextPath() %>/resources/temp/assets/img/icon/profile_default.jpg" alt="user">
 			    </div> <!--/ col-35 -->
 			    
 			    
 			  </div><!--/ row -->
-			  </form>
 			
 			  <div class="row">
 			    <div class="col-25">
 			      <label for="species">KIND</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="species" name="species" placeholder="종을 입력하세요..">
+			      <input type="text" id="species" name="p_kind" placeholder="종을 입력하세요..">
 			    </div>
 			  </div> 
 			  
@@ -339,7 +363,7 @@
 			      <label for="like">LIKE</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="like" name="like" placeholder="좋아하는 것을 입력하세요..">
+			      <input type="text" id="like" name="p_like" placeholder="좋아하는 것을 입력하세요..">
 			    </div>
 			  </div> 
 			  
@@ -348,7 +372,7 @@
 			      <label for="hate">HATE</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="hate" name="hate" placeholder="싫어하는 것을 입력하세요..">
+			      <input type="text" id="hate" name="p_hate" placeholder="싫어하는 것을 입력하세요..">
 			    </div>
 			  </div> 
 			  
@@ -357,10 +381,14 @@
 			      <label for="introduce">ABOUT</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="about" name="about" placeholder="소개를 입력하세요.." style="height:200px"></textarea>
+			      <textarea id="about" name="p_about" placeholder="소개를 입력하세요.." style="height:200px"></textarea>
 			    </div>
 			  </div>
 			</div><!--/ container -->
+			  <div id="subBtn" class="row btns">
+				<input id="submitBtn" type="submit" value="저장">
+			  </div><!--/ row btns -->	
+			 </form:form>			  
 			
 			
 <!-- testtest -->			
@@ -371,7 +399,6 @@
 				<div>
 						<!-- 저장된 프로필 보기 -->
 					<div id="mypetsDetail" class="cardbox" style="display:none; border:1px solid #F4F4F4; background-color: #F4F4F4; box-shadow: 2px 2px 2px 2px lightgray; height: 712px;">
-					  <form action="" method="">
 					  <div class="row">
 					    <div class="col-65">
 					      <div class="row">    
@@ -416,13 +443,11 @@
 					    </div> <!--/ col-65 -->
 					    
 						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
-					     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
 					      <img id="detailimage" src="" style="width: 90%; height: 90%; border-radius: 70%;">
 					    </div> <!--/ col-35 -->
 					    
 					    
 					  </div><!--/ row -->
-					  </form>
 					
 					  <div class="row">
 					    <div class="col-25">
@@ -465,8 +490,12 @@
 					
 					
 					<!-- 저장된 프로필  수정-->
+					<form:form action="mypage_pet_update.do" method="post" enctype="multipart/form-data" modelAttribute="petVo">
 					<div id="mypetsUpdate" class="cardbox" style="display:none; border:1px solid #F4F4F4; background-color: #F4F4F4; box-shadow: 2px 2px 2px 2px lightgray; height: 712px;">
-					  <form action="" method="">
+					  <input type="hidden" value="" name="p_no" id="updatepno">
+					  <input type="hidden" value="<%=accvo.getId()%>" name="id">
+					  <input type="hidden" value="-" name="p_character" id="updatepcharacter">
+					  
 					  <div class="row">
 					    <div class="col-65">
 					      <div class="row">    
@@ -474,7 +503,7 @@
 					      		<label for="name">NAME</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="updatename" name="updatename" value="" >
+					      		<input type="text" id="updatename" name="p_Name" value="" >
 					        </div>
 					      </div>
 					      <div class="row">    
@@ -482,7 +511,7 @@
 					      		<label for="birth">BIRTH</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="date" id="updatebirth" name="updatebirth" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>">
+					      		<input type="date" id="updatebirth" name="p_birthtmp" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>">
 					        </div>
 					      </div>
 					      <div class="row">
@@ -490,14 +519,15 @@
 					      		<label for="update_category1">CLASS</label>
 					      	</div>
 					      	<div class="col-65">
-					      	  <select id="update_category1" name="update_category1" >
+					      	  <select id="update_category1" name="class_no" >
 					      	  	<option value="0">선택해주세요</option>
 					        	<option value="1">포유류</option>
 							    <option value="2">조류</option>
 							    <option value="3">파충류,양서류</option>
 							    <option value="4">어류</option>
 							    <option value="5">절지류</option>
-							    <option value="6">기타</option>						      	  </select>
+							    <option value="6">기타</option>						      	  
+							   </select>
 					        </div>
 					  	  </div>
 					      <div class="row">
@@ -505,24 +535,24 @@
 					      		<label for="update_category2">SPECIES</label>
 					      	</div>
 					      	<div class="col-65">
-					      	  <select id="update_category2" name="update_category2" >
+					      	  <select id="update_category2" name="species_no" >
 					      	  
 					      	  </select>
 					        </div>
 					  	  </div>
+					      	  <p align="right" style="font-size: 8pt">*이미지의 확장자는 .jpg/.JPG 만 가능합니다. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </p>
 					    </div> <!--/ col-65 -->
 						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
-					     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
+			   			  <input type="file" id="updateimgInp" name="updateimgInp" src="" style="display: none;" onchange="readURL2(this);" accept=".jpg .JPG">
 					      <img id="updateimage" src="" style="width: 90%; height: 90%; border-radius: 70%;">
 					    </div> <!--/ col-35 -->
 					  </div><!--/ row -->
-					  </form>
 					  <div class="row">
 					    <div class="col-25">
 					      <label for="species">KIND</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="updatespecies" name="updatespecies" value="" >
+					      <input type="text" id="updatespecies" name="p_kind" value="" >
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -530,7 +560,7 @@
 					      <label for="like">LIKE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="updatelike" name="updatelike" value="">
+					      <input type="text" id="updatelike" name=p_like value="">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -538,7 +568,7 @@
 					      <label for="hate">HATE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="updatehate" name="updatehate" value="">
+					      <input type="text" id="updatehate" name="p_hate" value="">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -546,16 +576,18 @@
 					      <label for="introduce">ABOUT</label>
 					    </div>
 					    <div class="col-75">
-					      <textarea id="updateabout" name="updateabout" style="height:200px"></textarea>
+					      <textarea id="updateabout" name="p_about" style="height:200px"></textarea>
 					    </div>
 					  </div>
 					</div><!--/ container -->
-					
 					<div id="subBtn" class="row btns">
-					    <input id="submitBtn" type="submit" value="저장">
+					    <!-- 
+					     <input id="submitBtn" type="submit" value="저장">
+					     -->
 					    <input id="updateBtn" type="button" value="수정">
 					 </div><!--/ row btns -->	
-					
+				</form:form>
+				
 				</div>
 				
 			

@@ -100,6 +100,58 @@ public class SI_dao {
 		
 		return pet;
 	}
+
+	
+	
+	public int pet_update(PetVo petVo) {
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.update(NAMESPACE+"pet_update",petVo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : pet_update");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
+
+	public int pet_insert(PetVo petVo) {
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.update(NAMESPACE+"pet_insert",petVo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : pet_insert");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
+
+	public int getLastPetSeq() {
+
+		int lastpseq = 0;
+		
+		try {
+			
+			lastpseq = sqlSession.selectOne(NAMESPACE+"getLastPetSeq");
+			
+		} catch (Exception e) {
+			System.out.println("[error] : getLastPetSeq");
+			e.printStackTrace();			
+		}
+		
+		lastpseq--;
+		
+		return lastpseq;
+	}
 	
 	
 	

@@ -3,30 +3,66 @@
 $(function() {
 	
 	$("#updateBtn").hide();
-    //이미지 클릭시 업로드창 실행
+
+	//이미지 클릭시 업로드창 실행 (insert)
+	
     $("#image_section").click(function() {
     	
         $("#imgInp").click();
     })   
     
-    function readURL(input) {
-    	 if (input.files && input.files[0]) {
-    	  var reader = new FileReader();
-    	  
-    	  reader.onload = function (e) {
-    	   $('#image_section').attr('src', e.target.result);  
-    	  }
-    	  
-    	  reader.readAsDataURL(input.files[0]);
-    	  }
-    	}
-    	  
-    
+            
     $("#imgInp").change(function(){
     	readURL(this);
     });
     
-    	
+    
+    function readURL(input) {
+    	if (input.files && input.files[0]) {
+    		var reader = new FileReader();
+    		
+    		reader.onload = function (e) {
+    			$('#image_section').attr('src', e.target.result);  
+    			$("#imgInp").attr('src', e.target.result);
+    		}
+    		
+    		reader.readAsDataURL(input.files[0]);
+    	}
+    }
+    
+    
+    ////////////////////////////////////////////
+	//이미지 클릭시 업로드창 실행 (update)
+    
+    $("#updateimage").click(function(){
+    	$("#updateimgInp").click();
+    })
+
+    /*
+    $("#updateimginp").change(function(){
+    	readURL2(this);
+    });
+
+    
+    function readURL2(input) {
+   	 if (input.files && input.files[0]) {
+   	  var reader = new FileReader();
+   	  
+   	  reader.onload = function (e) {
+   		  $('#updateimage').attr('src', e.target.result);  
+   		  $("#updateimgInp").attr('src', e.target.result);
+
+   	  }
+   	  
+   	  reader.readAsDataURL(input.files[0]);
+   	  }
+   	}
+    
+     */
+    
+    //////////////////////////////////////////////////////////
+    
+    
     $(".mypetInsert").click(function(){
     	$("#updateBtn").hide();
     	$("#mypetsUpdate").hide();

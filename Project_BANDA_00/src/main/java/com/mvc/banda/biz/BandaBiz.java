@@ -56,6 +56,19 @@ public class BandaBiz {
 		
 	}
 	
+	public int mypage_pet_update(PetVo petVo) {
+		return si_dao.pet_update(petVo);
+	}
+	
+	
+	public int mypage_pet_insert(PetVo petVo) {
+		return si_dao.pet_insert(petVo);
+	}
+	
+	
+	public int getLastPetSeq() {
+		return si_dao.getLastPetSeq();
+	}
 	
 	
 	// < 김성일 파트  끝 > 
@@ -138,6 +151,11 @@ public class BandaBiz {
 		return hj_dao.map_autocompleteAjax(keyword);
 		
 	}
+
+
+
+
+
 
 
 

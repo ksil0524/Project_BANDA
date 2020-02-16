@@ -16,6 +16,7 @@ import com.mvc.banda.model.vo.AccountVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
+import com.mvc.banda.model.vo.BoardVo;
 
 @Service
 public class BandaBiz {
@@ -179,7 +180,30 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 하나경 파트  시작 >  
 	
+	//무료나눔 공지목록 출력
+	public List<BoardVo> selectListShNotice() {
+		return nk_dao.selectListShNotice();
+	}
+
+	//무료나눔 게시글목록 출력
+	public List<BoardVo> selectListSh() {
+		return nk_dao.selectListSh();
+	}
+
+	//물물교환 공지목록 출력
+	public List<BoardVo> selectListExNotice() {
+		return nk_dao.selectListExNotice();
+	}
 	
+	//물물교환 게시글목록 출력
+	public List<BoardVo> selectListEx() {
+		return nk_dao.selectListEx();
+	}
+	
+	//게시글 상세 보기
+	public BoardVo selectOneBoard(int board_no) {
+		return nk_dao.selectOneBoard(board_no);
+	}	
 	
 	
 	

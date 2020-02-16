@@ -39,6 +39,12 @@
 	
 	<br><a href="index_go.do">real_index</a><!-- 주예 -->
 
+	<!-- 나경 -->
+	<br>
+	<a href="boardListExchange_test.do">boardListExchange TEST</a>	
+	<br>
+	<a href="boardListFree_test.do">boardListFree TEST</a>	
+	<!--/ 나경 -->
 	
 </body>
 </html>

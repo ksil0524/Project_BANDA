@@ -20,7 +20,7 @@ function loginChk(){
 	
 	$.ajax({
 		
-		url : "jy_login.do",
+		url : "login.do",
 		type : "post",
 		data : JSON.stringify(login_set),
 		contentType: "application/json",
@@ -39,6 +39,7 @@ function loginChk(){
 			
 			} else {
 				$("#loginchk").css("display","block");
+				
 				return;
 			}
 			
@@ -58,7 +59,7 @@ function logout(){
 	
 	$.ajax({
 		
-		url : "jy_logout.do",
+		url : "logout.do",
 		type : "post",
 		success : function(data){
 			
@@ -91,7 +92,7 @@ function joinChk(){
 	alert("email: " + email + "ID: " + id+  "pw: " + pw + "phone:" + phone);
 	
 	/*정규식 및 데이터 입력 체크 - login 담당*/
-	if(email != "" && id != "" && pw != "" && phone != ""){
+	if(email == null || email != "" ||id == null|| id == "" || pw == null||pw != "" ||phone ==null || phone != ""){
 		close();
 	}else{
 		alert("정보를 모두 입력하세요.");

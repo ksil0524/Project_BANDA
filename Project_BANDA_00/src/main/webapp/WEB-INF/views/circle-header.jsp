@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 
+
 			<header id="header">
 				<div class="inner" style="position:relative;">
 					<div class="closeBtn">
@@ -38,7 +39,7 @@
                                 </div>
                                 <div class="error"></div>
                                 <div class="form loginBox">
-                                    <form id="loginForm" method="" action="post" accept-charset="UTF-8">
+                                    <form id="loginForm" method="" action="login.do" accept-charset="UTF-8">
                                     <input id="login-email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="login-password" class="form-control" type="password" placeholder="Password" name="password">
                                     <input id="login-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="loginChk()">
@@ -56,7 +57,7 @@
                                 </div>
                                 <div class="error"></div> 
                                 <div class="form loginBox">
-                                    <form id="joinForm" method="" action="post" accept-charset="UTF-8">
+                                    <form id="joinForm" method="" action="register.do" accept-charset="UTF-8">
                                     <input id="email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="id" class="form-control" type="text" placeholder="Id" name="id">
                                     <input id="password" class="form-control" type="password" placeholder="Password" name="password">

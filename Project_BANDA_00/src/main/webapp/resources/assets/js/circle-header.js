@@ -4,7 +4,7 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-var isLogin = 1;
+var isLogin = 0;
 
 
 
@@ -13,18 +13,27 @@ function loginChk(){
 	var email = $("#login-email").val().trim();
 	var pw = $("#login-password").val().trim();
 	
-	//alert("email: " + email + "  pw: " + pw);
+	alert("email: " + email + "  pw: " + pw);
 	
 	var login_set = {
 			"id":email,
 			"password":pw			
 	};
 	
-	console.log(login_set);
+	//console.log(login_set);
+	
+	//추가
+
+	if(email == null || email == ""||pw == null || pw == ""){
+		
+		alert("ID 및 PW를 확인해 주세요");
+		
+	}else{
+		
 	
 	$.ajax({
 		
-		url : "jy_login.do",
+		url : "login.do",
 		type : "post",
 		data : JSON.stringify(login_set),
 		contentType: "application/json",
@@ -34,6 +43,7 @@ function loginChk(){
 			if(msg.chk){
 				
 			isLogin = 1;
+			
 			$(".closeBtn").hide();
 			$("#logincontent").hide();
 			$("#header").toggleClass('hide');
@@ -41,8 +51,13 @@ function loginChk(){
 			$("#loginchk").css("display","none");
 			location.href = "index.jsp";
 			
+			
+			
 			} else {
 				$("#loginchk").css("display","block");
+				
+				alert("잘못입력");
+				
 				return;
 			}
 			
@@ -56,13 +71,17 @@ function loginChk(){
 		
 		
 	});
+	
+	}
+	
 }
+
 
 function logout(){
 	
 	$.ajax({
 		
-		url : "jy_logout.do",
+		url : "logout.do",
 		type : "post",
 		success : function(data){
 			
@@ -95,14 +114,17 @@ function joinChk(){
 	alert("email: " + email + "ID: " + id+  "pw: " + pw + "phone:" + phone);
 	
 	/*정규식 및 데이터 입력 체크 - login 담당*/
-	if(email != "" && id != "" && pw != "" && phone != ""){
-		close();
-	}else{
+	if(email == null || email == "" ||id == null|| id == "" || pw == null||pw == "" ||phone ==null || phone == ""){
 		alert("정보를 모두 입력하세요.");
+	}else{
+		$("#joinForm").submit();
+		close();
 	}
 }
 
 function close(){
+	
+	
 	$("#testlogo").hide();
 	$("#isLogin").hide();
 	$(".closeBtn").hide();

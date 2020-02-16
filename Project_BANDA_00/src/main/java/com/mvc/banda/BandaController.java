@@ -176,15 +176,9 @@ public class BandaController {
 		if(res > 0) {
 			
 			int lastpno = biz.getLastPetSeq();
-			
-			System.out.println("lastpno : "+lastpno);
-			
 			PetVo vo = biz.mypage_selectPet(lastpno);
 			
-			System.out.println("vo : "+vo);
-			
 			String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+vo.getP_no());
-			
 			System.out.println("savepath : "+savepath);
 			
 			File folder = new File(savepath);
@@ -245,6 +239,29 @@ public class BandaController {
 		return "temp/mypageAccount";
 	}
 	
+	@RequestMapping(value="/mypage_acco_changeprofileimg.do", method = RequestMethod.POST)
+	public String mypage_acco_changeprofileimg(HttpServletRequest request, Model model, @RequestParam String account_id, MultipartFile profile_img) throws IllegalStateException, IOException {
+		
+		
+		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\account\\account_profile\\"+account_id);
+		System.out.println("savepath : "+savepath);
+		
+		String filename = profile_img.getOriginalFilename();
+		
+		File updateprofileimg = new File(savepath+"\\"+filename);
+		
+		profile_img.transferTo(updateprofileimg);
+		
+		//image.jpg 만들긴
+ 		File imagefile = new File(savepath+"\\image.jpg");
+ 		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
+ 		updateprofileimg.renameTo(imagefile);
+ 		//업로드한 이미지 삭제
+ 		updateprofileimg.delete();
+ 		
+		
+		return "";
+	}
 	
 	
 	

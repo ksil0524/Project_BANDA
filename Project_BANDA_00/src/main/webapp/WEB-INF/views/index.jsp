@@ -59,13 +59,14 @@
 	List<FeedVo> feed_list = new ArrayList();
 	String str[] = null;
 
-<!--
+
 	if(session.getAttribute("vo") != null){
 		
 		if(request.getAttribute("fvo") != null){
 			
 		AccountVo main_vo = (AccountVo)request.getAttribute("fvo");
--->
+
+
 	if(session.getAttribute("vo1") != null){
 		AccountVo main_vo = (AccountVo)request.getAttribute("vo1");
 
@@ -117,30 +118,30 @@
 		}
 		
 	}
-		
 } else {
-	
-		feed_list = (List)request.getAttribute("frvo");	
-		
-		for(FeedVo f : feed_list){
 			
-			List rfeed_image = new ArrayList();
-			List rfeed_file = new ArrayList();
+			feed_list = (List)request.getAttribute("frvo");	
 			
-			rfeed_image.add(f.getFeed_no());
+			for(FeedVo f : feed_list){
+				
+				List rfeed_image = new ArrayList();
+				List rfeed_file = new ArrayList();
+				
+				rfeed_image.add(f.getFeed_no());
+				
+				str = f.getFeed_file().split("@");
+				rfeed_image.add(str[1]);
+				
+				feed.add(rfeed_image);
+				
+			}
 			
-			str = f.getFeed_file().split("@");
-			rfeed_image.add(str[1]);
+			for(FeedVo f : feed_list){
+				System.out.println(f);
+			}
 			
-			feed.add(rfeed_image);
-			
-		}
-		
-		for(FeedVo f : feed_list){
-			System.out.println(f);
-		}	
-		
-}
+}	
+
 %>
 					<c:forEach items = "<%=feed %>" var = "list">
 					<c:set var = "file" value = "${list.get(1)}"/>
@@ -385,6 +386,7 @@
 			<script src="<%=request.getContextPath() %>/resources/assets/js/main.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
   			<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
+
 
 	</body>
 </html>

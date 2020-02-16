@@ -153,9 +153,9 @@
 	   			
 	   			
 	   		function changeprofileimginp(){
-	   				
 	   			
 	   			
+	   			$("#changeprofileimg").submit();
 	   			
 	   			readURL3(this);
 	   				
@@ -165,7 +165,8 @@
 	   </script>
 	   
 	   
-	   <form:form action="mypage_pet_update.do" method="post" enctype="multipart/form-data">
+	   <form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="changeprofileimg">
+	   	<input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
 	   	<input type="file" id="profile_img" name="profile_img" src="" style="display: none;" onchange="changeprofileimginp();" accept=".jpg .JPG">
 	   </form:form>
 	   

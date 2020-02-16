@@ -40,6 +40,12 @@
 		SELECT LAST_NUMBER FROM USER_SEQUENCES  WHERE SEQUENCE_NAME = 'PET_SEQ'
 	</select>
 	
+	<update id="acc_update" parameterType="accountVo">
+		UPDATE ACCOUNT SET
+		PASSWORD = #{password}, EMAIL = #{email}, PHONE = #{phone}
+		WHERE ID = #{id}
+	</update>
+	
 </mapper>
 
 

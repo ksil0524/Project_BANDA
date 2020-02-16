@@ -248,21 +248,34 @@ public class BandaController {
 		
 		String filename = profile_img.getOriginalFilename();
 		
-		File updateprofileimg = new File(savepath+"\\"+filename);
+		System.out.println(filename);
 		
+		File updateprofileimg = new File(savepath+"\\"+filename);
+		System.out.println(updateprofileimg);
 		profile_img.transferTo(updateprofileimg);
 		
-		//image.jpg 만들긴
- 		File imagefile = new File(savepath+"\\image.jpg");
+		//image.jpg 가지는 객체
+		File imagefile = new File(savepath+"\\image.jpg");
+		//image.jpg 삭제
+		imagefile.delete();
  		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
- 		updateprofileimg.renameTo(imagefile);
+		updateprofileimg.renameTo(imagefile);
  		//업로드한 이미지 삭제
  		updateprofileimg.delete();
  		
-		
-		return "";
+ 		return "redirect:mypage_accountpage.do";
 	}
 	
+	
+	@RequestMapping("/mypage_accountupdate.do")
+	public String mypage_accountupdate(AccountVo accvo) {
+		
+		System.out.println("mypage_accountupdate");
+		System.out.println(accvo);
+		int res = biz.mypage_accountupdate(accvo);
+		
+		return "redirect:mypage_accountpage.do";
+	}
 	
 	
 	// < 김성일 파트  끝 > 

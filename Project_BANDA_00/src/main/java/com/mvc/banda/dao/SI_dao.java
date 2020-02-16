@@ -152,6 +152,22 @@ public class SI_dao {
 		
 		return lastpseq;
 	}
+
+	public int accountUpdate(AccountVo accvo) {
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.update(NAMESPACE+"acc_update",accvo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : accountUpdate");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
 	
 	
 	

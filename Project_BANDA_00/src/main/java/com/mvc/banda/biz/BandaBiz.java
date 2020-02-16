@@ -73,6 +73,10 @@ public class BandaBiz {
 		return si_dao.getLastPetSeq();
 	}
 	
+	public int mypage_accountupdate(AccountVo accvo) {
+		return si_dao.accountUpdate(accvo);
+	}	
+	
 	
 	// < 김성일 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -203,7 +207,9 @@ public class BandaBiz {
 	//게시글 상세 보기
 	public BoardVo selectOneBoard(int board_no) {
 		return nk_dao.selectOneBoard(board_no);
-	}	
+	}
+
+
 	
 	
 	

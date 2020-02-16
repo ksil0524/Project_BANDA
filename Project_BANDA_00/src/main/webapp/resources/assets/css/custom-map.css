@@ -1,4 +1,3 @@
-@charset "UTF-8";
 
 .details {
     background: #f4f4f4;
@@ -21,7 +20,7 @@
 	margin-bottom: 38px;
 }
 
-#selbox {
+#city_selbox, #dist_selbox {
 	/* width: 230px; */
 	width: 100%;
 	padding: .8em 1.5em;
@@ -38,11 +37,11 @@
     border-radius: 60px;
 }
 
-#selbox::-ms-expand {
+#city_selbox::-ms-expand,#dist_selbox::-ms-expand  {
     display: none;
 }
 
-#selbox:focus, #searchInput:focus, #topSearchBtn:focus {outline:none;}
+#city_selbox:focus, #dist_selbox:focus,#searchInput:focus, #topSearchBtn:focus {outline:none;}
 
 #topSearchBtn{
 	border: 1px solid #999;
@@ -100,7 +99,7 @@
 		width: 100% !important;
 		padding: 10px;
 	}
-	#searchInput, #selbox{
+	#searchInput, #city_selbox, #dist_selbox {
 		margin: 39px 0px 0px 0px;
 	}
 	
@@ -126,7 +125,7 @@
 		padding: 10px;
 	}
 	
-	#searchInput, #selbox{
+	#searchInput, #city_selbox, #dist_selbox{
 		margin: 39px 0px 0px 0px;
 	}
 	
@@ -157,4 +156,108 @@
 	width:100%;
 	height:350px;
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  
+}
+
+.custom-select select {
+  display: none; 
+}
+
+.select-selected {
+  /* background-color: DodgerBlue; */
+  background-color: white;
+      border-radius: 20px;
+}
+
+.select-selected:after {
+  position: absolute;
+  content: "";
+  /* top: 14px;
+  right: 10px; */
+  top: 67px !important;
+  right: 41px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #000 transparent transparent transparent;
+}
+
+.select-selected.select-arrow-active:after {
+/*   border-color: transparent transparent #fff transparent; */
+  border-color: transparent transparent #000 transparent;
+  /* top: 7px; */
+      top: 59px !important;
+}
+
+.select-items div{
+  /* color: #ffffff; */
+  color: #000;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 60px;
+  
+}
+
+.select-selected {
+  /* color: #ffffff; */
+      color: #333;
+  /* padding: 8px 16px; */
+      padding: 20px 16px 20px 26px;
+  /* border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent; */
+  cursor: pointer;
+  user-select: none;
+  border-radius: 60px;
+  height: 60px;
+  margin: 39px 0px 0px 5px;
+      border: 1px solid #999
+}
+
+.select-items {
+  position: absolute;
+  /* background-color: DodgerBlue; */
+  background-color: white;
+  top: 100%;
+  /* left: 0; */
+  left: 19px;
+  right: 0;
+  z-index: 99;
+  border-radius: 20px;
+  margin-top: 5px;
+      width: 237.5px;
+      border: 1px solid #999;
+}
+
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
 }

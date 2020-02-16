@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +33,7 @@
 				</div>
 				<div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
 					<a class="nav-icon" href="mapDrugstore.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-						span>약국</span>
+						<span>약국</span>
 					</a>
 				</div>
 			  
@@ -67,34 +69,21 @@
 				<div id="testimgfile">
 					<div class="row">
 						<div id="searchBox" style="width: 1070px;">
-							<span id="cateOne" class="col-lg-3 col-xs-12" style="text-align: left;">
-								<select id="selbox" class="w3-select w3-border" name="city">
-									<option value="" disabled selected>&nbsp;&nbsp;Choose your option</option>
-										<option value="서울">서울</option>
-										<option value="충남">충남</option>
-										<option value="인천">인천</option>
-										<option value="부산">부산</option>
-										<option value="울산">울산</option>
-										<option value="제주">제주</option>
-										<option value="광주">광주</option>
-										<option value="대전">대전</option>
-										<option value="대구">대구</option>
-										<option value="강원">강원</option>
-										<option value="전북">전북</option>
-										<option value="경북">경북</option>
-										<option value="전남">전남</option>
-										<option value="세종시">세종시</option>
-										<option value="경남">경남</option>
-										<option value="경기">경기</option>
-										<option value="충북">충북</option>
-								</select>
-							</span>
+								<!-- <select id="city_selbox" class="w3-select w3-border" name="city" >
+									<option value="" disabled selected>&nbsp;&nbsp;::구/군 선택::</option>
+										<option value="none">::시 선택::</option>
+										<option value="tt1">tt1</option>
+										<option value="tt2">tt2</option>
+									
+								</select> -->
+								<div id="cateOne" class="custom-select col-lg-3 col-xs-12" style="text-align: left;">
+								  <select id="city_selbox" class="w3-select w3-border" name="city">
+								  </select>
+								</div>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
-								<select id="selbox" class="w3-select w3-border" name="district">
-									<option value="" disabled selected>&nbsp;&nbsp;Choose your option</option>
-									<option value="1">Option 1</option>
-									<option value="2">Option 2</option>
-									<option value="3">Option 3</option>
+								<select id="dist_selbox" class="w3-select w3-border" name="district">
+									<option value="" disabled selected>&nbsp;&nbsp;::구/군 선택::</option>
+									<option value="none">::구/군 선택::</option>
 								</select>
 							</span>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">

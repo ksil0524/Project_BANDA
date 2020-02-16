@@ -54,8 +54,8 @@
 
 	List feed = new ArrayList();
 
-	if(session.getAttribute("vo") != null){
-		AccountVo main_vo = (AccountVo)request.getAttribute("vo");
+	if(session.getAttribute("vo1") != null){
+		AccountVo main_vo = (AccountVo)request.getAttribute("vo1");
 		//System.out.println(main_vo);	
 		
 		List<FeedVo> feed_list = (List)main_vo.getFeed_list();

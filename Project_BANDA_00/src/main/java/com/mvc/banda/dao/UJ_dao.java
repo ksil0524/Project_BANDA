@@ -19,6 +19,9 @@ public class UJ_dao {
 	public AccountVo login(AccountVo vo) {
 		
 		AccountVo res = null;
+		
+		
+		
 	
 		try {
 			res = sqlSession.selectOne(NAMESPACE+"login",vo);

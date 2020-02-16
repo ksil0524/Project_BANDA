@@ -83,21 +83,30 @@ public class BandaController {
 	public Map<String, Boolean> login(@RequestBody AccountVo vo) {
 		
 		AccountVo vo1 = biz.login(vo);
-		Boolean chk = false;
+		Boolean chk = true;
 		
-		if(passwordEncoder.matches(vo.getPassword(), vo1.getPassword())) {
-			session.setAttribute("login", vo1);
-			session.setMaxInactiveInterval(60*60);
-			chk = true;
+		if(vo1 == null) {
 			
-		} 
+			chk = false;
+			System.out.println("여기까지 들어옴1");
+			
+		}else {
+			session.setAttribute("vo", vo1);
+			session.setMaxInactiveInterval(60*60);
+			System.out.println("여기까지 들어옴2");
+		}
 		
 		
 		Map<String, Boolean> m = new HashMap<String, Boolean>();
 		m.put("chk", chk);
-		
+		System.out.println(m+"컨트롤러의 m");
 		return m;
 	}
+	
+	
+	
+	
+	
 	
 	//logout
 	@ResponseBody
@@ -117,13 +126,15 @@ public class BandaController {
 	@RequestMapping("/register.do")
 	public String register(AccountVo vo) {
 		
+		int res = biz.register(vo);
+		
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 		System.out.println("test:"+vo.getPassword());
 		
-		if(biz.register(vo)>0) {
+		if(res>0) {
 			return "redirect:login.do";
 		}else {
-			return "redirect:";
+			return "redirect:register.do";
 		}
 		
 		
@@ -132,8 +143,32 @@ public class BandaController {
 	}
 	
 	
+	//메인 리스트 출력
+	@RequestMapping("/uj_selectList.do")
+	public String selectList(Model model) {
+		
+		
+		if(session.getAttribute("vo") != null) {
+			
+			AccountVo vo = (AccountVo)session.getAttribute("vo");
+			String id = vo.getId();
+			
+			System.out.println(id);
+			
+			System.out.println("세션존재");
+			AccountVo vo1 = (AccountVo)biz.main_selectList(id);
+			
+			model.addAttribute("vo", vo1);
+			
+		} else {
+			System.out.println("세션없음");
+		}
 
+		
+		return "index";
+	}
 
+	
 	
 	
 	
@@ -156,68 +191,68 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 최주예 파트  시작 >  
 	
-			//login
-			@ResponseBody
-			@RequestMapping(value = "/jy_login.do", method = RequestMethod.POST)
-			public Map<String, Boolean> jy_login(@RequestBody AccountVo vo) {
-				
-				AccountVo vo2 = biz.jy_login(vo);
-				Boolean chk = true;
-				
-				if(vo2==null) {
-					chk = false;
-				} else {
-					session.setAttribute("vo", vo2);
-					session.setMaxInactiveInterval(60*60);
-				}
-				
-				//System.out.println(session.getAttribute("vo"));
-				
-				Map<String, Boolean> m = new HashMap<String, Boolean>();
-				m.put("chk", chk);
-				
-				return m;
-			}
-			
-			//logout
-			@ResponseBody
-			@RequestMapping(value = "/jy_logout.do", method = RequestMethod.POST)
-			public Map<String, Boolean> jy_logout() {
-				
-				session.invalidate();
-				System.out.println("로그아웃성공");
-
-				Map<String, Boolean> m = new HashMap<String, Boolean>();
-				m.put("chk", true);
-				
-				return m;
-			}
-	
-			//메인 리스트 출력
-			@RequestMapping("/main_selectList.do")
-			public String main_selectList(Model model) {
-				
-				
-				if(session.getAttribute("vo") != null) {
-					
-					AccountVo vo = (AccountVo)session.getAttribute("vo");
-					String id = vo.getId();
-					
-					System.out.println(id);
-					
-					System.out.println("세션존재");
-					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
-					
-					model.addAttribute("vo", vo2);
-					
-				} else {
-					System.out.println("세션없음");
-				}
-
-				
-				return "index";
-			}
-	
+//			//login
+//			@ResponseBody
+//			@RequestMapping(value = "/jy_login.do", method = RequestMethod.POST)
+//			public Map<String, Boolean> jy_login(@RequestBody AccountVo vo) {
+//				
+//				AccountVo vo2 = biz.jy_login(vo);
+//				Boolean chk = true;
+//				
+//				if(vo2==null) {
+//					chk = false;
+//				} else {
+//					session.setAttribute("vo", vo2);
+//					session.setMaxInactiveInterval(60*60);
+//				}
+//				
+//				//System.out.println(session.getAttribute("vo"));
+//				
+//				Map<String, Boolean> m = new HashMap<String, Boolean>();
+//				m.put("chk", chk);
+//				
+//				return m;
+//			}
+//			
+//			//logout
+//			@ResponseBody
+//			@RequestMapping(value = "/jy_logout.do", method = RequestMethod.POST)
+//			public Map<String, Boolean> jy_logout() {
+//				
+//				session.invalidate();
+//				System.out.println("로그아웃성공");
+//
+//				Map<String, Boolean> m = new HashMap<String, Boolean>();
+//				m.put("chk", true);
+//				
+//				return m;
+//			}
+//	
+//			//메인 리스트 출력
+//			@RequestMapping("/main_selectList.do")
+//			public String main_selectList(Model model) {
+//				
+//				
+//				if(session.getAttribute("vo") != null) {
+//					
+//					AccountVo vo = (AccountVo)session.getAttribute("vo");
+//					String id = vo.getId();
+//					
+//					System.out.println(id);
+//					
+//					System.out.println("세션존재");
+//					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
+//					
+//					model.addAttribute("vo", vo2);
+//					
+//				} else {
+//					System.out.println("세션없음");
+//				}
+//
+//				
+//				return "index";
+//			}
+//	
 	
 	
 	

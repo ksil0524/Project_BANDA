@@ -23,10 +23,12 @@ public class SI_dao {
 		
 		List<PetVo> petlist = pet_selectlist(id);
 		List<FeedVo> feedlist = feed_selectlist(id);
+		List<FollowVo> followlist = follow_selectlist(id);
 		
 		AccountVo vo = sqlSession.selectOne(NAMESPACE+"acc_selectone",id);
 		vo.setPet_list(petlist);
 		vo.setFeed_list(feedlist);
+		vo.setFollow_list(followlist);
 		
 		return vo;
 	}
@@ -82,7 +84,19 @@ public class SI_dao {
 	}
 	
 	public List<FollowVo> follow_selectlist(String id){
-		return null;
+		
+		List<FollowVo> list = null;
+		
+		try {
+			
+			list = sqlSession.selectList(NAMESPACE+"follow_selectlist", id);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : follow_selectlist");
+			e.printStackTrace();		
+		}
+		
+		return list;
 	}
 
 	public PetVo pet_selectOne(int p_no) {

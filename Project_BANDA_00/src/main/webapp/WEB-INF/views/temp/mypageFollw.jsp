@@ -1,9 +1,31 @@
+<%@page import="com.mvc.banda.model.vo.FollowVo"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+     <!-- ==============================================
+	 Scripts
+	 =============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+	
+	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-mypage-accountProfileImage.js"></script>
+	
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+	%>	  	  
+
 </head>
 <body>
 
@@ -109,8 +131,11 @@
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-		     <a href="#"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/13.jpeg" alt="Image"></a>
-		    </div><!-- /author -->
+		<form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="profileform">
+	   		 <input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
+	   		 <input type="file" id="profile_img" name="profile_img" src="" style="display: none;" accept=".jpg" onchange="profileimginp();">
+		     <img id="changeprofileimg" class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image" onclick="profileimg();">
+	  	 </form:form>		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
 		
@@ -129,9 +154,21 @@
           <div class="details-box row">
 		   <div class="col-lg-12">
            <div class="content-box">
-		     <h4>Anna Morgan <i class="fa fa-check"></i></h4>
-             <p>Welcome to the offical account of Anna Morgan. Success is in the PIXELS, <span class="hashtag">#pixels</span></p>
-			 <small><span>www.themashabrand.com</span></small>
+		     <h4>@<%=accvo.getId() %> <i class="fa fa-check"></i></h4>
+             <p>Welcome to the offical account of Anna Morgan. Success is in the PIXELS,(후에 소개 추가 예정) <span class="hashtag">#pixels</span></p>
+			 <small><span class="hashtag" style="color:#0fc19e;">
+			 	<c:choose>
+			 		<c:when test="<%=accvo.getPet_list().isEmpty() %>">
+			 		( 반려동물을 추가해주세요. )
+			 		</c:when>
+			 		<c:otherwise>
+			 			<c:forEach var="petvo" items="<%=accvo.getPet_list() %>">
+			 				 : ${petvo.p_Name }
+			 			</c:forEach>
+			 		</c:otherwise>
+			 	</c:choose>
+
+			</span></small>
            </div><!--/ media -->
 		   </div> 
 		   <!-- <div class="col-lg-3">
@@ -156,11 +193,26 @@
         <div class="menu-category">
          <ul class="menu">
           <!-- <li class="current-menu-item"><a href="photo_profile.html">Posts <span>1.7k</span></a></li> -->
+<%
+	List<FollowVo> followlist =  accvo.getFollow_list();
+	int fr_count=0;
+	int fd_count=0;
+	
+	for(int i=0; i<followlist.size(); i++){
+		if(followlist.get(i).getFr_id().equals(accvo.getId())){
+			fr_count++;
+		}
+		if(followlist.get(i).getFd_id().equals(accvo.getId())){
+			fd_count++;
+		}
+	}
+	
+%>
           <li id="followersNum">
-          	<a id="FollowersTab" class="" href="#frends" data-toggle="tab">Followers<span>55</span></a>
+          	<a id="FollowersTab" class="" href="#frends" data-toggle="tab">Followers<span><%=fd_count %></span></a>
           </li>
           <li>
-          	<a id="FollowingTab" class="" href="#frends-req" data-toggle="tab">Following<span>60</span></a>
+          	<a id="FollowingTab" class="" href="#frends-req" data-toggle="tab">Following<span><%=fr_count %></span></a>
           </li>
          </ul>
 		</div>
@@ -513,23 +565,16 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 		   
-     <!-- ==============================================
-	 Scripts
-	 =============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+
 		
     <!-- ==============================================
 	HEADER CIRCLE Scripts
 	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources//assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources//assets/js/skel.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources//assets/js/util.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->
-	<script src="<%=request.getContextPath() %>/resources//assets/js/circle-header.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 
   </body>
 </html>

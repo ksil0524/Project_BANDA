@@ -54,6 +54,9 @@ public class BandaController {
 	public String mypage_allselect(HttpServletRequest request, HttpServletResponse response) {
 		
 		HttpSession session = request.getSession();
+		
+		session.removeAttribute("accvo");
+		
 		session.setMaxInactiveInterval(60*60);
 		
 		String id = "user06";
@@ -226,9 +229,12 @@ public class BandaController {
 	public String mypage_accountpage(HttpServletRequest request, HttpServletResponse response) {
 		
 		HttpSession session = request.getSession();
+		
+		session.removeAttribute("accvo");
+		
 		session.setMaxInactiveInterval(60*60);
 		
-		String id = "user06";
+		String id = "ADMIN";
 		
 		AccountVo accvo = biz.mypage_allselect(id);
 		System.out.println(accvo);

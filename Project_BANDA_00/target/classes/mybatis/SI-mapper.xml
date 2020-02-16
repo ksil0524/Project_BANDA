@@ -21,6 +21,10 @@
 		SELECT * FROM FEED WHERE ID = #{id}
 	</select>
 	
+	<select id="follow_selectlist" parameterType="String" resultType="followVo">
+		SELECT * FROM FOLLOW WHERE FR_ID = #{id} OR FD_ID = #{id}
+	</select>
+	
 	<select id="pet_selectOne" parameterType="int" resultType="petVo">
 		SELECT * FROM PET WHERE P_NO = #{p_no}
 	</select>

@@ -24,10 +24,38 @@
 
 	<%
 		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
-		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
 	%>	  	  
 		
+		
+	   <script type="text/javascript">
+		  //프로필 사진 변경 스크립트
+	  		function profileimg(){
+	  			alert("프로필 사진은 .jpg 또는 .JPG 파일만 선택이 가능합니다.");
+	  			$("#profile_img").click();
+	  		}
+	   			
+	   			
+	   		function profileimginp(){
+	   			
+	   			$("#profileform").submit();
+	   			
+	   		}
+	   		
+	  		function readURL3(input) {
+			   	 if (input.files && input.files[0]) {
+			   	  var reader = new FileReader();
+								   	  
+			   	  reader.onload = function (e) {
+			   		  $('#profile_img').attr('src', e.target.result);  
+			
+			   	  }
+			   	  
+			   	  reader.readAsDataURL(input.files[0]);
+			   	  }
+			   	}	
+	   	
+	   </script>
 
 
 </head>
@@ -131,38 +159,6 @@
 	 <section class="user-profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   
-	   <script type="text/javascript">
-		  
-	  		function profileimg(){
-	  			alert("프로필 사진은 .jpg 또는 .JPG 파일만 선택이 가능합니다.");
-	  			$("#profile_img").click();
-	  		}
-	   			
-	   			
-	   		function profileimginp(){
-	   			
-	   			$("#profileform").submit();
-	   			
-	   		}
-	   		
-	  		function readURL3(input) {
-			   	 if (input.files && input.files[0]) {
-			   	  var reader = new FileReader();
-								   	  
-			   	  reader.onload = function (e) {
-			   		  $('#profile_img').attr('src', e.target.result);  
-			
-			   	  }
-			   	  
-			   	  reader.readAsDataURL(input.files[0]);
-			   	  }
-			   	}	
-	   	
-	   </script>
-	   
-	   
-	   
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">

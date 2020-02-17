@@ -82,7 +82,7 @@ public class HomeController {
 	
 	@RequestMapping("/mypageFeed.do")
 	public String mypageFeed() {
-		return "temp/mypageFeed";
+		return "redirect:mypageFeed_list.do";
 	}
 	
 	@RequestMapping("/mypageFollw.do")

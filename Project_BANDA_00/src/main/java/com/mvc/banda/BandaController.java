@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.FeedNoVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
@@ -478,6 +479,46 @@ public class BandaController {
 		}
 		
 		return "index";
+	}
+	
+	//feedno session에 삽입
+	@ResponseBody
+	@RequestMapping(value = "/feedno.do", method = RequestMethod.POST)
+	public Map<String, Boolean> feedno(Model model, @RequestBody FeedNoVo vo) {;
+		
+		Boolean chk = true;
+			
+		session.removeAttribute("feedno");
+		session.setAttribute("feedno", vo.getFeedno());
+							
+		Map<String, Boolean> m = new HashMap<String, Boolean>();
+		m.put("chk", chk);
+		
+		return m;
+	}
+	
+	//내피드리스트 가져오기
+	@RequestMapping("/mypageFeed_list.do")
+	public String mypageFeed_list(Model model){
+		
+		AccountVo vo = (AccountVo)session.getAttribute("vo");
+		String id = vo.getId();
+		
+		List<FeedVo> fvo = biz.my_feedList(id);
+		
+		model.addAttribute("fvo",fvo);			
+		
+		return "temp/mypageFeed";
+	}
+	
+	//다른사람피드이동
+	@RequestMapping("/otherfeed.do")
+	public String otherFeed(Model model, String id) {
+		
+		System.out.println(id);
+		model.addAttribute("id", id);
+		
+		return "temp/otherFeed";
 	}
 	
 	

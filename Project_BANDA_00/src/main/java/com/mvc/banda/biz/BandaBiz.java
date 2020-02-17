@@ -121,28 +121,33 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 최주예 파트  시작 >  
 	
-			//login
-			public AccountVo jy_login(AccountVo vo) {
-				
-				return jy_dao.jy_login(vo);
-			}
+		//login
+		public AccountVo jy_login(AccountVo vo) {
 			
-			//main_selectList - 로그인시
-			public AccountVo main_selectList(String id) {
-				
-				return jy_dao.main_selectList(id);
-			}
-
-			//main_selectListN - 비로그인/ 팔로우없을떄
-			public List<FeedVo> main_selectListN() {
-				
-				return jy_dao.main_selectListN();
-			}
+			return jy_dao.jy_login(vo);
+		}
+		
+		//main_selectList - 로그인시
+		public AccountVo main_selectList(String id) {
 			
-			//main_selectFollow - 로그인시 팔로우 판단
-			public List<FollowVo> main_selectFollow(String id) {
-				return jy_dao.main_selectFollow(id);
-			}
+			return jy_dao.main_selectList(id);
+		}
+	
+		//main_selectListN - 비로그인/ 팔로우없을떄
+		public List<FeedVo> main_selectListN() {
+			
+			return jy_dao.main_selectListN();
+		}
+		
+		//main_selectFollow - 로그인시 팔로우 판단
+		public List<FollowVo> main_selectFollow(String id) {
+			return jy_dao.main_selectFollow(id);
+		}
+		
+		//내피드가져오기
+		public List<FeedVo> my_feedList(String id){
+			return jy_dao.my_feedList(id);
+		}
 
 
 	

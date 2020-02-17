@@ -72,5 +72,13 @@ public class CommentVo {
 	public void setCom_pno(int com_pno) {
 		this.com_pno = com_pno;
 	}
+
+	@Override
+	public String toString() {
+		return "CommentVo [com_no=" + com_no + ", com_cate=" + com_cate + ", id=" + id + ", com_content=" + com_content
+				+ ", com_regdate=" + com_regdate + ", com_pno=" + com_pno + "]";
+	}
+	
+	
 	
 }

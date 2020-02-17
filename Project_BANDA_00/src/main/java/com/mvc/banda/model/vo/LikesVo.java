@@ -30,5 +30,12 @@ public class LikesVo {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "LikesVo [feed_no=" + feed_no + ", id=" + id + "]";
+	}
+	
+	
 	
 }

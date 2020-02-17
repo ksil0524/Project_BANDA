@@ -20,6 +20,22 @@
 		<result property="feed_file" column="FEED_FILE" />
 	</resultMap>
 	
+	<!-- comment -->
+	<resultMap type = "commentVo" id = "commentVo" >
+		<result property="com_no" column="COM_NO" />
+		<result property="com_cate" column="COM_CATE" />
+		<result property="id" column="ID" />
+		<result property="com_content" column="COM_CONTENT" />
+		<result property="com_regdate" column="COM_REGDATE" />
+		<result property="com_pno" column="COM_PNO" />
+	</resultMap>
+	
+	<!-- like -->
+	<resultMap type = "likesVo" id = "likesVo" >
+		<result property="feed_no" column="FEED_NO" />
+		<result property="id" column="ID" />
+	</resultMap>
+	
 	<!-- login -->
 	<select id = "jy_login" resultType="accountVo" parameterType="accountVo">
 		SELECT * FROM ACCOUNT WHERE ID=#{id} AND PASSWORD=#{password} 
@@ -30,7 +46,7 @@
 		SELECT * FROM FOLLOW WHERE FR_ID = #{id}
 	</select>
 	
-	<!-- feed list - id o -->
+	<!-- feed list - follow -->
 	<select id = "main_selectList_feed" resultMap="feedVo"  parameterType="java.util.HashMap">
 	
 		SELECT  ROWNUM, F.* FROM (SELECT * FROM FEED WHERE ID IN
@@ -48,9 +64,19 @@
 		SELECT ROWNUM, F.* FROM (SELECT * FROM FEED ORDER BY FEED_REGDATE DESC) F WHERE ROWNUM BETWEEN 1 AND #{count}
 	</select>
 	
-	<!-- feed count -->
+	<!-- feed count - default -->
 	<select id = "feed_count" resultType="int">
 		SELECT COUNT(*) FROM FEED
+	</select>
+	
+	<!-- comment list -->
+	<select id = "select_comment" resultMap="commentVo">
+		SELECT * FROM COMMENTS WHERE COM_PNO = #{feedno}
+	</select>
+	
+	<!-- like list -->
+	<select id = "select_like" resultMap="likesVo">
+		SELECT * FROM LIKES WHERE FEED_NO = #{feedno}
 	</select>
 
 </mapper>

@@ -96,9 +96,9 @@
 						  <form action="search_feedlist.do" id="searchform" method="get">
 						    
 						  <div>
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
+					        <input type="radio" class="jh_searchtype" name="searchtype" value="계정"> 계정
+					        <input type="radio" class="jh_searchtype" name="searchtype" value="반려동물"> 반려동물
+					        <input type="radio" class="jh_searchtype" name="searchtype" value="해시태그"> 해시태그
 					      </div>
 					        
 							<input type="text" id="searchinput" value="">

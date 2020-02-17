@@ -204,7 +204,16 @@ public class BandaBiz {
 	public BoardVo selectOneBoard(int board_no) {
 		return nk_dao.selectOneBoard(board_no);
 	}	
-	
+
+	//게시글을 공지로 등록하기
+	public int boardSetNotice(int board_no) {
+		return nk_dao.boardSetNotice(board_no);
+	}
+
+	//공지글을 일반 게시글로 내리기
+	public int boardNoticeCancel(int board_no) {
+		return nk_dao.boardNoticeCancel(board_no);
+	}
 	
 	
 	// < 하나경 파트  끝 > 

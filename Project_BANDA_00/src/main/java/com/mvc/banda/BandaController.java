@@ -546,7 +546,34 @@ public class BandaController {
 		model.addAttribute("detail", biz.selectOneBoard(board_no));
 		return "temp/boardDetail";
 	}	
+
+	//게시글을 공지로 바꾸기
+	@RequestMapping(value="/boardSetNotice.do")
+	public String boardSetNotice(int board_no) {
+		int res = biz.boardSetNotice(board_no);
+		if(res>0) {
+			return "redirect:boardListFree_test.do";
+		} else {
+			return "redirect:boardDetail_test.do?board_no="+board_no;
+		}
+	}
+
+	//공지글을 일반 게시글로 내리기
+	@RequestMapping(value="/boardSetNoticeCancel.do")
+	public String boardNoticeCancel(int board_no) {
+		int res = biz.boardNoticeCancel(board_no);
+		if(res>0) {
+			return "redirect:boardListFree_test.do";
+		} else {
+			return "redirect:boardDetail_test.do?board_no="+board_no;
+		}		
+	}
 	
+	//게시글 폼
+	@RequestMapping(value="/boardWriteForm.do")
+	public String boardWriteForm() {
+		return "temp/boardWrite";
+	}
 	
 	
 	// < 하나경 파트  끝 > 

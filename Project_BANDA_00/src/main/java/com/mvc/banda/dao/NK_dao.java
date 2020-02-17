@@ -76,7 +76,7 @@ public class NK_dao {
 		BoardVo vo = null;
 		
 		try {
-			vo = sqlSession.selectOne(NAMESPACE+"selectOne", board_no);
+			vo = sqlSession.selectOne(NAMESPACE+"selectOneBoard", board_no);
 		} catch(Exception e) {
 			System.out.println("[ERROR] Board Select One");
 			e.printStackTrace();
@@ -84,4 +84,32 @@ public class NK_dao {
 		
 		return vo;
 	}
+	
+	//게시글을 공지로 등록하기
+	public int boardSetNotice(int board_no) {
+		int res = 0;
+			
+		try {
+			res = sqlSession.update(NAMESPACE+"updateBoardToNotice", board_no);
+		} catch(Exception e) {
+			System.out.println("[ERROR] Board Set Board to Notice");			
+			e.printStackTrace();
+		}
+			
+		return res;
+	}
+
+	//공지글을 일반 게시글로 내리기
+	public int boardNoticeCancel(int board_no) {
+		int res = 0;
+			
+		try {
+			res = sqlSession.update(NAMESPACE+"updateNoticeToBoard", board_no);
+		} catch(Exception e) {
+			System.out.println("[ERROR] Board Set Notice to Board");			
+			e.printStackTrace();
+		}
+			
+		return res;
+	}	
 }

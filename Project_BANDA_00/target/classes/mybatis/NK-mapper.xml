@@ -45,11 +45,29 @@
 	</select>
 	
 	<!-- selectOne -->	
-	<select id="selectOne" parameterType="int" resultType="boardVo">
+	<select id="selectOneBoard" parameterType="int" resultType="boardVo">
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
 		FROM TEST_BOARD
 		WHERE BOARD_NO=#{board_no}
 	</select>
+	
+	<!-- 게시글을 공지로 등록하는 update -->
+	<update id="updateBoardToNotice" parameterType="int" >
+		UPDATE TEST_BOARD SET BOARD_NYN='Y' 
+		WHERE BOARD_NYN='N' AND BOARD_NO=#{board_no}
+	</update>
+
+	<!-- 공지글을 일반 게시글로 내리는 update -->
+	<update id="updateNoticeToBoard" parameterType="int" >
+		UPDATE TEST_BOARD SET BOARD_NYN='N' 
+		WHERE BOARD_NYN='Y' AND BOARD_NO=#{board_no}
+	</update>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insertBoard" parameterType="boardVo">
+		INSERT INTO TEST_BOARD
+		VALUES(TEST_BOARD_SEQ.NEXTVAL, #{board_cate}, 'test', #{board_title}, #{board_content}, SYSDATE, 'N', #{board_file}, #{board_hash})
+	</insert>
 
 </mapper>
 

@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +80,15 @@
             <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
 	         <a class="dropdown-item" href="#">수정</a>
 			 <a class="dropdown-item" href="#">삭제</a>
-			 <a class="dropdown-item" href="#">공지등록</a>
+			 <c:set var="noticeChk" value="${detail.board_nyn}"/>
+			 <c:choose>
+			   <c:when test="${fn:contains(noticeChk, 'Y')}">
+	         	 <a class="dropdown-item" href="boardSetNoticeCancel.do?board_no=${detail.board_no }">공지해제</a>
+	           </c:when>
+			   <c:when test="${fn:contains(noticeChk, 'N')}">
+	         	 <a class="dropdown-item" href="boardSetNotice.do?board_no=${detail.board_no }">공지등록</a>
+	           </c:when>
+	         </c:choose>
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->

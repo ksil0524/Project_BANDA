@@ -80,12 +80,15 @@
 								  <select id="city_selbox" class="w3-select w3-border" name="city">
 								  </select>
 								</div>
-							<span class="col-lg-3 col-xs-12" style="text-align: left;">
+								<div id="cateTwo" class="custom-select2 col-lg-3 col-xs-12" style="text-align: left;">
+								  <select id="dist_selbox" class="w3-select w3-border" name="district">
+								  </select>
+								</div>
+							<!-- <span class="col-lg-3 col-xs-12" style="text-align: left;">
 								<select id="dist_selbox" class="w3-select w3-border" name="district">
 									<option value="" disabled selected>&nbsp;&nbsp;::구/군 선택::</option>
-									<option value="none">::구/군 선택::</option>
 								</select>
-							</span>
+							</span> -->
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
 								<input id="searchInput" type="text" class="">
 							</span>

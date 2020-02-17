@@ -38,60 +38,24 @@ $(function(){
 	}); //autocomplete
 	
 	/*city select*/
-	$("#city_selbox").change(function(){
-		var cityname = $(this).val();
-		alert(cityname);
-		$.getJSON("resources/assets/json/administrativeArea.json",function(data){
-			$.each(data, function(key, val){
-				if(key=="district"){
-					
-					var list = val;
-					var result = Object.keys(list).map(function(key) {
-						  return [list[key]];
-						});
+	/*$("#city_selbox").change(function(){*/
 
-						console.log(result);
-						//한단계씩 안으로 [] + 
-						console.log("test! " + result[0].__proto__.length);
-						
-						//object 까기 
-						var sJson = JSON.stringify(list);
-						console.log("st :"+sJson);
-						
-					
-					for(var i=0; i<list.length; i++){
-						console.log(i + " = " +list[i].name);
-						if(list[i].name==cityname){
-							console.log("list[i].value : " + list[i].value);
-							var testlist = list[i].value;
-							for(var j=0; j<testlist.length; j++){
-								$("#dist_selbox").append("<option value='"+testlist[j]+"'>"+testlist[j]+"</option>");
-							}
-							return;
-						}
-						//$("#dist_selbox").append("<option value='"+list[i]+"'>"+list[i]+"</option>");
-					}
-				}
-				/*if(key=="district")*/
-			});
-		});
-		
-	});
 	
 	/*city select box default set*/
 	city_selbox_set();
 	
 	function city_selbox_set(){
+		$("#city_selbox").append("<option value='' disabled selected>&nbsp;&nbsp;::시/도 선택::</option>");
 		$.getJSON("resources/assets/json/administrativeArea.json",function(data){
 			$.each(data, function(key, val){
 				if(key=="city"){
 					var list = val;
 					for(var i=0; i<list.length; i++){
 						console.log(i + " = " +list[i]);
-						$("#city_selbox").append("<option value='"+(i+1)+"'>"+list[i]+"</option>");
+						$("#city_selbox").append("<option value='"+list[i]+"'>"+list[i]+"</option>");
 					}
 					
-					customSelect();
+					customSelect("custom-select");
 				}
 				/*if(key=="district")*/
 			});
@@ -103,14 +67,14 @@ $(function(){
 /***********************************
   select box
 ***********************************/
-function customSelect(){
+function customSelect(customTarget){
 	var x, i, j, selElmnt, a, b, c;
 	/*look for any elements with the class "custom-select":*/
-	x = document.getElementsByClassName("custom-select");
+	x = document.getElementsByClassName(customTarget);
 	alert("x::: " + x.innerHTML);
 	for (i = 0; i < x.length; i++) {
 	  selElmnt = x[i].getElementsByTagName("select")[0];
-	 alert("selElmnt: "+ selElmnt.innerHTML);
+	 //alert("selElmnt: "+ selElmnt.innerHTML);
 	  /*for each element, create a new DIV that will act as the selected item:*/
 	  a = document.createElement("DIV");
 	  a.setAttribute("class", "select-selected");
@@ -119,6 +83,7 @@ function customSelect(){
 	  /*for each element, create a new DIV that will contain the option list:*/
 	  b = document.createElement("DIV");
 	  b.setAttribute("class", "select-items select-hide");
+	  b.setAttribute("id","style-1");
 	  for (j = 1; j < selElmnt.length; j++) {
 	    /*for each option in the original select element,
 	    create a new DIV that will act as an option item:*/
@@ -139,7 +104,12 @@ function customSelect(){
 	              y[k].removeAttribute("class");
 	            }
 	            this.setAttribute("class", "same-as-selected");
-	            console.log("same-as-selected 동작!");
+	            alert("셀...: "+$("#city_selbox option:selected").attr('selected','selected').val());
+	            /*
+	             $("#city_selbox option:eq("+k+")").removeAttribute("selected");
+	             * */
+	            //$('#city_selbox option[value='+h.innerHTML+']').attr('selected','selected');
+	            testcity(h.innerHTML);
 	            break;
 	          }
 	        }
@@ -160,13 +130,14 @@ function customSelect(){
 	function closeAllSelect(elmnt) {
 	  /*a function that will close all select boxes in the document,
 	  except the current select box:*/
-		console.log("클릭되었나?");
+		
 	  var x, y, i, arrNo = [];
 	  x = document.getElementsByClassName("select-items");
 	  y = document.getElementsByClassName("select-selected");
 	  for (i = 0; i < y.length; i++) {
 	    if (elmnt == y[i]) {
 	      arrNo.push(i)
+	      
 	    } else {
 	      y[i].classList.remove("select-arrow-active");
 	    }
@@ -182,6 +153,52 @@ function customSelect(){
 	document.addEventListener("click", closeAllSelect);
 	
 }
+
+function testcity(cityname){
+	alert("cityname: "+cityname);
+	$("#dist_selbox").append("<option value='' disabled selected>&nbsp;&nbsp;::구/군 선택::</option>");
+	$.getJSON("resources/assets/json/administrativeArea.json",function(data){
+		$.each(data, function(key, val){
+			if(key=="district"){
+				
+				var list = val;
+				/*var result = Object.keys(list).map(function(key) {
+					  return [list[key]];
+					});
+
+					console.log(result);
+					//한단계씩 안으로 [] + 
+					console.log("test! " + result[0].__proto__.length);
+					
+					//object 까기 
+					var sJson = JSON.stringify(list);
+					console.log("st :"+sJson);*/
+					
+				
+				for(var i=0; i<list.length; i++){
+					console.log(i + " = " +list[i].name);
+					if(list[i].name==cityname){
+						console.log("list[i].value : " + list[i].value);
+						var testlist = list[i].value;
+						for(var j=0; j<testlist.length; j++){
+							$("#dist_selbox").append("<option value='"+testlist[j]+"'>"+testlist[j]+"</option>");
+						}
+						$("#cateTwo > div").remove();
+						customSelect("custom-select2");
+						return;
+					}
+					//$("#dist_selbox").append("<option value='"+list[i]+"'>"+list[i]+"</option>");
+				}
+				
+				
+			}
+			/*if(key=="district")*/
+		});
+	});
+	
+}
+
+
 
 /***********************************
  Map
@@ -221,3 +238,7 @@ function sub(){
 	var keyword = $("#searchInput").val();
 }
 */
+
+
+
+

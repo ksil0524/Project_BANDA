@@ -1,6 +1,6 @@
 package com.mvc.banda.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class PetVo {
 	
@@ -18,6 +18,13 @@ public class PetVo {
 	
 	public PetVo() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "PetVo [p_no=" + p_no + ", class_no=" + class_no + ", species_no=" + species_no + ", id=" + id
+				+ ", p_Name=" + p_Name + ", p_kind=" + p_kind + ", p_birth=" + p_birth + ", p_character=" + p_character
+				+ ", p_like=" + p_like + ", p_hate=" + p_hate + ", p_about=" + p_about + "]";
 	}
 
 	public PetVo(int p_no, int class_no, int species_no, String id, String p_Name, String p_kind, Date p_birth,

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
+
 			<header id="header">
 				<div class="inner" style="position:relative;">
 					<div class="closeBtn">
@@ -36,10 +39,11 @@
                                 </div>
                                 <div class="error"></div>
                                 <div class="form loginBox">
-                                    <form id="loginForm" method="" action="" accept-charset="UTF-8">
+                                    <form id="loginForm" method="" action="login.do" accept-charset="UTF-8">
                                     <input id="login-email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="login-password" class="form-control" type="password" placeholder="Password" name="password">
                                     <input id="login-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="loginChk()">
+                                 
                                     <input id="joinBtn" class="btn btn-default btn-login" type="button" value="Join" onclick="joinUser()">
                                     </form>
                                 </div>
@@ -53,7 +57,7 @@
                                 </div>
                                 <div class="error"></div> 
                                 <div class="form loginBox">
-                                    <form id="joinForm" method="" action="" accept-charset="UTF-8">
+                                    <form id="joinForm" method="" action="register.do" accept-charset="UTF-8">
                                     <input id="email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="id" class="form-control" type="text" placeholder="Id" name="id">
                                     <input id="password" class="form-control" type="password" placeholder="Password" name="password">
@@ -86,15 +90,31 @@
 							<a href="mypageFollw.do" id="menuBtn4" class="" style="color:#ec3d6e;"><i class="fas fa-user"></i></a>
 							
 						</div>
+						
 						<div id="searchinputBox">
-							<input type="text" id="searchinput"><div id="searchBtn" onclick="" ><i class="fas fa-search"></i></div>
+						  
+						  <form action="search_feedlist.do" id="searchform" method="get">
+						    
+						  <div>
+					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
+					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
+					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
+					      </div>
+					        
+							<input type="text" id="searchinput" value="">
+							<div id="searchBtn" class="searchBtn" onclick="#"><i class="fas fa-search"></i></div>
+							
+						  </form>
+							
 						</div>
-					</div>
+				      
+						
+					</div>				
 					<div id="logOut">
-						<div ><i class="fas fa-sign-out-alt"></i></div>
+						<button onclick = "logout();" style = "background : none;"><i class="fas fa-sign-out-alt"></i></button>
 					</div>
 					
 					<!-- 닫혔을때 열기 버튼  -->
-					<a href="#" class="button hidden" onclick=""><span>Let's Go</span></a>
+					<a href="#" class="button hidden"><span>Let's Go</span></a>
 				</div>
 			</header>

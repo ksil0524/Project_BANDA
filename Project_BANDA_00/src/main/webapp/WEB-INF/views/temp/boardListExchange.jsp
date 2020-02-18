@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,12 +69,12 @@
 	  <div class="container">
 	  	<!-- 검색창 부분 -->
 	  	<span id="searchinputBox">
-		  	<select id="searchinput">
+		  	<select id="searchSelect">
 		  		<option>제목</option>
 		  		<option>내용</option>
 		  		<option>글쓴이</option>
 		  	</select>
-			<input type="text" id="searchinput" placeholder="검색어를 입력하세요." style="width: 362px !important;"/>
+			<input type="text" id="searchKeyword" placeholder="검색어를 입력하세요" />
 			<div id="searchBtn" onclick=""><i class="fas fa-search" style="width: 25px; height: 25px;"></i></div>
 		</span>
 	  	<!-- -------- -->
@@ -81,10 +85,44 @@
 	 
 
 	 <!-- ==============================================
-	 News Feed Section
+	 Board List Section
 	 =============================================== --> 
-	 <section class="newsfeed">
+	 <section class="boardlist">
 	  <div class="container">
+	  
+	   <!-- 공지사항 부분 -->	   
+	   <div class="row">
+	   	<div class="upper-notice" style="padding: 1em;">
+	   	  <table>
+	   	  	<colgroup>
+	   	  	  <col style="width: 90px;">
+	   	  	  <col>
+	   	  	  <col style="width: 130px;">
+	   	  	  <col style="width: 100px;">
+	   	  	  <col style="width: 100px;">
+	   	  	</colgroup>
+	   	  	<thead>
+		   	  <tr>
+		   	  	<th><!-- 공지 --></th>
+		   	  	<th>제목</th>
+		   	  	<th>글쓴이</th>
+		   	  	<th>작성일</th>
+		   	  	<th>조회수</th>
+		   	  </tr>
+	   	  	</thead>
+	   	  	<tbody>
+	   	  	  <tr>
+	   	  	  	<td class="td_notice">공지</td>
+	   	  	  	<td class="td_title"><a href="boardDetail.do">거래 전 주의사항</a></td>
+	   	  	  	<td class="td_writer">BANDA</td>
+	   	  	  	<td class="td_date">2020-01-01</td>
+	   	  	  	<td class="td_view">100</td>
+	   	  	  </tr>
+	   	  	</tbody>
+	   	  </table>
+	   	</div><!--/ upper-notice -->
+	   </div><!--/ div row -->
+	   <!--/ 공지사항 부분 -->
 	  
 	   <div class="row">
 	   
@@ -244,7 +282,7 @@
 	 <!-- ==============================================
 	 Page Section
 	 =============================================== -->
-	 
+
 	 <nav aria-label="Page navigation example" style="background-color: #f4f4f4; padding-bottom:100px;">
 	  <ul class="pagination justify-content-end">
 		  <!-- « » -->

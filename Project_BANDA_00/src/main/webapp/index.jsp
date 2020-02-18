@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 	<br>
 	<a href="index.do">index</a>	
 	<br>
-	<a href="boardDetail.do">boardDetail</a>		
+	<a href="boardDetail.do">boardDetail</a>	
 	<br>
 	<a href="boardListExchange.do">boardListExchange</a>	
 	<br>
@@ -33,5 +33,18 @@
 	<a href="mypageFollw.do">mypageFollw</a>
 	<br>
 	<a href="mypagePets.do">mypagePets</a>
+	
+	<br><a href="mypage_allselect.do">mypage_allselect</a> <!-- 성일 -->
+	<br><a href="mypage_accountpage.do">mypage_accountpage</a> <!-- 성일 -->
+	
+	<br><a href="index_go.do">real_index</a><!-- 주예 -->
+
+	<!-- 나경 -->
+	<br>
+	<a href="boardListExchange_test.do">boardListExchange TEST</a>	
+	<br>
+	<a href="boardListFree_test.do">boardListFree TEST</a>	
+	<!--/ 나경 -->
+	
 </body>
 </html>

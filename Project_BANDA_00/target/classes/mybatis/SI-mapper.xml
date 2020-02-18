@@ -2,10 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="SI-mapper">
-
-
-
-
+	<resultMap type="accountVo" id="accountVoMap">
+		<result property="id" column="ID"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+	</resultMap>
+	
+	<select id="acc_selectone" parameterType="String" resultMap="accountVoMap">
+		SELECT * FROM ACCOUNT WHERE ID = #{id}
+	</select>
+	
+	<select id="pet_selectlist" parameterType="String" resultType="petVo">
+		SELECT * FROM PET WHERE ID = #{id}
+	</select>
+	
+	<select id="feed_selectlist" parameterType="String" resultType="feedVo">
+		SELECT * FROM FEED WHERE ID = #{id}
+	</select>
+	
+	<select id="pet_selectOne" parameterType="int" resultType="petVo">
+		SELECT * FROM PET WHERE P_NO = #{p_no}
+	</select>
+	
+	<update id="pet_update" parameterType="petVo">
+		UPDATE PET SET 
+		CLASS_NO = #{class_no}, SPECIES_NO = #{species_no}, P_NAME = #{p_Name}, P_KIND = #{p_kind}, 
+		P_BIRTH = #{p_birth}, P_LIKE = #{p_like}, P_HATE = #{p_hate}, P_ABOUT = #{p_about} 
+		WHERE P_NO = #{p_no}
+	</update>
+	
+	<insert id="pet_insert" parameterType="petVo">
+		INSERT INTO PET VALUES(PET_SEQ.NEXTVAL, #{class_no}, #{species_no}, #{id}, #{p_Name}, #{p_kind}, #{p_birth}, #{p_character}, #{p_like}, #{p_hate}, #{p_about})
+	</insert>
+	
+	<select id="getLastPetSeq" resultType="_int">
+		SELECT LAST_NUMBER FROM USER_SEQUENCES  WHERE SEQUENCE_NAME = 'PET_SEQ'
+	</select>
+	
 </mapper>
 
 

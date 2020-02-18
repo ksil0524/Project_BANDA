@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Auto CSS -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Map CSS -->
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-map.css" rel="stylesheet" />
 <!-- HEAD CSS -->
@@ -20,81 +24,80 @@
 	Navbar Second Section
 	=============================================== -->
 	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
-	<div class="row">
-	  <div class="d-flex justify-content-between col-lg-12 col-xs-12">
-	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="mapHospital.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>병원</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mapDrugstore.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>약국</span>
-	   </a>
-	   </div>
-	   
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mapPark.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>공원</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="#" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span></span>
-	   </a>
-	   </div>
-	  </div>
-	</div>
+		<div class="row">
+			<div class="d-flex justify-content-between col-lg-12 col-xs-12">
+				<div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
+					<a class="nav-icon" href="mapHospital.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+						<span>병원</span>
+					</a>
+				</div>
+				<div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
+					<a class="nav-icon" href="mapDrugstore.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+						<span>약국</span>
+					</a>
+				</div>
+			  
+				<div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
+					<a class="nav-icon" href="mapPark.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+						<span>공원</span>
+					</a>
+				</div>
+				<div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
+					<a class="nav-icon" href="#" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+						<span></span>
+					</a>
+				</div>
+			 </div>
+		</div>
 	</section>	
   
-	 <!-- ==============================================
-	 User Profile Section
-	 =============================================== --> 
-	 <section class="user-profile">
-	  <div class="container-fluid">
-	  </div></section>
-
-	 <!-- ==============================================
-	 User Profile Section
-	 =============================================== --> 
-	 	
-	 <section id="details" class="details">
-	  <div id="searchCon" class="container">
-	    <div id="detail-bg-box">
-	    	
-           	<div id="testimgfile">
-	   <div class="row">
-           	  <div id="searchBox" style="width: 1070px;">
-           	  	<span id="cateOne" class="col-lg-3 col-xs-12" style="text-align: left;">
-	           	  <select id="selbox" class="w3-select w3-border" name="option">
-				    <option value="" disabled selected>&nbsp;&nbsp;Choose your option</option>
-				    <option value="1">Option 1</option>
-				    <option value="2">Option 2</option>
-				    <option value="3">Option 3</option>
-				  </select>
-			  </span>
-			  <span class="col-lg-3 col-xs-12" style="text-align: left;">
-	           	  <select id="selbox" class="w3-select w3-border" name="option">
-				    <option value="" disabled selected>&nbsp;&nbsp;Choose your option</option>
-				    <option value="1">Option 1</option>
-				    <option value="2">Option 2</option>
-				    <option value="3">Option 3</option>
-				  </select>
-			  </span>
-			  <span class="col-lg-3 col-xs-12" style="text-align: left;">
-			  	<input id="searchInput" type="text" class="">
-			 
-			  </span>
-			  <span class="col-lg-3 col-xs-12" style="text-align: left;">
-			  	<button id="topSearchBtn" >Search<i id="searchIcon" class="fas fa-search"></i></button>
-			  </span>
-           	  </div><!-- 1070 -->
-	   </div><!-- row -->
-           	</div>
-		  
+	<!-- ==============================================
+	User Profile Section
+	=============================================== --> 
+	<section class="user-profile">
+		<div class="container-fluid">
 		</div>
-	  </div><!--/ container -->
-	 </section><!--/ profile -->
+	</section>
+
+	<!-- ==============================================
+	User Profile Section
+	=============================================== --> 
+	 	
+	<section id="details" class="details">
+		<div id="searchCon" class="container">
+			<div id="detail-bg-box">
+				<div id="testimgfile">
+					<div class="row">
+						<div id="searchBox" style="width: 1070px;">
+								<!-- <select id="city_selbox" class="w3-select w3-border" name="city" >
+									<option value="" disabled selected>&nbsp;&nbsp;::구/군 선택::</option>
+										<option value="none">::시 선택::</option>
+										<option value="tt1">tt1</option>
+										<option value="tt2">tt2</option>
+									
+								</select> -->
+								<div id="cateOne" class="custom-select col-lg-3 col-xs-12" style="text-align: left;">
+								  <select id="city_selbox" class="w3-select w3-border" name="city">
+								  </select>
+								</div>
+							<span class="col-lg-3 col-xs-12" style="text-align: left;">
+								<select id="dist_selbox" class="w3-select w3-border" name="district">
+									<option value="" disabled selected>&nbsp;&nbsp;::구/군 선택::</option>
+									<option value="none">::구/군 선택::</option>
+								</select>
+							</span>
+							<span class="col-lg-3 col-xs-12" style="text-align: left;">
+								<input id="searchInput" type="text" class="">
+							</span>
+							<span class="col-lg-3 col-xs-12" style="text-align: left;">
+								<button id="topSearchBtn" onclick="sub()">Search<i id="searchIcon" class="fas fa-search"></i></button>
+							</span>
+						</div><!-- 1070 -->
+					</div><!-- row -->
+				</div>
+			</div>
+		</div><!--/ container -->
+	</section><!--/ profile -->
 
 	 <!-- ==============================================
 	 News Feed Section
@@ -183,6 +186,11 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Map Script -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-map.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0d9f5c75a037bb611cbdea021d1a56f"></script>
+	<!-- Auto Script -->
+	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	
   </body>
 </html>

@@ -155,7 +155,7 @@ a.navbar-brand:hover {
     position: absolute;
 	color: #fff;
     top: -8px;
-    right: 16px;
+    right: 12px;
     display: inline-block;
     border-right: 8px solid transparent;
     border-bottom: 8px solid #e1e6ef;
@@ -593,6 +593,10 @@ a.navbar-brand:hover {
   background: #f4f4f4;	
   padding: 40px 0px;
 }   
+.boardlist {
+  background: #f4f4f4;	
+  padding: 0px 0px 40px 0px;
+} 
 .cardbox {
   border-radius: 3px;
   background-color: #fff;
@@ -1242,10 +1246,11 @@ a.navbar-brand:hover {
   color: #e16a70 !important;
 }
 .explore-top .explore-circle{
-  padding: 5px;	
   position: relative;
-  top: -28px;
-  color: #fff !important;
+    top: -28px;
+    color: #fff !important;
+    padding-top: 5px;
+    padding-right: 5px;
 }
 .explore-top i{
   font-size: 16px;	
@@ -1256,6 +1261,11 @@ a.navbar-brand:hover {
   font-size: 16px;	
   color: #f4f4f4;
   padding-left: 2px;
+}
+.explore-top .explore-circle span{
+  font-family: 'Abhaya Libre', serif;	
+  font-size: 16px;	
+  color: #f4f4f4;
 }
 .explore-body{
   padding: 0px 9px 10px 9px;	

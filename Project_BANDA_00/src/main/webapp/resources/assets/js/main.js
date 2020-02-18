@@ -6,22 +6,77 @@
 
 var isLogin = 0;
 
+
 function loginChk(){
-	var email = $("#login-email").val();
-	var pw = $("#login-password").val();
-	//alert("email: " + email + "  pw: " + pw);
+	var email = $("#login-email").val().trim();
+	var pw = $("#login-password").val().trim();
+	
+	var login_set = {
+			"id":email,
+			"password":pw			
+	};
+	
+	console.log(login_set);
+	
+	$.ajax({
 		
-	if(email =="test" && pw=="test"){
-		isLogin = 1;
-		$(".closeBtn").hide();
-		$("#logincontent").hide();
-		$("#header").toggleClass('hide');
-		$("#content").hide();
+		url : "login.do",
+		type : "post",
+		data : JSON.stringify(login_set),
+		contentType: "application/json",
+		dataType:"json",
+		success : function(msg){
+			
+			if(msg.chk){
+			isLogin = 1;
+			$(".closeBtn").hide();
+			$("#logincontent").hide();
+			$("#header").toggleClass('hide');
+			$("#content").hide();
+			$("#loginchk").css("display","none");
+			
+			location.href = "index.jsp";
+			
+			} else {
+				$("#loginchk").css("display","block");
+				
+				return;
+			}
+			
+		},
+		error:function(request,status,error){
+			
+			alert("통신실패");
+			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+		}
 		
 		
-	}else{
-		return;
-	}
+	});
+}
+
+function logout(){
+	
+	$.ajax({
+		
+		url : "logout.do",
+		type : "post",
+		success : function(data){
+			
+			if(data.chk){
+				isLogin = 0;
+				alert("로그아웃성공");
+				location.href = "index.jsp";
+			} 
+			
+		},
+		error : function(request,status,error){
+			
+			alert("통신실패");
+			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+		}
+		
+	});
 }
 
 function joinUser(){
@@ -37,7 +92,7 @@ function joinChk(){
 	alert("email: " + email + "ID: " + id+  "pw: " + pw + "phone:" + phone);
 	
 	/*정규식 및 데이터 입력 체크 - login 담당*/
-	if(email != "" && id != "" && pw != "" && phone != ""){
+	if(email == null || email != "" ||id == null|| id == "" || pw == null||pw != "" ||phone ==null || phone != ""){
 		close();
 	}else{
 		alert("정보를 모두 입력하세요.");
@@ -57,6 +112,22 @@ function close(){
 
 (function($) {
 
+	var session = $("#hidden_session").val();
+	console.log(session);
+
+	if(session == 'AccountVo') {
+		
+		isLogin = 1;
+		$(".closeBtn").hide();
+		$("#logincontent").hide();
+		$("#header").toggleClass('hide');
+		$("#content").hide();
+		$("#loginchk").css("display","none");
+		
+	} else {
+		
+	}
+	
 	skel.breakpoints({
 		xlarge:	'(max-width: 1680px)',
 		large:	'(max-width: 1280px)',
@@ -183,5 +254,6 @@ $(document).ready(function(){
        });
        
        $('#back-to-top').tooltip('show');
+       // 하기싫습니다.......집에 보내주세요....... 우리조원은 왜 학원을 안나오는 걸까요....
 
 });

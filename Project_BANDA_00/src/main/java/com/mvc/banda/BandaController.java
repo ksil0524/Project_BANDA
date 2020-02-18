@@ -1,5 +1,6 @@
 ﻿package com.mvc.banda;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -281,6 +282,62 @@ public class BandaController {
 		int res = biz.mypage_accountupdate(accvo);
 		
 		return "redirect:mypage_accountpage.do";
+	}
+	
+	
+	@RequestMapping("/mypage_followpage.do")
+	public String mypage_followpage(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		System.out.println("mypage_followpage");
+
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("accvo");
+		
+		session.setMaxInactiveInterval(60*60);
+		
+		String id = "ADMIN";
+		
+		AccountVo accvo = biz.mypage_allselect(id);
+		System.out.println(accvo);
+		
+		// 해당하는 아이디가  팔로우하고 있는 계정들 정보 리스트
+		List<AccountVo> fr_acclist = biz.mypage_fr_accountSelectList(accvo.getId());
+		System.out.println("fr_acclist : " + fr_acclist);
+
+		// 해당하는 아이디를  팔로우하고 있는 계정들 정보 리스트
+		List<AccountVo> fd_acclist = biz.mypage_fd_accountSelectList(accvo.getId());
+		System.out.println("fd_acclist : " + fd_acclist);
+		
+		session.setAttribute("accvo", accvo);
+		model.addAttribute("fr_acclist", fr_acclist);
+		model.addAttribute("fd_acclist", fd_acclist);
+		
+		return "temp/mypageFollw";
+		
+	}
+	
+	@RequestMapping("/mypage_unfollow.do")
+	@ResponseBody
+	public Map<String, Boolean> mypage_unfollow(@RequestBody String[] idarr){
+		
+		System.out.println("mypage_unfollow");
+		
+		String fr_id = idarr[0];
+		String fd_id = idarr[1];
+		FollowVo fvo = new FollowVo(fr_id, fd_id);
+		
+		int res = biz.mypage_unfollow(fvo);
+
+		Map<String, Boolean> resMap = new HashMap<String, Boolean>();
+		
+		if(res>0) {
+			resMap.put("res", true);
+		}else {
+			resMap.put("res", false);
+		}
+		
+		return resMap;
 	}
 	
 	

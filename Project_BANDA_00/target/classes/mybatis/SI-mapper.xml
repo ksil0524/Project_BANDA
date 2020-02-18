@@ -50,6 +50,25 @@
 		WHERE ID = #{id}
 	</update>
 	
+	<select id="fd_accountSelectList" parameterType="String" resultMap="accountVoMap">
+		SELECT ID, PASSWORD, EMAIL, PHONE 
+		FROM ACCOUNT
+		LEFT JOIN FOLLOW ON(ID = FR_ID)
+		WHERE FD_ID = #{fd_id}
+	</select>
+	
+	<select id="fr_accountSelectList" parameterType="String" resultMap="accountVoMap">
+		SELECT ID, PASSWORD, EMAIL, PHONE 
+		FROM ACCOUNT
+		LEFT JOIN FOLLOW ON(ID = FD_ID)
+		WHERE FR_ID = #{fr_id}
+	</select>
+	
+	<delete id="follow_unfollow" parameterType="followVo">
+		DELETE FROM FOLLOW WHERE FR_ID = #{fr_id} AND FD_ID = #{fd_id}
+	</delete>
+	
+	
 </mapper>
 
 

@@ -1,3 +1,7 @@
+<%@page import="com.mvc.banda.model.vo.PetVo"%>
+<%@page import="org.springframework.ui.Model"%>
+<%@page import="javax.swing.Box.Filler"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.mvc.banda.model.vo.FollowVo"%>
 <%@page import="java.util.List"%>
 <%@page import="com.mvc.banda.model.vo.AccountVo"%>
@@ -25,6 +29,52 @@
 	<%
 		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
 	%>	  	  
+	
+	
+	<script type="text/javascript">
+		function follow_func(fuf, frid, fdid){
+			
+			var fr_id = frid;
+			var fd_id = fdid;
+			
+			var idarr = [frid, fdid];
+			
+			
+			console.log(idarr);
+			
+			if(fuf == 'uf'){
+				
+				$.ajax({
+					
+					type:"post",
+					url:"mypage_unfollow.do",
+					data:JSON.stringify(idarr),
+					contentType:"application/json",
+					dataType:"json",
+					success : function(data){	
+						var res = data.res;
+
+						if(res){
+							$("#followbtn_fd_"+fdid).css("background","#0fc19e");							
+							$("#followbtn_fd_"+fdid).attr("onclick","#follow_func('f','"+frid+"','"+fdid+"')");
+							$("#followbtn_fd_"+fdid).text("add follow");							
+						}else{
+							alert("false");	
+						}
+
+					},
+					error : function(){
+						alert("fail");
+					}
+					
+				});
+				
+			}
+			
+			
+		};
+	
+	</script>
 
 </head>
 <body>
@@ -195,15 +245,26 @@
           <!-- <li class="current-menu-item"><a href="photo_profile.html">Posts <span>1.7k</span></a></li> -->
 <%
 	List<FollowVo> followlist =  accvo.getFollow_list();
+
+	//현 계정이 팔로우 한사람의 수
 	int fr_count=0;
+	List<AccountVo> fr_acclist = (List<AccountVo>)request.getAttribute("fr_acclist");
+	List<FollowVo> followerlist = new ArrayList<FollowVo>();
+	
+	//현 계정을 팔로우 한사람의 수
 	int fd_count=0;
+	List<AccountVo> fd_acclist = (List<AccountVo>)request.getAttribute("fd_acclist");
+	List<FollowVo> followinglist = new ArrayList<FollowVo>();
+	
 	
 	for(int i=0; i<followlist.size(); i++){
 		if(followlist.get(i).getFr_id().equals(accvo.getId())){
 			fr_count++;
+			followerlist.add(followlist.get(i));
 		}
 		if(followlist.get(i).getFd_id().equals(accvo.getId())){
 			fd_count++;
+			followinglist.add(followlist.get(i));
 		}
 	}
 	
@@ -221,13 +282,14 @@
       </div><!--/container -->
      </section><!--/home-menu -->	
 
+
 	 <!-- ==============================================
 	 News Feed Section
 	 =============================================== --> 
 	 <section id="follwList" class="newsfeed">
 	  <div class="container">
 	  
-	   <div class="row">
+	   <div class="row" style="margin-bottom: 200px;">
 		<div class="col-lg-12" style="background: #fff;">
 			<div class="frnds">
 				<!-- <ul class="frnds-nav frnds-nav-tabs">
@@ -238,6 +300,75 @@
 				<div class="tab-content">
 				  <div class="tab-pane active frnds-fade frnds-show" id="frends">
 					<ul class="nearby-contct">
+					<!-- 나를 팔로우 한사람 -->
+					
+					
+					
+<%
+					if(fd_count == 0){
+%>
+					<li>
+						<p align="center"> 현 계정을 팔로우한 사람이 없습니다. </p>
+					</li>
+<%						
+					}else{
+						for(int i=0 ; i<fd_acclist.size() ; i++){							
+%>
+						
+						<li>
+						<div class="nearly-pepls">
+							<figure>
+								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=fd_acclist.get(i).getId() %>/image.jpg" alt="" style="width: 100%; height: 100%;"></a>
+							</figure>
+							<div class="pepl-info">
+								<h4><a href="#" title=""><%=fd_acclist.get(i).getId() %></a></h4>
+								<span>
+<%
+								for(PetVo tmp : fd_acclist.get(i).getPet_list()){
+%>
+								:<%=tmp.getP_Name() %> &nbsp;
+<%									
+								}
+%>
+								</span>
+								
+<%
+								// 나를 팔로우 하는 사람을 내가 팔로우 하고 있으면 팔로우 취소 버튼으로 아니면 팔로우 하기 버튼으로
+								int j=0;
+								while(j<=followerlist.size()){
+									if(j == followerlist.size()){									
+%>
+										<a id="followbtn_fd_<%=fd_acclist.get(i).getId()%>" href="javascript:void(0);" class="add-butn" style="background: #0fc19e;" onclick="follow_func('f','<%=accvo.getId() %>','<%=fd_acclist.get(i).getId()%>');">add follow</a>
+<%
+										break;
+									}
+									
+									if(fd_acclist.get(i).getId().equals(followerlist.get(j).getFd_id())){
+%>
+										<a id="followbtn_fd_<%=fd_acclist.get(i).getId()%>" href="javascript:void(0);" class="add-butn" style="background: lightgray;" onclick="follow_func('uf','<%=accvo.getId() %>','<%=fd_acclist.get(i).getId()%>');">following</a>
+<%
+										break;
+									}
+									j++;
+								}
+%>
+
+								<!-- 								
+								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
+								<a href="#" title="" class="add-butn" data-ripple="" style="background: #0fc19e;">add friend</a>
+								 -->
+								
+								
+							</div>
+						</div>
+						</li>
+						
+<%	
+						}
+					}
+%>					
+
+<!--    			
 					<li>
 						<div class="nearly-pepls">
 							<figure>
@@ -342,11 +473,88 @@
 							</div>
 						</div>
 					</li>
+-->
+					
 				</ul>
 					<div class="lodmore"><!-- <button id="loadBtn" class="btn-view btn-load-more"></button>  --><button id="loadBtn" class="fas fa-redo-alt"></button></div>
 				  </div>
+	<!--    -->
 				  <div class="tab-pane fade" id="frends-req">
 					<ul class="nearby-contct">
+					<!-- 팔로우 하는 사람 -->
+<%
+					if(fd_count == 0){
+%>
+					<li>
+						<p align="center"> 현 계정이 팔로우 한 사람이 없습니다. </p>
+					</li>
+<%						
+					}else{
+						for(int i=0 ; i<fr_acclist.size() ; i++){							
+%>
+	
+						<li>
+						<div class="nearly-pepls">
+							<figure>
+								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=fr_acclist.get(i).getId() %>/image.jpg" alt="" style="width: 100%; height: 100%;"></a>
+							</figure>
+							<div class="pepl-info">
+								<h4><a href="#" title=""><%=fr_acclist.get(i).getId() %></a></h4>
+								<span>
+<%
+								for(PetVo tmp : fr_acclist.get(i).getPet_list()){
+%>
+								:<%=tmp.getP_Name() %> &nbsp;
+<%									
+								}
+%>
+								</span>
+																
+<%
+								// 나를 팔로우 하는 사람을 내가 팔로우 하고 있으면 팔로우 취소 버튼으로 아니면 팔로우 하기 버튼으로
+								int j=0;
+								while(j<=followerlist.size()){
+									if(j == followerlist.size()){									
+%>
+										<button></button>
+										<a href="#" title="" class="add-butn" data-ripple="" style="background: #0fc19e;">add follow</a>
+<%
+										break;
+									}
+									
+									if(fr_acclist.get(i).getId().equals(followerlist.get(j).getFd_id())){
+%>
+										
+										<a href="#" title="" class="add-butn" data-ripple="" style="background: lightgray;">following</a>
+<%
+										break;
+									}
+									j++;
+								}
+%>
+								
+								<!-- 								
+								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
+								<a href="#" title="" class="add-butn" data-ripple="" style="background: #0fc19e;">Confirm</a>
+								 -->
+							</div>
+						</div>
+						</li>	
+	
+	
+<%	
+						}
+					}
+%>					
+					
+					
+					
+					
+					
+					
+					
+					
+<!-- 
 					<li>
 						<div class="nearly-pepls">
 							<figure>
@@ -360,6 +568,7 @@
 							</div>
 						</div>
 					</li>	
+
 
 					<li>
 						<div class="nearly-pepls">
@@ -452,6 +661,9 @@
 							</div>
 						</div>
 					</li>
+ -->
+ 
+ 
 				</ul>	
 					  <button id="loadBtn" class="fas fa-redo-alt"></button>
 

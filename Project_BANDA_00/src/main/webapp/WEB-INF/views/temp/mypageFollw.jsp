@@ -32,6 +32,17 @@
 	
 	
 	<script type="text/javascript">
+		
+	$(function(){
+		
+		$("#loadBtn").click(function(){
+			location.href='mypage_followpage.do';
+		});
+		
+		
+	});
+	
+	
 		function follow_func(fuf, frid, fdid){
 			
 			var fr_id = frid;
@@ -56,11 +67,38 @@
 
 						if(res){
 							$("#followbtn_fd_"+fdid).css("background","#0fc19e");							
-							$("#followbtn_fd_"+fdid).attr("onclick","#follow_func('f','"+frid+"','"+fdid+"')");
+							$("#followbtn_fd_"+fdid).attr("onclick","follow_func('f','"+frid+"','"+fdid+"')");
 							$("#followbtn_fd_"+fdid).text("add follow");							
 						}else{
 							alert("false");	
 						}
+
+					},
+					error : function(){
+						alert("fail");
+					}
+					
+				});
+				
+			}else if(fuf == 'f'){
+				
+				$.ajax({
+					type:"post",
+					url:"mypage_follow.do",
+					data:JSON.stringify(idarr),
+					contentType:"application/json",
+					dataType:"json",
+					success : function(data){	
+						var res = data.res;
+
+						if(res){
+							$("#followbtn_fd_"+fdid).css("background","lightgray");							
+							$("#followbtn_fd_"+fdid).attr("onclick","follow_func('uf','"+frid+"','"+fdid+"')");
+							$("#followbtn_fd_"+fdid).text("following");							
+						}else{
+							alert("false");	
+						}
+						
 
 					},
 					error : function(){
@@ -367,113 +405,6 @@
 						}
 					}
 %>					
-
-<!--    			
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/friend-avatar9.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">jhon kates</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly1.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">sophia Gate</a></h4>
-								<span>tv actresses</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly2.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">sara grey</a></h4>
-								<span>work at IBM</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly3.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Sexy cat</a></h4>
-								<span>Student</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly4.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Sara grey</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly5.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Amy watson</a></h4>
-								<span>Study in university</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly6.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">caty lasbo</a></h4>
-								<span>work as dancers</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly2.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Ema watson</a></h4>
-								<span>personal business</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a>
-								<a href="#" title="" class="add-butn" data-ripple="">add friend</a>
-							</div>
-						</div>
-					</li>
--->
 					
 				</ul>
 					<div class="lodmore"><!-- <button id="loadBtn" class="btn-view btn-load-more"></button>  --><button id="loadBtn" class="fas fa-redo-alt"></button></div>
@@ -516,157 +447,30 @@
 								while(j<=followerlist.size()){
 									if(j == followerlist.size()){									
 %>
-										<button></button>
-										<a href="#" title="" class="add-butn" data-ripple="" style="background: #0fc19e;">add follow</a>
+										<a id="followbtn_fd_<%=fr_acclist.get(i).getId()%>" href="javascript:void(0);" class="add-butn" style="background: #0fc19e;" onclick="follow_func('f','<%=accvo.getId() %>','<%=fr_acclist.get(i).getId()%>');">add follow</a>
 <%
 										break;
 									}
 									
 									if(fr_acclist.get(i).getId().equals(followerlist.get(j).getFd_id())){
 %>
-										
-										<a href="#" title="" class="add-butn" data-ripple="" style="background: lightgray;">following</a>
+										<a id="followbtn_fd_<%=fr_acclist.get(i).getId()%>" href="javascript:void(0);" class="add-butn" style="background: lightgray;" onclick="follow_func('uf','<%=accvo.getId() %>','<%=fr_acclist.get(i).getId()%>');">following</a>
 <%
 										break;
 									}
 									j++;
 								}
 %>
-								
-								<!-- 								
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="" style="background: #0fc19e;">Confirm</a>
-								 -->
 							</div>
 						</div>
 						</li>	
-	
-	
+
 <%	
 						}
 					}
 %>					
-					
-					
-					
-					
-					
-					
-					
-					
-<!-- 
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly5.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Amy watson</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>	
-
-
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly1.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">sophia Gate</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly6.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">caty lasbo</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/friend-avatar9.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">jhon kates</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly2.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">sara grey</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly4.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Sara grey</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/nearly3.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">Sexy cat</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="nearly-pepls">
-							<figure>
-								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/temp/assets/img/follwer/friend-avatar9.jpg" alt=""></a>
-							</figure>
-							<div class="pepl-info">
-								<h4><a href="#" title="">jhon kates</a></h4>
-								<span>ftv model</span>
-								<a href="#" title="" class="add-butn more-action" data-ripple="">delete Request</a>
-								<a href="#" title="" class="add-butn" data-ripple="">Confirm</a>
-							</div>
-						</div>
-					</li>
- -->
- 
- 
 				</ul>	
-					  <button id="loadBtn" class="fas fa-redo-alt"></button>
-
+					  <button id="loadBtn" class="fas fa-redo-alt" onclick="location.href='mypage_followpage.do'"></button>
 				  </div>
 				</div>
 			</div>

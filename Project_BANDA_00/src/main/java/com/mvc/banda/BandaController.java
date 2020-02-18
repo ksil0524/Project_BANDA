@@ -235,7 +235,7 @@ public class BandaController {
 		
 		session.setMaxInactiveInterval(60*60);
 		
-		String id = "ADMIN";
+		String id = "user06";
 		
 		AccountVo accvo = biz.mypage_allselect(id);
 		System.out.println(accvo);
@@ -339,6 +339,53 @@ public class BandaController {
 		
 		return resMap;
 	}
+	
+	
+	@RequestMapping("/mypage_follow.do")
+	@ResponseBody
+	public Map<String, Boolean> mypage_follow(@RequestBody String[] idarr){
+		
+		System.out.println("mypage_follow");
+		
+		String fr_id = idarr[0];
+		String fd_id = idarr[1];
+		FollowVo fvo = new FollowVo(fr_id, fd_id);
+		
+		int res = biz.mypage_follow(fvo);
+
+		Map<String, Boolean> resMap = new HashMap<String, Boolean>();
+		
+		if(res>0) {
+			resMap.put("res", true);
+		}else {
+			resMap.put("res", false);
+		}
+		
+		return resMap;
+	}
+	
+	@RequestMapping("/mypage_feedpage.do")
+	public String mypage_feedpage(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		System.out.println("mypage_feedpage");
+
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("accvo");
+		
+		session.setMaxInactiveInterval(60*60);
+		
+		String id = "user06";
+		
+		AccountVo accvo = biz.mypage_allselect(id);
+		System.out.println(accvo);
+
+		session.setAttribute("accvo", accvo);
+		
+		return "temp/mypageFeed";
+	}
+	
+	
 	
 	
 	// < 김성일 파트  끝 > 

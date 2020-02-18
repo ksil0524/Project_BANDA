@@ -1,9 +1,37 @@
+<%@page import="com.mvc.banda.model.vo.FeedVo"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+     <!-- ==============================================
+	 Scripts
+	 =============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+<%
+	AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+
+
+	List<FeedVo> feedlist = accvo.getFeed_list();
+
+
+
+
+
+
+
+%>
+
 </head>
 <body>
 
@@ -109,7 +137,7 @@
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-		     <a href="#"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/13.jpeg" alt="Image"></a>
+		     <a href="mypage_accountpage.do"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image"></a>
 		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
@@ -155,6 +183,38 @@
 	 =============================================== --> 
 	 <section class="newsfeed">
 	  <div class="container">
+	  
+	  <c:choose>
+	  	<c:when test="<%=feedlist.size() <= 3 %>">
+	  		<div class="row">
+	  			<c:forEach var="flist" items="<%=feedlist %>">
+	  				
+	  				<div class="col-lg-4">
+					 <a href="#myModal" data-toggle="modal">
+					 <div class="explorebox" 
+					   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/14.jpg') no-repeat;
+					          background-size: cover;
+			                  background-position: center center;
+			                  -webkit-background-size: cover;
+			                  -moz-background-size: cover;
+			                  -o-background-size: cover;">
+					  <div class="explore-top">
+					   <div class="explore-like"><i class="fa fa-heart"></i> <span>14,100</span></div>
+					   <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>
+			          </div>		  
+					 </div>
+					 </a>
+					</div><!--/ col-lg-4 -->
+	  				
+	  			</c:forEach>
+	  		</div>
+	  	</c:when>
+	  </c:choose>
+	  
+	  
+	  
+	  
+	  
 	  
 	   <div class="row">
 	   
@@ -211,6 +271,7 @@
 		
 	   </div><!--/ row -->
 	   
+<!-- 
 	   <div class="row">
 	   
 	    <div class="col-lg-4">
@@ -228,7 +289,7 @@
           </div>		  
 		 </div>
 		 </a>
-		</div><!--/ col-lg-4 -->
+		</div>
 	   
 	    <div class="col-lg-4">
 		 <a href="#myModal" data-toggle="modal">
@@ -245,7 +306,7 @@
           </div>			  
 		 </div>
 		 </a>
-		</div><!--/ col-lg-4 -->
+		</div>
 	   
 	    <div class="col-lg-4">
 		 <a href="#myModal" data-toggle="modal">
@@ -262,9 +323,11 @@
           </div>		  
 		 </div>
 		 </a>
-		</div><!--/ col-lg-4 -->
+		</div>
 		
-	   </div><!--/ row -->
+	   </div>
+ -->
+	   
 	   
 	  </div><!--/ container -->
 	 </section><!--/ newsfeed -->
@@ -370,13 +433,6 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>	   
 	   
-     <!-- ==============================================
-	 Scripts
-	 =============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 
     <!-- ==============================================
 	HEADER CIRCLE Scripts

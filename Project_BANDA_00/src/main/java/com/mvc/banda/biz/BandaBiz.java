@@ -89,6 +89,11 @@ public class BandaBiz {
 		return si_dao.follow_unfollow(fvo);
 	}
 	
+	public int mypage_follow(FollowVo fvo) {
+		return si_dao.follow_follow(fvo);
+	}
+
+	
 	// < 김성일 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -219,6 +224,7 @@ public class BandaBiz {
 	public BoardVo selectOneBoard(int board_no) {
 		return nk_dao.selectOneBoard(board_no);
 	}
+
 
 
 

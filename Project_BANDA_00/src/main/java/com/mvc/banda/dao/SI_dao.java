@@ -257,6 +257,22 @@ public class SI_dao {
 		
 		return res;
 	}
+
+	public int follow_follow(FollowVo fvo) {
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.insert(NAMESPACE+"follow_follow",fvo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : follow_follow");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
 	
 	
 	

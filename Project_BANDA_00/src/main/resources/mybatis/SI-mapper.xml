@@ -68,6 +68,10 @@
 		DELETE FROM FOLLOW WHERE FR_ID = #{fr_id} AND FD_ID = #{fd_id}
 	</delete>
 	
+	<insert id="follow_follow" parameterType="followVo">
+		INSERT INTO FOLLOW VALUES(#{fr_id}, #{fd_id})
+	</insert>
+	
 	
 </mapper>
 

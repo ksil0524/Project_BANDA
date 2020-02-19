@@ -196,9 +196,7 @@
 	 		var spantag = $("<span>").addClass("tag").html(":"+val+"<a onclick='deletepetspan(this)'>x</a>");
 	 		$("#pettags").append(spantag);
 	 		$("#pettaginp").val("");
-	 		
 	 		pettaglist.push(val);
-	 		console.log(pettaglist);
 	 		
 	 	}
 	 	
@@ -206,6 +204,7 @@
 	 		var spantag = $("<span>").addClass("tag").html("#"+val+"<a onclick='deletehashspan(this)'>x</a>");
 	 		$("#hashtags").append(spantag);
 	 		$("#hashtaginp").val("");
+	 		hashtaglist.push(val);
 	 	}
 	 	
 	 	function deletepetspan(atag){
@@ -236,12 +235,20 @@
 	 				hashtaglist.splice(i,1);
 	 			}
 	 		}	
-	 		
 	 		atag.remove();
 	 		pa.remove();	 	
 	 	}
 	 	
 	 	function insertfeed(){
+	 		
+	 		$("#ptaglist").val(pettaglist);
+	 		$("#hteglist").val(hashtaglist);
+	 		
+			var insert_confirm = confirm("새로운 피드를 생성하시겠습니까?");
+			
+			if(insert_confirm){
+				$("#insertfeedform").submit();			
+			}
 	 		
 	 	}
 	 	
@@ -259,27 +266,27 @@
 	    <div class="col-lg-12">  
 		
 	     <div class="box">
-		  <form:form action="mypage_insertfeed.do()" method="post" onsubmit="return false" enctype="form-data">
-		  <input type="hidden" id="feedid" value="<%=vo.getId() %>">
+		  <form:form action="mypage_insertfeed.do" method="post"  modelAttribute="feedVo" enctype="multipart/form-data" id="insertfeedform" >
+		  <input type="hidden" id="feedid" name="id" value="<%=vo.getId() %>">
 		  <table>
 		  	<tr>
 		  		<td colspan="2">
-		  			<textarea name="feed_content" class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  			<textarea name="feed_content" class="form-control no-border" rows="3" placeholder="내용을 입력해주세요..." ></textarea>
 		  		</td>
 		  	</tr>
 		  	<tr>
 		  		<td class="tags-input-wrapper" id="pettags" width="30%;">
-		   			<input id="pettaginp" type="text" class="form-control no-border" placeholder="Type something..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {pettaginsert(this.value)}"/>
-		  			<input type="hidden" id="feed_ptag" name="feed_ptag" value="">
+		   			<input id="pettaginp" type="text" class="form-control no-border" placeholder="태그할 반려동물을 입력해주세요..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {pettaginsert(this.value)}"/>
+		  			<input type="hidden" id="ptaglist" name="ptaglist" value="">
 		  		</td>
 		  		<td class="tags-input-wrapper" id="hashtags" width="70%;">
-		   			<input id="hashtaginp" type="text" class="form-control no-border" placeholder="Type something..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {hashtaginsert(this.value)}"/>
-		  			<input type="hidden" id="feed_hteg" name="feed_hteg" value="">
+		   			<input id="hashtaginp" type="text" class="form-control no-border" placeholder="해시태그를 입력해주세요..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {hashtaginsert(this.value)}"/>
+		  			<input type="hidden" id="hteglist" name="hteglist" value="">
 		  		</td>
 		  	</tr>
 		  </table>
 		  <div class="box-footer clearfix">
-		   <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm">Upload</button>
+		   <input type="button" class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="insertfeed()" value="Upload">
 		   <ul class="nav nav-pills nav-sm" id="filetagpa">
 		   	<li id="li1" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
 		   	<li id="li2" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
@@ -291,11 +298,11 @@
 			<li class="nav-item"><a class="nav-link" href="javascript:void(0);" id="file_select1"><i class="fa fa-camera text-muted"></i></a></li>
 			<li class="nav-item"><a class="nav-link" href="javascript:void(0);" id="file_select2"><i class="fa fa-video text-muted"></i></a></li>
 			
-		   	<input type="file" id="file_1" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_2" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_3" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_4" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_5" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_1" name="file_1" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_2" name="file_2" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_3" name="file_3" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_4" name="file_4" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_5" name="file_5" style="display: none" accept="video/mp4, image/jpeg, image/png">
 		   	
 		   </ul>
 		  </div>
@@ -362,11 +369,18 @@
     		
     		
     		
+    		$('input[type="button"]').keydown(function() {
+    			  if (event.keyCode === 13) {
+    			    event.preventDefault();
+    			  };
+    			});
+
     		
     	});
     	
     	
     	
+    		
     	
     	
     </script>

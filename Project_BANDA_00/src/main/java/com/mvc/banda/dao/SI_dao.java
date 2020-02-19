@@ -273,6 +273,41 @@ public class SI_dao {
 		
 		return res;
 	}
+
+	public int mypage_insertfeed(FeedVo feedVo) {
+		
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.insert(NAMESPACE+"feed_insert",feedVo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : mypage_insertfeed");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
+
+	public int getLastFeedSeq() {
+
+		int lastpseq = 0;
+		
+		try {
+			
+			lastpseq = sqlSession.selectOne(NAMESPACE+"getLastFeedSeq");
+			
+		} catch (Exception e) {
+			System.out.println("[error] : getLastPetSeq");
+			e.printStackTrace();			
+		}
+		
+		lastpseq--;
+		
+		return lastpseq;
+	}
 	
 	
 	

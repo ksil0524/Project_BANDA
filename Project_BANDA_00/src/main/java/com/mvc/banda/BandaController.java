@@ -389,6 +389,107 @@ public class BandaController {
 	}
 	
 	
+	@RequestMapping(value = "/mypage_insertfeed.do", method = RequestMethod.POST)
+	public String mypage_insertfeed(HttpServletRequest request, Model model, FeedVo feedVo, @RequestParam String[] ptaglist , @RequestParam String[] hteglist, 
+									MultipartFile file_1, MultipartFile file_2, MultipartFile file_3, MultipartFile file_4, MultipartFile file_5) throws IllegalStateException, IOException {
+		
+		System.out.println("mypage_insertfeed");
+		
+		String feed_ptag = "";
+		String feed_hteg = "";
+		String feed_file = "";
+		
+		for(int i=0; i<ptaglist.length;i++) {
+			feed_ptag = feed_ptag+":"+ptaglist[i]+" ";
+		}
+		for(int i=0; i<hteglist.length;i++) {
+			feed_hteg = feed_hteg+"#"+hteglist[i]+" ";
+		}
+		
+		feedVo.setFeed_ptag(feed_ptag);
+		feedVo.setFeed_hteg(feed_hteg);
+		
+		int contentCount = 0;
+		
+		List<MultipartFile> filelist = new ArrayList<MultipartFile>();
+		filelist.add(file_1);
+		filelist.add(file_2);
+		filelist.add(file_3);
+		filelist.add(file_4);
+		filelist.add(file_5);
+		
+		for(MultipartFile tmp : filelist) {
+			if(tmp.getOriginalFilename() != "" ) {
+				contentCount++;	
+			}
+		}
+		
+		for(int i=0; i<contentCount ; i++) {
+			String[] ext = filelist.get(i).getOriginalFilename().split("\\.");
+			String extension = ext[1];
+			feed_file = feed_file+"@content_"+(1+i)+"."+extension;
+		}
+		
+		feedVo.setFeed_file(feed_file);
+
+		System.out.println("insert 할 feedVo : "+feedVo);
+		
+		int res = biz.mypage_insertfeed(feedVo);
+		
+		///////////////////////////////////////////////////////////
+		//여기서 부터 파일
+		
+		if(res > 0) {
+			
+			int lastfno = biz.getLastFeedSeq();
+			
+			String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\feed\\"+lastfno);
+			
+			System.out.println("savepath : "+savepath);
+			
+			File folder = new File(savepath);
+			
+			if (!folder.exists()) {
+	            try{
+	                folder.mkdir(); //폴더 생성합니다.
+	                System.out.println("폴더가 생성되었습니다.");
+	                 } 
+	                 catch(Exception e){
+	                e.getStackTrace();
+	            }        
+	               }else {
+	            System.out.println("이미 폴더가 생성되어 있습니다.");
+	         }
+			
+			for(int i=0; i<contentCount; i++) {
+				
+				//확장자
+				String[] ext = filelist.get(i).getOriginalFilename().split("\\.");
+				String extension = ext[1];
+				
+				//파일이름
+				String filename = filelist.get(i).getOriginalFilename();
+				
+				//실제 경로와 파일이름
+		        File insertcontent = new File(savepath+"\\"+filename);
+		        
+		        //위치에 넣기
+		        filelist.get(i).transferTo(insertcontent);
+		        
+		        //변경할 이름으로 파일 객체 만들기
+		 		File renamefile = new File(savepath+"\\content_"+(1+i)+"."+extension);
+		 		//업로드한 컨텐스 이름 content_(번호).(확장자)로 바꿔서 붙혀넣기
+		 		insertcontent.renameTo(renamefile);
+		 		//업로드한 컨텐츠 삭제
+		 		insertcontent.delete();
+				
+			}
+
+		}
+		
+		return "redirect:mypageFeed.do";
+	}
+	
 	
 	
 	// < 김성일 파트  끝 > 

@@ -182,8 +182,25 @@
 	    <div class="col-lg-12">  
 		
 	     <div class="box">
+	     
 		  <form>
-		   <textarea class="form-control no-border" rows="3" placeholder="Type something..."></textarea>
+		  <table>
+		  	<tr>
+		  		<td colspan="2">
+		  			<textarea class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  		</td>
+		  	</tr>
+		  	<tr>
+		  		<td>
+		   			<textarea class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  		</td>
+		  		<td>
+		   			<textarea class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  		</td>
+		  	</tr>
+		  </table>
+		   <textarea class="form-control no-border" rows="3" placeholder="Type something..." style="width:50%;"></textarea>
+		   <textarea class="form-control no-border" rows="3" placeholder="Type something..." style="width:50%;"></textarea>
 		  </form>
 		  <div class="box-footer clearfix">
 		   <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm">Upload</button>

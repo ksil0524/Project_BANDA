@@ -6,6 +6,7 @@
 <%@ page import = "com.mvc.banda.model.vo.FeedVo" %>
 <%@ page import = "java.util.*" %>
 <%@ page session = "true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE HTML>
 <html>
@@ -467,6 +468,9 @@ else {
   							htag = arr['feed_hteg'];
   							regdate = arr['feed_regdate'];
   							
+  							//regdate = getFormatDate(regdate);
+  							
+  							
   							var l = arr['like_list'];
   							
   							if(l == null){
@@ -493,6 +497,7 @@ else {
   							$('#feed_htag').html(htag);
   							$('#feed_ptag').html(ptag);
   							$('#feed_regdate').html(regdate);
+  							alert(regdate);
   							$('#feed_follow').html(like_list.length);
   							console.log('<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id.trim() +'/profile.jpg');
   							document.getElementById('feed_p_image').src = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id +'/profile.jpg';
@@ -918,8 +923,18 @@ else {
   				
   			}
   			
-  			
-  			
+  			getFormatDate = function(date){
+  				
+  				var year = date.getFullYear();              //yyyy
+   		       var month = (1 + date.getMonth());          //M
+   		       month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+   		       var day = date.getDate();                   //d
+   		       day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+   		       return  year + '-' + month + '-' + day;
+  				
+  				
+  			}
+  					
   			
   			});
   			

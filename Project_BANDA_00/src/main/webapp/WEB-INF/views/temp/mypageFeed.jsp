@@ -6,6 +6,8 @@
 <%@ page import = "com.mvc.banda.model.vo.FeedVo" %>
 <%@ page import = "java.util.*" %>
 <%@ page session = "true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

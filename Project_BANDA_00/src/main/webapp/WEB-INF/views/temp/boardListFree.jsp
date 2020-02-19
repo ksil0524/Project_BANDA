@@ -17,6 +17,7 @@
 	
 </head>
 <body>
+<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
 	HeaderSection

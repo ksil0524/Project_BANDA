@@ -21,6 +21,7 @@
    
 </head>
 <body style = "background-color:#f4f4f4">
+<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 <%
 	

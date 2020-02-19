@@ -150,7 +150,17 @@ function close(){
 	});
 	
 	$(function() {
+		
+		var session = $("#hidden_session").val();
+		   console.log(session);
 
+		   if(session == 'AccountVo') {
+		      
+		      isLogin = 1;
+		      
+		   } else {
+		      
+		   }
 		
 		
 		var	$window = $(window),

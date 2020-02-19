@@ -6,6 +6,7 @@
 	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 </head>
 <body>
+<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
 	HeaderSection

@@ -19,6 +19,7 @@
 
 </head>
 <body>
+<input type = "hidden" id = "hidden_session" value = '<%=session.getAttribute("vo") %>'>
 
 	<!-- ==============================================
 	HeaderSection
@@ -452,6 +453,7 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Auto Script -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
   	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

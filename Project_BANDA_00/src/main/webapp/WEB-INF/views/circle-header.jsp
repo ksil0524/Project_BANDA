@@ -85,7 +85,7 @@
 							<a href="rank.do" id="menuBtn1" class="" style="color:#21b77b;"><i class="fas fa-award"></i></a>
 							<a href="boardListFree.do" id="menuBtn2" class="" style="color:#80b8ff;"><i class="fas fa-user-friends"></i></a>
 							<a href="mapHospital.do" id="menuBtn3" class="" style="color:#f79689;"><i class="fas fa-map-marked-alt"></i></a>
-							<a href="mypageFollw.do" id="menuBtn4" class="" style="color:#ec3d6e;"><i class="fas fa-user"></i></a>
+							<a href="mypage_followpage.do" id="menuBtn4" class="" style="color:#ec3d6e;"><i class="fas fa-user"></i></a>
 							
 						</div>
 						

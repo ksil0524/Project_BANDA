@@ -416,6 +416,9 @@ public class BandaController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public Map<String, Boolean> login(@RequestBody AccountVo vo) {
 		
+		session.setMaxInactiveInterval(60*60);
+
+		
 		AccountVo vo1 = biz.login(vo);
 		Boolean chk = true;
 		

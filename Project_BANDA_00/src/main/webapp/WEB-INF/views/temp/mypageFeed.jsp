@@ -6,13 +6,26 @@
 <%@ page import = "com.mvc.banda.model.vo.FeedVo" %>
 <%@ page import = "java.util.*" %>
 <%@ page session = "true" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+     <!-- ==============================================
+	 Scripts
+	 =============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+	
+	
 <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-modal.css" rel="stylesheet" />
+<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />
 
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 
@@ -175,6 +188,70 @@
 	 <!-- ==============================================
 	 	글올리기
 	 =============================================== --> 
+	 <script type="text/javascript">
+	 	var pettaglist = new Array;
+	 	var hashtaglist = new Array;
+	 	
+	 	function pettaginsert(val){
+	 		var spantag = $("<span>").addClass("tag").html(":"+val+"<a onclick='deletepetspan(this)'>x</a>");
+	 		$("#pettags").append(spantag);
+	 		$("#pettaginp").val("");
+	 		
+	 		pettaglist.push(val);
+	 		console.log(pettaglist);
+	 		
+	 	}
+	 	
+	 	function hashtaginsert(val){
+	 		var spantag = $("<span>").addClass("tag").html("#"+val+"<a onclick='deletehashspan(this)'>x</a>");
+	 		$("#hashtags").append(spantag);
+	 		$("#hashtaginp").val("");
+	 	}
+	 	
+	 	function deletepetspan(atag){
+	 		
+	 		var pa = atag.parentNode;
+	 		var patext = pa.innerText;
+	 		var patextck = patext.substr(1,patext.length-2);
+	 		console.log(patextck);
+
+	 		for(var i=0 ; i<pettaglist.length ; i++){
+	 			if(pettaglist[i] == patextck){
+	 				pettaglist.splice(i,1);
+	 			}
+	 		}	 		
+	 		atag.remove();
+	 		pa.remove();
+	 	}
+	 	
+	 	function deletehashspan(atag){
+	 		var pa = atag.parentNode;
+	 		var patext = pa.innerText;
+	 		var patextck = patext.substr(1,patext.length-2);
+	 		console.log(patextck);
+	 		
+	 		
+	 		for(var i=0 ; i<hashtaglist.length ; i++){
+	 			if(hashtaglist[i] == patextck){
+	 				hashtaglist.splice(i,1);
+	 			}
+	 		}	
+	 		
+	 		atag.remove();
+	 		pa.remove();	 	
+	 	}
+	 	
+	 	function insertfeed(){
+	 		
+	 	}
+	 	
+	 	
+	 	
+	 	
+	 
+	 </script>
+	 
+	 
 	 <section class="details">
 	  <div class="container">
 	   
@@ -182,33 +259,47 @@
 	    <div class="col-lg-12">  
 		
 	     <div class="box">
-	     
-		  <form>
+		  <form:form action="mypage_insertfeed.do()" method="post" onsubmit="return false" enctype="form-data">
+		  <input type="hidden" id="feedid" value="<%=vo.getId() %>">
 		  <table>
 		  	<tr>
 		  		<td colspan="2">
-		  			<textarea class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  			<textarea name="feed_content" class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
 		  		</td>
 		  	</tr>
 		  	<tr>
-		  		<td>
-		   			<textarea class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  		<td class="tags-input-wrapper" id="pettags" width="30%;">
+		   			<input id="pettaginp" type="text" class="form-control no-border" placeholder="Type something..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {pettaginsert(this.value)}"/>
+		  			<input type="hidden" id="feed_ptag" name="feed_ptag" value="">
 		  		</td>
-		  		<td>
-		   			<textarea class="form-control no-border" rows="3" placeholder="Type something..." ></textarea>
+		  		<td class="tags-input-wrapper" id="hashtags" width="70%;">
+		   			<input id="hashtaginp" type="text" class="form-control no-border" placeholder="Type something..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {hashtaginsert(this.value)}"/>
+		  			<input type="hidden" id="feed_hteg" name="feed_hteg" value="">
 		  		</td>
 		  	</tr>
 		  </table>
-		   <textarea class="form-control no-border" rows="3" placeholder="Type something..." style="width:50%;"></textarea>
-		   <textarea class="form-control no-border" rows="3" placeholder="Type something..." style="width:50%;"></textarea>
-		  </form>
 		  <div class="box-footer clearfix">
 		   <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm">Upload</button>
+		   <ul class="nav nav-pills nav-sm" id="filetagpa">
+		   	<li id="li1" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
+		   	<li id="li2" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
+		   	<li id="li3" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
+		   	<li id="li4" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
+		   	<li id="li5" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
+		   </ul>
 		   <ul class="nav nav-pills nav-sm">
-			<li class="nav-item"><a class="nav-link" href=""><i class="fa fa-camera text-muted"></i></a></li>
-			<li class="nav-item"><a class="nav-link" href=""><i class="fa fa-video text-muted"></i></a></li>
+			<li class="nav-item"><a class="nav-link" href="javascript:void(0);" id="file_select1"><i class="fa fa-camera text-muted"></i></a></li>
+			<li class="nav-item"><a class="nav-link" href="javascript:void(0);" id="file_select2"><i class="fa fa-video text-muted"></i></a></li>
+			
+		   	<input type="file" id="file_1" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_2" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_3" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_4" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	<input type="file" id="file_5" style="display: none" accept="video/mp4, image/jpeg, image/png">
+		   	
 		   </ul>
 		  </div>
+		 </form:form>
 		 </div>	
 		 
 		</div>
@@ -216,6 +307,71 @@
 	  
 	  </div><!--/ container -->
 	 </section><!--/ profile -->	
+    
+    <script type="text/javascript">
+    	
+    	$(function(){
+	
+    		var filecount = 1;
+    		
+    		$("#file_select1").on('click', function(){
+    			if(filecount > 5){
+    				alert("더 이상 파일을 첨부할 수 없습니다.");
+    				return false;
+    			}
+    			$("#file_"+filecount).click();
+    		});
+    		$("#file_select2").on('click', function(){
+    			if(filecount > 5){
+    				alert("더 이상 파일을 첨부할 수 없습니다.");
+    				return false;
+    			}
+    			$("#file_"+filecount).click();
+    		});
+    		
+    		
+    		$("#file_1").on('change', function(){
+    			console.log(this);
+    			filecount = filecount+1;
+    			$("#li1").css("display","block")
+    		});
+    		$("#file_2").on('change', function(){
+    			console.log(this);
+    			filecount = filecount+1;
+    			$("#li2").css("display","block")
+
+    		});
+    		$("#file_3").on('change', function(){
+    			console.log(this);
+    			filecount = filecount+1;
+    			$("#li3").css("display","block")
+
+    		});
+    		$("#file_4").on('change', function(){
+    			console.log(this);
+    			filecount = filecount+1;
+    			$("#li4").css("display","block")
+
+    		});
+    		$("#file_5").on('change', function(){
+    			console.log(this);
+    			filecount = filecount+1;
+    			$("#li5").css("display","block")
+    		});
+    		
+    		
+    		
+    		
+    		
+    	});
+    	
+    	
+    	
+    	
+    	
+    </script>
+    
+    
     
 	 <!-- ==============================================
 	  피드부분
@@ -450,14 +606,7 @@
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>	   
 	   
 
-     <!-- ==============================================
-	 Scripts
-	 =============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+
 
 
     <!-- ==============================================

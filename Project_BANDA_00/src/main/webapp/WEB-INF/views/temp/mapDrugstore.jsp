@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Auto CSS -->
 <!-- Map CSS -->
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-map.css" rel="stylesheet" />
 <!-- HEAD CSS -->
@@ -183,6 +186,8 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Map Script -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-map.js"></script>
+	<!-- Auto Script -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
   </body>
 </html>

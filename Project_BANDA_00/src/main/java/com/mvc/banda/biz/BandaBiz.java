@@ -112,7 +112,16 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정재호 파트  시작 >  
 	
-	
+	public List<String> circleheader_autosearch(String keyword, String searchtype){
+		/*
+		 * 검색어 자동완성
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200219
+		*/
+		return jh_dao.circleheader_autosearch(keyword, searchtype);
+	}
 	
 	
 	

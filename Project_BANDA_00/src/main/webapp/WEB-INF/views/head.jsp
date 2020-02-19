@@ -45,4 +45,8 @@
 		<!-- <script src="assets/js/modernizr-custom.js"></script> -->
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 		<link href="<%=request.getContextPath() %>/resources//assets/webfonts/custom-font.css" rel="stylesheet" />
+		<!-- ==============================================
+		Auto CSS
+		=============================================== -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		

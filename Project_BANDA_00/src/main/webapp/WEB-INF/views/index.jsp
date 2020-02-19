@@ -386,7 +386,8 @@
 			<script src="<%=request.getContextPath() %>/resources/assets/js/main.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
   			<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
-
-
+		<!-- Auto Script -->
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 	</body>
 </html>

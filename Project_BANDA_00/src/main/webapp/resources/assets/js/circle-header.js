@@ -4,7 +4,7 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-var isLogin = 0;
+var isLogin = 1;
 
 
 
@@ -263,3 +263,51 @@ function close(){
 
 
 })(jQuery);
+
+
+/***********************************
+검색어  @author 주희진
+***********************************/
+
+$(function(){
+$("#searchinput").autocomplete({
+		appendTo: "#autoArea",
+	    source: function(request, response){
+	    	var searchtype=$("input[name='jh_searchtype']:checked").val();
+	    	
+	    	if(searchtype == null || searchtype == ""){
+	    		alert("검색 카테고리를 선택해주세요.");
+	    		$("#searchform #searchinput").val("");
+	    		return;
+	    	}
+	    	
+	       $.ajax({
+	          type:"post",
+	          url:"circleheader_autosearch.do",
+	          data:{keyword:request.term, searchtype:searchtype},
+	          dataType:"json",
+	          success: function(result){
+	             if(result.success==true){
+	                response(
+	                   $.map(result.list, function(item){
+	                      return{
+	                         label:item,
+	                         value:item
+	                      }
+	                   })
+	                )
+	             }
+	          },
+	          error: function(){
+	             alert("ajax 서버와 통신 실패");
+	          }
+	          
+	       })
+	    },
+	    minLength:1,
+	    select:function(event, ui){
+	    
+	    }
+	 });
+    
+ });

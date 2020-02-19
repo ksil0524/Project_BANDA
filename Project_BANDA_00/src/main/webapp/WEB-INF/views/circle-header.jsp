@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
-
 			<header id="header">
 				<div class="inner" style="position:relative;">
 					<div class="closeBtn">
@@ -100,8 +98,8 @@
 					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
 					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
 					      </div>
-					        
-							<input type="text" id="searchinput" value="">
+					        <div id="autoArea" style="text-align: left;"></div><!-- 자동완성 @author 주희진 -->
+							<input type="text" id="searchinput" name="keyword" value="" >
 							<div id="searchBtn" class="searchBtn" onclick="#"><i class="fas fa-search"></i></div>
 							
 						  </form>
@@ -118,3 +116,4 @@
 					<a href="#" class="button hidden"><span>Let's Go</span></a>
 				</div>
 			</header>
+			

@@ -315,6 +315,8 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
-
+	<!-- Auto Script -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
   </body>
 </html>

@@ -392,6 +392,24 @@ public class BandaController {
 		return "index";
 	}
 	
+	@RequestMapping(value="/circleheader_autosearch.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> autosearch(HttpSession session, String keyword, String searchtype){
+		/*
+		 * 검색어 자동완성
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200219
+		*/
+		System.out.println("재호 - 자동검색 데이터 확인: " + keyword + "/ " + searchtype);
+		List<String> list = biz.circleheader_autosearch(keyword, searchtype);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("success", true);
+		return map;
+	}
 	
 	
 	// < 정재호 파트  끝 > 
@@ -513,7 +531,18 @@ public class BandaController {
 		return map;
 	}
 	
-	
+	@RequestMapping(value="/map_searchlist.do")
+	public String map_searchlist(Model model, String city, String district, String keyword ){
+		/*
+		 * 검색
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200218
+		*/
+		
+		return "";
+	}
 	
 	
 	// < 주희진 파트  끝 > 

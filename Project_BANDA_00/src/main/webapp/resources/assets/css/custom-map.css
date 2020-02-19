@@ -354,3 +354,55 @@
 	display: block; width: 12px;height: 20px; background: #f5f5f500;
 
 }
+
+
+/*page custom*/
+#cateOne, #cateTwo{
+	text-align: left;
+}
+
+#mapCon{
+	position: relative; 
+	padding: 60px 15px 15px 15px;
+}
+#mapDiv{
+	margin-top:-18px; 
+	background: #0fc19e; 
+	width:62px; 
+	height:65px;
+	position: absolute; 
+	top: 0px; 
+	left:15px; 
+	right: 0px; 
+	z-index: 10;
+	text-align: center; 
+	padding: 15px; 
+	border-radius: 7px;
+}
+
+.fa-map-marker-alt{
+	color: white;font-size: 32px;
+}
+#listCon{
+	background: rgba(255,255,255,.15); 
+	padding: 0px;
+}
+
+#listDiv {
+	height: 100px;
+	border: 0px solid red;
+	border-radius: 10px;
+	background: white;
+	padding: 20px;
+	margin-bottom: 15px;
+}
+
+#listDiv h3{
+	margin: 0px 0px 12px 0px;
+}
+
+.nodatalistDiv{
+	size: 15px;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 41px;}

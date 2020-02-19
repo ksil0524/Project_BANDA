@@ -113,9 +113,12 @@
 	background: white;
 }
 
+/* 자동검색   @author 주희진*/
 #header.hide .inner, #header.preview .inner {
 	height: 6em !important;
     width: 6em !important;
     padding: 4em !important;
 }
 
+/* 자동검색   @author 주희진*/
+.ui-autocomplete {position:relative; cursor:default; z-index:999999 !important;}

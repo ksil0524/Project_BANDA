@@ -595,6 +595,8 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- custom script -->
 	 <script src="<%=request.getContextPath() %>/resources/assets/js/custom-mypage-pets.js"></script>
-
+	<!-- Auto Script -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
   </body>
 </html>

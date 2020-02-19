@@ -183,6 +183,8 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Map Script -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-map.js"></script>
+	<!-- Auto Script -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
   </body>
 </html>

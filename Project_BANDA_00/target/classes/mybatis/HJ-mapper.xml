@@ -6,9 +6,10 @@
 
 	<!-- 자동검색  -->
 	<select id="autocompleteSelect" parameterType="string" resultType="string">
+		
 		SELECT MAP_NAME 
 		FROM MAPS
-		WHERE MAP_NAME LIKE '%'||#{keyword}||'%' 
+		WHERE MAP_NAME LIKE '%'||#{keyword}||'%'
 		<![CDATA[AND ROWNUM <= 5]]>
 	</select>
 

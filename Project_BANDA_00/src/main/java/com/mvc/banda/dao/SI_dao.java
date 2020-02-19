@@ -4,6 +4,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mvc.banda.model.vo.AccountVo;
 import com.mvc.banda.model.vo.ChatVo;
@@ -23,10 +24,12 @@ public class SI_dao {
 		
 		List<PetVo> petlist = pet_selectlist(id);
 		List<FeedVo> feedlist = feed_selectlist(id);
+		List<FollowVo> followlist = follow_selectlist(id);
 		
 		AccountVo vo = sqlSession.selectOne(NAMESPACE+"acc_selectone",id);
 		vo.setPet_list(petlist);
 		vo.setFeed_list(feedlist);
+		vo.setFollow_list(followlist);
 		
 		return vo;
 	}
@@ -82,7 +85,19 @@ public class SI_dao {
 	}
 	
 	public List<FollowVo> follow_selectlist(String id){
-		return null;
+		
+		List<FollowVo> list = null;
+		
+		try {
+			
+			list = sqlSession.selectList(NAMESPACE+"follow_selectlist", id);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : follow_selectlist");
+			e.printStackTrace();		
+		}
+		
+		return list;
 	}
 
 	public PetVo pet_selectOne(int p_no) {
@@ -151,6 +166,112 @@ public class SI_dao {
 		lastpseq--;
 		
 		return lastpseq;
+	}
+
+	public int accountUpdate(AccountVo accvo) {
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.update(NAMESPACE+"acc_update",accvo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : accountUpdate");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
+	
+	
+
+	public List<AccountVo> fd_accountSelectList(String fd_id) {
+
+		List<AccountVo> fd_accountlist = null;
+		
+		try {
+			
+			fd_accountlist = sqlSession.selectList(NAMESPACE+"fd_accountSelectList", fd_id);	
+			
+		} catch (Exception e) {
+			System.out.println("[error] : fd_accountSelectList");
+			e.printStackTrace();
+		}
+		
+		if(fd_accountlist != null) {
+			
+			List<PetVo> tmpPetList = null;
+			
+			for(AccountVo tmp : fd_accountlist) {
+				String tmpid = tmp.getId();
+				tmpPetList = pet_selectlist(tmpid);
+				tmp.setPet_list(tmpPetList);
+			}
+		
+		}
+
+		return fd_accountlist;
+	}
+
+	public List<AccountVo> fr_accountSelectList(String fr_id) {
+		List<AccountVo> fr_accountlist = null;
+		
+		try {
+			
+			fr_accountlist = sqlSession.selectList(NAMESPACE+"fr_accountSelectList", fr_id);	
+			
+		} catch (Exception e) {
+			System.out.println("[error] : fr_accountSelectList");
+			e.printStackTrace();
+		}
+		
+		if(fr_accountlist != null) {
+			
+			List<PetVo> tmpPetList = null;
+			
+			for(AccountVo tmp : fr_accountlist) {
+				String tmpid = tmp.getId();
+				tmpPetList = pet_selectlist(tmpid);
+				tmp.setPet_list(tmpPetList);
+			}
+		
+		}
+
+		return fr_accountlist;
+	}
+
+	
+	public int follow_unfollow(FollowVo fvo) {
+		
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.delete(NAMESPACE+"follow_unfollow",fvo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : follow_unfollow");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
+
+	public int follow_follow(FollowVo fvo) {
+
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.insert(NAMESPACE+"follow_follow",fvo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : follow_follow");
+			e.printStackTrace();			
+		}
+		
+		return res;
 	}
 	
 	

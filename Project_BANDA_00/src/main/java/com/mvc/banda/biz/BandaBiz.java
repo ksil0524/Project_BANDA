@@ -75,6 +75,26 @@ public class BandaBiz {
 		return si_dao.getLastPetSeq();
 	}
 	
+	public int mypage_accountupdate(AccountVo accvo) {
+		return si_dao.accountUpdate(accvo);
+	}	
+	
+	public List<AccountVo> mypage_fd_accountSelectList(String id) {
+		return si_dao.fd_accountSelectList(id);
+	}
+
+	public List<AccountVo> mypage_fr_accountSelectList(String id) {
+		return si_dao.fr_accountSelectList(id);
+	}
+	
+	public int mypage_unfollow(FollowVo fvo) {
+		return si_dao.follow_unfollow(fvo);
+	}
+	
+	public int mypage_follow(FollowVo fvo) {
+		return si_dao.follow_follow(fvo);
+	}
+
 	
 	// < 김성일 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -248,7 +268,15 @@ public class BandaBiz {
 	//게시글 상세 보기
 	public BoardVo selectOneBoard(int board_no) {
 		return nk_dao.selectOneBoard(board_no);
-	}	
+	}
+
+
+
+
+
+
+
+
 	
 	
 	

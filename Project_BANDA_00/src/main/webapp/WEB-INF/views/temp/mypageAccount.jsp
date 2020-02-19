@@ -13,17 +13,49 @@
      <!-- ==============================================
 	 Scripts
 	 =============================================== -->
+	 
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 
 	<%
 		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
-		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
 	%>	  	  
 		
+		
+	   <script type="text/javascript">
+		  //프로필 사진 변경 스크립트
+	  		function profileimg(){
+	  			alert("프로필 사진은 .jpg 또는 .JPG 파일만 선택이 가능합니다.");
+	  			$("#profile_img").click();
+	  		}
+	   			
+	   			
+	   		function profileimginp(){
+	   			
+	   			$("#profileform").submit();
+	   			
+	   		}
+	   		
+	  		function readURL3(input) {
+			   	 if (input.files && input.files[0]) {
+			   	  var reader = new FileReader();
+								   	  
+			   	  reader.onload = function (e) {
+			   		  $('#profile_img').attr('src', e.target.result);  
+			
+			   	  }
+			   	  
+			   	  reader.readAsDataURL(input.files[0]);
+			   	  }
+			   	}	
+	   	
+	   </script>
 
 
 </head>
@@ -127,53 +159,14 @@
 	 <section class="user-profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   
-	   <script type="text/javascript">
-	   
-	  		function readURL3(input) {
-		   	 if (input.files && input.files[0]) {
-		   	  var reader = new FileReader();
-							   	  
-		   	  reader.onload = function (e) {
-		   		  $('#profile_img').attr('src', e.target.result);  
-		   		  $("#profile_img").attr('src', e.target.result);
-		
-		   	  }
-		   	  
-		   	  reader.readAsDataURL(input.files[0]);
-		   	  }
-		   	}	
-	   
-
-	  		function changeprofileimg(){
-	  			
-	   			$("#profile_img").click();
-	   			
-	   		};
-	   			
-	   			
-	   		function changeprofileimginp(){
-	   			
-	   			
-	   			$("#changeprofileimg").submit();
-	   			
-	   			readURL3(this);
-	   				
-	   		};
-	   			
-
-	   </script>
-	   
-	   
-	   <form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="changeprofileimg">
-	   	<input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
-	   	<input type="file" id="profile_img" name="profile_img" src="" style="display: none;" onchange="changeprofileimginp();" accept=".jpg .JPG">
-	   </form:form>
-	   
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-		     <a href="changeprofileimg();"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image"></a>
+	  	 <form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="profileform">
+	   		 <input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
+	   		 <input type="file" id="profile_img" name="profile_img" src="" style="display: none;" accept=".jpg" onchange="profileimginp();">
+		     <img id="changeprofileimg" class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image" onclick="profileimg();">
+	  	 </form:form>
 		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
@@ -191,12 +184,41 @@
 	 	function conform(){
 	 		if($("#tconform").css("display") == "none"){
 	 			$("#tconform").show();
+	 			$("#cfbtn").show();
+	 			$("#updatebtn").html("");
+	 			$("#updatebtn").text("취   소");
 	 			$("#tprofile").hide();
 	 		}else{
 	 			$("#tconform").hide();
 	 			$("#tprofile").show();
+	 			$("#cfbtn").hide();
+	 			$("#updatebtn").html("");
+	 			$("#updatebtn").text("수   정");
 	 		}
 	 	};
+	 	
+	 	function confirm(){
+	 		
+	 		var email = $("#ckemail").val();
+	 		var phone = $("#ckphone").val();
+	 		var password = $("#ckpassword").val();
+	 		var passwordck = $("#ckpasswordck").val();
+	 		
+	 		if(email == "" ||  phone == "" ||  password == "" || passwordck == ""){
+	 			alert("수정항목을 제대로 입력해주세요.");
+	 			return false;	
+	 		}
+	 		
+	 		if(password != passwordck){
+	 			
+	 			alert("비밀번호가 같지 않습니다. 다시 입력해 주세요.");
+	 			return false;
+	 			
+	 		}
+	 	
+	 		$("#accountupdate").submit();
+
+	 	}
 	 	
 	 	
 	 </script>
@@ -241,7 +263,8 @@
              	</tr>
              </table>
              
-             
+             <form action="mypage_accountupdate.do" method="post" id="accountupdate">
+             <input type="hidden" name="id" value="<%=accvo.getId() %>">
              <table id="tconform" style="display: none;">
              	<col width="300px;">
              	<col width="300px;">
@@ -250,7 +273,7 @@
             			<p style="font-size: 20pt;">EMAIL</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" name="#" value="<%=accvo.getEmail() %>"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" id="ckemail" name="email" value="<%=accvo.getEmail() %>"></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -258,7 +281,7 @@
             			<p style="font-size: 20pt;">PHONE</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" name="#" value="<%=accvo.getPhone() %>"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" id="ckphone" name="phone" value="<%=accvo.getPhone() %>"></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -266,7 +289,7 @@
             			<p style="font-size: 20pt;">PASSWORD</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" name="#" value=""></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" id="ckpassword" name="password" value=""></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -274,10 +297,11 @@
             			<p style="font-size: 20pt;">PASSWORD CHECK</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" name="#" value=""></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" id="ckpasswordck" name="passwordck" value=""></span><p>
              		</td>
              	</tr>
              </table>
+             </form>
              
              
              <!-- 
@@ -288,8 +312,9 @@
 		   </div> 
 		   <div class="col-lg-3" style="width: 1140px; margin-top: 30px;">
            <div class="follow-box" style="text-align: center; margin-top: 50px; margin-bottom: 70px;">
-		    <button class="kafe-btn kafe-btn-mint" onclick="conform();"><i class="fa fa-check"></i>수   정</button>
-		    <button class="kafe-btn kafe-btn-mint"><i class="fa fa-check"></i>회원 탈퇴</button>
+		    <button id="updatebtn" class="kafe-btn kafe-btn-mint" onclick="conform();">수   정</button>
+		    <button id="cfbtn" class="kafe-btn kafe-btn-mint" style="display: none;" onclick="confirm()">수정완료</button>
+		    <button class="kafe-btn kafe-btn-mint">회원 탈퇴</button>
            </div><!--/ dropdown -->
 		   </div>
           </div><!--/ details-box -->
@@ -307,6 +332,7 @@
 	HEADER CIRCLE Scripts
 	=============================================== -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+
 	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->

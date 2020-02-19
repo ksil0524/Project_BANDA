@@ -15,6 +15,8 @@
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-modal.css" rel="stylesheet" />
 
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+
+
 </head>
 <body>
 
@@ -160,6 +162,7 @@
 		    <div class="author-post text-center">
 		     <a href="#"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/<%=id %>/profile.jpg" 
 		     											   alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'"></a>
+
 		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
@@ -201,6 +204,7 @@
 	 =============================================== --> 
 	 <section class="newsfeed">
 	  <div class="container">
+	  
 	  
 	   <div class="row">
 	   
@@ -263,7 +267,7 @@
 		            </c:otherwise>
 		            </c:choose>
 			</c:forEach>
-		
+	
 		</c:when>
 		
 		<c:otherwise>
@@ -276,9 +280,10 @@
 	    </c:otherwise>
 		
 		</c:choose>
-
 		
-	   </div><!--/ row -->
+	   </div>
+
+	   
 	   
 	  </div><!--/ container -->
 	 </section><!--/ newsfeed -->
@@ -426,6 +431,7 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>	   
 	   
+
      <!-- ==============================================
 	 Scripts
 	 =============================================== -->
@@ -434,6 +440,8 @@
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+
+
     <!-- ==============================================
 	HEADER CIRCLE Scripts
 	=============================================== -->

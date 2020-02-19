@@ -21,6 +21,10 @@
 		SELECT * FROM FEED WHERE ID = #{id}
 	</select>
 	
+	<select id="follow_selectlist" parameterType="String" resultType="followVo">
+		SELECT * FROM FOLLOW WHERE FR_ID = #{id} OR FD_ID = #{id}
+	</select>
+	
 	<select id="pet_selectOne" parameterType="int" resultType="petVo">
 		SELECT * FROM PET WHERE P_NO = #{p_no}
 	</select>
@@ -39,6 +43,35 @@
 	<select id="getLastPetSeq" resultType="_int">
 		SELECT LAST_NUMBER FROM USER_SEQUENCES  WHERE SEQUENCE_NAME = 'PET_SEQ'
 	</select>
+	
+	<update id="acc_update" parameterType="accountVo">
+		UPDATE ACCOUNT SET
+		PASSWORD = #{password}, EMAIL = #{email}, PHONE = #{phone}
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="fd_accountSelectList" parameterType="String" resultMap="accountVoMap">
+		SELECT ID, PASSWORD, EMAIL, PHONE 
+		FROM ACCOUNT
+		LEFT JOIN FOLLOW ON(ID = FR_ID)
+		WHERE FD_ID = #{fd_id}
+	</select>
+	
+	<select id="fr_accountSelectList" parameterType="String" resultMap="accountVoMap">
+		SELECT ID, PASSWORD, EMAIL, PHONE 
+		FROM ACCOUNT
+		LEFT JOIN FOLLOW ON(ID = FD_ID)
+		WHERE FR_ID = #{fr_id}
+	</select>
+	
+	<delete id="follow_unfollow" parameterType="followVo">
+		DELETE FROM FOLLOW WHERE FR_ID = #{fr_id} AND FD_ID = #{fd_id}
+	</delete>
+	
+	<insert id="follow_follow" parameterType="followVo">
+		INSERT INTO FOLLOW VALUES(#{fr_id}, #{fd_id})
+	</insert>
+	
 	
 </mapper>
 

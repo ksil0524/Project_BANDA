@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,16 +26,34 @@
 	=============================================== -->
 	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>무료나눔</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>물물교환</span>
-	   </a>
-	   </div>
+	   <c:set var="boardCate" value="${detail.board_cate}"/>
+	   <c:choose>
+	     <c:when test="${fn:contains(boardCate, 'SH')}">
+	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
+	         <a class="nav-icon" href="boardListFree_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>무료나눔</span>
+	         </a>
+	       </div>
+	       <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
+	         <a class="nav-icon" href="boardListExchange_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>물물교환</span>
+	         </a>
+	       </div> 
+	     </c:when>
+	     <c:when test="${fn:contains(boardCate, 'EX')}">
+	       <div class="p-2 nav-icon-lg clean-black"style="height: 59px;">
+	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>무료나눔</span>
+	         </a>
+	       </div>
+	       <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
+	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>물물교환</span>
+	         </a>
+	       </div> 
+	     </c:when>
+	   </c:choose>
+	  
 	   
 	   <style>
 	   .nav-icon-lg {
@@ -79,7 +98,15 @@
             <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
 	         <a class="dropdown-item" href="#">수정</a>
 			 <a class="dropdown-item" href="#">삭제</a>
-			 <a class="dropdown-item" href="#">공지등록</a>
+			 <c:set var="noticeChk" value="${detail.board_nyn}"/>
+			 <c:choose>
+			   <c:when test="${fn:contains(noticeChk, 'Y')}">
+	         	 <a class="dropdown-item" href="boardSetNoticeCancel.do?board_no=${detail.board_no }">공지해제</a>
+	           </c:when>
+			   <c:when test="${fn:contains(noticeChk, 'N')}">
+	         	 <a class="dropdown-item" href="boardSetNotice.do?board_no=${detail.board_no }">공지등록</a>
+	           </c:when>
+	         </c:choose>
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->

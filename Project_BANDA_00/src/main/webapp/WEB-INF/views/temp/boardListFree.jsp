@@ -79,7 +79,7 @@
 		</span>
 	  	<!-- -------- -->
 	  	
-	   	<button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardWrite.do'" style="position: relative;">Upload</button>
+	   	<button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardWriteForm.do'" style="position: relative;">Upload</button>
 	  </div>
 	 </section>
 	 

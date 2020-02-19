@@ -268,17 +268,27 @@ public class BandaBiz {
 	//게시글 상세 보기
 	public BoardVo selectOneBoard(int board_no) {
 		return nk_dao.selectOneBoard(board_no);
+	}	
+
+	//게시글을 공지로 등록하기
+	public int boardSetNotice(int board_no) {
+		return nk_dao.boardSetNotice(board_no);
 	}
 
+	//공지글을 일반 게시글로 내리기
+	public int boardNoticeCancel(int board_no) {
+		return nk_dao.boardNoticeCancel(board_no);
+	}
 
-
-
-
-
-
-
+	//마지막 시퀀스 번호 가져오기
+	public int getLastBoardSeq() {
+		return nk_dao.getLastBoardSeq();
+	}
 	
-	
+	//게시글 쓰기
+	public int boardWrite(BoardVo vo) {
+		return nk_dao.boardWrite(vo);
+	}
 	
 	// < 하나경 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

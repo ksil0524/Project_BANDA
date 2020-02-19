@@ -246,17 +246,26 @@ function close(){
 		// 재호
 		$("#searchBtn").click(function(){
 			
+			// 라디오버튼 값 가져옴
+			var radioVal = $('input[name="searchtype"]:checked').val(); 
+			
+			// 텍스창 값
 			var text = $("#searchform #searchinput").val();
-			
-			if(text == null || text == ""){
+					
+			if(radioVal == null){
+				
+				alert("카테고리를 선택해주세요");
+				
+			} else if(text == null || text == ""){
+				
 				alert("검색어를 입력해주세요");
+				
 			} else {
-				alert(text);
+				
+				alert("radioVal: " + radioVal + "\n" + text);
+				location.href="index_search.do";
 			}
-			
-
-			
-   
+			   
        })
 		
 	});

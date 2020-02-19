@@ -100,4 +100,11 @@ public class HomeController {
 		
 		return "redirect:main_selectList.do";
 	}
+	
+	@RequestMapping("/index_search.do")
+	public String index_search(){
+		
+		return "redirect:index_search_test.do";
+	}
+	
 }

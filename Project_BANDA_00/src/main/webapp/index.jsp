@@ -53,5 +53,9 @@
 	<a href="boardListFree_test.do">boardListFree TEST</a>	
 	<!--/ 나경 -->
 	
+	<!-- 재호 -->
+	<br>
+	<a href="index_search.do">index_search</a>
+	
 </body>
 </html>

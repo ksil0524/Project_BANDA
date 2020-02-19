@@ -511,11 +511,12 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정재호 파트  시작 >  
 	
-	@RequestMapping("/search_feedlist.do")
-	public String search_feedlist() {
+	@RequestMapping("/index_search_test")
+	public String index_search_test() {
 		
-		return "index";
+		return null;
 	}
+		
 	
 	@RequestMapping(value="/circleheader_autosearch.do", method=RequestMethod.POST)
 	@ResponseBody

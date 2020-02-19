@@ -136,6 +136,8 @@ function close(){
 }
 
 (function($) {
+	
+	
 	$("#header").toggleClass('hide');
 	$("#content").hide();
 	

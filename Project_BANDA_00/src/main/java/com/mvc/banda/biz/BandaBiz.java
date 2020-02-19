@@ -1,6 +1,7 @@
 ﻿package com.mvc.banda.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.BoardVo;
+import com.mvc.banda.model.vo.CommentVo;
 
 @Service
 public class BandaBiz {
@@ -130,29 +132,63 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 최주예 파트  시작 >  
 	
-			//login
-			public AccountVo jy_login(AccountVo vo) {
-				
-				return jy_dao.jy_login(vo);
-			}
+		//login
+		public AccountVo jy_login(AccountVo vo) {
 			
-			//main_selectList - 로그인시
-			public AccountVo main_selectList(String id) {
-				
-				return jy_dao.main_selectList(id);
-			}
-
-			//main_selectListN - 비로그인/ 팔로우없을떄
-			public List<FeedVo> main_selectListN() {
-				
-				return jy_dao.main_selectListN();
-			}
+			return jy_dao.jy_login(vo);
+		}
+		
+		//main_selectList - 로그인시
+		public AccountVo main_selectList(String id) {
 			
-			//main_selectFollow - 로그인시 팔로우 판단
-			public List<FollowVo> main_selectFollow(String id) {
-				return jy_dao.main_selectFollow(id);
-			}
+			return jy_dao.main_selectList(id);
+		}
+	
+		//main_selectListN - 비로그인/ 팔로우없을떄
+		public List<FeedVo> main_selectListN() {
+			
+			return jy_dao.main_selectListN();
+		}
+		
+		//main_selectFollow - 로그인시 팔로우 판단
+		public List<FollowVo> main_selectFollow(String id) {
+			return jy_dao.main_selectFollow(id);
+		}
+		
+		//내피드가져오기
+		public List<FeedVo> my_feedList(String id){
+			return jy_dao.my_feedList(id);
+		}
+		
+		//피드하나가져오기
+		public FeedVo each_feed(int feedno) {
+			return jy_dao.each_feed(feedno);
+		}
+		
+		//타인 피드 가져오기
+		public Map<String, Object> main_otherfeed(String id){
+			return jy_dao.main_otherfeed(id);
+		}
+		
+		//답글 가져오기
+		public List<CommentVo> main_select_comment(int feedno) {
+			return jy_dao.main_select_comment(feedno);
+		}
+		
+		//댓글 삽입
+		public int main_insert_comment(CommentVo c) {
+			return jy_dao.main_insert_comment(c);
+		}
 
+		//댓글 삭제
+		public int main_delete_comment(CommentVo c) {
+			return jy_dao.main_delete_comment(c);
+		}
+		
+		//댓글 갱신
+		public int main_update_comment(CommentVo c) {
+			return jy_dao.main_update_comment(c);
+		}
 
 	
 	// < 최주예 파트  끝 > 

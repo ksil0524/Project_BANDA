@@ -20,6 +20,40 @@
 		<result property="feed_file" column="FEED_FILE" />
 	</resultMap>
 	
+	<!-- comment -->
+	<resultMap type = "commentVo" id = "commentVo" >
+		<result property="com_no" column="COM_NO" />
+		<result property="com_cate" column="COM_CATE" />
+		<result property="id" column="ID" />
+		<result property="com_content" column="COM_CONTENT" />
+		<result property="com_regdate" column="COM_REGDATE" />
+		<result property="com_pno" column="COM_PNO" />
+	</resultMap>
+	
+	<!-- like -->
+	<resultMap type = "likesVo" id = "likesVo" >
+		<result property="feed_no" column="FEED_NO" />
+		<result property="id" column="ID" />
+	</resultMap>
+	
+	<!-- pet -->
+	<resultMap type = "petVo" id = "petVo" >
+		<result property="p_no" column="P_NO" />
+		<result property="class_no" column="CLASS_NO" />
+		<result property="species_no" column="SPECIES_NO" />
+		<result property="id" column="ID" />
+		<result property="p_Name" column="P_NAME" />
+		<result property="p_kind" column="P_KIND" />
+		<result property="p_birth" column="P_BRITH" />
+		<result property="p_character" column="P_CHARACTER" />
+		<result property="p_like" column="P_LIKE" />
+		<result property="p_hate" column="P_HATE" />
+		<result property="p_about" column="P_ABOUT" />
+	</resultMap>
+	
+	
+	
+	
 	<!-- login -->
 	<select id = "jy_login" resultType="accountVo" parameterType="accountVo">
 		SELECT * FROM ACCOUNT WHERE ID=#{id} AND PASSWORD=#{password} 
@@ -30,7 +64,7 @@
 		SELECT * FROM FOLLOW WHERE FR_ID = #{id}
 	</select>
 	
-	<!-- feed list - id o -->
+	<!-- feed list - follow -->
 	<select id = "main_selectList_feed" resultMap="feedVo"  parameterType="java.util.HashMap">
 	
 		SELECT  ROWNUM, F.* FROM (SELECT * FROM FEED WHERE ID IN
@@ -48,11 +82,65 @@
 		SELECT ROWNUM, F.* FROM (SELECT * FROM FEED ORDER BY FEED_REGDATE DESC) F WHERE ROWNUM BETWEEN 1 AND #{count}
 	</select>
 	
-	<!-- feed count -->
+	<!-- feed count - default -->
 	<select id = "feed_count" resultType="int">
 		SELECT COUNT(*) FROM FEED
 	</select>
-
+	
+	<!-- comment list -->
+	<select id = "select_comment" resultMap="commentVo">
+		SELECT * FROM COMMENTS WHERE COM_PNO = #{feedno} ORDER BY COM_REGDATE
+	</select>
+	
+	<!-- like list -->
+	<select id = "select_like" resultMap="likesVo">
+		SELECT * FROM LIKES WHERE FEED_NO = #{feedno}
+	</select>
+	
+	<!-- one feed -->
+	<select id = "each_feed" resultMap="feedVo">
+		SELECT * FROM FEED WHERE FEED_NO = #{feedno}
+	</select>
+	
+	<!-- Account -->
+	<select id = "select_account" resultType="accountVo">
+		SELECT * FROM ACCOUNT WHERE ID = #{id}
+	</select>
+	
+	<!-- PET -->
+	<select id = "select_pet_list" resultMap = "petVo">
+		SELECT * FROM PET WHERE ID = #{id}
+	</select>
+	
+	<!-- feed list - count x -->
+	<select id = "feed_list_nocount" resultMap="feedVo">
+		SELECT * FROM FEED WHERE ID = #{id}
+	</select>
+	
+	<!-- follow count -->
+	<select id = "follow_count" resultType="Int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FR_ID = #{id}
+	</select>
+	
+	<!-- follower_count -->
+	<select id = "follower_count" resultType="Int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FD_ID = #{id}
+	</select>
+	
+	<!-- insert_comment_ -->
+	<insert id = "insert_comment" parameterType="commentVo">
+		INSERT INTO COMMENTS VALUES(COM_SEQ.NEXTVAL, #{com_cate}, #{id}, #{com_content}, SYSDATE, #{com_pno})
+	</insert>
+	
+	<!-- delete_comment -->
+	<delete id = "delete_comment" parameterType="Int">
+		DELETE FROM COMMENTS WHERE COM_NO = #{comment_no}
+	</delete>
+	
+	<!-- update_comment -->
+	<update id = "update_comment" parameterType="commentVo">
+		UPDATE COMMENTS SET COM_CONTENT = #{com_content} WHERE COM_NO = #{com_no}
+	</update>
 </mapper>
 
 

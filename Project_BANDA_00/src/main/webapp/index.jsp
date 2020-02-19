@@ -1,4 +1,5 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,8 +11,11 @@
 	<br>
 	<a href="index.do">index</a>	
 	<br>
+	
+	
 	<a href="boardDetail.do">boardDetail</a>	
 	<br>
+	
 	<a href="boardListExchange.do">boardListExchange</a>	
 	<br>
 	<a href="boardListFree.do">boardListFree</a>	
@@ -27,6 +31,7 @@
 	<a href="myChat.do">myChat</a>	
 	<br>
 	<a href="mypageAccount.do">mypageAccount</a>
+	
 	<br>
 	<a href="mypageFeed.do">mypageFeed</a>
 	<br>

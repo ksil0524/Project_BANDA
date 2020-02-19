@@ -34,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.CommentVo;
+import com.mvc.banda.model.vo.FeedNoVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
@@ -497,6 +499,143 @@ public class BandaController {
 		
 		return "index";
 	}
+	
+	//내피드리스트 가져오기
+	@RequestMapping("/mypageFeed_list.do")
+	public String mypageFeed_list(Model model){
+		
+		AccountVo vo = (AccountVo)session.getAttribute("vo");
+		String id = vo.getId();
+		
+		List<FeedVo> fvo = biz.my_feedList(id);
+		
+		model.addAttribute("fvo",fvo);			
+		
+		return "temp/mypageFeed";
+	}
+	
+	//다른사람피드이동
+	@RequestMapping("/main_otherfeed.do")
+	public String main_otherfeed(Model model, String id) {
+		
+		Map<String, Object> m = biz.main_otherfeed(id);
+		model.addAttribute("acc",m);
+		
+		return "temp/otherFeed";
+	}
+	
+	//피드 하나가져오기
+	@RequestMapping(value = "/each_feed.do",  method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> each_feed(@RequestBody FeedNoVo f) {
+		
+		Boolean chk = false;
+		
+		System.out.println(f.getFeedno());
+		int feedno = f.getFeedno();
+		FeedVo feed = biz.each_feed(feedno);
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		
+		if(feed != null) {
+			chk = true;
+			m.put("chk", chk);
+			m.put("feed", feed);
+		} else {
+			m.put("chk", chk);
+		}
+		return m;
+	}
+	
+	//댓글 삽입
+	@RequestMapping("/main_insert_comment.do")
+	@ResponseBody
+	public Map<String, Object> main_insert_comment(@RequestBody CommentVo c){
+		
+		Boolean chk = false;
+		Map<String, Object> m = new HashMap<String, Object>();
+		
+		//삽입
+		int res = biz.main_insert_comment(c);
+		
+		//가져오기
+		int feedno = c.getCom_pno();
+		List<CommentVo> c2 = new ArrayList<CommentVo>();
+		
+		c2 = biz.main_select_comment(feedno);
+		
+		if(res > 0) {
+		
+			chk = true;
+			m.put("chk", chk );
+			m.put("comment_list",c2);
+		
+		} else {
+			m.put("chk", chk );
+			m.put("comment_list",c2);
+		}
+		
+		return m;
+	}
+	
+	//댓글삭제
+	@RequestMapping("/main_delete_comment.do")
+	@ResponseBody
+	public Map<String, Object> main_delete_comment(@RequestBody CommentVo c){
+		
+			
+			Boolean chk = false;
+			
+			Map<String, Object> m = new HashMap<String, Object>();
+			
+			//삭제
+			int res = biz.main_delete_comment(c);
+			
+			//리스트
+			int feedno = c.getCom_pno();
+			List<CommentVo> c2 = new ArrayList<CommentVo>();
+			
+			c2 = biz.main_select_comment(feedno);
+			
+			if(res>0) {
+				chk = true; 
+				m.put("chk", chk);
+				m.put("comment_list",c2);
+			} else {
+				m.put("chk", chk);
+				m.put("comment_list",c2);
+			}
+		
+		return m;
+	}
+	
+	//댓글수정
+	@RequestMapping("/main_update_comment.do")
+	@ResponseBody
+	public Map<String, Object> main_update_comment(@RequestBody CommentVo c){
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		Boolean chk = false;
+		
+		int res = biz.main_update_comment(c);
+		
+		int feed_no = c.getCom_pno();
+		List<CommentVo> clist = biz.main_select_comment(feed_no);
+		
+		if(res>0) {
+			
+			chk = true;
+			m.put("chk", chk);
+			m.put("comment_list", clist);
+			
+		} else {
+			m.put("chk", chk);
+			m.put("comment_list", clist);
+		}
+
+		return m;
+	}
+	
 	
 	
 	

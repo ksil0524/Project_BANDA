@@ -38,7 +38,7 @@
 		=============================================== -->
         <link type="text/css" href="<%=request.getContextPath() %>/resources/temp/assets/css/demos/photo.css" rel="stylesheet" />
         <link type="text/css" href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-follower.css" rel="stylesheet" />
-				
+		<link href="<%=request.getContextPath() %>/resources/assets/css/custom-modal.css" rel="stylesheet" />
 		<!-- ==============================================
 		Feauture Detection
 		=============================================== -->

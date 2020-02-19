@@ -13,6 +13,7 @@ import com.mvc.banda.model.vo.CommentVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.LikesVo;
+import com.mvc.banda.model.vo.PetVo;
 
 @Repository
 public class JY_dao {
@@ -137,7 +138,84 @@ public class JY_dao {
 					
 			return fvo;
 		}
+		
+		//각각 피드 가져오기
+		public FeedVo each_feed(int feedno) {
+			
+			FeedVo f = select_each_feed(feedno);
+			
+			List<LikesVo> like_list= select_like(feedno);
+			f.setLike_list(like_list);
+			
+			List<CommentVo> comment_list = select_comment(feedno);
+			f.setComment_list(comment_list);			
+			
+			System.out.println(f);
+			
+			return f;
+		}
 
+		//타인피드가져오기
+		public Map<String, Object> main_otherfeed(String id){
+			
+			Map<String, Object> m = new HashMap<String, Object>();
+			
+			//사람계정
+			AccountVo vo = select_account(id);
+			
+			//동물계정
+			List<PetVo> pvo = select_pet_list(id);
+			vo.setPet_list(pvo);
+			
+			//피드
+			List<FeedVo> fvo = feed_list_nocount(id);
+
+			for(FeedVo f : fvo) {
+				
+				List<CommentVo> c = select_comment(f.getFeed_no());
+				f.setComment_list(c);
+				
+				List<LikesVo> l = select_like(f.getFeed_no());
+				f.setLike_list(l);
+				
+			}
+			
+			vo.setFeed_list(fvo);
+			
+			m.put("acc", vo);
+			m.put("follow_count", follow_count(id));
+			m.put("follower_count", follower_count(id));
+			
+			return m;
+		}
+		
+		//댓글 삽입
+		public int main_insert_comment(CommentVo c) {
+			
+			int res = insert_comment_sql(c);
+			
+			return res;
+		}
+		
+		//댓글 삭제
+		public int main_delete_comment(CommentVo c) {
+			
+			int comment_no = c.getCom_no();
+			
+			return delete_comment(comment_no);
+		}
+		
+		//댓글 수정
+		public int main_update_comment(CommentVo c) {
+			
+			return update_comment(c);
+		}
+		
+		//댓글 리스트 반환 
+		public List<CommentVo> main_select_comment(int feedno) {
+			
+			return select_comment(feedno);
+		}
 		
 		///////////////////////////////////////////////////////////////////////////////////////
 		//sql
@@ -180,5 +258,49 @@ public class JY_dao {
 				
 			return sqlSession.selectList(NAMESPACE+"select_like",feedno);
 		}
-
+		
+		//one feed
+		public FeedVo select_each_feed(int feedno) {
+			return sqlSession.selectOne(NAMESPACE + "each_feed", feedno);
+		}
+		
+		//Account
+		public AccountVo select_account(String id) {
+			return sqlSession.selectOne(NAMESPACE+"select_account", id);
+		}
+		
+		//PET
+		public List<PetVo> select_pet_list(String id) {
+			return sqlSession.selectList(NAMESPACE+"select_pet_list", id);
+		}
+		
+		//feed - count x 
+		public List<FeedVo> feed_list_nocount(String id){
+			return sqlSession.selectList(NAMESPACE+"feed_list_nocount", id);
+		}
+		
+		//follow count
+		public int follow_count(String id) {
+			return sqlSession.selectOne(NAMESPACE+"follow_count", id);
+		}
+		
+		//follower count
+		public int follower_count(String id) {
+			return sqlSession.selectOne(NAMESPACE+"follower_count", id);
+		}
+		
+		//insert_comment
+		public int insert_comment_sql(CommentVo c) {
+			return sqlSession.insert(NAMESPACE+"insert_comment", c);
+		}
+		
+		//delete_comment
+		public int delete_comment(int comment_no) {
+			return sqlSession.delete(NAMESPACE+"delete_comment", comment_no);
+		}
+		
+		//update_comment
+		public int update_comment(CommentVo c) {
+			return sqlSession.update(NAMESPACE+"update_comment", c);
+		}
 }

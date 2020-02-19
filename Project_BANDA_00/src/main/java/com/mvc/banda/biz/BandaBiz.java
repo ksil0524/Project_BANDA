@@ -1,6 +1,7 @@
 ﻿package com.mvc.banda.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.BoardVo;
+import com.mvc.banda.model.vo.CommentVo;
 
 @Service
 public class BandaBiz {
@@ -148,7 +150,36 @@ public class BandaBiz {
 		public List<FeedVo> my_feedList(String id){
 			return jy_dao.my_feedList(id);
 		}
+		
+		//피드하나가져오기
+		public FeedVo each_feed(int feedno) {
+			return jy_dao.each_feed(feedno);
+		}
+		
+		//타인 피드 가져오기
+		public Map<String, Object> main_otherfeed(String id){
+			return jy_dao.main_otherfeed(id);
+		}
+		
+		//답글 가져오기
+		public List<CommentVo> main_select_comment(int feedno) {
+			return jy_dao.main_select_comment(feedno);
+		}
+		
+		//댓글 삽입
+		public int main_insert_comment(CommentVo c) {
+			return jy_dao.main_insert_comment(c);
+		}
 
+		//댓글 삭제
+		public int main_delete_comment(CommentVo c) {
+			return jy_dao.main_delete_comment(c);
+		}
+		
+		//댓글 갱신
+		public int main_update_comment(CommentVo c) {
+			return jy_dao.main_update_comment(c);
+		}
 
 	
 	// < 최주예 파트  끝 > 

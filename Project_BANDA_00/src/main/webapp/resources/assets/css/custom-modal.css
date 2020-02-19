@@ -126,6 +126,12 @@
     border-radius: 50%;
 }
 
+#myModal .img-comment-list2 img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
 #myModal .modal-body{
 	border-radius: 6px !important;
 }
@@ -176,7 +182,14 @@
 #myModal .img-comment-list {
     list-style: none;
     padding: 0px 10px 30px 0px;
-    height: 390px !important;
+    height: 140px !important;
+    overflow-y: hidden;
+}
+
+#myModal .img-comment-list2 {
+    list-style: none;
+    padding: 0px 10px 30px 0px;
+    height: 220px !important;
     overflow-y: scroll;
 }
 
@@ -188,7 +201,21 @@
     line-height: 24px;
 }
 
+#myModal .img-comment-list2 p {
+    
+    margin: 0;
+    font-size: 13px;
+    color: #848484;
+    line-height: 24px;
+}
+
 #myModal .img-comment-list span {
+    
+    font-size: .8em;
+    color: #aaa;
+}
+
+#myModal .img-comment-list2 span {
     
     font-size: .8em;
     color: #aaa;
@@ -241,7 +268,19 @@
     color: #88898a !important;
 }
 
+#myModal .img-comment-list2 li a {
+    
+    font-size: 14px;
+    color: #88898a !important;
+}
+
 #myModal .img-comment-list span {
+    
+    font-size: .8em;
+    color: #aaa;
+}
+
+#myModal .img-comment-list2 span {
     
     font-size: .8em;
     color: #aaa;
@@ -287,13 +326,27 @@
     display: table-cell;
 }
 
+#myModal .img-comment-list2 li > div {
+    display: table-cell;
+}
+
 #myModal  .img-comment-list .comment-img {
     float: left !important;
     margin-right: 10px !important;
     margin-top: 5px;
 }
 
+#myModal  .img-comment-list2 .comment-img {
+    float: left !important;
+    margin-right: 10px !important;
+    margin-top: 5px;
+}
+
 #myModal .img-comment-list li > div {
+    display: table-cell;
+}
+
+#myModal .img-comment-list2 li > div {
     display: table-cell;
 }
 

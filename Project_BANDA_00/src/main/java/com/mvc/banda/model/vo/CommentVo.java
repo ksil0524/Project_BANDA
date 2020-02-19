@@ -24,6 +24,15 @@ public class CommentVo {
 		this.com_regdate = com_regdate;
 		this.com_pno = com_pno;
 	}
+	
+
+	public CommentVo(String com_cate, String id, String com_content, int com_pno) {
+		super();
+		this.com_cate = com_cate;
+		this.id = id;
+		this.com_content = com_content;
+		this.com_pno = com_pno;
+	}
 
 	public int getCom_no() {
 		return com_no;

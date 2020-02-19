@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,15 +73,17 @@
 		  	<span style="border-bottom: 1px;"><h3>글쓰기</h3></span>
 		  </div><!--/ board-form-title -->
 		  <div class="board-form">
-			<form action="" method="post">
+			<form:form method="post" enctype="multipart/form-data" name="insertForm" modelAttribute="BoardVo" action="boardWriteRes.do">
+<!-- 			  <input type="hidden" value="<accvo.getId() %>" name="id"/>	 -->
+			  <input type="hidden" value="test" name="id"/>
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
 			      <label for="boardtab">게시판선택</label>
 			    </div>
 			    <div class="col-75">
 			      <select id="boardtab" name="board_cate">
-			        <option value="sh">무료나눔</option>
-			        <option value="ex">물물교환</option>
+			        <option value="SH">무료나눔</option>
+			        <option value="EX">물물교환</option>
 			      </select>
 			    </div>
 			  </div>
@@ -98,28 +103,48 @@
 			      <textarea id="content" name="board_content" placeholder="내용을 입력하세요" style="height:200px"></textarea>
 			    </div>
 			  </div>
+			  
+			  <!-- 해시태그 -->		  
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
 			      <label for="hashtag">해시태그</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="hashtag" name="board_hash" placeholder="해시태그를 입력하세요">
+			     <input type="text" id="tag-input1">
+			     <input type="hidden" name="board_hash" id="board_hash" value="">
+			      <script src="<%=request.getContextPath() %>/resources/temp/assets/js/index.js"></script>
+			      <script>
+			        var tagInput1 = new TagsInput({
+			            selector: 'tag-input1',
+			            duplicate : false,
+			            max : 10
+			       	 
+			        });
+			
+			        tagInput1.addData('#tag-input1');
+			        
+//			        document.getElementById("board_hash").value=tagInput1.arr;
+			       
+			      </script>
 			    </div>
 			  </div>
+			  <!--/ 해시태그 -->
+			  
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
-			      <label for="content">첨부파일</label>
+			      <label for="board_file">첨부파일</label>
 			    </div>
 			    <div class="custom-file col-75 ">
-			      <input type="file" class="custom-file-input" id="customFile" name="board_file">
-			      <label class="custom-file-label" for="customFile"></label>
+			      <input type="file" class="custom-file-input" id="board_file" name="boardfile">
+			      <label class="custom-file-label" for="board_file"></label>
 			    </div>
 			  </div>
 			  <div class="row btns" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <input type="submit" value="작성">
 			    <input type="button" value="목록" onclick="javascript:history.back()">
+			    
 			  </div>
-			  </form>
+			  </form:form>
 		  </div><!--/ board-form -->
           			        
 		 </div><!--/ cardbox -->	

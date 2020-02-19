@@ -112,4 +112,36 @@ public class NK_dao {
 			
 		return res;
 	}	
+	
+	//마지막 시퀀스 번호 가져오기
+	public int getLastBoardSeq() {
+		int boardno = 0;
+		
+		try {
+			boardno = sqlSession.selectOne(NAMESPACE+"getLastBoardSeq");
+		} catch(Exception e) {
+			System.out.println("[ERROR] GET LAST BOARD SEQ");
+			e.printStackTrace();
+		}
+		
+		//시퀀스는 nextval에서 대기하고 있으므로 -1해줘야함
+		boardno--;
+		
+		return boardno;
+	}	
+	
+	//게시글 쓰기
+	public int boardWrite(BoardVo vo) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE+"insertBoard", vo);
+		} catch(Exception e) {
+			System.out.println("[ERROR] BOARD WRITE");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}	
+	
 }

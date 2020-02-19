@@ -17,14 +17,14 @@
 	<!-- 무료나눔 selectList -->
 	<select id="selectListShNotice" resultType="boardVo">
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH
-		FROM TEST_BOARD
+		FROM BOARD
 		WHERE BOARD_CATE='SH' AND BOARD_NYN='Y'
 		ORDER BY BOARD_NO DESC
 	</select>
 	
 	<select id="selectListSh" resultType="boardVo">
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
-		FROM TEST_BOARD
+		FROM BOARD
 		WHERE BOARD_CATE='SH' AND BOARD_NYN='N'
 		ORDER BY BOARD_NO DESC
 	</select>
@@ -32,14 +32,14 @@
 	<!-- 물물교환 selectList -->
 	<select id="selectListExNotice" resultType="boardVo">
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
-		FROM TEST_BOARD
+		FROM BOARD
 		WHERE BOARD_CATE='EX' AND BOARD_NYN='Y'
 		ORDER BY BOARD_NO DESC
 	</select>
 
 	<select id="selectListEx" resultType="boardVo">
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
-		FROM TEST_BOARD
+		FROM BOARD
 		WHERE BOARD_CATE='EX' AND BOARD_NYN='N'
 		ORDER BY BOARD_NO DESC
 	</select>
@@ -47,27 +47,40 @@
 	<!-- selectOne -->	
 	<select id="selectOneBoard" parameterType="int" resultType="boardVo">
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
-		FROM TEST_BOARD
+		FROM BOARD
 		WHERE BOARD_NO=#{board_no}
 	</select>
 	
 	<!-- 게시글을 공지로 등록하는 update -->
 	<update id="updateBoardToNotice" parameterType="int" >
-		UPDATE TEST_BOARD SET BOARD_NYN='Y' 
+		UPDATE BOARD SET BOARD_NYN='Y' 
 		WHERE BOARD_NYN='N' AND BOARD_NO=#{board_no}
 	</update>
 
 	<!-- 공지글을 일반 게시글로 내리는 update -->
 	<update id="updateNoticeToBoard" parameterType="int" >
-		UPDATE TEST_BOARD SET BOARD_NYN='N' 
+		UPDATE BOARD SET BOARD_NYN='N' 
 		WHERE BOARD_NYN='Y' AND BOARD_NO=#{board_no}
 	</update>
 	
 	<!-- 게시글 작성 -->
 	<insert id="insertBoard" parameterType="boardVo">
-		INSERT INTO TEST_BOARD
-		VALUES(TEST_BOARD_SEQ.NEXTVAL, #{board_cate}, 'test', #{board_title}, #{board_content}, SYSDATE, 'N', #{board_file}, #{board_hash})
+		INSERT INTO BOARD
+		VALUES(BOARD_SEQ.NEXTVAL, #{board_cate}, #{id}, #{board_title}, #{board_content}, SYSDATE, 'N', '1.JPG', #{board_hash})
 	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="boardVo">
+		UPDATE BOARD
+		SET BOARD_TITLE=#{board_title}, BOARD_CONTENT=#{board_content}, BOARD_HASH=#{board_hash}
+		WHERE BOARD_NO=#{board_no}
+	</update>
+	
+	<!-- 게시글 삭제-->
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM BOARD
+		WHERE BOARD_NO=#{board_no}
+	</delete>
 
 </mapper>
 

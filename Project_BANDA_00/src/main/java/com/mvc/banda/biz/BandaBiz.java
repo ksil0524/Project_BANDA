@@ -214,7 +214,16 @@ public class BandaBiz {
 	public int boardNoticeCancel(int board_no) {
 		return nk_dao.boardNoticeCancel(board_no);
 	}
+
+	//마지막 시퀀스 번호 가져오기
+	public int getLastBoardSeq() {
+		return nk_dao.getLastBoardSeq();
+	}
 	
+	//게시글 쓰기
+	public int boardWrite(BoardVo vo) {
+		return nk_dao.boardWrite(vo);
+	}
 	
 	// < 하나경 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

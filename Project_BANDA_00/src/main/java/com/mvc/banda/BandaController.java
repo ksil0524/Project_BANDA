@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
@@ -575,6 +576,62 @@ public class BandaController {
 		return "temp/boardWrite";
 	}
 	
+	//게시판 글쓰기
+	@RequestMapping(value="/boardWriteRes.do", method=RequestMethod.POST)
+	public String boardWrite(HttpServletRequest request, Model model, BoardVo vo, MultipartFile boardfile) throws IllegalStateException, IOException {
+		System.out.println(vo);
+		int res = biz.boardWrite(vo);
+		
+		if(res>0) {	//insert 성공시
+			int boardno = biz.getLastBoardSeq();	//insert한 게시글의 시퀀스번호 갖고옴
+			BoardVo vo2 = biz.selectOneBoard(boardno);	//시퀀스 번호와 게시글 번호 일치하는지 확인
+			
+			//저장경로 생성
+			String storagePath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+vo2.getBoard_no());
+			
+			System.out.println("저장경로 : "+storagePath);
+			
+			//저장경로 정보 셋팅
+			File folder = new File(storagePath);	
+			
+			//저장경로 디렉토리가 없을 경우 생성
+			if(!folder.exists()) {
+				try {
+					folder.mkdir();	//storagePath의 경로 생성
+					System.out.println("폴더가 생성되었습니다.");
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			//올릴려는 파일의 실제 이름을 fileName에 넣는다
+			String fileName = boardfile.getOriginalFilename();
+			
+			//저장경로에 fileName까지 셋팅
+			File insertImg = new File(storagePath+"\\"+fileName);
+			
+			//실제 가지고온 파일을 transerTo 메소드로 저장경로에 저장
+			boardfile.transferTo(insertImg);
+			
+			//파일 이름 바꿔주기
+			File imgFile = new File(storagePath+"\\boardImg.jpg");
+			
+			//실제로 가지고온 파일이름을 imgFile에서 셋팅해놓은 boardImg.jpg로 변경(복붙해서 이름 변경)
+			insertImg.renameTo(imgFile);
+			
+			//원본파일(실제로 가지고온 파일 - insertImg) 삭제
+			insertImg.delete();
+			
+			//상세 보기로 이동
+			return "redirect:boardDetail_test.do?board_no="+boardno;
+			
+		} else {
+			System.out.println("[ERROR] BOARD WRITE");
+			
+			return "rediect:boardWriteForm.do";
+		}
+		
+	}
 	
 	// < 하나경 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

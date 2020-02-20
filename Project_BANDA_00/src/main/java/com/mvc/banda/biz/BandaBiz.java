@@ -102,6 +102,10 @@ public class BandaBiz {
 	public int getLastFeedSeq() {
 		return si_dao.getLastFeedSeq();
 	}
+	
+	public int mypage_deletefeed(int deletefeed_no) {
+		return si_dao.deletefeed(deletefeed_no);
+	}
 
 	
 	// < 김성일 파트  끝 > 
@@ -297,6 +301,8 @@ public class BandaBiz {
 	public int boardWrite(BoardVo vo) {
 		return nk_dao.boardWrite(vo);
 	}
+
+
 
 
 

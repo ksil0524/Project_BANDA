@@ -28,11 +28,28 @@
 <link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />
 
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+<style type="text/css">
+	@font-face { font-family: 'BMHANNAAir'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff'); font-weight: normal; font-style: normal; }
+</style>
+
+<style type="text/css">
+	
+	body{
+			  !important;
+	}
+
+</style>
 
 
 </head>
 <body>
 <input type = "hidden" id = "hidden_session" value = '<%=session.getAttribute("vo") %>'>
+
+<form id="delete_feed" action="mypage_deletefeed.do" method="post">
+	<input type="hidden" name="deletefeed_no" id="deletefeed_no" value="">
+</form>
+
+
 
 	<!-- ==============================================
 	HeaderSection
@@ -42,15 +59,15 @@
 	<!-- ==============================================
 	Navbar Second Section
 	=============================================== -->
-	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
+		<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg clean-black"style="height: 59px;">
-	   <a class="nav-icon" href="mypageFollw.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <div class="p-2 nav-icon-lg dark-black"style="height: 59px;">
+	   <a class="nav-icon" href="mypage_followpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>F / F</span>
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypagePets.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_allselect.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>나의 반려동물</span>
 	   </a>
 	   </div>
@@ -61,12 +78,12 @@
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypageAccount.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_accountpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>내계정</span>
 	   </a>
 	   </div>
 	  </div>
-	</section>	
+	</section>		
 			
   
 	 <!-- ==============================================
@@ -174,8 +191,8 @@
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-		     <a href="#"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/<%=id %>/profile.jpg" 
-		     											   alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'"></a>
+		     <img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=id %>/image.jpg" 
+		     											   alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'" onclick="location.href='mypage_accountpage.do'">
 
 		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
@@ -380,9 +397,22 @@
     	
     	
     	
+    	function deletefeed(){
     		
-    	
-    	
+    		var delfeed_no = $("#delfeed_no").text();
+    		alert(delfeed_no);
+    		
+    		var delconfirm = confirm("피드를 삭제하시겠습니까?");
+    		
+    		if(delconfirm){
+    			
+    			$("#deletefeed_no").val(delfeed_no);
+    			$("#delete_feed").submit();
+				    			
+    		}    		
+    		
+    		
+    	}
     </script>
     
     
@@ -506,7 +536,11 @@
           </a>
           
           <!-- 좋아요 -->
-		        <div style = "float:left;width:20%;margin-left:3%;margin-top: -1%;">
+		        <div style = "float:left;width:13%;margin-left:3%;margin-top: -1%;">
+			 	 <p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="deletefeed()"
+			 	 style="margin-top:2.5px; width: 15px; height: 15px; background-color: #ff4343; padding: 1px;font-size: 3px;">X</p>
+			 	 <p id="delfeed_no" style="display: none;"></p>
+			 	
 			 	 <a class="modal-like" href="#"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>
 			 	 <a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow"></a>
 			 	</div>
@@ -529,18 +563,21 @@
              	<img id = "feed_p_image" class="img-responsive img-circle" src="" alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
              </a>
              <strong><a href="#" id = "feed_id"></a></strong>
-		     <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
+		     <!-- 
+		      <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
+		      -->
+               <p class="date sub-text" id = "feed_regdate" style="font-size: 9px; text-align: right; margin: 3px 0 0;"></p>
             </div><!--/ img-poster -->
+            
            
           <!-- 내용 -->
 			<div style = "height:15vh">
             <ul class="img-comment-list" >
              <li>
-              <div class="comment-text">
-               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_ptag"></p>
-               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_htag"></p>
-               <p id = "feed_content"></p> 
-               <span class="date sub-text" id = "feed_regdate"></span>
+              <div class="comment-text" style="width: 200px;">
+               <p id = "feed_content"  style="margin-bottom: 10%;"></p> 
+               <p style = "font-size : 12px;color:rgb(5,203,149)" id = "feed_ptag"></p>
+               <p style = "font-size : 12px;color:rgb(5,203,149)" id = "feed_htag"></p>
               </div>
              </li><!--/ li -->
             </ul><!--/ comment-list -->
@@ -560,7 +597,7 @@
 			  <!-- 댓글쓰기 -->
 			  <li>
 			   <div class="comment-body" style = "width:115%;margin-top:10%">
-				 <input class="form-control input-sm" type="text" placeholder="Write your comment..." style = "float:left" name = "comment" id = "comment">
+				 <input class="form-control input-sm" type="text" placeholder="Write your comment..." style = "float:left; margin-left: 5%; width:82%" name = "comment" id = "comment">
 				 <div style = "float:left;margin-left:2%;margin-top:8%">
 				 	<a class="modal-comment" href="#" style = "float:right" name = "insertcomment" id = "insertcomment"><i class="fa fa-comments"></i></a>
 				 </div>
@@ -645,7 +682,7 @@
 		
 		$(document).ready(function(){ 	
 			
-			
+			var feed_no = null;
 			var id = null;
 			var file = null;
 			var content = null;
@@ -691,12 +728,17 @@
 					if(data.chk){
 						var arr = data.feed;
 						
+						feed_no = arr['feed_no'];
 						file = arr['feed_file'];
 						id = arr['id'];
 						content = arr['feed_content'];
 						ptag = arr['feed_ptag'];
 						htag = arr['feed_hteg'];
-						regdate = arr['feed_regdate'];
+						regdate = new Date(arr['feed_regdate']);
+						
+						var chregdate = getFormatDate(regdate);
+						
+						console.log(feed_no);
 						
 						var l = arr['like_list'];
 						
@@ -723,10 +765,13 @@
 						$('#feed_content').html(content);
 						$('#feed_htag').html(htag);
 						$('#feed_ptag').html(ptag);
-						$('#feed_regdate').html(regdate);
+						$('#feed_regdate').html(chregdate);
 						$('#feed_follow').html(like_list.length);
 						console.log('<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id.trim() +'/profile.jpg');
 						document.getElementById('feed_p_image').src = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id +'/profile.jpg';
+						
+						//피드 번호 넣기
+						$('#delfeed_no').text(feed_no);						
 						
 						//이미지 동영상 넣기
 						var file_list = file.split('@');
@@ -794,19 +839,19 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
 											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 								console.log(real_url);  									
 								} else {
 									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
 									console.log(real_url);
 								}
 							
@@ -931,19 +976,19 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
 											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 							
 								} else {
 									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
 								}
 							
 										
@@ -1017,19 +1062,19 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
 											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 								console.log(real_url);  									
 								} else {
 									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
 									console.log(real_url);
 								}
 							
@@ -1109,19 +1154,19 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
 											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 								console.log(real_url);  									
 								} else {
 									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
 									console.log(real_url);
 								}
 							
@@ -1153,6 +1198,20 @@
 		
 		
 		});
+		
+		</script>
+		
+		<script type="text/javascript">
+		
+		function getFormatDate(date){
+		    var year = date.getFullYear();              //yyyy
+		    var month = (1 + date.getMonth());          //M
+		    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+		    var day = date.getDate();                   //d
+		    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+		    return  year + '-' + month + '-' + day;
+		}
+		
 		
 		</script>
 	   

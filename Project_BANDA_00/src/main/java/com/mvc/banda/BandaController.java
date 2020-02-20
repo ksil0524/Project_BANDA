@@ -59,16 +59,16 @@ public class BandaController {
 		
 		HttpSession session = request.getSession();
 		
-		session.removeAttribute("accvo");
+		AccountVo votmp = (AccountVo)session.getAttribute("vo");
+		
+		session.removeAttribute("vo");
 		
 		session.setMaxInactiveInterval(60*60);
-		
-		String id = "user06";
-		
-		AccountVo accvo = biz.mypage_allselect(id);
+			
+		AccountVo accvo = biz.mypage_allselect(votmp.getId());
 		System.out.println(accvo);
 		
-		session.setAttribute("accvo", accvo);
+		session.setAttribute("vo", accvo);
 		System.out.println("mypage_allselect");
 		
 		return "temp/mypagePets";
@@ -234,16 +234,16 @@ public class BandaController {
 		
 		HttpSession session = request.getSession();
 		
-		session.removeAttribute("accvo");
+		AccountVo votmp = (AccountVo)session.getAttribute("vo");
+		
+		session.removeAttribute("vo");
 		
 		session.setMaxInactiveInterval(60*60);
 		
-		String id = "user06";
-		
-		AccountVo accvo = biz.mypage_allselect(id);
+		AccountVo accvo = biz.mypage_allselect(votmp.getId());
 		System.out.println(accvo);
 		
-		session.setAttribute("accvo", accvo);
+		session.setAttribute("vo", accvo);
 		System.out.println("mypage_allselect");
 		
 		return "temp/mypageAccount";
@@ -295,13 +295,15 @@ public class BandaController {
 
 		HttpSession session = request.getSession();
 		
-		session.removeAttribute("accvo");
+		AccountVo votmp = (AccountVo)session.getAttribute("vo");
+		
+		session.removeAttribute("vo");
 		
 		session.setMaxInactiveInterval(60*60);
 		
 		String id = "ADMIN";
 		
-		AccountVo accvo = biz.mypage_allselect(id);
+		AccountVo accvo = biz.mypage_allselect(votmp.getId());
 		System.out.println(accvo);
 		
 		// 해당하는 아이디가  팔로우하고 있는 계정들 정보 리스트
@@ -312,7 +314,7 @@ public class BandaController {
 		List<AccountVo> fd_acclist = biz.mypage_fd_accountSelectList(accvo.getId());
 		System.out.println("fd_acclist : " + fd_acclist);
 		
-		session.setAttribute("accvo", accvo);
+		session.setAttribute("vo", accvo);
 		model.addAttribute("fr_acclist", fr_acclist);
 		model.addAttribute("fd_acclist", fd_acclist);
 		
@@ -374,16 +376,16 @@ public class BandaController {
 
 		HttpSession session = request.getSession();
 		
-		session.removeAttribute("accvo");
+		AccountVo votmp = (AccountVo)session.getAttribute("vo");
+		
+		session.removeAttribute("vo");
 		
 		session.setMaxInactiveInterval(60*60);
-		
-		String id = "user06";
-		
-		AccountVo accvo = biz.mypage_allselect(id);
+				
+		AccountVo accvo = biz.mypage_allselect(votmp.getId());
 		System.out.println(accvo);
 
-		session.setAttribute("accvo", accvo);
+		session.setAttribute("vo", accvo);
 		
 		return "temp/mypageFeed";
 	}
@@ -489,6 +491,25 @@ public class BandaController {
 		
 		return "redirect:mypageFeed.do";
 	}
+	
+	@RequestMapping("/mypage_deletefeed.do")
+	public String mypage_deletefeed(HttpServletRequest request, HttpServletResponse response, Model model, int deletefeed_no) {
+		
+		System.out.println("mypage_deletefeed");
+		
+		int res = biz.mypage_deletefeed(deletefeed_no);	
+		
+		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\feed\\"+deletefeed_no);
+		
+		if(res > 0) {		
+			File deletefile = new File(savepath);
+			deletefile.delete();
+		}
+		
+		return "redirect:mypageFeed.do";
+	}
+	
+	
 	
 	
 	
@@ -763,7 +784,7 @@ public class BandaController {
 		System.out.println(f.getFeedno());
 		int feedno = f.getFeedno();
 		FeedVo feed = biz.each_feed(feedno);
-		
+		System.out.println("feeeeeed"+feed);
 		Map<String, Object> m = new HashMap<String, Object>();
 		
 		if(feed != null) {

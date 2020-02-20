@@ -308,6 +308,28 @@ public class SI_dao {
 		
 		return lastpseq;
 	}
+
+	public int deletefeed(int feed_no) {
+		
+		int cres = 0;
+		int lres = 0;
+		int fres = 0;
+		
+		try {
+			
+			cres = sqlSession.delete(NAMESPACE+"comment_delete",feed_no);
+			lres = sqlSession.delete(NAMESPACE+"like_delete",feed_no);
+			fres = sqlSession.delete(NAMESPACE+"feed_delete",feed_no);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : mypage_insertfeed");
+			e.printStackTrace();			
+		}
+		
+		return fres;	
+	}
+	
+	
 	
 	
 	

@@ -69,6 +69,8 @@ $(function() {
     	$("#mypetsDetail").hide();
     	$("#mypetsInsert").show();
     	$("#submitBtn").show();
+    	$("#submitBtnch").hide();
+    	
     })
     
 
@@ -79,6 +81,8 @@ $(function() {
     	$("#mypetsInsert").hide();
     	$("#mypetsDetail").show();
     	$("#updateBtn").show();
+    	$("#submitBtnch").hide();
+
     })
  
     
@@ -87,7 +91,9 @@ $(function() {
     	$("#mypetsInsert").hide();
     	$("#mypetsDetail").hide();
     	$("#mypetsUpdate").show();
-    	$("#submitBtn").show();
+    	$("#submitBtn").hide();
+    	$("#submitBtnch").show();
+
     })
     
     

@@ -72,6 +72,25 @@
 		INSERT INTO FOLLOW VALUES(#{fr_id}, #{fd_id})
 	</insert>
 	
+	<insert id="feed_insert" parameterType="feedVo">
+		INSERT INTO FEED VALUES(FEED_SEQ.NEXTVAL, #{id}, #{feed_content}, #{feed_ptag}, #{feed_hteg}, SYSDATE, #{feed_file})
+	</insert>
+	
+	<select id="getLastFeedSeq" resultType="_int">
+		SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'FEED_SEQ'
+	</select>
+	
+	<delete id="comment_delete" parameterType="_int">
+		DELETE FROM COMMENTS WHERE COM_CATE = 'F' AND COM_PNO = #{feed_no}
+	</delete>
+	
+	<delete id="like_delete" parameterType="_int">
+		DELETE FROM LIKES WHERE FEED_NO = #{feed_no}
+	</delete>
+	
+	<delete id="feed_delete" parameterType="_int">
+		DELETE FROM FEED WHERE FEED_NO = #{feed_no}
+	</delete>
 	
 </mapper>
 

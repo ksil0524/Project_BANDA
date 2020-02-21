@@ -27,7 +27,7 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-mypage-accountProfileImage.js"></script>
 	
 	<%
-		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+		AccountVo accvo = (AccountVo)session.getAttribute("vo");
 	%>	  	  
 	
 	
@@ -129,12 +129,12 @@
 	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
 	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="mypageFollw.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_followpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>F / F</span>
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypagePets.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_allselect.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>나의 반려동물</span>
 	   </a>
 	   </div>
@@ -145,7 +145,7 @@
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypageAccount.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_accountpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>내계정</span>
 	   </a>
 	   </div>

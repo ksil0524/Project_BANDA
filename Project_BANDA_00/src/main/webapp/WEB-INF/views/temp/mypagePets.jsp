@@ -29,7 +29,7 @@
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
 	
 	<%
-		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+		AccountVo accvo = (AccountVo)session.getAttribute("vo");
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	%>	  	  
@@ -65,15 +65,15 @@
 	<!-- ==============================================
 	Navbar Second Section
 	=============================================== -->
-	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
+		<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
 	   <div class="p-2 nav-icon-lg clean-black"style="height: 59px;">
-	   <a class="nav-icon" href="mypageFollw.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_followpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>F / F</span>
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
-	   <a class="nav-icon" href="mypagePets.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_allselect.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>나의 반려동물</span>
 	   </a>
 	   </div>
@@ -84,12 +84,12 @@
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypageAccount.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_accountpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>내계정</span>
 	   </a>
 	   </div>
 	  </div>
-	</section>	
+	</section>		
   
 	 <!-- ==============================================
 	 News Feed Section
@@ -280,7 +280,6 @@
 	
 	
 </script>
-		 
 		</div><!--/ col-lg-3 -->
 	    <div class="col-lg-6">
 			
@@ -386,6 +385,7 @@
 			    </div>
 			  </div>
 			</div><!--/ container -->
+			
 			  <div id="subBtn" class="row btns">
 				<input id="submitBtn" type="submit" value="저장">
 			  </div><!--/ row btns -->	
@@ -582,9 +582,7 @@
 					  </div>
 					</div><!--/ container -->
 					<div id="subBtn" class="row btns">
-					    <!-- 
-					     <input id="submitBtn" type="submit" value="저장">
-					     -->
+					    <input id="submitBtnch" type="submit" value="저장" style="display: none" >					
 					    <input id="updateBtn" type="button" value="수정">
 					 </div><!--/ row btns -->	
 				</form:form>

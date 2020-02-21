@@ -227,7 +227,7 @@
 }
 
 #myModal .modal-meta-bottom .comment-body input {
-    width: 200px !important;
+	width: 200px;
 }
 
 #myModal .modal-meta-bottom li a.modal-like i {

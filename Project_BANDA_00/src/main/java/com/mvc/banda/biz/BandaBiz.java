@@ -95,6 +95,18 @@ public class BandaBiz {
 	public int mypage_follow(FollowVo fvo) {
 		return si_dao.follow_follow(fvo);
 	}
+	
+	public int mypage_insertfeed(FeedVo feedVo) {
+		return si_dao.mypage_insertfeed(feedVo);
+	}
+	
+	public int getLastFeedSeq() {
+		return si_dao.getLastFeedSeq();
+	}
+	
+	public int mypage_deletefeed(int deletefeed_no) {
+		return si_dao.deletefeed(deletefeed_no);
+	}
 
 	
 	// < 김성일 파트  끝 > 
@@ -327,6 +339,7 @@ public class BandaBiz {
 		return nk_dao.boardWrite(vo);
 	}
 
+
 	//게시글 수정
 	public int boardUpdate(BoardVo vo) {
 		return nk_dao.boardUpdate(vo);
@@ -356,6 +369,7 @@ public class BandaBiz {
 	public int boardComDelete(int com_no) {
 		return nk_dao.boardComDelete(com_no);
 	}
+
 
 
 	

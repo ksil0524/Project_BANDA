@@ -23,7 +23,7 @@
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 
 	<%
-		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+		AccountVo accvo = (AccountVo)session.getAttribute("vo");
 
 	%>	  	  
 		
@@ -70,15 +70,15 @@
 	<!-- ==============================================
 	Navbar Second Section
 	=============================================== -->
-	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
+		<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg dark-black"style="height: 59px;">
-	   <a class="nav-icon" href="mypageFollw.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <div class="p-2 nav-icon-lg clean-black"style="height: 59px;">
+	   <a class="nav-icon" href="mypage_followpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>F / F</span>
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypagePets.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_allselect.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>나의 반려동물</span>
 	   </a>
 	   </div>
@@ -89,12 +89,12 @@
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
-	   <a class="nav-icon" href="mypageAccount.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="mypage_accountpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>내계정</span>
 	   </a>
 	   </div>
 	  </div>
-	</section>	
+	</section>		
   
 	 <!-- ==============================================
 	 News Feed Section
@@ -163,11 +163,7 @@
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-	  	 <form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="profileform">
-	   		 <input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
-	   		 <input type="file" id="profile_img" name="profile_img" src="" style="display: none;" accept=".jpg" onchange="profileimginp();">
-		     <img id="changeprofileimg" class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image" onclick="profileimg();">
-	  	 </form:form>
+		     <img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image" >
 		    </div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
@@ -239,6 +235,19 @@
              	<col width="300px;">
              	<col width="300px;">
              	<tr>
+					<td style="text-align: center;    padding: 3.75em 0.75em ">
+            			<p style="font-size: 20pt;">PROFILE IMG</p>
+            			<p style="font-size: 13pt;">수정을 원하시면 이미지를 클릭해주세요.</p>
+             		</td>
+             		<td style="text-align: center; padding: 3.75em 0.75em">             		
+						<form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="profileform">
+					   		 <input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
+					   		 <input type="file" id="profile_img" name="profile_img" src="" style="display: none;" accept=".jpg" onchange="profileimginp();">
+						     <img id="changeprofileimg" class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image" onclick="profileimg();" style="width: 200px; height: 200px; border: 7px solid #fff;">
+					  	 </form:form> 
+             		</td>             	
+             	</tr>
+             	<tr>
              		<td style="text-align: center;    padding: 3.75em 0.75em ">
             			<p style="font-size: 20pt;">EMAIL</p>
              		</td>
@@ -268,7 +277,7 @@
              <input type="hidden" name="id" value="<%=accvo.getId() %>">
              <table id="tconform" style="display: none;">
              	<col width="300px;">
-             	<col width="300px;">
+             	<col width="300px;">   	
              	<tr>
              		<td style="text-align: center;    padding: 3.75em 0.75em ">
             			<p style="font-size: 20pt;">EMAIL</p>

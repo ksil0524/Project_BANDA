@@ -40,7 +40,7 @@ body{
 }
 .navbar-brand {
 /**/
-    font-family: sans serif;
+	font-family: 'BMHANNAAir';
     font-size: 32px;
     color: #474B59 !important;
     -webkit-transition-duration: 0;
@@ -68,7 +68,7 @@ a.navbar-brand:hover {
 }
 .navbar-default .navbar-nav li a{
     text-decoration: none;
-    font-family: sans serif;
+	font-family: 'BMHANNAAir';
     color: #858686;
     font-size: 14px;
     text-transform: uppercase;
@@ -157,7 +157,7 @@ a.navbar-brand:hover {
   top: 118% !important;
 }	
 .w a{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px !important;
 }   
 
@@ -331,7 +331,7 @@ a.navbar-brand:hover {
   background: #f4f4f4;
   padding: 0px 20px !important;  
   text-transform: none !important;
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 15px !important;
 }
 .notification-list a.notify-all:hover{
@@ -352,7 +352,7 @@ a.navbar-brand:hover {
   white-space: normal;
   line-height: 16px; 
   text-transform: none !important;
-  font-family: sans serif;
+	font-family: 'BMHANNAAir';
   font-size: 15px !important;
 }
 .font-13 {
@@ -542,7 +542,7 @@ a.navbar-brand:hover {
   color: #90a4ae;
 }
 .nav-icon span{
-  font-family: sans serif;	
+	font-family: 'BMHANNAAir';
   font-size: 20px !important;
   display: block;
   font-weight: bold;
@@ -586,7 +586,7 @@ a.navbar-brand:hover {
 	  height: 100px;
 	}	
 	.nav-icon span{
-	  font-family: sans serif;	
+	font-family: 'BMHANNAAir';
 	  font-size: 12px !important;
 	  display: block;
 	}
@@ -644,7 +644,7 @@ a.navbar-brand:hover {
   padding: 4px 0px 4px 10px;
   clear: both;
   font-weight: 400;
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px !important;
   color: #848484;
   text-align: inherit;
@@ -681,13 +681,13 @@ a.navbar-brand:hover {
   padding: .4rem !important;
 }
 .media-body p{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-weight: 700 !important;
   font-size: 14px;
   color: #88898a;
 }
 .media-body small span{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-size: 14px;
   color: #aaa;
 }
@@ -760,7 +760,7 @@ a.navbar-brand:hover {
   color: #e16a70 !important;
 }
 .cardbox-like li span{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   float: left;
   color: #e16a70;
   font-size: 18px;
@@ -804,17 +804,17 @@ a.navbar-brand:hover {
   border: 4px solid #f4f4f4;
 }
 .modal-meta-top .img-poster a{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-size: 14px;	
   color: #88898a !important;	
 }
 .modal-meta-top .img-poster span {
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   color: #aaa;
   font-size: 12px;
 }
 .modal-meta-top .img-poster a.kafe-btn-mint-small {
-  font-family: 'Abhaya Libre', serif; 	
+	font-family: 'BMHANNAAir';
   margin-left: 0px;
   color: #fff !important;
   border-radius: 3px;  
@@ -843,18 +843,18 @@ a.navbar-brand:hover {
   height: 22px;
 }
 .img-comment-list li a{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-size: 14px;	
   color: #88898a !important;	
 }
 .img-comment-list p {
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   margin: 0;
   font-size: 13px;
   color: #848484;
 }
 .img-comment-list span {
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: .8em; 
   color: #aaa;
 }
@@ -895,7 +895,7 @@ a.navbar-brand:hover {
   color: #e16a70 !important;
 }
 .modal-meta-bottom li span{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-size: 14px !important;
   color: #848484;
 }
@@ -1030,13 +1030,13 @@ a.navbar-brand:hover {
   border: 2px dotted #fff;
 }
 .story-body h4{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
   color: #fff;  
   line-height: 1;
 }
 .story-body p{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 12px;
   color: #fff;  
   line-height: 1;
@@ -1081,14 +1081,14 @@ a.navbar-brand:hover {
   padding-top: 0px !important;
 }
 .suggestion-box .name-box h4 {
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  color: #88898a;
  font-size: 14px;
  font-weight: 700;
  margin-bottom: 4px;
 }
 .suggestion-box .name-box span {
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  font-size: 14px;
  color: #aaa;
 }
@@ -1130,7 +1130,7 @@ a.navbar-brand:hover {
  margin-bottom: 0px;	
 }
 .trending-box h4{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 12px;
   color: #88898a;
   font-weight: 500;  
@@ -1146,7 +1146,7 @@ a.navbar-brand:hover {
    Explore Page
    ========================================================================== */ 	 
 .one-row h4{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
   color: #88898a;
   font-weight: 700;  
@@ -1214,14 +1214,14 @@ a.navbar-brand:hover {
   padding: 0px 15px;	
 }
 .tr-section .card-content h4{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
   color: #88898a;
   font-weight: 700;	  
   line-height: 0;
 }
 .tr-section .card-content span{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
   color: #aaa;  
   line-height: 0.4;
@@ -1230,7 +1230,7 @@ a.navbar-brand:hover {
   border-radius: 0px !important;	
 }
 .tr-section .tr-post .post-content a.kafe-btn-mint-small{
-  font-family: 'Abhaya Libre', serif !important;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
 }
 	
@@ -1267,13 +1267,13 @@ a.navbar-brand:hover {
   float: center !important;
 }
 .explore-top .explore-like span{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-size: 16px;	
   color: #f4f4f4;
   padding-left: 2px;
 }
 .explore-top .explore-circle span{
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   font-size: 16px;	
   color: #f4f4f4;
 }
@@ -1288,13 +1288,13 @@ a.navbar-brand:hover {
   top: 320px;
 }
 .explore-body h4{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
   color: #fff;  
   line-height: 1;
 }
 .explore-body p{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 12px;
   color: #fff;  
   line-height: 1;
@@ -1327,7 +1327,7 @@ a.navbar-brand:hover {
   padding: 1rem;
 }
 .box .kafe-btn-mint-small{
-  font-family: 'Abhaya Libre', serif !important;
+	font-family: 'BMHANNAAir';
   font-size: 14px;
 }
 .box .nav-sm .nav-link {
@@ -1345,7 +1345,7 @@ a.navbar-brand:hover {
   text-align: center !important;
 }
 .upload .card .card-header span{
-  font-family: 'Abhaya Libre', serif !important;
+	font-family: 'BMHANNAAir';
   font-size: 16px;
   color: #88898a;
   font-weight: 700;
@@ -1452,7 +1452,7 @@ a.navbar-brand:hover {
   padding: 15px;  
 }
 .details .content-box h4{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 32px;
   color: #88898a;  
 }
@@ -1464,7 +1464,7 @@ a.navbar-brand:hover {
   padding: 4px;  
 }
 .details .content-box p{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 15px;
   color: #848484;  
 }
@@ -1472,7 +1472,7 @@ a.navbar-brand:hover {
   color: #0fc19e !important;
 }
 .details .content-box small span{
-  font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
   font-size: 15px;
   color: #aaa; 
 }
@@ -1510,7 +1510,7 @@ a.navbar-brand:hover {
   padding-bottom: 0;
 }
 .home-menu .menu-category li {
-  font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
   display: inline-block;
   padding: 2px 5px;
   margin: 3px 15px;
@@ -1588,14 +1588,14 @@ a.navbar-brand:hover {
   margin-bottom: 0px;
 }
 .sidebar .user-info .detail h4 {
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  font-size: 20px;
  color: #88898a;
  font-weight: 700;
  line-height: 0;
 }
 .sidebar .user-info .detail small {
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  font-size: 14px;
  color: #aaa;
  line-height: 0;
@@ -1607,12 +1607,12 @@ a.navbar-brand:hover {
  margin-top: 0px;
 }
 .sidebar .list li small{
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  font-size: 16px;
  color: #88898a !important;
 }
 .sidebar .list li p{
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  font-size: 14px;
  color: #848484 !important;
 }
@@ -1681,7 +1681,7 @@ a.navbar-brand:hover {
   padding-top: 0px !important;
 }
 .followers-box .name-box h4 {
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  color: #88898a;
  font-size: 14px;
  font-weight: 700;
@@ -1711,7 +1711,7 @@ a.navbar-brand:hover {
   padding: 0px !important;
 }
 .followers-box .followers-body > span a{
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  font-size: 14px;
 }
 .followers-box .followers-body .list-group .list-group-item {
@@ -1736,7 +1736,7 @@ a.navbar-brand:hover {
     max-width: 40px !important;
 }
 .followers-box .followers-body .list-group .list-group-item span{
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  font-size: 14px;
  margin-left: 5px;
 }
@@ -1798,7 +1798,7 @@ a.navbar-brand:hover {
  border-bottom: 2px solid #f4f4f4;
 }
 .message-title h4{
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  font-size: 20px;
  color: #88898a;
  font-weight: 700;
@@ -1815,7 +1815,7 @@ a.navbar-brand:hover {
  position: relative;
 }
 .search-area .input-field input {
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  width: 80%; 
  margin: 0;
  border: 0;
@@ -1895,21 +1895,21 @@ a.navbar-brand:hover {
  padding-left: 13px;
 }
 .user-message-info h4 {
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  color: #88898a;
  font-size: 16px;
  font-weight: 700;
  line-height: 0;
 }
 .user-message-info p {
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  color: #848484;
  font-size: 14px;
  padding-bottom: 0px !important;
  margin-bottom: 0px !important;
 }
 .user-message-info span {
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  color: #aaa;
  font-size: 13px;
  line-height: 0;
@@ -1995,7 +1995,7 @@ a.navbar-brand:hover {
  float: right;
  width: 60%;
  background-color: #0fc19e;
- font-family: 'Abhaya Libre', serif;	
+	font-family: 'BMHANNAAir';
  color: #848484;
  font-size: 15px;
  line-height: 22px;
@@ -2232,14 +2232,14 @@ a.navbar-brand:hover {
  flex: 1;
 }
 .notifications ul li .media .media_body p {
- font-family: 'Abhaya Libre', serif; 
+	font-family: 'BMHANNAAir';
  font-size: 16px; 
  color: #858686;
  margin-top: 10px;
  line-height: 1;
 }
 .notifications ul li .media .media_body h6 {
- font-family: 'Abhaya Libre', serif; 
+	font-family: 'BMHANNAAir';
  font-size: 14px; 
  color: #aaa;
  padding-top: 6px;
@@ -2317,7 +2317,7 @@ a.navbar-brand:hover {
   padding: 15px;
 }
 .form-signin .form-signin-heading {
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  font-size: 24px;
  color: #fff;
 }
@@ -2341,14 +2341,14 @@ a.navbar-brand:hover {
   z-index: 2;
 }
 .form-signin input[type="text"] {
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  font-size: 15px;
   margin-bottom: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 .form-signin input[type="password"] {
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  font-size: 15px;
  margin-bottom: 10px;
  border-top-left-radius: 0;
@@ -2361,7 +2361,7 @@ a.navbar-brand:hover {
 
 .btn-dark {
  border-radius: 0;
- font-family: 'Abhaya Libre', serif;
+	font-family: 'BMHANNAAir';
  font-size: 15px !important;
  color: #fff;
  background-color: rgba(0,0,0,0.4);

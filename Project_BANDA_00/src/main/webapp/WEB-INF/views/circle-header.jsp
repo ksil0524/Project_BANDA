@@ -38,7 +38,7 @@
                                 <div class="error"></div>
                                 <div class="form loginBox">
                                     <form id="loginForm" method="" action="login.do" accept-charset="UTF-8">
-                                    <input id="login-email" class="form-control" type="text" placeholder="Email" name="email">
+                                    <input id="login-email" class="form-control" type="text" placeholder="Id" name="email">
                                     <input id="login-password" class="form-control" type="password" placeholder="Password" name="password">
                                     <input id="login-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="loginChk()">
                                  
@@ -59,8 +59,8 @@
                                     <input id="email" class="form-control" type="text" placeholder="Email" name="email">
                                     <input id="id" class="form-control" type="text" placeholder="Id" name="id">
                                     <input id="password" class="form-control" type="password" placeholder="Password" name="password">
-                                    <input id="phone" class="form-control" type="text" placeholder="Phone" name="phone">
-                                    <input id="join-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="joinChk()">
+                                    <input id="phone" onKeyup="inputPhoneNumber(this);" maxlength="13"  class="form-control" type="text" placeholder="Phone" name="phone">
+                                    <input id="join-loginBtn" class="btn btn-default btn-login" type="button" value="Join" onclick="joinChk()">
                                     </form>
                                 </div>
                              </div>

@@ -178,6 +178,12 @@ public class BandaBiz {
 			return jy_dao.jy_login(vo);
 		}
 		
+		//naverlogin - register
+		public int naver_register(AccountVo vo) {
+			
+			return jy_dao.naver_register(vo);
+		}
+		
 		//main_selectList - 로그인시
 		public AccountVo main_selectList(String id) {
 			

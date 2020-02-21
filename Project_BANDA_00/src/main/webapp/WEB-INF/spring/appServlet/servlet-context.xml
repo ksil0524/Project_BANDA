@@ -25,8 +25,27 @@
 	
 	<context:component-scan base-package="com.mvc.banda" />
 	
+	<!-- oauth -->
+	<beans:bean id="naverClientID" class="java.lang.String">
+        <beans:constructor-arg value="OIquuewzUMTa5bZGuDrG" />
+	</beans:bean>
+		
+	<beans:bean id="naverClientSecret" class="java.lang.String">
+   		<beans:constructor-arg value="5zHPg6ytIX" />
+	</beans:bean>
 	
-	
+	<beans:bean id="naverRedirectUrl" class="java.lang.String">
+        <beans:constructor-arg value="http://localhost:8787/banda/callback.do" />
+	</beans:bean>
+    
+    
+	<beans:bean id="naverSns" class="com.mvc.banda.auth.Snsvalue">
+        <beans:constructor-arg value="naver" />
+        <beans:constructor-arg ref="naverClientID" />
+        <beans:constructor-arg ref="naverClientSecret" />
+        <beans:constructor-arg ref="naverRedirectUrl" />
+	</beans:bean>
+		
 	<!-- (인터셉터 예시)
 	
 	<interceptors>

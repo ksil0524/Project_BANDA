@@ -13,9 +13,7 @@ public class AccountVo {
 	private List<ChatVo> chat_list;			//현 계정의 채팅 리스트
 	private List<FollowVo> follow_list;		//현 계정의 팔로우 리스트
 	
-	public AccountVo() {
-		// TODO Auto-generated constructor stub
-	}
+	public AccountVo() {}
 
 	public AccountVo(String id, String password, String email, String phone, List<PetVo> pet_list,
 			List<FeedVo> feed_list, List<ChatVo> chat_list, List<FollowVo> follow_list) {

@@ -420,252 +420,272 @@ else {
 
   			<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/js/modal.js"></script>
-			<script>
-  			
-  			
-  			$(document).ready(function(){ 	
-  				
-  				
-  				var id = null;
-  				var file = null;
-	  			var content = null;
-	  			var ptag = null;
-	  			var htag = null;
-	  			var regdate = new Date();
-	  			var feedno = null;
-	  			var comment_list = [];
-	  			var real_date = null;
+		 <script>		
+		
+		$(document).ready(function(){ 	
+			
+			var feed_no = null;
+			var id = null;
+			var file = null;
+			var content = null;
+			var ptag = null;
+			var htag = null;
+			var regdate = null;
+			var feedno = null;
+			var comment_list = [];
+			var session_id = '<%=id%>';
+		
+			$('#myModal').on('show.bs.modal', function(e){
+				
+	  			var like_list = [];
+	  			comment_list = [];
 	  			
-	  			var session_id = '<%=id%>';
-  			
-  				$('#myModal').on('show.bs.modal', function(e){
-  					
-  					
-  					var like_list = [];
-  		  			comment_list = [];
-  		  			
-  		  			
-  					
-  					$('#modal_image * ').remove();
-  					$('#feed_comment * ').remove();
-  					$('#feed_like * ').remove();
-  					$('#feed_heart * ').remove();
-  					
-  				 var button = $(e.relatedTarget);
-  				 feedno = button.data('title');
-  				 var modal = $(this);
-  				 
-  				 var feed_set = {
-  						
-  					'name' : 'name',
-  					'feedno' : feedno
-  						 
-  				 };
-  				  				 
-				$.ajax({
+				
+				$('#modal_image * ').remove();
+				$('#feed_comment * ').remove();
+				$('#feed_like * ').remove();
+				$('#feed_heart * ').remove();
+				
+			 var button = $(e.relatedTarget);
+			 feedno = button.data('title');
+			 var modal = $(this);
+			 
+			 
+			 var feed_set = {
 					
-					url : 'each_feed.do',
-					type : 'post',
-					data : JSON.stringify(feed_set),
-  					contentType: "application/json",
-  					dataType:"json",
-  					success : function(data){
-  						
-  						if(data.chk){
-  							
-  							var arr = data.feed;
-  							
-  							file = arr['feed_file'];
-  							id = arr['id'];
-  							content = arr['feed_content'];
-  							ptag = arr['feed_ptag'];
-  							htag = arr['feed_hteg'];
-  							regdate = arr['feed_regdate'];
-  							//regdate = getFormatDate(regdate);
-
-  							var c = arr['comment_list'];
-  							
-  							
-  							for(var i = 0; i<c.length; i++){
-  								comment_list[i] = c[i];
-  							}
-  							
-  							//내용들 넣기
-  							$('#feed_id').html(id);
-  							$('#feed_content').html(content);
-  							$('#feed_htag').html(htag);
-  							$('#feed_ptag').html(ptag);
-  							$('#feed_regdate').html(regdate);
-  							document.getElementById('feed_p_image').src = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id +'/profile.jpg';
-  							
-  							//이미지 동영상 넣기
-  							var file_list = file.split('@');
-  							
-  							var str = "";
-  							
-  							for(var i = 1; i <file_list.length;i++){
-  								
-  								
-  								var ext = null;
-  								
-  								 if(i == 1){
-  									
-  									ext = file_list[1].substr(file_list[1].length-3,3);
-  									
-  									if(ext != 'mp4'){
-  									
-			  							var url = "url('<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1] + "')";
-			  							var url_real = '<div class = "carousel-item active" ><img class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), ' +url + ' no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;"> <br></div>';
-			  							str += url_real;
-			  							
-  									} else {
-  										
-  										var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1];
-  										var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
-			  							str += url_real;
-
-  									}
-  								} else {
-									ext = file_list[i].substr(file_list[i].length-3,3);
-  									
-  									if(ext != 'mp4'){
-	  									var url = "url('<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i] + "')";
-			  							var url_real = '<div class = "carousel-item" ><img class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), ' +url + ' no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;"> <br></div>';
-			  							str += url_real;  	
-  									} else {
-  										
-  										var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i];
-  										var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
-			  							str += url_real;
-
-  									}
-  								}
-  							}
-  							
-  							
-  							$('#modal_image').append(str);
-  							
-  							var str2 = "";
-  							
-  							//댓글 넣기
-  								
-  							if(comment_list.length == 0){
-  								var url = '<ul class="img-comment-list2"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
-  								str2 += url;
-  							} else {
-  								
-  								for(var i =0; i<comment_list.length;i++){
-  									
-  									var list = comment_list[i];
-  									
-  									if(session_id == 'ADMIN' || session_id == list['id']){
-	  									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
-	  									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<p>'+list['com_content']+'</p>'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-	  											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
-	  											'</div>'+
-	  											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
-	  											'</div>'+
-	  											'</li>';
-										//console.log(real_url);  									
-  									} else {
-  										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-	  									//console.log(real_url);
-  									}
-  								
-  											
-  									str2 += real_url;
-  								}
-  								
-  							}
-  							
-  							$('#feed_comment').append(str2);
-  							
-							//하트여부  							
-  							var l = new Array();
-  							l = arr['like_list'];
-  							
-  							var str4 = '';
-  							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>'+
-  							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
-  							
-  							
-							if(l == null){
-  								
-  								like_list = null;
-  								
-  							} else {
-  								
-
-  								for(var i =0; i<l.length; i++){
-  	  							
-  									var list2 = l[i];
-  									like_list[i] = l[i];
-  	  								  	  								
-  	  								var idid = list2['id'];
-
-  		  							if(idid == session_id){
-  		
-  										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
-  										'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
-	
-  									} 
-  		  						}
-  							}
-  							
-
-  							str4 += real_url; 							
-  							$('#feed_heart').append(str4);
-  							$('#feed_follow').html(like_list.length);
-  							
-  							//팔로우 목록
-  							var str3 = "";
-  							
-  							if(like_list.length == 0){
-  								var url = '<li style = "border:none"><div class="nearly-pepls"><div class="pepl-info"><h4 style = "margin-left:30%;font-weight:bold;color:rgb(5,203,149);">아직까지 좋아요한 반다가 없습니다.</h4></div></div></li>';
-  								str3 += url
-  							} else {
-  								
-  								for(var i =0; i<like_list.length;i++){
-  									var list = like_list[i];
-	  								var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  								var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";	
-	  								var url = '<li style = "border:none;border-bottom:1px solid lightgray"><div class="nearly-pepls"><figure><img style = "width:50px;height:50px"src="'+img_url+'" alt="" onerror="this.src ='+onerr+'"></figure><div class="pepl-info"><a href="main_otherfeed.do?id='+list['id']+'" title=""><h4 style = "margin-left:10%;margin-top:-8%;font-weight:bold;color:rgb(5,203,149)">'+list['id']+'</h4></a><a href="main_otherfeed?id="'+list['id']+' class="kafe kafe-btn-mint-small" style = "margin-top:-5%;float:right"><i class="fa fa-check-square"></i> Following</a></div></div></li>';
-	  								str3 += url;
-  								}
-  							}
-  								
-  							$('#feed_like').append(str3);
-  							
-  							
-  							
-  							
-  						} else {
-  							alert('가져오기 실패');
-  						}
-  						
-  					},
-					error:function(request,status,error){
-  						
-  						alert("통신실패");
-  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-
-  					}
+				'name' : 'name',
+				'feedno' : feedno
+					 
+			 };
+			  				 
+		$.ajax({
+			
+			url : 'each_feed.do',
+			type : 'post',
+			data : JSON.stringify(feed_set),
+				contentType: "application/json",
+				dataType:"json",
+				success : function(data){
 					
+					if(data.chk){
+						var arr = data.feed;
+						
+						feed_no = arr['feed_no'];
+						file = arr['feed_file'];
+						id = arr['id'];
+						content = arr['feed_content'];
+						ptag = arr['feed_ptag'];
+						htag = arr['feed_hteg'];
+						regdate = new Date(arr['feed_regdate']);
+						
+						var chregdate = getFormatDate(regdate);
+						
+						console.log(feed_no);
+						
+//						var l = arr['like_list'];
+//						
+//						if(l == null){
+//							
+//							like_list = null;
+//							
+//						} else {
+//							for(var i = 0; i<arr['like_list'].length; i++){
+//								like_list[i] = l[i];
+//							}
+//						}
+						
 					
-				});
-  				 
+						var c = arr['comment_list'];
+						
+						
+						for(var i = 0; i<c.length; i++){
+							comment_list[i] = c[i];
+						}
+						
+						//내용들 넣기
+						$('#feed_id').html(id);
+						$('#feed_content').html(content);
+						$('#feed_htag').html(htag);
+						$('#feed_ptag').html(ptag);
+						$('#feed_regdate').html(chregdate);
+						$('#feed_follow').html(like_list.length);
+						console.log('<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id.trim() +'/profile.jpg');
+						document.getElementById('feed_p_image').src = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id +'/profile.jpg';
+						
+						//피드 번호 넣기
+						$('#delfeed_no').text(feed_no);						
+						
+						//이미지 동영상 넣기
+						var file_list = file.split('@');
+						
+						var str = "";
+						
+						for(var i = 1; i <file_list.length;i++){
+							
+							
+							var ext = null;
+							
+							 if(i == 1){
+								
+								ext = file_list[1].substr(file_list[1].length-3,3);
+								
+								if(ext != 'mp4'){
+								
+	  							var url = "url('<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1] + "')";
+	  							var url_real = '<div class = "carousel-item active" ><img class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), ' +url + ' no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;"> <br></div>';
+	  							str += url_real;
+	  							
+								} else {
+									
+									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1];
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+	  							str += url_real;
 
-  			
-  			});
-  			
+								}
+							} else {
+							ext = file_list[i].substr(file_list[i].length-3,3);
+								
+								if(ext != 'mp4'){
+									var url = "url('<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i] + "')";
+	  							var url_real = '<div class = "carousel-item" ><img class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), ' +url + ' no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;"> <br></div>';
+	  							str += url_real;  	
+								} else {
+									
+									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i];
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+	  							str += url_real;
+
+								}
+							}
+						}
+						
+						
+						$('#modal_image').append(str);
+						
+						var str2 = "";
+						
+						//댓글 넣기
+							
+						if(comment_list.length == 0){
+							var url = '<ul class="img-comment-list2"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
+							str2 += url;
+						} else {
+							
+							for(var i =0; i<comment_list.length;i++){
+								
+								var list = comment_list[i];
+								
+								if(session_id == 'ADMIN' || session_id == list['id']){
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
+									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<p>'+list['com_content']+'</p>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'</div>'+
+											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'</div>'+
+											'</li>';
+								console.log(real_url);  									
+								} else {
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
+									console.log(real_url);
+								}
+							
+										
+								str2 += real_url;
+							}
+							
+						}
+						
+						$('#feed_comment').append(str2);
+						
+						/////////////////
+						//하트여부  							
+							var l = new Array();
+							l = arr['like_list'];
+							
+							var str4 = '';
+							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>'+
+							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+							
+							
+						if(l == null){
+								
+								like_list = null;
+								
+							} else {
+								
+
+								for(var i =0; i<l.length; i++){
+	  							
+									var list2 = l[i];
+									like_list[i] = l[i];
+	  								  	  								
+	  								var idid = list2['id'];
+
+		  							if(idid == session_id){
+										
+		  								alert('같음');
+										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
+										'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+
+									} 
+		  						}
+							}
+							
+
+							str4 += real_url;
+							console.log(str4 + "str"); 							
+							$('#feed_heart').append(str4);
+							console.log(like_list.length);
+							$('#feed_follow').html(like_list.length);
+						/////////////////
+						
+						//팔로우 목록
+						var str3 = "";
+						
+						if(like_list.length == 0){
+							var url = '<li style = "border:none"><div class="nearly-pepls"><div class="pepl-info"><h4 style = "margin-left:30%;font-weight:bold;color:rgb(5,203,149);">아직까지 좋아요한 반다가 없습니다.</h4></div></div></li>';
+							str3 += url
+						} else {
+							
+							for(var i =0; i<like_list.length;i++){
+								var list = like_list[i];
+								var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+								var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";	
+								var url = '<li style = "border:none;border-bottom:1px solid lightgray"><div class="nearly-pepls"><figure><img style = "width:50px;height:50px"src="'+img_url+'" alt="" onerror="this.src ='+onerr+'"></figure><div class="pepl-info"><a href="main_otherfeed.do?id='+list['id']+'" title=""><h4 style = "margin-left:10%;margin-top:-8%;font-weight:bold;color:rgb(5,203,149)">'+list['id']+'</h4></a><a href="main_otherfeed?id="'+list['id']+' class="kafe kafe-btn-mint-small" style = "margin-top:-5%;float:right"><i class="fa fa-check-square"></i> Following</a></div></div></li>';
+								str3 += url;
+							}
+						}
+							
+						$('#feed_like').append(str3);
+						
+						
+					} else {
+						alert('가져오기 실패');
+					}
+					
+				},
+			error:function(request,status,error){
+					
+					alert("통신실패");
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+				}
+			
+			
+		});
+			 
+
+		
+		});
+			
   			//heart : before -> after
   			changeheart_b = function(){
 
@@ -693,7 +713,7 @@ else {
 	  							//second 넣기
 	  							$('#feed_like *').remove();
 	  							
-
+	  							alert('좋아요 삽입 성공');
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -764,7 +784,7 @@ else {
 	  							//second 넣기
 	  							$('#feed_like *').remove();
 	  							
-
+	  							alert('좋아요 삭제 성공');
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -810,318 +830,319 @@ else {
 	  				});
   				
   			}
-  				
-  			//작성자피드이동
-  			$("#feed_id").on('click',function(){
-  				
-  				location.href = 'main_otherfeed.do?id='+id;
-  				
-  			});
-  			
-  			//팔로우 보이기
-  			look_like = function(){
-  				$('#first').hide();
-  				$('#second').show();
-  			}
-  			
-  			//모달로 전달
-  			$('#go_detail').on('click',function(){
-  				
-  				$('#first').show();
-  				$('#second').hide();
-  				
-  			});
-  			
-  			//댓글 삽입
-  			$("#insertcomment").on('click', function(){
-  				
+			
+		//작성자피드이동
+		$("#feed_id").on('click',function(){
+			
+			location.href = 'main_otherfeed.do?id='+id;
+			
+		});
+		
+		//팔로우 보이기
+		$('#feed_follow').on('click', function(){
+			
+			$('#first').hide();
+			$('#second').show();
+			
+		});
+		
+		//모달로 전달
+		$('#go_detail').on('click',function(){
+			
+			$('#first').show();
+			$('#second').hide();
+			
+		});
+		
+		//댓글 삽입
+		$("#insertcomment").on('click', function(){
+			
+		
+			if(session_id == 'null'){
 				
-  				if(session_id == 'null'){
-  					
-  					alert('로그인이 필요합니다.');
-  					location.href = 'index.jsp';
-  					
-  				} else {
-  					  					
-	  				var new_comment = $('#comment').val();
-	  				var category = 'F';
-	  				
-	  				var comment_set = {
-	  						
-	  					'com_content' : new_comment,	
-	  					'id' : session_id,
-	  					'com_pno' : feedno,
-	  					'com_cate' : category
-	  						
-	  				};
-	  				
-	  				$.ajax({
-	  					
-	  					url : 'main_insert_comment.do',
-	  					type : 'post',
-						data : JSON.stringify(comment_set),
-	  					contentType: "application/json",
-	  					dataType:"json",
-	  					success : function(data){
-	  						
-	  						if(data.chk){
-	  							
-	  							
-	  							comment_list = data['comment_list'];	
+				alert('로그인이 필요합니다.');
+				location.href = 'index.jsp';
+				
+			} else {
+				  					
+				var new_comment = $('#comment').val();
+				var category = 'F';
+				
+				var comment_set = {
+						
+					'com_content' : new_comment,	
+					'id' : session_id,
+					'com_pno' : feedno,
+					'com_cate' : category
+						
+				};
+				
+				$.ajax({
+					
+					url : 'main_insert_comment.do',
+					type : 'post',
+				data : JSON.stringify(comment_set),
+					contentType: "application/json",
+					dataType:"json",
+					success : function(data){
+						
+						if(data.chk){
+							
+							alert('삽입성공');
+							
+							comment_list = data['comment_list'];
+							console.log(comment_list);	
 
-	  							var str2 = '';
-	  								
-								for(var i =0; i<comment_list.length;i++){
-  									
-  									var list = comment_list[i];
-  									
-  									if(session_id == 'ADMIN' || session_id == list['id']){
-	  									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
-	  									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<p>'+list['com_content']+'</p>'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-	  											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
-	  											'</div>'+
-	  											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
-	  											'</div>'+
-	  											'</li>';
- 									
-  									} else {
-  										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-  									}
-  								
-  											
-  									str2 += real_url;
-  								}
-	  								
-	  								$('#feed_comment * ').remove();
-	  								$('#feed_comment').append(str2);
-	  							
-	  						} else {
-	  							
-	  							alert('삽입 실패');
-	  							
-	  						}
-	  					},
-	  					error:function(request,status,error){
-	  						
-	  						alert("통신실패");
-	  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-
-	  					}
-	  					
-	  					
-	  					
-	  				});
-	  				
-	  				$('#comment').val('');
-  				}
-  			});
-  			
-  			//댓글 삭제
-  			delete_comment = function(comment_no, feed_no){
-  				
-  				var delete_set = {
-  				  					
-  					'com_no' : comment_no,
-  					'com_pno' : feed_no
-  				};
-  				
-  				$.ajax({
-  					
-  					url : 'main_delete_comment.do',
-  					type : 'post',
-					data : JSON.stringify(delete_set),
-  					contentType: "application/json",
-  					dataType:"json",
-  					success : function(data){
-  						
-  						if(data.chk){
-
-  							
-  							comment_list = data.comment_list;
-  							
-  							var str2 = '';
-  							
-  							if(comment_list.length == 0){
-  								
-  								var url = '<ul class="img-comment-list2"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
-  	  							str2 += url;
-  								
-  							} else {
+							var str2 = '';
 								
-								for(var i =0; i<comment_list.length;i++){
-  									
-  									var list = comment_list[i];
-  									
-  									if(session_id == 'ADMIN' || session_id == list['id']){
-	  									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
-	  									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<p>'+list['com_content']+'</p>'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-	  											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
-	  											'</div>'+
-	  											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
-	  											'</div>'+
-	  											'</li>';
-										//console.log(real_url);  									
-  									} else {
-  										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-	  									//console.log(real_url);
-  									}
-  								
-  											
-  									str2 += real_url;
-  								}
-  							}
+						for(var i =0; i<comment_list.length;i++){
+								
+								var list = comment_list[i];
+								
+								if(session_id == 'ADMIN' || session_id == list['id']){
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
+									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<p>'+list['com_content']+'</p>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'</div>'+
+											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'</div>'+
+											'</li>';
+							
+								} else {
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
+								}
+							
+										
+								str2 += real_url;
+							}
 								
 								$('#feed_comment * ').remove();
 								$('#feed_comment').append(str2);
-								
-  						} else {
-  							alert('삭제실패');
-  						}
-  						
-  					},
-  					error:function(request,status,error){
-  						
-  						alert("통신실패");
-  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-
-  					}
-  					
-  					
-  					
-  					
-  				});
-  				
-  				
-  				
-  			}
-  			
-  			//댓글 수정
-  			update_comment = function(i){
-  				
-  				$('div[name=before_update'+i+']').hide();
-  				$('div[name=after_update'+i+']').show();
-  				
-  			}
-  			
-  			//댓글 수정 완료
-  			updateres_comment = function(comment_no, feed_no, i){
-  				
-  				var comment_content = $('input[name=change_content'+i+']').val();
-  				
-  				var update_set = {
-  					'com_no' : comment_no,
-  					'com_pno' : feed_no,
-  					'com_content' : comment_content	
-  				};
-  				
-  				$.ajax({
-  					
-  					url : 'main_update_comment.do',
-  					type : 'post',
-					data : JSON.stringify(update_set),
-  					contentType: "application/json",
-  					dataType:"json",
-  					success : function(data){
-  						if(data.chk){
-  							
-  							alert('갱신성공'); 
-  							
-							comment_list = data.comment_list;
-  							
-  							var str2 = '';
-  				
-								
-								for(var i =0; i<comment_list.length;i++){
-  									
-  									var list = comment_list[i];
-  									
-  									if(session_id == 'ADMIN' || session_id == list['id']){
-	  									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
-	  									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<p>'+list['com_content']+'</p>'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-	  											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
-	  											'</div>'+
-	  											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
-	  											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
-	  											'</div>'+
-	  											'</li>';
-										//console.log(real_url);  									
-  									} else {
-  										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
-	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
-	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-	  									//console.log(real_url);
-  									}
-  								
-  											
-  									str2 += real_url;
-  								}
-  							
-								
-								$('#feed_comment * ').remove();
-								$('#feed_comment').append(str2);
-  							
-  						} else {
-  							alert('갱신실패');
-  						}
-  					},
+							
+						} else {
+							
+							alert('삽입 실패');
+							
+						}
+					},
 					error:function(request,status,error){
-  						
-  						alert("통신실패");
-  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+						
+						alert("통신실패");
+						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
-  					}
-  					
-  				});
-  				
-  				
-  			}
-  			
-  			getFormatDate = function(date){
-  				
-  				console.log(typeof(Date(date)));
-  				
-  				var d = new Date();
-  				console.log(typeof(d));
-  				
-  				/*
-  			   var year = date.getFullYear();              //yyyy
-   		       var month = (1 + date.getMonth());          //M
-   		       month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-   		       var day = date.getDate();                   //d
-   		       day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-   		       return  year + '-' + month + '-' + day;
-  				*/
-  				
-  			}
-  			
+					}
+					
+					
+					
+				});
+				
+				$('#comment').val('');
+			}
+		});
+		
+		//댓글 삭제
+		delete_comment = function(comment_no, feed_no){
+			
+			var delete_set = {
+			  					
+				'com_no' : comment_no,
+				'com_pno' : feed_no
+			};
+			
+			$.ajax({
+				
+				url : 'main_delete_comment.do',
+				type : 'post',
+			data : JSON.stringify(delete_set),
+				contentType: "application/json",
+				dataType:"json",
+				success : function(data){
+					
+					if(data.chk){
+						alert('삭제성공');
+						console.log(data.comment_list);
+						
+						comment_list = data.comment_list;
+						
+						var str2 = '';
+						
+						if(comment_list.length == 0){
+							
+							var url = '<ul class="img-comment-list2"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
+							str2 += url;
+							
+						} else {
+						
+						for(var i =0; i<comment_list.length;i++){
+								
+								var list = comment_list[i];
+								
+								if(session_id == 'ADMIN' || session_id == list['id']){
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
+									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<p>'+list['com_content']+'</p>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'</div>'+
+											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'</div>'+
+											'</li>';
+								console.log(real_url);  									
+								} else {
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
+									console.log(real_url);
+								}
+							
+										
+								str2 += real_url;
+							}
+						}
+						
+						$('#feed_comment * ').remove();
+						$('#feed_comment').append(str2);
+						
+					} else {
+						alert('삭제실패');
+					}
+					
+				},
+				error:function(request,status,error){
+					
+					alert("통신실패");
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
-  			
-  					
-  			
-  			});
-  			
-  			</script>
+				}
+				
+				
+				
+				
+			});
+			
+			
+			
+		}
+		
+		//댓글 수정
+		update_comment = function(i){
+			
+			alert(i);
+			$('div[name=before_update'+i+']').hide();
+			$('div[name=after_update'+i+']').show();
+			
+		}
+		
+		//댓글 수정 완료
+		updateres_comment = function(comment_no, feed_no, i){
+			
+			var comment_content = $('input[name=change_content'+i+']').val();
+			
+			var update_set = {
+				'com_no' : comment_no,
+				'com_pno' : feed_no,
+				'com_content' : comment_content	
+			};
+			
+			$.ajax({
+				
+				url : 'main_update_comment.do',
+				type : 'post',
+			data : JSON.stringify(update_set),
+				contentType: "application/json",
+				dataType:"json",
+				success : function(data){
+					if(data.chk){
+						
+						alert('갱신성공'); 
+						
+					comment_list = data.comment_list;
+						
+						var str2 = '';
+			
+						
+						for(var i =0; i<comment_list.length;i++){
+								
+								var list = comment_list[i];
+								
+								if(session_id == 'ADMIN' || session_id == list['id']){
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
+									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<p>'+list['com_content']+'</p>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'</div>'+
+											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
+											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'</div>'+
+											'</li>';
+								console.log(real_url);  									
+								} else {
+									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
+									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
+									console.log(real_url);
+								}
+							
+										
+								str2 += real_url;
+							}
+						
+						
+						$('#feed_comment * ').remove();
+						$('#feed_comment').append(str2);
+						
+					} else {
+						alert('갱신실패');
+					}
+				},
+			error:function(request,status,error){
+					
+					alert("통신실패");
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+				}
+				
+			});
+			
+			
+		}
+		
+		
+		
+		
+		});
+		
+		</script>
+		
+		<script type="text/javascript">
+		
+		function getFormatDate(date){
+		    var year = date.getFullYear();              //yyyy
+		    var month = (1 + date.getMonth());          //M
+		    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+		    var day = date.getDate();                   //d
+		    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+		    return  year + '-' + month + '-' + day;
+		}
+		
+		
+		</script>
 
 	</body>
 </html>

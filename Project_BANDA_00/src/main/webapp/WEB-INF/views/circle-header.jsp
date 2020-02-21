@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.mvc.banda.model.vo.AccountVo" %>
 
 			<header id="header">
 				<div class="inner" style="position:relative;">
@@ -20,8 +21,8 @@
 					<div id="logincontent" style="display: none;" >
 						<div class="content">
                                 <div class="social">
-                                    <a class="circle github" href="#">
-                                        <i class="fa fa-github fa-fw"></i>
+                                    <a class="circle github" href="${naver_url}" style = "background-color:#00CF38">
+                                        <img src = "<%=request.getContextPath() %>/resources/images/naver.png" style = "width:23px;height:25px">
                                     </a>
                                     <a id="google_login" class="circle google" href="#">
                                         <i class="fa fa-google-plus fa-fw"></i>
@@ -98,8 +99,17 @@
 								<i class="fa fa-bell noti-icon"></i>
 								<span class="badge badge-danger badge-pill noti-icon-badge">4</span>
 							</a>
+							
+							<%
+								String id = null;
+							
+								if(session.getAttribute("vo") != null){
+									AccountVo vo = (AccountVo)session.getAttribute("vo");
+									id = vo.getId();
+								}
+							%>
 							<!-- 프로필사진 -->
-							<a href="photo_profile.do"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/3.jpg" alt="Image"></a>
+							<a href="photo_profile.do"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=id %>/image.jpg" alt="Image" onerror="this.src = '<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/image.jpg'"></a>
 							<!-- 메일 -->
 							<a class="islogin-icon-right" href="myChat.do" >
 								<i class="fas fa-comments"></i>

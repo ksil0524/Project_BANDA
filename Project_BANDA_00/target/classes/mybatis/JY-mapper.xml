@@ -59,6 +59,11 @@
 		SELECT * FROM ACCOUNT WHERE ID=#{id}
 	</select>
 	
+	<!-- naver_register -->
+	<insert id = "naver_register" parameterType="accountVo">
+		INSERT INTO ACCOUNT VALUES(#{id}, #{password}, #{email}, #{phone})
+	</insert>
+	
 	<!-- follow list -->
 	<select id = "main_selectList" resultMap="followVo" parameterType="String">
 		SELECT * FROM FOLLOW WHERE FR_ID = #{id}

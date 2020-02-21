@@ -1,6 +1,7 @@
 ﻿package com.mvc.banda;
 
 import javax.crypto.Cipher;
+import javax.inject.Inject;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -25,6 +26,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Provider.Service;
 import java.security.spec.RSAPublicKeySpec;
 //import java.net.PasswordAuthentication;
 import java.text.ParseException;
@@ -59,12 +61,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mvc.banda.auth.SNSLogin;
+import com.mvc.banda.auth.Snsvalue;
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
 import com.mvc.banda.model.vo.CommentVo;
 import com.mvc.banda.model.vo.FeedNoVo;
 import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.PetVo;
+import com.mvc.banda.model.vo.User;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.LikesVo;
@@ -621,12 +626,7 @@ public class BandaController {
 		m.put("chk", chk);
 		return m;
 	}
-	
-	
-	
-	
-	
-	
+
 	//logout
 	@ResponseBody
 	@RequestMapping(value = "/logout.do", method = RequestMethod.POST)
@@ -758,6 +758,7 @@ public class BandaController {
 		return m;
 	}
 	
+	
 	//logout
 	@ResponseBody
 	@RequestMapping(value = "/jy_logout.do", method = RequestMethod.POST)
@@ -772,6 +773,9 @@ public class BandaController {
 		return m;
 	}
 
+	@Inject
+	private Snsvalue naverSns;
+	
 	//메인 리스트 출력
 	@RequestMapping("/main_selectList.do")
 	public String main_selectList(Model model) {
@@ -810,7 +814,63 @@ public class BandaController {
 			
 		}
 		
+		SNSLogin snsLogin = new SNSLogin(naverSns);
+		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+		
 		return "index";
+	}
+	
+	//naver에서 로그인 한 후 해당 정보 받기
+	@RequestMapping(value = "/callback.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String snsLoginCallback(Model model, @RequestParam String code) throws Exception {
+		
+		//1. code이용하여 access token 받기
+		//2. access token이용하여 사용자 profile 정보 가져오기
+		//4. 존재하는 경우 로그인, 아닌경우 계정 생성
+		//3. db에 해당 유저 존재하는지 체크
+		SNSLogin snslogin = new SNSLogin(naverSns);
+		
+		User profile = snslogin.getUserProfile(code);	
+		System.out.println(profile + " 네이버 프로필 입니다.");
+
+		String email = profile.getEmail();
+		
+		String id = email.split("@")[0];
+		
+		AccountVo avo = new AccountVo();
+		avo.setId(id);
+		
+		AccountVo real_vo = biz.jy_login(avo);
+		
+		if(real_vo == null) {
+			
+			System.out.println("아이디 없음");
+			
+			String pwd = passwordEncoder.encode("1234");
+			
+			AccountVo avo2 = new AccountVo(id, pwd, email, "010-1111-1111");
+			
+			int res = biz.naver_register(avo2);
+			
+			if(res > 0 ) {
+				System.out.println("네이버로 회원가입 성공");
+				
+				session.setAttribute("vo", avo2);
+				session.setMaxInactiveInterval(60*60);
+			} else {
+				System.out.println("네이버로 회원가입 실패");
+			}
+			
+		} else {
+			
+			System.out.println(real_vo+"아이디 존재");
+			session.setAttribute("vo", real_vo);
+			session.setMaxInactiveInterval(60*60);
+			
+		}
+				
+		
+		return "redirect:main_selectList.do";
 	}
 	
 	//내피드리스트 가져오기

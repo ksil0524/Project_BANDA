@@ -30,6 +30,11 @@ public class JY_dao {
 			return sqlSession.selectOne(NAMESPACE+"jy_login", vo);
 		}
 		
+		//naver_register
+		public int naver_register(AccountVo vo) {
+			return sqlSession.insert(NAMESPACE+"naver_register", vo);
+		}
+		
 		//main_selectList -> 로그인 시 ACCOUNTVO 반환
 		public AccountVo main_selectList(String id) {
 			

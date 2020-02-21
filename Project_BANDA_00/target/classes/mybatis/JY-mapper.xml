@@ -56,7 +56,7 @@
 	
 	<!-- login -->
 	<select id = "jy_login" resultType="accountVo" parameterType="accountVo">
-		SELECT * FROM ACCOUNT WHERE ID=#{id} AND PASSWORD=#{password} 
+		SELECT * FROM ACCOUNT WHERE ID=#{id}
 	</select>
 	
 	<!-- follow list -->
@@ -140,6 +140,31 @@
 	<!-- update_comment -->
 	<update id = "update_comment" parameterType="commentVo">
 		UPDATE COMMENTS SET COM_CONTENT = #{com_content} WHERE COM_NO = #{com_no}
+	</update>
+	
+	<!-- feed_like_insert -->
+	<insert id = "feed_like_insert" parameterType="likesVo">
+		INSERT INTO LIKES VALUES(#{feed_no}, #{id})
+	</insert>
+	
+	<!-- feed_like_delete -->
+	<delete id = "feed_like_delete" parameterType="likesVo">
+		DELETE FROM LIKES WHERE FEED_NO = #{feed_no} AND ID = #{id}
+	</delete>
+	
+	<!-- find_id -->
+	<select id = "find_id" parameterType="String" resultType="accountVo">
+		SELECT * FROM ACCOUNT WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- find_vo -->
+	<select id = "find_vo" parameterType="accountVo" resultType="accountVo"> 
+		SELECT * FROM ACCOUNT WHERE EMAIL = #{email} AND ID = #{id}
+	</select>
+	
+	<!-- pwdfind_update -->
+	<update id = "pwdfind_update" parameterType="accountVo">
+		UPDATE ACCOUNT SET PASSWORD = #{password} WHERE ID = #{id}
 	</update>
 </mapper>
 

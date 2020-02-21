@@ -65,6 +65,7 @@
 	List feed = new ArrayList();
 	List<FeedVo> feed_list = new ArrayList();
 	String str[] = null;
+	
 
 	AccountVo real_vo = null;
 	String id = null;
@@ -264,11 +265,10 @@ else {
 		        </div>
 		        
 		        <!-- 좋아요 -->
-		        <div style = "float:left;width:20%;margin-left:3%;margin-top: -4%;">
-			 	 <a class="modal-like" href="#"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>
-			 	 <a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow"></a>
+		        <div style = "float:left;width:20%;margin-left:3%;margin-top: -4%;" id = "feed_heart">
+
 			 	</div>
-		      
+							      
 		       </div>
 					
 			</div>
@@ -431,26 +431,29 @@ else {
 	  			var content = null;
 	  			var ptag = null;
 	  			var htag = null;
-	  			var regdate = null;
+	  			var regdate = new Date();
 	  			var feedno = null;
 	  			var comment_list = [];
+	  			var real_date = null;
+	  			
 	  			var session_id = '<%=id%>';
   			
   				$('#myModal').on('show.bs.modal', function(e){
   					
-  		  			var like_list = [];
+  					
+  					var like_list = [];
   		  			comment_list = [];
+  		  			
   		  			
   					
   					$('#modal_image * ').remove();
   					$('#feed_comment * ').remove();
   					$('#feed_like * ').remove();
+  					$('#feed_heart * ').remove();
   					
   				 var button = $(e.relatedTarget);
   				 feedno = button.data('title');
   				 var modal = $(this);
-  				 
-  				 alert(feedno);
   				 
   				 var feed_set = {
   						
@@ -469,6 +472,7 @@ else {
   					success : function(data){
   						
   						if(data.chk){
+  							
   							var arr = data.feed;
   							
   							file = arr['feed_file'];
@@ -477,23 +481,8 @@ else {
   							ptag = arr['feed_ptag'];
   							htag = arr['feed_hteg'];
   							regdate = arr['feed_regdate'];
-  							
   							//regdate = getFormatDate(regdate);
-  							
-  							
-  							var l = arr['like_list'];
-  							
-  							if(l == null){
-  								
-  								like_list = null;
-  								
-  							} else {
-	  							for(var i = 0; i<arr['like_list'].length; i++){
-	  								like_list[i] = l[i];
-	  							}
-  							}
-  							
-  						
+
   							var c = arr['comment_list'];
   							
   							
@@ -507,9 +496,6 @@ else {
   							$('#feed_htag').html(htag);
   							$('#feed_ptag').html(ptag);
   							$('#feed_regdate').html(regdate);
-  							alert(regdate);
-  							$('#feed_follow').html(like_list.length);
-  							console.log('<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id.trim() +'/profile.jpg');
   							document.getElementById('feed_p_image').src = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+ id +'/profile.jpg';
   							
   							//이미지 동영상 넣기
@@ -586,12 +572,12 @@ else {
 	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 	  											'</div>'+
 	  											'</li>';
-										console.log(real_url);  									
+										//console.log(real_url);  									
   									} else {
   										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
 	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-	  									console.log(real_url);
+	  									//console.log(real_url);
   									}
   								
   											
@@ -601,6 +587,43 @@ else {
   							}
   							
   							$('#feed_comment').append(str2);
+  							
+							//하트여부  							
+  							var l = new Array();
+  							l = arr['like_list'];
+  							
+  							var str4 = '';
+  							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>'+
+  							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+  							
+  							
+							if(l == null){
+  								
+  								like_list = null;
+  								
+  							} else {
+  								
+
+  								for(var i =0; i<l.length; i++){
+  	  							
+  									var list2 = l[i];
+  									like_list[i] = l[i];
+  	  								  	  								
+  	  								var idid = list2['id'];
+
+  		  							if(idid == session_id){
+  		
+  										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
+  										'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+	
+  									} 
+  		  						}
+  							}
+  							
+
+  							str4 += real_url; 							
+  							$('#feed_heart').append(str4);
+  							$('#feed_follow').html(like_list.length);
   							
   							//팔로우 목록
   							var str3 = "";
@@ -622,6 +645,8 @@ else {
   							$('#feed_like').append(str3);
   							
   							
+  							
+  							
   						} else {
   							alert('가져오기 실패');
   						}
@@ -640,6 +665,151 @@ else {
 
   			
   			});
+  			
+  			//heart : before -> after
+  			changeheart_b = function(){
+
+  				if(session_id == 'null'){
+  					alert('로그인이 필요합니다.');
+  				}
+  				else {
+	  				
+	  				var insert_like = {
+	  					'feed_no' : feedno,
+	  					'id' : session_id
+	  				};
+	  				
+	  				$.ajax({
+	  					
+	  					url : 'feed_like_insert.do',
+	  					type : 'post',
+						data : JSON.stringify(insert_like),
+	  					contentType: "application/json",
+	  					dataType:"json",
+	  					success : function(data){
+	  						
+	  						if(data.chk){
+	  							
+	  							//second 넣기
+	  							$('#feed_like *').remove();
+	  							
+
+	  							like_list = data['like_list'];
+	  							
+	  							var str3 = "";
+	  							
+	  							if(like_list.length == 0){
+	  								var url = '<li style = "border:none"><div class="nearly-pepls"><div class="pepl-info"><h4 style = "margin-left:30%;font-weight:bold;color:rgb(5,203,149);">아직까지 좋아요한 반다가 없습니다.</h4></div></div></li>';
+	  								str3 += url
+	  							} else {
+	  								
+	  								for(var i =0; i<like_list.length;i++){
+	  									var list = like_list[i];
+		  								var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+		  								var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";	
+		  								var url = '<li style = "border:none;border-bottom:1px solid lightgray"><div class="nearly-pepls"><figure><img style = "width:50px;height:50px"src="'+img_url+'" alt="" onerror="this.src ='+onerr+'"></figure><div class="pepl-info"><a href="main_otherfeed.do?id='+list['id']+'" title=""><h4 style = "margin-left:10%;margin-top:-8%;font-weight:bold;color:rgb(5,203,149)">'+list['id']+'</h4></a><a href="main_otherfeed?id="'+list['id']+' class="kafe kafe-btn-mint-small" style = "margin-top:-5%;float:right"><i class="fa fa-check-square"></i> Following</a></div></div></li>';
+		  								str3 += url;
+	  								}
+	  							}
+	  								
+	  							$('#feed_like').append(str3);
+	  							
+	  							//하트, 숫자
+	  							var str = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
+	  							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+	  						
+		  						$('#feed_heart * ').remove();
+		  		  				$('#feed_heart').append(str);
+		  		  				$('#feed_follow * ').remove();
+		  		  				$('#feed_follow').html(like_list.length);
+	  							
+	  						} else {
+	  							alert('좋아요 삽입 실패');
+	  						}
+	  						
+	  					},
+	  					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  						}
+  					
+	  				
+	  				});
+	  				
+	  				
+  				}
+  			}
+  			
+  			//heart : after -> before
+  			changeheart_a = function(){
+  				
+  					var delete_like = {
+	  					'feed_no' : feedno,
+	  					'id' : session_id
+	  				};
+ 	
+					$.ajax({
+	  					
+	  					url : 'feed_like_delete.do',
+	  					type : 'post',
+						data : JSON.stringify(delete_like),
+	  					contentType: "application/json",
+	  					dataType:"json",
+	  					success : function(data){
+	  						
+	  						if(data.chk){
+	  							
+	  							//second 넣기
+	  							$('#feed_like *').remove();
+	  							
+
+	  							like_list = data['like_list'];
+	  							
+	  							var str3 = "";
+	  							
+	  							if(like_list.length == 0){
+	  								var url = '<li style = "border:none"><div class="nearly-pepls"><div class="pepl-info"><h4 style = "margin-left:30%;font-weight:bold;color:rgb(5,203,149);">아직까지 좋아요한 반다가 없습니다.</h4></div></div></li>';
+	  								str3 += url
+	  							} else {
+	  								
+	  								for(var i =0; i<like_list.length;i++){
+	  									var list = like_list[i];
+		  								var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
+		  								var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";	
+		  								var url = '<li style = "border:none;border-bottom:1px solid lightgray"><div class="nearly-pepls"><figure><img style = "width:50px;height:50px"src="'+img_url+'" alt="" onerror="this.src ='+onerr+'"></figure><div class="pepl-info"><a href="main_otherfeed.do?id='+list['id']+'" title=""><h4 style = "margin-left:10%;margin-top:-8%;font-weight:bold;color:rgb(5,203,149)">'+list['id']+'</h4></a><a href="main_otherfeed?id="'+list['id']+' class="kafe kafe-btn-mint-small" style = "margin-top:-5%;float:right"><i class="fa fa-check-square"></i> Following</a></div></div></li>';
+		  								str3 += url;
+	  								}
+	  							}
+	  								
+	  							$('#feed_like').append(str3);
+	  							
+	  							//하트, 숫자
+	  							var str = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
+								'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+				
+		  						$('#feed_heart * ').remove();
+		  		  				$('#feed_heart').append(str);
+		  		  				$('#feed_follow * ').remove();
+		  		  				$('#feed_follow').html(like_list.length);
+	  							
+	  						} else {
+	  							alert('좋아요 삽입 실패');
+	  						}
+	  						
+	  					},
+	  					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  						}
+  					
+	  				
+	  				});
+  				
+  			}
   				
   			//작성자피드이동
   			$("#feed_id").on('click',function(){
@@ -649,12 +819,10 @@ else {
   			});
   			
   			//팔로우 보이기
-  			$('#feed_follow').on('click', function(){
-  				
+  			look_like = function(){
   				$('#first').hide();
   				$('#second').show();
-  				
-  			});
+  			}
   			
   			//모달로 전달
   			$('#go_detail').on('click',function(){
@@ -698,10 +866,8 @@ else {
 	  						
 	  						if(data.chk){
 	  							
-	  							alert('삽입성공');
 	  							
-	  							comment_list = data['comment_list'];
-	  							console.log(comment_list);	
+	  							comment_list = data['comment_list'];	
 
 	  							var str2 = '';
 	  								
@@ -777,8 +943,7 @@ else {
   					success : function(data){
   						
   						if(data.chk){
-  							alert('삭제성공');
-  							console.log(data.comment_list);
+
   							
   							comment_list = data.comment_list;
   							
@@ -809,12 +974,12 @@ else {
 	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 	  											'</div>'+
 	  											'</li>';
-										console.log(real_url);  									
+										//console.log(real_url);  									
   									} else {
   										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
 	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-	  									console.log(real_url);
+	  									//console.log(real_url);
   									}
   								
   											
@@ -849,7 +1014,6 @@ else {
   			//댓글 수정
   			update_comment = function(i){
   				
-  				alert(i);
   				$('div[name=before_update'+i+']').hide();
   				$('div[name=after_update'+i+']').show();
   				
@@ -901,12 +1065,12 @@ else {
 	  											'<span class="date sub-text">'+list['com_regdate']+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 	  											'</div>'+
 	  											'</li>';
-										console.log(real_url);  									
+										//console.log(real_url);  									
   									} else {
   										var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 	  									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
 	  									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+list['com_regdate']+'</span></div></li>';
-	  									console.log(real_url);
+	  									//console.log(real_url);
   									}
   								
   											
@@ -935,15 +1099,24 @@ else {
   			
   			getFormatDate = function(date){
   				
-  				var year = date.getFullYear();              //yyyy
+  				console.log(typeof(Date(date)));
+  				
+  				var d = new Date();
+  				console.log(typeof(d));
+  				
+  				/*
+  			   var year = date.getFullYear();              //yyyy
    		       var month = (1 + date.getMonth());          //M
    		       month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
    		       var day = date.getDate();                   //d
    		       day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
    		       return  year + '-' + month + '-' + day;
-  				
+  				*/
   				
   			}
+  			
+
+  			
   					
   			
   			});

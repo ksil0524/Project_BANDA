@@ -161,7 +161,7 @@
 	   
 	   <div class="col-lg-3">
 		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/4.jpg') no-repeat;
+		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/dog.png') no-repeat;
 		          background-size: cover;
                   background-position: center center;
                   -webkit-background-size: cover;
@@ -169,7 +169,7 @@
                   -o-background-size: cover;">		  
 		 </div>
 		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg') no-repeat;
+		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/koala.png') no-repeat;
 		          background-size: cover;
                   background-position: center center;
                   -webkit-background-size: cover;
@@ -179,7 +179,7 @@
 	   </div>
 	   <div class="col-lg-6">
 		 <div class="profilebox-large hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/9.jpg') no-repeat;
+		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/crocodile.png') no-repeat;
 		          background-size: cover;
                   background-position: center center;
                   -webkit-background-size: cover;
@@ -189,7 +189,7 @@
 	   </div>
 	   <div class="col-lg-3">
 		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/11.jpg') no-repeat;
+		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/squirrel.png') no-repeat;
 		          background-size: cover;
                   background-position: center center;
                   -webkit-background-size: cover;
@@ -197,7 +197,7 @@
                   -o-background-size: cover;">		  
 		 </div>
 		 <div class="profilebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.6), rgba(34,34,34,0.6)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/12.jpg') no-repeat;
+		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/flamingo.png') no-repeat;
 		          background-size: cover;
                   background-position: center center;
                   -webkit-background-size: cover;

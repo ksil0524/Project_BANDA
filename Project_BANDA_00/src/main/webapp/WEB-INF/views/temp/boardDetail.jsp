@@ -97,8 +97,8 @@
 		     <em class="fa fa-ellipsis-h"></em>
 			</button>
             <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-	         <a class="dropdown-item" href="#">수정</a>
-			 <a class="dropdown-item" href="#">삭제</a>
+	         <a class="dropdown-item" href="boardUpdateForm.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">수정</a>
+			 <a class="dropdown-item" href="boardDelete.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">삭제</a>
 			 <c:set var="noticeChk" value="${detail.board_nyn}"/>
 			 <c:choose>
 			   <c:when test="${fn:contains(noticeChk, 'Y')}">
@@ -108,6 +108,8 @@
 	         	 <a class="dropdown-item" href="boardSetNotice.do?board_no=${detail.board_no }">공지등록</a>
 	           </c:when>
 	         </c:choose>
+			
+	         
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->
@@ -135,7 +137,7 @@
           <!-- 본문 -->
 		  <div class="cardbox-item">
 		    <div class="cardbox-img">
-		      <img class="img-responsive" src="<%=request.getContextPath() %>/resources/temp/assets/img/posts/1.jpg" alt="MaterialImg">
+		      <img class="img-responsive" src="<%=request.getContextPath() %>/resources/images/filemanager/board/${detail.board_no }/boardImg.jpg" alt="MaterialImg">
 		    </div>
 		    <div class="cardbox-content">
 		     <div class="cardbox-text">
@@ -159,77 +161,76 @@
 		    
 		  <div class="cardbox-comment-list">
 		   <ul class="img-comment-list">
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/17.jpeg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Anthony McCartney</a></strong> <span class="date sub-text">on December 5th, 2016</span>
-               <p>Hello this is a test comment.</p> 
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/15.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Vanessa Wells</a></strong> <span>on December 5th, 2016</span>
-               <p>Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p> 
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/14.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Sean Coleman</a></strong> <span class="date sub-text">on December 5th, 2016</span>
-               <p class="">Hello this is a test comment.</p> 
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/13.jpeg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Anna Morgan</a></strong> <span class="date sub-text">on December 5th, 2016</span>
-               <p class="">Hello this is a test comment.</p> 
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/3.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">Allison Fowler</a></strong> <span class="date sub-text">on December 5th, 2016</span>
-               <p class="">Hello this is a test comment.</p> 
-              </div>
-             </li><!--/ li -->
-             <li>
-              <div class="comment-img">
-               <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/7.jpg" class="img-responsive img-circle" alt="Image"/>
-              </div>
-              <div class="comment-text">
-               <strong><a href="">한국인</a></strong> <span class="date sub-text">on December 5th, 2016</span>
-               <p class="">쿨거래원합니다</p> 
-              </div>
-             </li><!--/ li -->
+		    <c:choose>
+		      <c:when test="${empty boardComList }">
+		        <li style="text-align: center;">등록된 댓글이 없습니다. 댓글을 달아주세요!</li>
+		      </c:when>
+		      <c:when test="${not empty boardComList }">
+		        <c:forEach items="${boardComList }" var="comments">
+		          <li>
+                    <div class="comment-img">
+                      <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/17.jpeg" class="img-responsive img-circle" alt="Image"/>
+                    </div>
+                    <div class="comment-text">
+                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span><span class=""> <i class="fas fa-pen" id="boardComUpdate"></i></span><span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
+                      <p>${comments.com_content }</p> 
+                    </div>
+                  </li><!--/ li -->
+		        </c:forEach>
+		      </c:when>
+		     </c:choose>
             </ul><!--/ comment-list -->
+            <script type="text/javascript">
+              $("#boardComUpdate").click(function(){
+            	  var comContent = $
+              });
+            </script>
            </div><!--/ cardbox-comment-list -->
 		   
-		   <div class="comment-bottom">   	 	 
+		   <div class="comment-bottom">  
+		    	 	 
 			<div class="comment-put">
 			   <table style="width: 800px;">
 		   	    <tr>
 		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
-		   	     <td><input class="form-control input-sm" type="text" placeholder="댓글을 입력하세요"/></td>
-		   	     <td style="width: 50px;"><a href="#"><i class="fas fa-edit"></i></a></td>
+		   	     <td>
+		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
+		   	         <input type="hidden" name="com_cate" value="B"/>
+		   	         <input type="hidden" name="id" value="test"/>
+		   	         <input class="form-control input-sm" type="text" name="com_content" placeholder="댓글을 입력하세요"/>
+		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
+		   	       </form:form>
+		   	     </td>
+		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="$('#commentForm').submit();"></i></td>
 		   	    </tr>
 		   	   </table>  
 			 </div><!--/ comment-put -->
+			 
+			 <div class="comment-edit" style="display: none;">
+			   <table style="width: 800px;">
+		   	    <tr>
+		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
+		   	     <td>
+		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
+		   	         <input type="hidden" name="com_cate" value="B"/>
+		   	         <input type="hidden" name="id" value="test"/>
+		   	         <input class="form-control input-sm" type="text" name="com_content" placeholder="댓글을 입력하세요"/>
+		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
+		   	       </form:form>
+		   	     </td>
+		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="$('#commentForm').submit();"></i></td>
+		   	    </tr>
+		   	   </table>  
+			 </div><!--/ comment-edit -->
+			 
 			 <div class="list-btn">
-		       <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="javascript:history.back()">목록</button>
+			   <c:if test="${detail.board_cate eq 'SH' }">
+		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListFree_test.do'">목록</button>
+			   </c:if>
+			   <c:if test="${detail.board_cate eq 'EX' }">
+		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListExchange_test.do'">목록</button>
+			   </c:if>			   
 		     </div><!--/ list-btn -->
-	  	   </div><!--/ comment-bottom -->
 		   
           </div><!--/ cardbox-comments -->			  
                 

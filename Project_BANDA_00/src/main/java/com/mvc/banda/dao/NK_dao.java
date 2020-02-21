@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mvc.banda.model.vo.BoardVo;
+import com.mvc.banda.model.vo.CommentVo;
 
 @Repository
 public class NK_dao {
@@ -128,7 +129,7 @@ public class NK_dao {
 		boardno--;
 		
 		return boardno;
-	}	
+	}
 	
 	//게시글 쓰기
 	public int boardWrite(BoardVo vo) {
@@ -143,5 +144,86 @@ public class NK_dao {
 		
 		return res;
 	}	
+	
+	//게시글 수정
+	public int boardUpdate(BoardVo vo) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE+"updateBoard", vo);
+		} catch(Exception e) {
+			System.out.println("[ERROR] BOARD UPDATE");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	//게시글 삭제
+	public int boardDelete(int board_no) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.delete(NAMESPACE+"deleteBoard", board_no);
+		} catch(Exception e) {
+			System.out.println("[ERROR] BOARD DELETE");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	//댓글 목록
+	public List<CommentVo> selectBoardComList(int board_no) {
+		List<CommentVo> list = new ArrayList<CommentVo>();
+		
+		try {
+			list = sqlSession.selectList(NAMESPACE+"selectBoardCom", board_no);
+		} catch(Exception e) {			
+			System.out.println("[ERROR] BOARD COMMENTS LOAD");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	//댓글 작성
+	public int boardComWrite(CommentVo vo, int board_no) {
+		int res=0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE+"insertBoardCom", vo);
+		} catch(Exception e) {
+			System.out.println("[ERROR] BOARD COMMENT WRITE");
+		}
+		
+		return res;
+	}
+	
+	//댓글 수정
+	public int boardComUpdate(CommentVo vo) {
+		int res=0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE+"updateBoardCom", vo);
+		} catch(Exception e) {
+			System.out.println("[ERROR] BOARD COMMENT UPDATE");
+		}
+		
+		return res;
+	}
+	
+	//댓글 삭제
+	public int boardComDelete(int com_no) {
+		int res=0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE+"deleteBoardCom", com_no);
+		} catch(Exception e) {
+			System.out.println("[ERROR] BOARD COMMENT UPDATE");
+		}
+		
+		return res;
+	}
 	
 }

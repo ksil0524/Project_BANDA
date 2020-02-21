@@ -50,6 +50,11 @@
 		FROM BOARD
 		WHERE BOARD_NO=#{board_no}
 	</select>
+
+	<!-- 마지막 게시글 시퀀스 가져오기 -->
+	<select id="getLastBoardSeq" resultType="int">
+		SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'TEST_BOARD_SEQ'
+	</select>
 	
 	<!-- 게시글을 공지로 등록하는 update -->
 	<update id="updateBoardToNotice" parameterType="int" >
@@ -80,6 +85,25 @@
 	<delete id="deleteBoard" parameterType="int">
 		DELETE FROM BOARD
 		WHERE BOARD_NO=#{board_no}
+	</delete>
+
+	<!-- 댓글 작성 -->
+	<insert id="insertBoardCom" parameterType="commentVo">
+		INSERT INTO TEST_COMMENTS
+		VALUES(TEST_COM_SEQ.NEXTVAL, #{com_cate}, #{id}, #{com_content}, SYSDATE, #{com_pno})
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateBoardCom" parameterType="commentVo">
+		UPDATE TEST_COMMENTS
+		SET COM_CONTENT=#{com_content}
+		WHERE COM_NO=#{com_no}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteBoardCom" parameterType="int">
+		DELETE FROM TEST_COMMENTS
+		WHERE COM_NO=#{com_no}
 	</delete>
 
 </mapper>

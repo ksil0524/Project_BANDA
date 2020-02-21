@@ -289,6 +289,36 @@ public class BandaBiz {
 	public int boardWrite(BoardVo vo) {
 		return nk_dao.boardWrite(vo);
 	}
+
+	//게시글 수정
+	public int boardUpdate(BoardVo vo) {
+		return nk_dao.boardUpdate(vo);
+	}
+
+	//게시글 삭제
+	public int boardDelete(int board_no) {
+		return nk_dao.boardDelete(board_no);
+	}
+	
+	//댓글 목록
+	public List<CommentVo> selectBoardComList(int board_no) {
+		return nk_dao.selectBoardComList(board_no);
+	}
+
+	//댓글 작성
+	public int boardComWrite(CommentVo vo, int board_no) {
+		return nk_dao.boardComWrite(vo, board_no);
+	}
+	
+	//댓글 수정
+	public int boardComUpdate(CommentVo vo) {
+		return nk_dao.boardComUpdate(vo);
+	}
+	
+	//댓글 삭제
+	public int boardComDelete(int com_no) {
+		return nk_dao.boardComDelete(com_no);
+	}
 	
 	// < 하나경 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

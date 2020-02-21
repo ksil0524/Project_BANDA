@@ -308,10 +308,14 @@ public class BandaController {
 	public String mypage_accountupdate(AccountVo accvo) {
 		
 		System.out.println("mypage_accountupdate");
-		System.out.println(accvo);
+		String enpassword = passwordEncoder.encode(accvo.getPassword());
+		
+		accvo.setPassword(enpassword);
+		
 		int res = biz.mypage_accountupdate(accvo);
 		
 		return "redirect:mypage_accountpage.do";
+		
 	}
 	
 	
@@ -732,6 +736,7 @@ public class BandaController {
 	@ResponseBody
 	@RequestMapping(value = "/jy_login.do", method = RequestMethod.POST)
 	public Map<String, Boolean> jy_login(@RequestBody AccountVo vo, HttpServletRequest request) {
+		System.out.println("jy_login");
 
 		Boolean chk = true;
 		

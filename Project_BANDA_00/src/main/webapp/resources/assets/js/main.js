@@ -123,10 +123,10 @@ $("#id").blur(function(){
 			
 			if(rres){
 				$("#id").val("");
-				$("#id::-webkit-input-placeholder").css({"color" : "red"});
-				$("#id::-moz-placeholder").css({"color" : "red"});
-				$("#id:-ms-input-placeholder").css({"color" : "red"});
-				$("#id:-moz-placeholder ").css({"color" : "red"});
+//				$("#id::-webkit-input-placeholder").css({"color" : "red"});
+//				$("#id::-moz-placeholder").css({"color" : "red"});
+//				$("#id:-ms-input-placeholder").css({"color" : "red"});
+//				$("#id:-moz-placeholder ").css({"color" : "red"});
 				$("#id").attr("placeholder","아이디가 중복되었습니다.");
 			}
 		}, 

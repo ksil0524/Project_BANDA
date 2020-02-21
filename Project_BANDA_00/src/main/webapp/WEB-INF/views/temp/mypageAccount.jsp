@@ -102,7 +102,7 @@
 	 <section class="profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   
+	   <!-- 
 	   <div class="col-lg-3">
 		 <div class="profilebox hidden-xs hidden-sm" 
 		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/4.jpg') no-repeat;
@@ -121,6 +121,7 @@
                   -o-background-size: cover;">		  
 		 </div>
 	   </div>
+	    -->
 	   <div class="col-lg-6">
 		 <div class="profilebox-large hidden-xs hidden-sm" 
 		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/9.jpg') no-repeat;
@@ -131,6 +132,7 @@
                   -o-background-size: cover;">		  
 		 </div>
 	   </div>
+	   <!-- 
 	   <div class="col-lg-3">
 		 <div class="profilebox hidden-xs hidden-sm" 
 		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/11.jpg') no-repeat;
@@ -149,6 +151,7 @@
                   -o-background-size: cover;">		  
 		 </div>
 	   </div>
+	    -->
 		
        </div><!--/ row-->	
 	  </div><!--/ container -->
@@ -263,14 +266,16 @@
              			<p style="font-size: 20pt;"><span class="hashtag"><%=accvo.getPhone() %></span><p>
              		</td>
              	</tr>
+             	<!-- 
              	<tr>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
             			<p style="font-size: 20pt;">PASSWORD</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><%=accvo.getPassword() %></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag">test</span><p>
              		</td>
              	</tr>
+             	 -->
              </table>
              
              <form action="mypage_accountupdate.do" method="post" id="accountupdate">

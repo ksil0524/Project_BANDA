@@ -1,11 +1,32 @@
 ﻿package com.mvc.banda;
 
-import javax.annotation.Resource;
+import javax.crypto.Cipher;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+//import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.RSAPublicKeySpec;
+//import java.net.PasswordAuthentication;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,8 +34,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +46,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +67,7 @@ import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
+import com.mvc.banda.model.vo.LikesVo;
 
 @Controller
 public class BandaController {
@@ -422,18 +449,15 @@ public class BandaController {
 		if(vo1 == null) {
 			
 			chk = false;
-			System.out.println("여기까지 들어옴1");
 			
 		}else {
 			session.setAttribute("vo", vo1);
 			session.setMaxInactiveInterval(60*60);
-			System.out.println("여기까지 들어옴2");
 		}
 		
 		
 		Map<String, Boolean> m = new HashMap<String, Boolean>();
 		m.put("chk", chk);
-		System.out.println(m+"컨트롤러의 m");
 		return m;
 	}
 	
@@ -448,7 +472,6 @@ public class BandaController {
 	public Map<String, Boolean> logout() {
 		
 		session.invalidate();
-		System.out.println("로그아웃성공");
 
 		Map<String, Boolean> m = new HashMap<String, Boolean>();
 		m.put("chk", true);
@@ -543,26 +566,31 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 최주예 파트  시작 >  
-	
-
 
 	//login
 	@ResponseBody
 	@RequestMapping(value = "/jy_login.do", method = RequestMethod.POST)
-	public Map<String, Boolean> jy_login(@RequestBody AccountVo vo) {
-		
-		AccountVo vo2 = biz.jy_login(vo);
+	public Map<String, Boolean> jy_login(@RequestBody AccountVo vo, HttpServletRequest request) {
+
 		Boolean chk = true;
 		
-		if(vo2==null) {
-			chk = false;
-		} else {
+		//입력비밀번호
+		String input_pwd = vo.getPassword();
+
+		AccountVo vo2 = biz.jy_login(vo);
+		
+		//디비비밀번호
+		String db_pwd = vo2.getPassword();
+		
+		if(passwordEncoder.matches(input_pwd, db_pwd)) {
+			
 			session.setAttribute("vo", vo2);
 			session.setMaxInactiveInterval(60*60);
+			
+		} else {
+			chk = false;
 		}
-		
-		//System.out.println(session.getAttribute("vo"));
-		
+
 		Map<String, Boolean> m = new HashMap<String, Boolean>();
 		m.put("chk", chk);
 		
@@ -597,7 +625,6 @@ public class BandaController {
 			List<FollowVo> fvo = biz.main_selectFollow(id);
 
 			if(fvo.size() != 0) {
-				System.out.println("로그인성공/ 팔로우 있음");
 				
 				AccountVo vo2 = (AccountVo)biz.main_selectList(id);
 				//System.out.println(vo2);
@@ -761,7 +788,180 @@ public class BandaController {
 		return m;
 	}
 	
+	//피드 좋아요 추가
+	@RequestMapping("/feed_like_insert.do")
+	@ResponseBody
+	public Map<String, Object> feed_like_insert(@RequestBody LikesVo l){
+		
+		System.out.println(l);
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		Boolean chk = false;
+		
+		int res = biz.feed_like_insert(l);
+		List<LikesVo> llist = biz.main_like_list(l.getFeed_no());
+		
+		if(res >0) {
+			System.out.println("삽입성공");
+			chk = true;
+			m.put("chk", chk);
+			m.put("like_list",llist);
+		} else {
+			System.out.println("삽입실패");
+			m.put("chk", chk);
+			m.put("like_list",llist);
+		}
+		
+		return m;
+	}
 	
+	//피드 좋아요 삭제
+	@RequestMapping("/feed_like_delete.do")
+	@ResponseBody
+	public Map<String, Object> feed_like_delete(@RequestBody LikesVo l){
+		
+		System.out.println(l);
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		Boolean chk = false;
+		
+		int res = biz.feed_like_delete(l);
+		List<LikesVo> llist = biz.main_like_list(l.getFeed_no());
+		
+		if(res >0) {
+			System.out.println("삭제성공");
+			chk = true;
+			m.put("chk", chk);
+			m.put("like_list",llist);
+		} else {
+			System.out.println("삭제실패");
+			m.put("chk", chk);
+			m.put("like_list",llist);
+		}
+		
+		return m;
+		
+	}
+	
+	//아이디 찾기
+	@RequestMapping("/idFind.do")
+	@ResponseBody
+	public Map<String, Object> idFind(@RequestBody AccountVo vo){
+		
+		Boolean chk = false;
+		String email = vo.getEmail();
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		
+		AccountVo avo = biz.find_id(email);
+		if(avo == null) {
+			chk = true;
+			m.put("id", "※이메일에 맞는 아이디가 없습니다.");
+			m.put("chk", chk);
+			
+		} else {
+			if(avo != null) {
+				chk = true;
+				m.put("id", avo.getId());
+				m.put("chk", chk);
+			} else {
+				m.put("chk", chk);
+			}
+		}
+		
+		return m;
+	}
+	
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	
+	//비밀번호 찾기
+	@RequestMapping("/pwdFind.do")
+	@ResponseBody
+	public Map<String, Object> pwdFind(@RequestBody AccountVo vo){
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		Boolean chk = true;
+		
+		AccountVo avo = biz.find_vo(vo);
+		System.out.println(avo);
+		
+		if(avo == null) {
+
+			m.put("id", "※아이디와 이메일이 맞지 않습니다.");
+			m.put("chk", chk);
+			
+		} else {
+			
+			//이메일
+			String to_email = avo.getEmail();
+			//아이디
+			String id = avo.getId();
+			
+			//임시비밀번호
+	         StringBuffer temp = new StringBuffer();
+	         Random rnd = new Random();
+
+	         for (int i = 0; i < 10; i++) {
+	            int rIndex = rnd.nextInt(3);
+	            switch (rIndex) {
+	            case 0:
+	               temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+	               break;
+	            case 1:
+	               temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+	               break;
+	            case 2:
+	               temp.append((rnd.nextInt(10)));
+	               break;
+	            }
+	         }
+
+	         String AuthenticationKey = temp.toString();
+	         
+	         
+	 		String setfrom = "juihy10004@gmail.com";
+
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message,
+						true, "UTF-8");
+
+				messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+				messageHelper.setTo(to_email); // 받는사람 이메일
+				messageHelper.setSubject(id + "님의 임시 비밀번호입니다."); // 메일제목은 생략이 가능하다
+				
+				messageHelper.setText(id + "님의 임시 비밀번호는 " + AuthenticationKey + "입니다."); // 메일 내용
+
+				mailSender.send(message);
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+	         
+	         //암호화
+	         vo.setPassword(passwordEncoder.encode(AuthenticationKey));
+	         
+	         System.out.println(AuthenticationKey + "a");
+	         System.out.println(vo.getPassword());
+	         
+	         int res = biz.pwdfind_update(vo);
+	         
+	         if(res > 0) {
+	        	 m.put("id", "이메일이 전송되었습니다.");
+		         m.put("chk", chk);
+	         } else {
+	        	 m.put("id", "이메일이 전송되었지만 데이터베이스에 입력되지 않았습니다.");
+		         m.put("chk", chk);
+	         }
+	         
+		}
+	
+		
+		return m;
+	}
 	
 	
 	// < 최주예 파트  끝 > 

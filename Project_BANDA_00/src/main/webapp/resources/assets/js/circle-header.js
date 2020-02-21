@@ -4,7 +4,7 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-var isLogin = 1;
+var isLogin = 0;
 
 
 
@@ -13,14 +13,11 @@ function loginChk(){
 	var email = $("#login-email").val().trim();
 	var pw = $("#login-password").val().trim();
 	
-	alert("email: " + email + "  pw: " + pw);
-	
 	var login_set = {
+			
 			"id":email,
 			"password":pw			
 	};
-	
-	//console.log(login_set);
 	
 	//추가
 
@@ -33,7 +30,7 @@ function loginChk(){
 	
 	$.ajax({
 		
-		url : "login.do",
+		url : "jy_login.do",
 		type : "post",
 		data : JSON.stringify(login_set),
 		contentType: "application/json",
@@ -48,15 +45,14 @@ function loginChk(){
 			$("#logincontent").hide();
 			$("#header").toggleClass('hide');
 			$("#content").hide();
-			$("#loginchk").css("display","none");
+			$("#error_login").css("display","none");
 			location.href = "index.jsp";
 			
 			
 			
 			} else {
-				$("#loginchk").css("display","block");
 				
-				alert("잘못입력");
+				$("#error_login").css("display","block");
 				
 				return;
 			}
@@ -137,6 +133,17 @@ function close(){
 
 (function($) {
 	
+	var session = $("#hidden_session").val();
+	console.log(session);
+
+	if(session == 'AccountVo') {
+		
+		isLogin = 1;
+		
+	} else {
+		
+	}
+	
 	
 	$("#header").toggleClass('hide');
 	$("#content").hide();
@@ -201,7 +208,6 @@ function close(){
 						$("#content").show();
 						$("#testlogo").show();
 						if($(this).attr("id")=="loginBtn"){
-							alert("???");
 							$("#content").hide();
 							$(".closeBtn").show();
 							$("#login-email").val("");

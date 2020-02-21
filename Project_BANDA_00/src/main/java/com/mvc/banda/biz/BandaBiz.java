@@ -17,6 +17,7 @@ import com.mvc.banda.model.vo.AccountVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
+import com.mvc.banda.model.vo.LikesVo;
 import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.CommentVo;
 
@@ -210,6 +211,35 @@ public class BandaBiz {
 			return jy_dao.main_update_comment(c);
 		}
 
+		//좋아요 삽입
+		public int feed_like_insert(LikesVo l) {
+			return jy_dao.feed_like_insert(l);
+		}
+		
+		//좋아요 삭제
+		public int feed_like_delete(LikesVo l){
+			return jy_dao.feed_like_delete(l);
+		}
+		
+		//좋아요 리스트
+		public List<LikesVo> main_like_list(int feedno){
+			return jy_dao.main_like_list(feedno);
+		}
+		
+		//아이디 찾기
+		public AccountVo find_id(String email) {
+			return jy_dao.find_id(email);
+		}
+		
+		//아이디 이메일로 계정 찾기
+		public AccountVo find_vo(AccountVo vo) {
+			return jy_dao.find_vo(vo);
+		}
+		
+		//비밀번호찾기에서 비밀번호 업데이트
+		public int pwdfind_update(AccountVo vo) {
+			return jy_dao.pwdfind_update(vo);
+		}
 	
 	// < 최주예 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

@@ -1,5 +1,8 @@
 package com.mvc.banda.dao;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +25,7 @@ public class JY_dao {
 	private SqlSessionTemplate sqlSession;
 	String NAMESPACE = "JY-mapper.";
 	
-	//login
+		//login
 		public AccountVo jy_login(AccountVo vo) {
 			return sqlSession.selectOne(NAMESPACE+"jy_login", vo);
 		}
@@ -105,6 +108,8 @@ public class JY_dao {
 			
 			return feed_list;
 		}
+		
+		
 		
 		//main_selectFollow - 로그인시 팔로우 여부 판단
 		public List<FollowVo> main_selectFollow(String id){
@@ -217,6 +222,42 @@ public class JY_dao {
 			return select_comment(feedno);
 		}
 		
+		//좋아요 삽입
+		public int feed_like_insert(LikesVo l) {
+			
+			return feed_like_insert_sql(l);
+		}
+		
+		//좋아요 삭제
+		public int feed_like_delete(LikesVo l) {
+			
+			return feed_like_delete_sql(l);
+		}
+		
+		//좋아요 리스트
+		public List<LikesVo> main_like_list(int feedno){
+		
+			return select_like(feedno);
+		}
+		
+		//아이디찾기
+		public AccountVo find_id(String email) {
+			
+			return find_id_sql(email);
+		}
+		
+		//아이디 이메일로 계정 찾기
+		public AccountVo find_vo(AccountVo vo) {
+			
+			return find_vo_sql(vo);
+		}
+		
+		//비밀번호 찾기에서 비밀번호 업데이트
+		public int pwdfind_update(AccountVo vo) {
+			
+			return pwdfind_update_sql(vo);
+		}
+		
 		///////////////////////////////////////////////////////////////////////////////////////
 		//sql
 		
@@ -253,8 +294,6 @@ public class JY_dao {
 		
 		//like list
 		public List<LikesVo> select_like(int feedno){
-			
-			List<LikesVo> l = sqlSession.selectList(NAMESPACE+"select_like",feedno);
 				
 			return sqlSession.selectList(NAMESPACE+"select_like",feedno);
 		}
@@ -302,5 +341,30 @@ public class JY_dao {
 		//update_comment
 		public int update_comment(CommentVo c) {
 			return sqlSession.update(NAMESPACE+"update_comment", c);
+		}
+		
+		//feed_like_insert
+		public int feed_like_insert_sql(LikesVo l) {
+			return sqlSession.insert(NAMESPACE+"feed_like_insert", l);
+		}
+		
+		//feed_like_delete
+		public int feed_like_delete_sql(LikesVo l) {
+			return sqlSession.delete(NAMESPACE+"feed_like_delete", l);
+		}
+		
+		//find_id
+		public AccountVo find_id_sql(String email) {
+			return sqlSession.selectOne(NAMESPACE+"find_id",email);
+		}
+		
+		//find_vo
+		public AccountVo find_vo_sql(AccountVo vo) {
+			return sqlSession.selectOne(NAMESPACE+"find_vo", vo);
+		}
+		
+		//pwdfind_update
+		public int pwdfind_update_sql(AccountVo vo) {
+			return sqlSession.update(NAMESPACE+"pwdfind_update", vo);
 		}
 }

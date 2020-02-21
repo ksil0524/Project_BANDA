@@ -89,12 +89,21 @@ div.m-0 {
 	width: 25px; height:25px;
 }
 
-.comment-put a {
+.comment-put i {
 	color: #a4a4a4 !important;
 }
 
-.comment-put a:hover {
+.comment-put i:hover {
 	color: #05cb95 !important;
+}
+
+.comment-text i:hover {
+	color: #a4a4a4 !important;
+}
+
+.comment-text i:hover {
+	color: #05cb95 !important;
+	cursor: pointer;
 }
 
 .list-btn {

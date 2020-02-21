@@ -880,7 +880,10 @@ public class BandaController {
 	
 	//게시글 폼
 	@RequestMapping(value="/boardWriteForm.do")
-	public String boardWriteForm() {
+	public String boardWriteForm(Model model, String board_cate) {
+		model.addAttribute("category", board_cate);
+		System.out.println("카테고리 : "+board_cate);
+		
 		return "temp/boardWrite";
 	}
 	
@@ -939,6 +942,95 @@ public class BandaController {
 			return "rediect:boardWriteForm.do";
 		}
 		
+	}
+	
+	//게시글 수정 폼
+	@RequestMapping(value="/boardUpdateForm.do")
+	public String boardUpdateForm(Model model, int board_no) {
+		model.addAttribute("detail", biz.selectOneBoard(board_no));
+		
+		return "temp/boardUpdate";
+	}
+	
+	//게시글 수정
+	@RequestMapping(value="/boardUpdateRes.do", method=RequestMethod.POST)
+	public String boardUpdate(HttpServletRequest request, Model model, BoardVo vo, MultipartFile updateboardfile) throws IllegalStateException, IOException {
+		int res = biz.boardUpdate(vo);
+		
+		//수정하려는 파일의 원본 이름을 가져옴
+		String fileName = updateboardfile.getOriginalFilename();
+		
+		if(fileName == "") {
+			//기존 파일과 같을 경우
+			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
+		} else {			
+			String storagePath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+vo.getBoard_no());
+			
+			
+			File updateBoardImg = new File(storagePath+"\\"+fileName);
+			
+			updateboardfile.transferTo(updateBoardImg);
+			
+			//파일 이름 바꿔주기
+			File imgFile = new File(storagePath+"\\boardImg.jpg");
+			
+			//실제로 가지고온 파일이름을 imgFile에서 셋팅해놓은 boardImg.jpg로 변경(복붙해서 이름 변경)
+			updateBoardImg.renameTo(imgFile);
+			
+			//원본파일(실제로 가지고온 파일 - updateBoardImg) 삭제
+			updateBoardImg.delete();
+			
+			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
+		}
+	}
+	
+	//게시글 삭제
+	@RequestMapping(value="/boardDelete.do")
+	public String boardDelete(String board_cate, int board_no) {
+		System.out.println("삭제할 게시글의 카테고리 : " + board_cate);
+		
+		int res = biz.boardDelete(board_no);
+		if(res>0 && board_cate.equals("SH")) {
+			return "redirect:boardListFree_test.do";							
+		} else if(res>0 && board_cate.equals("EX")) {
+			return "redirect:boardListExchange_test.do";						
+		} else {
+			return "redirect:boardDetail_test.do?board_no="+board_no;						
+		}
+	}
+	
+	//댓글 작성
+	@RequestMapping(value="/boardComWrite.do")
+	public String boardComWrite(CommentVo vo, int com_pno) {
+		int res = biz.boardComWrite(vo, com_pno);
+		if(res>0) {
+			return "redirect:boardDetail_test.do?board_no="+com_pno;			
+		} else {
+			return "redirect:boardDetail_test.do?board_no="+com_pno;			
+		}
+	}
+	
+	//댓글 수정
+	public String boardComUpdate(CommentVo vo, int board_no) {
+		int res = biz.boardComUpdate(vo);
+		
+		if(res>0) {
+			return "redirect:boardDetail_test.do?board_no="+board_no;			
+		} else {
+			return "redirect:boardDetail_test.do?board_no="+board_no;			
+		}
+	}
+	
+	//댓글 삭제
+	@RequestMapping(value="/boardComDelete.do")
+	public String boardComDelete(int board_no, int com_no) {
+		int res = biz.boardComDelete(com_no);
+		
+		if(res>0) {
+			return "redirect:boardDetail_test.do?board_no="+board_no;			
+		} else {
+			return "redirect:boardDetail_test.do?board_no="+board_no;			
+		}
 	}
 	
 	// < 하나경 파트  끝 > 

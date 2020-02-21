@@ -101,7 +101,14 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 김재익 파트  시작 >  
 	
-	
+	public  int idoverlab(String id) {
+		return ji_dao.idoverlab(id);
+	}
+
+	public int joinregister(AccountVo vo) {
+		// TODO Auto-generated method stub
+		return ji_dao.joinregister(vo);
+	}
 	
 	
 	
@@ -289,6 +296,8 @@ public class BandaBiz {
 	public int boardWrite(BoardVo vo) {
 		return nk_dao.boardWrite(vo);
 	}
+
+	
 	
 	// < 하나경 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

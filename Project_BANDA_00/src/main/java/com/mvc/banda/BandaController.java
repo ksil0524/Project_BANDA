@@ -395,8 +395,44 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 김재익 파트  시작 >  
+	@RequestMapping(value = "/idoverlab.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Boolean> idoverlab(@RequestBody AccountVo vo) {
+		int res = 0;
+		String id = vo.getId();
+		System.out.println("asdasdasdasd"+id);
+		res = biz.idoverlab(id);
+		
+		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
+		System.out.println(res);
+		
+		if(res >=1 ) {
+			resmap.put("res", true);
+		}else {
+			resmap.put("res", false);
+		}
+		
+		System.out.println(resmap);
+		return resmap;
+	}
 	
+	@RequestMapping(value = "/joinregister.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Boolean> joinregister(@RequestBody AccountVo vo) {
+		
+		System.out.println("asdasdasd"+vo);
 	
+		int res = biz.joinregister(vo);
+		
+		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
+		
+		if(res >=1 ) {
+			resmap.put("res", true);
+		}else {
+			resmap.put("res", false);
+		}
+		return resmap;
+	}
 	
 	
 	
@@ -423,7 +459,7 @@ public class BandaController {
 			
 			chk = false;
 			System.out.println("여기까지 들어옴1");
-			
+		
 		}else {
 			session.setAttribute("vo", vo1);
 			session.setMaxInactiveInterval(60*60);

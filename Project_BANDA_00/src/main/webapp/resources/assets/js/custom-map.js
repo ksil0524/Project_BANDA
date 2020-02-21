@@ -42,6 +42,7 @@ $(function(){
 	/*city select box default set*/
 	city_selbox_set();
 	dist_selbox_set();
+	neig_selbox_set();
 	
 	function city_selbox_set(){
 		$("#city_selbox").append("<option value='' disabled selected>&nbsp;&nbsp;::시/도 선택::</option>");
@@ -50,7 +51,7 @@ $(function(){
 				if(key=="city"){
 					var list = val;
 					for(var i=0; i<list.length; i++){
-						console.log(i + " = " +list[i]);
+						//console.log(i + " = " +list[i]);
 						$("#city_selbox").append("<option value='"+list[i]+"'>"+list[i]+"</option>");
 					}
 					
@@ -60,9 +61,15 @@ $(function(){
 		});
 	}
 	
+	
 	function dist_selbox_set(){
 		$("#dist_selbox").append("<option value='' disabled selected>&nbsp;&nbsp;::구/군 선택::</option>");
 		customSelect("custom-select2");
+	}
+	
+	function neig_selbox_set(){
+		$("#neig_selbox").append("<option value='' disabled selected>&nbsp;::읍/면/동 선택::</option>");
+		customSelect("custom-select3");
 	}
 
 });//function
@@ -102,8 +109,10 @@ function customSelect(customTarget){
 				/* 기존 selected option 해제*/
 				if (customTarget == "custom-select") {
 					$("#city_selbox option:selected").attr('selected', false);
-				} else {
+				} else if(customTarget == "custom-select2"){
 					$("#dist_selbox option:selected").attr('selected', false);
+				}else{
+					$("#neig_selbox option:selected").attr('selected', false);
 				}
 	
 				/* 항목 클릭 시 원본 리스트 업데이트 */
@@ -124,8 +133,11 @@ function customSelect(customTarget){
 						if (customTarget == "custom-select") {
 							$('#city_selbox option[value='+ h.innerHTML + ']').attr('selected','selected');
 							testcity(h.innerHTML);
-						} else {
+						} else if(customTarget == "custom-select2"){
 							$('#dist_selbox option[value='+ h.innerHTML + ']').attr('selected','selected');
+							testdistrict(h.innerHTML);
+						}else{
+							$('#neig_selbox option[value='+ h.innerHTML + ']').attr('selected','selected');
 						}
 						break;
 					}
@@ -186,9 +198,9 @@ function testcity(cityname){
 			if(key=="district"){
 				var list = val;
 				for(var i=0; i<list.length; i++){
-					console.log(i + " = " +list[i].name);
+					//console.log(i + " = " +list[i].name);
 					if(list[i].name==cityname){
-						console.log("list[i].value : " + list[i].value);
+						//console.log("list[i].value : " + list[i].value);
 						var testlist = list[i].value;
 						for(var j=0; j<testlist.length; j++){
 							$("#dist_selbox").append("<option value='"+testlist[j]+"'>"+testlist[j]+"</option>");
@@ -204,6 +216,39 @@ function testcity(cityname){
 	
 }
 
+
+/* city 선택 시 district 리스트 set*/
+function testdistrict(testdistrictname){
+	var cityname = $("#city_selbox option:selected").val();
+	alert("testdistrict: "+testdistrictname + "/ city: " + cityname);
+	/* 기존 리스트 제거 */
+	$("#neig_selbox option").remove();
+	
+	/* 기본 option 추가 */
+	$("#neig_selbox").append("<option value='' disabled selected>&nbsp;::읍/면/동 선택::</option>");
+	$.getJSON("resources/assets/json/codelist.json",function(data){
+		$.each(data, function(key, val){
+			if(key==cityname){
+				var list = val;
+				for(var i=0; i<list.length; i++){
+					//console.log(i + " = " +list[i].name);
+					if(list[i].name==testdistrictname){
+						//console.log("list[i].value : " + list[i].value);
+						var testlist = list[i].value;
+						for(var j=0; j<testlist.length; j++){
+							$("#neig_selbox").append("<option value='"+testlist[j]+"'>"+testlist[j]+"</option>");
+						}
+						$("#cateThree > div").remove();
+						customSelect("custom-select3");
+						return;
+					}
+				}
+			}
+			
+		});
+	});
+	
+}
 /***********************************
 searchForm
 ***********************************/
@@ -238,12 +283,12 @@ $("#searchInput").bind("keyup", function(){
 /***********************************
  Map
 ***********************************/
-$(function(){
-	/* Map */
+/*$(function(){
+	 Map 
 	// 지도를 표시할 div 
 	var mapContainer = document.getElementById('map'), 
     mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(longitude, latitude), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
@@ -262,7 +307,7 @@ $(function(){
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);
 	//----------------1. 마커만 찍기  end
-});
+});*/
 
 
 //TestCode

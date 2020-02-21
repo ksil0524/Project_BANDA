@@ -10,11 +10,10 @@
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-map.css" rel="stylesheet" />
 <!-- HEAD CSS -->
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
-
+<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
 </head>
 <body>
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
-
 	<!-- ==============================================
 	HeaderSection
 	=============================================== -->
@@ -27,7 +26,7 @@
 		<div class="row">
 			<div class="d-flex justify-content-between col-lg-12 col-xs-12">
 				<div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-					<a class="nav-icon" href="mapHospital.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+					<a class="nav-icon" href="mapHospitalTest.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 						<span>병원</span>
 					</a>
 				</div>
@@ -70,12 +69,16 @@
 					<div class="row">
 						<!-- <form action="" method="post" id="searchForm"> -->
 						<div id="searchBox" style="width: 1070px;">
-								<div id="cateOne" class="custom-select col-lg-3 col-xs-12">
+								<div id="cateOne" class="custom-select col-lg-2 col-xs-12">
 								  <select id="city_selbox" class="w3-select w3-border" name="city">
 								  </select>
 								</div>
-								<div id="cateTwo" class="custom-select2 col-lg-3 col-xs-12">
+								<div id="cateTwo" class="custom-select2 col-lg-2 col-xs-12">
 								  <select id="dist_selbox" class="w3-select w3-border" name="district">
+								  </select>
+								</div>
+								<div id="cateThree" class="custom-select3 col-lg-2 col-xs-12">
+								  <select id="neig_selbox" class="w3-select w3-border" name="neighborhood">
 								  </select>
 								</div>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
@@ -93,8 +96,40 @@
 	</section><!--/ profile -->
 
 	 <!-- ==============================================
-	 News Feed Section
+	 Map Script
 	 =============================================== --> 
+	 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0d9f5c75a037bb611cbdea021d1a56f"></script>
+	 <script type="text/javascript">
+		 $(function(){
+			 
+			// 지도를 표시할 div 
+			var mapContainer = document.getElementById('map'), 
+		    mapOption = { 
+		        center: new kakao.maps.LatLng((${longitude}), (${latitude})), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };
+	
+			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			//----------------1. 마커만 찍기 
+				//마커가 표시될 위치입니다 
+				var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
+			
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+				    position: markerPosition
+				});
+			
+				// 마커가 지도 위에 표시되도록 설정합니다
+				marker.setMap(map);
+			//----------------1. 마커만 찍기  end
+		});
+	 </script>
+	 <!-- ==============================================
+	 Map
+	 =============================================== --> 
+	 
 	 <section id="map-container" class="newsfeed">
 	  <div class="container">
 	  
@@ -114,7 +149,9 @@
 	 </section><!--/ newsfeed -->
 	 
 	 
-	 
+	 <!-- ==============================================
+	 Map List
+	 =============================================== --> 
   	 <section id="maplist" class="newsfeed">
 	  <div class="container">
 
@@ -186,14 +223,14 @@
     <!-- ==============================================
 	HEADER CIRCLE Scripts
 	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Map Script -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-map.js"></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0d9f5c75a037bb611cbdea021d1a56f"></script>
+	
 	<!-- Auto Script -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

@@ -808,6 +808,22 @@ public class BandaController {
 		return "";
 	}
 	
+	@RequestMapping(value="/mapHospitalTest.do")
+	public String map_searchlist(Model model){
+		/*
+		 * 병원 검색
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200219
+		*/
+		
+		model.addAttribute("longitude","33.450701");
+		model.addAttribute("latitude","126.570667");
+		
+		return "temp/mapHospital";
+	}
+	
 	
 	// < 주희진 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

@@ -242,7 +242,7 @@
   
 }
 
-.custom-select select, .custom-select2 select {
+.custom-select select, .custom-select2 select, .custom-select3 select {
   display: none; 
 }
 
@@ -258,7 +258,7 @@
   /* top: 14px;
   right: 10px; */
   top: 67px !important;
-  right: 41px;
+  right: 33px;
   width: 0;
   height: 0;
   border: 6px solid transparent;
@@ -288,7 +288,7 @@
   /* color: #ffffff; */
       color: #333;
   /* padding: 8px 16px; */
-      padding: 20px 16px 20px 26px;
+      padding: 20px 14px 20px 14px;
   /* border: 1px solid transparent;
   border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent; */
   cursor: pointer;
@@ -357,7 +357,7 @@
 
 
 /*page custom*/
-#cateOne, #cateTwo{
+#cateOne, #cateTwo, #cateThree{
 	text-align: left;
 }
 

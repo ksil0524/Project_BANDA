@@ -1,5 +1,6 @@
 ﻿package com.mvc.banda.biz;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.LikesVo;
+import com.mvc.banda.model.vo.MapVo;
 import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.CommentVo;
 
@@ -264,7 +266,7 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 주희진 파트  시작 >  
-	public List<String> map_autocompleteAjax(String keyword){
+	public List<String> map_autocompleteAjax(HashMap<String, String> searchMap){
 		/*
 		 * 검색어 자동완성
 		 * 
@@ -273,11 +275,34 @@ public class BandaBiz {
 		 * @date 200213
 		*/
 		
-		return hj_dao.map_autocompleteAjax(keyword);
+		return hj_dao.map_autocompleteAjax(searchMap);
 		
 	}
 
-
+	public List<MapVo> map_defaultLocationAjax(HashMap<String, String> searchMap){
+		/*
+		 * Map 클라이언트 행정동 기본 위치 정보 
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200221
+		 */
+		
+		return hj_dao.map_defaultLocationAjax(searchMap);
+	}
+	
+	public List<MapVo> map_searchLocationAjax(HashMap<String, String> searchMap){
+		/*
+		 * Map 검색 위치 정보 
+		 * 
+		 * @author 주희진
+		 * @version 1.0
+		 * @date 200221
+		 */
+		
+		return hj_dao.map_searchLocationAjax(searchMap);
+		
+	}
 
 
 

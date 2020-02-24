@@ -101,6 +101,13 @@ public class MapVo {
 	public void setMap_longitude(double map_longitude) {
 		this.map_longitude = map_longitude;
 	}
+
+	@Override
+	public String toString() {
+		return "MapVo [map_no=" + map_no + ", map_cate=" + map_cate + ", map_name=" + map_name + ", map_addr="
+				+ map_addr + ", map_naddr=" + map_naddr + ", map_zipcode=" + map_zipcode + ", map_phone=" + map_phone
+				+ ", map_latitude=" + map_latitude + ", map_longitude=" + map_longitude + "]";
+	}
 	
 	
 	

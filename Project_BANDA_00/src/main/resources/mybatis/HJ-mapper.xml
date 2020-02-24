@@ -9,10 +9,33 @@
 		
 		SELECT MAP_NAME 
 		FROM MAPS
-		WHERE MAP_NAME LIKE '%'||#{keyword}||'%'
+		WHERE MAP_CATE=#{mapcate} 
+		AND MAP_NAME LIKE '%'||#{keyword}||'%'
 		<![CDATA[AND ROWNUM <= 5]]>
 	</select>
-
+	
+	<select id="defaultLocationSelect" parameterType="hashmap" resultType="mapVo">
+		SELECT *
+		FROM MAPS
+		WHERE MAP_CATE=#{mapcate} 
+		AND MAP_ADDR LIKE '%'||#{dong}||'%'
+	</select>
+	
+	<select id="searchLocationSelect" parameterType="hashmap" resultType="mapVo">
+		<if test="city!=null and district!=null and neighborhood!=null and keyword!=null">
+			SELECT * 
+			FROM MAPS 
+			WHERE MAP_CATE=#{mapcate} 
+			AND MAP_ADDR LIKE '%'||#{addr}||'%' 
+			AND MAP_NAME LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test="city!=null and district!=null and neighborhood!=null and keyword==null">
+			SELECT * 
+			FROM MAPS 
+			WHERE MAP_CATE=#{mapcate} 
+			AND MAP_ADDR LIKE '%'||#{addr}||'%' 
+		</if>
+	</select>
 </mapper>
 
 

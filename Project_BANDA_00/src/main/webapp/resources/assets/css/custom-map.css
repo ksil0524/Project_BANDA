@@ -4,7 +4,7 @@
     padding: 0px;
 }
 
-#testimgfile{
+#backimgfile{
 	width:100%;
 	height:138px;
 	background-image: url( '../../images/detailsboxbg.jpg' );
@@ -103,7 +103,7 @@
 		margin: 39px 0px 0px 0px;
 	}
 	
-	#testimgfile{
+	#backimgfile{
 		padding-left: 0px;
 		background-position-x: right;
 	    background-position-y: bottom;
@@ -188,7 +188,7 @@
 		margin: 39px 0px 0px 0px;
 	}
 	
-	#testimgfile{
+	#backimgfile{
 		padding-left: 0px;
 		background-position-x: right;
 	    background-position-y: bottom;
@@ -250,6 +250,7 @@
   /* background-color: DodgerBlue; */
   background-color: white;
       border-radius: 20px;
+      font-family: 'BMHANNAAir' !important;
 }
 
 .select-selected:after {
@@ -269,7 +270,7 @@
 /*   border-color: transparent transparent #fff transparent; */
   border-color: transparent transparent #000 transparent;
   /* top: 7px; */
-      top: 59px !important;
+  top: 59px !important;
 }
 
 .select-items div{
@@ -286,9 +287,9 @@
 
 .select-selected {
   /* color: #ffffff; */
-      color: #333;
+  color: #333;
   /* padding: 8px 16px; */
-      padding: 20px 14px 20px 14px;
+  padding: 20px 14px 20px 14px;
   /* border: 1px solid transparent;
   border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent; */
   cursor: pointer;
@@ -296,7 +297,7 @@
   border-radius: 60px;
   height: 60px;
   margin: 39px 0px 0px 5px;
-      border: 1px solid #999
+  border: 1px solid #999
 }
 
 .select-items {
@@ -310,11 +311,12 @@
   z-index: 99;
   border-radius: 20px;
   margin-top: 5px;
-      width: 237.5px;
-      border: 1px solid #999;
-       height: 250px;
-      /*overflow: auto; */
-      overflow-y: scroll;
+  width: 237.5px;
+  border: 1px solid #999;
+  height: 250px;
+  /*overflow: auto; */
+  overflow-y: scroll;
+  font-family: 'BMHANNAAir' !important;
 }
 
 .select-hide {
@@ -335,6 +337,7 @@
 	/*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
 	border-radius: 10px;
 	background-color: #f5f5f500;
+	
 }
 
 #style-1::-webkit-scrollbar
@@ -405,4 +408,4 @@
 	size: 15px;
 	text-align: center;
 	vertical-align: middle;
-	padding-top: 41px;}
+	padding-top: 40px !important;}

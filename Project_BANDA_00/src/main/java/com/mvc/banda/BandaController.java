@@ -541,6 +541,13 @@ public class BandaController {
 	}
 	
 	
+	@RequestMapping("/streaming_test.do")
+	public String streaming_test(Model model) {
+		
+		return "temp/Streaming_test";
+	}
+	
+	
 	
 	
 	

@@ -73,6 +73,7 @@ import com.mvc.banda.model.vo.User;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.LikesVo;
+import com.mvc.banda.model.vo.MapVo;
 
 @Controller
 public class BandaController {
@@ -1192,7 +1193,7 @@ public class BandaController {
 	
 	@RequestMapping(value="/map_autocompleteAjax.do", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> map_autocompleteAjax(HttpSession session, String keyword){
+	public Map<String, Object> map_autocompleteAjax(HttpSession session, String keyword, String mapcate){
 		/*
 		 * 검색어 자동완성
 		 * 
@@ -1201,23 +1202,24 @@ public class BandaController {
 		 * @date 200213
 		*/
 		
-		/* Test Code */
-		System.out.println("검색어 value: " + keyword);
+		/* 검색조건 map */
+		HashMap<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("keyword", keyword);
+		searchMap.put("mapcate", mapcate);
 		
-		List<String> list = biz.map_autocompleteAjax(keyword); 
-		/*
-		 * list.add("1"); list.add("2"); list.add("3");
-		 */
+		/* result */
+		List<String> list = biz.map_autocompleteAjax(searchMap); 
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("success", true);
-		/* Test Code end*/
 		
 		return map;
 	}
 	
-	@RequestMapping(value="/map_searchlist.do")
-	public String map_searchlist(Model model, String city, String district, String keyword ){
+	@RequestMapping(value="/map_searchLocationAjax.do")
+	@ResponseBody
+	public Map<String, Object> map_searchLocationAjax(HttpSession session, String city, String district, String neighborhood,String keyword, String mapcate ){
 		/*
 		 * 검색
 		 * 
@@ -1226,11 +1228,28 @@ public class BandaController {
 		 * @date 200218
 		*/
 		
-		return "";
+		/* 검색조건 map */
+		HashMap<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("city", city);
+		searchMap.put("district", district);
+		searchMap.put("neighborhood", neighborhood);
+		searchMap.put("addr", city+" "+district+" "+neighborhood);
+		searchMap.put("keyword", keyword);
+		searchMap.put("mapcate", mapcate);
+		
+		/* result */
+		List<MapVo> list = biz.map_searchLocationAjax(searchMap);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("success", true);
+		
+		return map;
 	}
 	
-	@RequestMapping(value="/mapHospitalTest.do")
-	public String map_searchlist(Model model){
+	@RequestMapping(value="/map_defaultLocationAjax.do")
+	@ResponseBody
+	public Map<String, Object> map_searchlist(HttpSession session, String dong, String mapcate){
 		/*
 		 * 병원 검색
 		 * 
@@ -1238,11 +1257,21 @@ public class BandaController {
 		 * @version 1.0
 		 * @date 200219
 		*/
+		System.out.println("동이름: " + dong);
 		
-		model.addAttribute("longitude","33.450701");
-		model.addAttribute("latitude","126.570667");
+		/* 검색조건 map */
+		HashMap<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("dong", dong);
+		searchMap.put("mapcate", mapcate);
 		
-		return "temp/mapHospital";
+		/* result */
+		List<MapVo> list = biz.map_defaultLocationAjax(searchMap);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("success", true);
+		
+		return map;
 	}
 	
 	

@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.KeyFactory;
@@ -584,7 +587,7 @@ public class BandaController {
 	
 	@RequestMapping(value = "/joinregister.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Boolean> joinregister(@RequestBody AccountVo vo) {
+	public Map<String,Boolean> joinregister(HttpServletRequest request ,@RequestBody AccountVo vo) {
 		
 		System.out.println("asdasdasd"+vo);
 	
@@ -597,6 +600,58 @@ public class BandaController {
 		}else {
 			resmap.put("res", false);
 		}
+		////
+		String path = request.getSession().getServletContext()
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + vo.getId());
+
+	      File Folder = new File(path);
+
+	      // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+	      if (!Folder.exists()) {
+	         try {
+	            Folder.mkdir(); // 폴더 생성합니다.
+	            System.out.println("폴더가 생성되었습니다.");
+	         } catch (Exception e) {
+	            e.getStackTrace();
+	         }
+	      } else {
+	         System.out.println("이미 폴더가 생성되어 있습니다.");
+	      }
+
+	      // 원본 파일경로
+	      String oriFilePath = request.getSession().getServletContext()
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	      // 복사될 파일경로
+	      String copyFilePath = path + "\\image.jpg";
+
+	      // 파일객체생성
+	      File oriFile = new File(oriFilePath);
+	      // 복사파일객체생성
+	      File copyFile = new File(copyFilePath);
+
+	      try {
+
+	         FileInputStream fis = new FileInputStream(oriFile); // 읽을파일
+	         FileOutputStream fos = new FileOutputStream(copyFile); // 복사할파일
+
+	         int fileByte = 0;
+	         // fis.read()가 -1 이면 파일을 다 읽은것
+	         while ((fileByte = fis.read()) != -1) {
+	            fos.write(fileByte);
+	         }
+	         // 자원사용종료
+	         fis.close();
+	         fos.close();
+
+	      } catch (FileNotFoundException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+
+	      System.out.println(path);
+	      ////
+		
 		return resmap;
 	}
 	
@@ -835,7 +890,7 @@ public class BandaController {
 	
 	//naver에서 로그인 한 후 해당 정보 받기
 	@RequestMapping(value = "/callback.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public String snsLoginCallback(Model model, @RequestParam String code) throws Exception {
+	public String snsLoginCallback(HttpServletRequest request, Model model, @RequestParam String code) throws Exception {
 		
 		//1. code이용하여 access token 받기
 		//2. access token이용하여 사용자 profile 정보 가져오기
@@ -855,13 +910,15 @@ public class BandaController {
 		
 		AccountVo real_vo = biz.jy_login(avo);
 		
+		AccountVo avo2 = null;
+		
 		if(real_vo == null) {
 			
 			System.out.println("아이디 없음");
 			
 			String pwd = passwordEncoder.encode("1234");
 			
-			AccountVo avo2 = new AccountVo(id, pwd, email, "010-1111-1111");
+			avo2 = new AccountVo(id, pwd, email, "010-1111-1111");
 			
 			int res = biz.naver_register(avo2);
 			
@@ -881,7 +938,59 @@ public class BandaController {
 			session.setMaxInactiveInterval(60*60);
 			
 		}
-				
+		
+		////////////
+		
+		String path = request.getSession().getServletContext()
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + avo2.getId());
+
+	      File Folder = new File(path);
+
+	      // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+	      if (!Folder.exists()) {
+	         try {
+	            Folder.mkdir(); // 폴더 생성합니다.
+	            System.out.println("폴더가 생성되었습니다.");
+	         } catch (Exception e) {
+	            e.getStackTrace();
+	         }
+	      } else {
+	         System.out.println("이미 폴더가 생성되어 있습니다.");
+	      }
+
+	      // 원본 파일경로
+	      String oriFilePath = request.getSession().getServletContext()
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	      // 복사될 파일경로
+	      String copyFilePath = path + "\\image.jpg";
+
+	      // 파일객체생성
+	      File oriFile = new File(oriFilePath);
+	      // 복사파일객체생성
+	      File copyFile = new File(copyFilePath);
+
+	      try {
+
+	         FileInputStream fis = new FileInputStream(oriFile); // 읽을파일
+	         FileOutputStream fos = new FileOutputStream(copyFile); // 복사할파일
+
+	         int fileByte = 0;
+	         // fis.read()가 -1 이면 파일을 다 읽은것
+	         while ((fileByte = fis.read()) != -1) {
+	            fos.write(fileByte);
+	         }
+	         // 자원사용종료
+	         fis.close();
+	         fos.close();
+
+	      } catch (FileNotFoundException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+
+	      System.out.println(path);
+		
 		
 		return "redirect:main_selectList.do";
 	}

@@ -2,6 +2,7 @@ package com.mvc.banda.auth;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.github.scribejava.apis.GoogleApi20;
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
 import lombok.Data;
@@ -31,7 +32,10 @@ public class Snsvalue implements SnsUrls {
 		if(StringUtils.equalsIgnoreCase(service, "naver")) {
 			this.api20Instance = NaverAPI20.instance();
 			this.profileUrl = NAVER_PROFILE_URL;
-		}  
+		}  else if(StringUtils.equalsIgnoreCase(service, "google")) {
+			this.api20Instance = GoogleApi20.instance();
+			this.profileUrl = GOOGLE_PROFILE_URL;
+		} 
 	}
 
 

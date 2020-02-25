@@ -24,7 +24,7 @@
                                     <a class="circle github" href="${naver_url}" style = "background-color:#00CF38">
                                         <img src = "<%=request.getContextPath() %>/resources/images/naver.png" style = "width:23px;height:25px">
                                     </a>
-                                    <a id="google_login" class="circle google" href="#">
+                                    <a id="google_login" class="circle google" href="${google_url}">
                                         <i class="fa fa-google-plus fa-fw"></i>
                                     </a>
                                     <a id="facebook_login" class="circle facebook" href="#">

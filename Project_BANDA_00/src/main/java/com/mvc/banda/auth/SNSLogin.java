@@ -1,8 +1,8 @@
 package com.mvc.banda.auth;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import java.util.Iterator;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -27,6 +27,7 @@ public class SNSLogin {
 				.build(sns.getApi20Instance());
 		
 		this.profileUrl = sns.getProfileUrl();
+		System.out.println(this.oauthService);
 	}
 
 	public String getNaverAuthURL() {
@@ -44,7 +45,36 @@ public class SNSLogin {
 		
 		return parseJson(response.getBody());
 	}
-	
+	//김재익 구글
+	public User getUserProfile2(String code) throws Exception {
+		OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
+		
+		OAuthRequest request = new OAuthRequest(Verb.GET, this.profileUrl);
+		oauthService.signRequest(accessToken, request);
+		
+		Response response = oauthService.execute(request);
+		System.out.println(response.getBody());
+		return parseJson2(response.getBody());
+	}
+	//김재익 구글
+	private User parseJson2(String body) throws Exception {
+		
+		User user = new User();
+		String email = null;
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode rootNode = mapper.readTree(body);
+		String id = rootNode.get("id").asText();
+		Iterator<JsonNode> emailNodes = rootNode.path("emails").elements();
+		
+		while(emailNodes.hasNext()) {
+			JsonNode emailNode = emailNodes.next();
+			email = emailNode.get("value").asText();  
+		}
+		user.setNaverid(id);
+		user.setEmail(email);
+		
+		return user;
+	}
 	private User parseJson(String body) throws Exception {
 		
 		User user = new User();

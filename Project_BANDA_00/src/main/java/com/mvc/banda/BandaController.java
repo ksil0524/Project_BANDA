@@ -1,36 +1,10 @@
 ﻿package com.mvc.banda;
 
-import javax.crypto.Cipher;
-import javax.inject.Inject;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Provider.Service;
-import java.security.spec.RSAPublicKeySpec;
 //import java.net.PasswordAuthentication;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,24 +13,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 
-import javax.servlet.http.HttpSession;
-
-
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,15 +42,15 @@ import com.mvc.banda.auth.SNSLogin;
 import com.mvc.banda.auth.Snsvalue;
 import com.mvc.banda.biz.BandaBiz;
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.CommentVo;
 import com.mvc.banda.model.vo.FeedNoVo;
-import com.mvc.banda.model.vo.BoardVo;
-import com.mvc.banda.model.vo.PetVo;
-import com.mvc.banda.model.vo.User;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.LikesVo;
 import com.mvc.banda.model.vo.MapVo;
+import com.mvc.banda.model.vo.PetVo;
+import com.mvc.banda.model.vo.User;
 
 @Controller
 public class BandaController {
@@ -654,7 +628,122 @@ public class BandaController {
 		
 		return resmap;
 	}
+	@Inject
+	private GoogleConnectionFactory googleConnectionFactory;
 	
+	@Inject
+	private OAuth2Parameters googleOAuth2Parameters;
+	
+	@Inject
+	private Snsvalue googleSns;
+
+	@RequestMapping(value = "/callbackgoo.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String snsLoginCallbackgoo(HttpServletRequest request, Model model, @RequestParam String code) throws Exception {
+		System.out.println("aasldkfjalskdf jalsdk jf");
+
+		//1. code이용하여 access token 받기
+		//2. access token이용하여 사용자 profile 정보 가져오기
+		//4. 존재하는 경우 로그인, 아닌경우 계정 생성
+		//3. db에 해당 유저 존재하는지 체크
+		SNSLogin snslogin = new SNSLogin(googleSns);
+		System.out.println(
+				"asdfjalksjdfksajdflasjdfoweinfkasdlf kzdkf l"+snslogin);
+		User profile = snslogin.getUserProfile2(code);	
+		System.out.println(profile + " 구글 프로필 입니다.");
+
+		String email = profile.getEmail();
+		
+		String id = email.split("@")[0];
+		
+		AccountVo avo = new AccountVo();
+		avo.setId(id);
+		
+		AccountVo real_vo = biz.jy_login(avo);
+		
+		AccountVo avo2 = null;
+		
+		if(real_vo == null) {
+			
+			System.out.println("아이디 없음");
+			
+			String pwd = passwordEncoder.encode("1234");
+			
+			avo2 = new AccountVo(id, pwd, email, "010-1111-1111");
+			
+			int res = biz.naver_register(avo2);
+			
+			if(res > 0 ) {
+				System.out.println("구글로 회원가입 성공");
+				
+				session.setAttribute("vo", avo2);
+				session.setMaxInactiveInterval(60*60);
+			} else {
+				System.out.println("구글로 회원가입 실패");
+			}
+			
+		} else {
+			
+			System.out.println(real_vo+"아이디 존재");
+			session.setAttribute("vo", real_vo);
+			session.setMaxInactiveInterval(60*60);
+			
+		}
+		
+		////////////
+		
+		String path = request.getSession().getServletContext()
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + avo2.getId());
+
+	      File Folder = new File(path);
+
+	      // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+	      if (!Folder.exists()) {
+	         try {
+	            Folder.mkdir(); // 폴더 생성합니다.
+	            System.out.println("폴더가 생성되었습니다.");
+	         } catch (Exception e) {
+	            e.getStackTrace();
+	         }
+	      } else {
+	         System.out.println("이미 폴더가 생성되어 있습니다.");
+	      }
+
+	      // 원본 파일경로
+	      String oriFilePath = request.getSession().getServletContext()
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	      // 복사될 파일경로
+	      String copyFilePath = path + "\\image.jpg";
+
+	      // 파일객체생성
+	      File oriFile = new File(oriFilePath);
+	      // 복사파일객체생성
+	      File copyFile = new File(copyFilePath);
+
+	      try {
+
+	         FileInputStream fis = new FileInputStream(oriFile); // 읽을파일
+	         FileOutputStream fos = new FileOutputStream(copyFile); // 복사할파일
+
+	         int fileByte = 0;
+	         // fis.read()가 -1 이면 파일을 다 읽은것
+	         while ((fileByte = fis.read()) != -1) {
+	            fos.write(fileByte);
+	         }
+	         // 자원사용종료
+	         fis.close();
+	         fos.close();
+
+	      } catch (FileNotFoundException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+
+	      System.out.println(path);
+		
+		
+		return "redirect:main_selectList.do";
+	}
 	
 	
 	// < 김재익 파트  끝 > 
@@ -885,6 +974,11 @@ public class BandaController {
 		SNSLogin snsLogin = new SNSLogin(naverSns);
 		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
 		
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+
+		model.addAttribute("google_url", url);
+
 		return "index";
 	}
 	
@@ -897,7 +991,7 @@ public class BandaController {
 		//4. 존재하는 경우 로그인, 아닌경우 계정 생성
 		//3. db에 해당 유저 존재하는지 체크
 		SNSLogin snslogin = new SNSLogin(naverSns);
-		
+	
 		User profile = snslogin.getUserProfile(code);	
 		System.out.println(profile + " 네이버 프로필 입니다.");
 

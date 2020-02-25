@@ -21,6 +21,7 @@ import com.mvc.banda.model.vo.FollowVo;
 import com.mvc.banda.model.vo.LikesVo;
 import com.mvc.banda.model.vo.MapVo;
 import com.mvc.banda.model.vo.BoardVo;
+import com.mvc.banda.model.vo.ChatVo;
 import com.mvc.banda.model.vo.CommentVo;
 
 @Service
@@ -108,6 +109,10 @@ public class BandaBiz {
 	
 	public int mypage_deletefeed(int deletefeed_no) {
 		return si_dao.deletefeed(deletefeed_no);
+	}
+	
+	public List<ChatVo> myChat_selectlist(String id) {
+		return si_dao.myChat_selectlist(id);
 	}
 
 	
@@ -400,6 +405,8 @@ public class BandaBiz {
 	public int boardComDelete(int com_no) {
 		return nk_dao.boardComDelete(com_no);
 	}
+
+
 
 
 

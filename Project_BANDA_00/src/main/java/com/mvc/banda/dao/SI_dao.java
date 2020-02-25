@@ -328,6 +328,27 @@ public class SI_dao {
 		
 		return fres;	
 	}
+
+	public List<ChatVo> myChat_selectlist(String id) {
+		
+		List<ChatVo> chat_list = null;
+		
+//		ChatVo tmp = new ChatVo();
+//		tmp.setS_id(id);
+//		tmp.setG_id(id);
+		
+		try {
+			
+			chat_list = sqlSession.selectList(NAMESPACE+"chat_selectlist", id);	
+			
+		} catch (Exception e) {
+			System.out.println("[error] : chat_selectlist");
+			e.printStackTrace();
+		}
+		
+
+		return chat_list;
+	}
 	
 	
 	

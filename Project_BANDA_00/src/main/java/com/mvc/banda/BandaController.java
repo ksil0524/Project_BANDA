@@ -71,6 +71,7 @@ import com.mvc.banda.model.vo.AccountVo;
 import com.mvc.banda.model.vo.CommentVo;
 import com.mvc.banda.model.vo.FeedNoVo;
 import com.mvc.banda.model.vo.BoardVo;
+import com.mvc.banda.model.vo.ChatVo;
 import com.mvc.banda.model.vo.PetVo;
 import com.mvc.banda.model.vo.User;
 import com.mvc.banda.model.vo.FeedVo;
@@ -554,6 +555,33 @@ public class BandaController {
 	public String streaming_test(Model model) {
 		
 		return "temp/Streaming_test";
+	}
+	
+	
+	//채팅 페이지로 이동
+	@RequestMapping("/myChatpage.do")
+	public String myChatpage(HttpServletRequest request, HttpServletResponse response) {
+		
+		System.out.println("myChatpage.do");
+		
+		HttpSession session = request.getSession();
+		
+		AccountVo votmp = (AccountVo)session.getAttribute("vo");
+		
+		session.removeAttribute("vo");
+		
+		session.setMaxInactiveInterval(60*60);
+			
+		AccountVo accvo = biz.mypage_allselect(votmp.getId());
+		List<ChatVo> chat_list = biz.myChat_selectlist(votmp.getId());
+		accvo.setChat_list(chat_list);
+		
+		System.out.println(accvo);
+		System.out.println("chat_list : "+chat_list);
+		
+		session.setAttribute("vo", accvo);
+		
+		return "temp/myChat";
 	}
 	
 	

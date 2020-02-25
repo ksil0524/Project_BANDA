@@ -111,7 +111,7 @@
 							<!-- 프로필사진 -->
 							<a href="photo_profile.do"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=id %>/image.jpg" alt="Image" onerror="this.src = '<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/image.jpg'"></a>
 							<!-- 메일 -->
-							<a class="islogin-icon-right" href="myChat.do" >
+							<a class="islogin-icon-right" href="myChatpage.do" >
 								<i class="fas fa-comments"></i>
 								<span class="badge badge-success badge-pill noti-icon-badge">6</span>
 							</a>

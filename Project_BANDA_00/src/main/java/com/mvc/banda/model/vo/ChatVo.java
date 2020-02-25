@@ -11,20 +11,19 @@ public class ChatVo {
 	private String g_id;				//받는사람
 	private String chat_content;		//내용
 	private String chat_fyn;			//파일여부
-	private Date chat_date;				//보낸시간
+	private Date chat_regdate;				//보낸시간
 
 	public ChatVo() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public ChatVo(int chat_no, String s_id, String g_id, String chat_content, String chat_fyn, Date chat_date) {
+	public ChatVo(int chat_no, String s_id, String g_id, String chat_content, String chat_fyn, Date chat_regdate) {
 		super();
 		this.chat_no = chat_no;
 		this.s_id = s_id;
 		this.g_id = g_id;
 		this.chat_content = chat_content;
 		this.chat_fyn = chat_fyn;
-		this.chat_date = chat_date;
+		this.chat_regdate = chat_regdate;
 	}
 
 	public int getChat_no() {
@@ -67,14 +66,20 @@ public class ChatVo {
 		this.chat_fyn = chat_fyn;
 	}
 
-	public Date getChat_date() {
-		return chat_date;
+	public Date getChat_regdate() {
+		return chat_regdate;
 	}
 
-	public void setChat_date(Date chat_date) {
-		this.chat_date = chat_date;
+	public void setChat_regdate(Date chat_regdate) {
+		this.chat_regdate = chat_regdate;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ChatVo [chat_no=" + chat_no + ", s_id=" + s_id + ", g_id=" + g_id + ", chat_content=" + chat_content
+				+ ", chat_fyn=" + chat_fyn + ", chat_regdate=" + chat_regdate + "]";
+	}
+
 	
 	
 }

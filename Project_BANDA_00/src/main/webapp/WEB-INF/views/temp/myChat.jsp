@@ -1,5 +1,15 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="com.mvc.banda.model.vo.ChatVo"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,34 +23,58 @@
 	=============================================== -->
 	<jsp:include page="/WEB-INF/views/circle-header.jsp"></jsp:include>
 
-	 <!-- ==============================================
-	 Navbar Second Section
-	 =============================================== -->
-	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
-	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="mypageFollw.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>F / F</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypagePets.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의 반려동물</span>
-	   </a>
-	   </div>
-	   
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypageFeed.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의피드</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypageAccount.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>내계정</span>
-	   </a>
-	   </div>
-	  </div>
-	</section>	
+<%
+	AccountVo vo = (AccountVo)session.getAttribute("vo");
+
+	List<ChatVo> vo_chatlist = vo.getChat_list();
+	
+	
+	//뿌릴 채팅값
+	List<ChatVo> select_chat = new ArrayList<ChatVo>();
+
+	
+	List<String[]> chated_vo = new ArrayList<String[]>();
+	
+	//중복제거를 위해 사용함.
+	Set<String> chat_voSet = new HashSet<String>();
+	
+	
+	
+	String user = vo.getId();
+	
+	for(int i=0; i<vo_chatlist.size(); i++){
+		
+		String anotherUser = "";
+		int tf = 0;
+		
+		if(vo_chatlist.get(i).getS_id().equals(user)){
+			anotherUser = vo_chatlist.get(i).getG_id();
+		}else if(vo_chatlist.get(i).getG_id().equals(user)){
+			anotherUser = vo_chatlist.get(i).getS_id();
+		}
+		
+		int count = 0;
+		
+		Iterator it = chat_voSet.iterator();
+
+		while(it.hasNext()){
+			if(it.next().equals(anotherUser)){
+				count++;
+			}
+		}
+		
+		if(count == 0){
+			select_chat.add(vo_chatlist.get(i));
+%>
+		<script type="text/javascript">
+			console.log("<%=vo_chatlist.get(i) %>")
+		</script>
+<%			
+		}
+		chat_voSet.add(anotherUser);
+	}
+	
+%>
   
 	 <!-- ==============================================
 	 Modal Section
@@ -68,6 +102,67 @@
 								
 			<div class="messages-list">
 			  <ul>
+<!--  -->
+			<c:choose>
+				<c:when test="<%=select_chat.isEmpty() %>">
+					<li>
+					<div class="user-message-details">
+					 <div class="user-message-img">
+					 </div>
+					 <div class="user-message-info">
+				  	  <h4> </h4>
+					  <p>채팅 내역이 없습니다.</p>
+					  <span class="time-posted"></span>
+				     </div><!--/ user-message-info -->
+				    </div><!--/ user-message-details -->
+				   </li>	
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="chatvo" items="<%=select_chat %>">
+						<li>
+						<div class="user-message-details">
+						 <div class="user-message-img">
+						  <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${chatvo.s_id }/image.jpg" class="img-responsive img-circle" alt="">
+						 </div>
+						 <div class="user-message-info">
+						  <h4>${chatvo.s_id }</h4>
+						  <p>${chatvo.chat_content }</p>
+						  <span class="time-posted"><fmt:formatDate value="${chatvo.chat_regdate }"/></span>
+					     </div><!--/ user-message-info -->
+					    </div><!--/ user-message-details -->
+					   </li>	
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+
+			  <li>
+				<div class="user-message-details">
+				 <div class="user-message-img">
+				  <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" class="img-responsive img-circle" alt="">
+				 </div>
+				 <div class="user-message-info">
+				  <h4>Sean Coleman</h4>
+				  <p>Lorem ipsum dolor ...</p>
+				  <span class="time-posted">1:55 PM</span>
+			     </div><!--/ user-message-info -->
+			    </div><!--/ user-message-details -->
+			   </li>
+			  
+					<li>
+					<div class="user-message-details">
+					 <div class="user-message-img">
+					 </div>
+					 <div class="user-message-info">
+				  	  <h4> </h4>
+					  <p>채팅 내역이 없습니다.</p>
+					  <span class="time-posted"></span>
+				     </div><!--/ user-message-info -->
+				    </div><!--/ user-message-details -->
+				   </li>			  
+			  
+<!--      -->
+
+			  
 			   <li class="active">
 				<div class="user-message-details">
 				 <div class="user-message-img">

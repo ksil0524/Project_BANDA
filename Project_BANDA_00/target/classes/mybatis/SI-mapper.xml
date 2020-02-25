@@ -92,6 +92,10 @@
 		DELETE FROM FEED WHERE FEED_NO = #{feed_no}
 	</delete>
 	
+	<select id="chat_selectlist" parameterType="String" resultType="chatVo">
+		SELECT * FROM CHAT WHERE S_ID = #{id} OR G_ID = #{id} ORDER BY CHAT_REGDATE DESC
+	</select>
+	
 </mapper>
 
 

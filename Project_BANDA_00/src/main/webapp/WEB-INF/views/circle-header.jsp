@@ -126,18 +126,14 @@
 						
 						<div id="searchinputBox">
 						  
-						  <form action="search_feedlist.do" id="searchform" method="get">
-						    
-						  <div>
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
-					      </div>
+							  <div>
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
+						      </div>
 					        <div id="autoArea" style="text-align: left;"></div><!-- 자동완성 @author 주희진 -->
 							<input type="text" id="searchinput" name="keyword" value="" >
-							<div id="searchBtn" class="searchBtn" onclick="#"><i class="fas fa-search"></i></div>
-							
-						  </form>
+							<div id="searchBtn" class="searchBtn" onclick = "searchFunction()"><i class="fas fa-search"></i></div>
 							
 						</div>
 				      

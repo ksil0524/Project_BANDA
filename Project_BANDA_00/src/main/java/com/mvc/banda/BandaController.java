@@ -762,13 +762,7 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정재호 파트  시작 >  
-	
-	@RequestMapping("/index_search_test")
-	public String index_search_test() {
-		
-		return null;
-	}
-		
+			
 	
 	@RequestMapping(value="/circleheader_autosearch.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -903,14 +897,12 @@ public class BandaController {
 
 		String email = profile.getEmail();
 		
-		String id = email.split("@")[0];
-		
 		AccountVo avo = new AccountVo();
-		avo.setId(id);
+		avo.setId(email);
 		
 		AccountVo real_vo = biz.jy_login(avo);
 		
-		AccountVo avo2 = null;
+		//AccountVo avo2 = null;
 		
 		if(real_vo == null) {
 			
@@ -918,14 +910,14 @@ public class BandaController {
 			
 			String pwd = passwordEncoder.encode("1234");
 			
-			avo2 = new AccountVo(id, pwd, email, "010-1111-1111");
+			real_vo = new AccountVo(email, pwd, email, "010-1111-1111");
 			
-			int res = biz.naver_register(avo2);
+			int res = biz.naver_register(real_vo);
 			
 			if(res > 0 ) {
 				System.out.println("네이버로 회원가입 성공");
 				
-				session.setAttribute("vo", avo2);
+				session.setAttribute("vo", real_vo);
 				session.setMaxInactiveInterval(60*60);
 			} else {
 				System.out.println("네이버로 회원가입 실패");
@@ -942,7 +934,7 @@ public class BandaController {
 		////////////
 		
 		String path = request.getSession().getServletContext()
-	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + avo2.getId());
+	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + real_vo.getId());
 
 	      File Folder = new File(path);
 
@@ -1305,6 +1297,37 @@ public class BandaController {
 		
 		return m;
 	}
+	
+	//검색
+	 @RequestMapping("/circleheader_searchindex.do")
+	 public String index_search(Model model, String category, String keyword) {
+	      
+	     System.out.println("검색 : cate: " + category +"/ keyworkd: " + keyword);
+	     
+	     List<FeedVo> fvo = new ArrayList<FeedVo>();
+	     String keyword2 = null;
+	     
+	     if(category.equals("jh_searchid")) {
+	    	 
+	    	 fvo = biz.search_id(keyword);
+	    	 keyword2 = keyword;
+	    	 
+	     } else if(category.equals("jh_searchfeedptag")) {
+	    	 
+	    	 fvo = biz.search_ptag(keyword);
+	    	 keyword2 = ": "+keyword;
+	    	 
+	     } else {
+	    	 
+	    	 fvo = biz.search_htag(keyword);
+	    	 keyword2 = "# "+keyword;
+	     }
+
+	     model.addAttribute("frvo",fvo);
+	     model.addAttribute("keyword",keyword2);
+	      
+      return "search_index";
+	  }
 	
 	
 	// < 최주예 파트  끝 > 

@@ -267,6 +267,21 @@ public class BandaBiz {
 		public int pwdfind_update(AccountVo vo) {
 			return jy_dao.pwdfind_update(vo);
 		}
+		
+		//아이디 검색
+		public List<FeedVo> search_id(String keyword){
+			return jy_dao.search_id(keyword);
+		}
+		
+		//ptag 검색
+		public List<FeedVo> search_ptag(String keyword){
+			return jy_dao.search_ptag(keyword);
+		}
+		
+		//htag로 검색
+		public List<FeedVo> search_htag(String keyword){
+			return jy_dao.search_htag(keyword);
+		}
 	
 	// < 최주예 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

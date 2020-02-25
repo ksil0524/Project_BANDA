@@ -16,15 +16,32 @@
      <!-- ==============================================
 	 Scripts
 	 =============================================== -->
+	 <!-- jquery.min.js -->
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   
+   <!-- bootstrp.min.js -->
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
+	<!-- main 외  페이지 전용 -->
+	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
+	<!-- Auto Script -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
+  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
+   
+   
 	
+
 <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/resources/assets/css/custom-modal.css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />
 
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
@@ -34,15 +51,17 @@
 
 <style type="text/css">
 	
-	body{
-			  !important;
-	}
+		::-webkit-scrollbar {
+
+		display:none;
+
+		} 
 
 </style>
 
 
 </head>
-<body>
+<body style = "-ms-overflow-style: none;">
 <input type = "hidden" id = "hidden_session" value = '<%=session.getAttribute("vo") %>'>
 
 <form id="delete_feed" action="mypage_deletefeed.do" method="post">
@@ -469,7 +488,7 @@
 			                  background-position: center center;
 			                  -webkit-background-size: cover;
 			                  -moz-background-size: cover;
-			                  -o-background-size: cover;" autoplay loop>
+			                  -o-background-size: cover;" autoplay loop muted>
 			               <source src="<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}" type="video/mp4">    
 			          </video>
 			          
@@ -661,20 +680,7 @@
     <!-- ==============================================
 	HEADER CIRCLE Scripts
 	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
-	<!-- main 외  페이지 전용 -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
-	<!-- Auto Script -->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
-  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    
       <script>		
 		
@@ -794,7 +800,7 @@
 								} else {
 									
 									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1];
-									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop muted><source src="'+url+'" type="video/mp4">  </video><br></div>';
 	  							str += url_real;
 
 								}
@@ -808,7 +814,7 @@
 								} else {
 									
 									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i];
-									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop muted><source src="'+url+'" type="video/mp4">  </video><br></div>';
 	  							str += url_real;
 
 								}

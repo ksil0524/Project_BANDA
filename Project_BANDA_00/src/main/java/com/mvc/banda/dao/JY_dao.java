@@ -263,6 +263,104 @@ public class JY_dao {
 			return pwdfind_update_sql(vo);
 		}
 		
+		//search_id
+		public List<FeedVo> search_id(String keyword){
+			
+			List<FeedVo> flist = search_id_sql(keyword);
+		
+			int count = flist.size();
+			
+			if(count < 4) {
+				System.out.println("4개 미만의 게시물");
+			}
+			else if(count % 4 != 0) {
+				count = count - (count%4);
+			}
+			
+			Map m = new HashMap();
+			m.put("keyword", keyword);
+			m.put("count", count);
+			
+			flist = search_id_count(m);
+			
+			for(FeedVo v : flist) {
+				
+				List<CommentVo> c = select_comment(v.getFeed_no());
+				v.setComment_list(c);
+				
+				List<LikesVo> l = select_like(v.getFeed_no());
+				v.setLike_list(l);
+
+			}
+
+			return flist;
+		}
+		
+		//search_htag
+		public List<FeedVo> search_ptag(String keyword){
+			
+			List<FeedVo> flist = search_ptag_sql(keyword);
+			
+			int count = flist.size();
+			
+			if(count < 4) {
+				System.out.println("4개 미만의 게시물");
+			}
+			else if(count % 4 != 0) {
+				count = count - (count%4);
+			}
+			
+			Map m = new HashMap();
+			m.put("keyword", keyword);
+			m.put("count", count);
+			
+			flist = search_ptag_count(m);
+			
+			for(FeedVo v : flist) {
+				
+				List<CommentVo> c = select_comment(v.getFeed_no());
+				v.setComment_list(c);
+				
+				List<LikesVo> l = select_like(v.getFeed_no());
+				v.setLike_list(l);
+			}
+			
+			return flist;			
+		}
+		
+		//search_htag
+		public List<FeedVo> search_htag(String keyword){
+			
+			List<FeedVo> flist = search_htag_sql(keyword);
+			
+			int count = flist.size();
+			
+			if(count < 4) {
+				System.out.println("4개 미만의 게시물");
+			}
+			else if(count % 4 != 0) {
+				count = count - (count%4);
+			}
+			
+			Map m = new HashMap();
+			m.put("keyword", keyword);
+			m.put("count", count);
+			
+			flist = search_htag_count(m);
+			
+			for(FeedVo v : flist) {
+				
+				List<CommentVo> c = select_comment(v.getFeed_no());
+				v.setComment_list(c);
+				
+				List<LikesVo> l = select_like(v.getFeed_no());
+				v.setLike_list(l);
+			}
+			
+			return flist;	
+			
+		}
+		
 		///////////////////////////////////////////////////////////////////////////////////////
 		//sql
 		
@@ -371,5 +469,35 @@ public class JY_dao {
 		//pwdfind_update
 		public int pwdfind_update_sql(AccountVo vo) {
 			return sqlSession.update(NAMESPACE+"pwdfind_update", vo);
+		}
+		
+		//search_id
+		public List<FeedVo> search_id_sql(String keyword){
+			return sqlSession.selectList(NAMESPACE+"search_id", keyword);
+		}
+		
+		//search_ptag
+		public List<FeedVo> search_ptag_sql(String keyword){
+			return sqlSession.selectList(NAMESPACE+"search_ptag", keyword);
+		}
+		
+		//search_htag
+		public List<FeedVo> search_htag_sql(String keyword){
+			return sqlSession.selectList(NAMESPACE+"search_htag", keyword);
+		}
+		
+		//search_id_count
+		public List<FeedVo> search_id_count(Map m){
+			return sqlSession.selectList(NAMESPACE+"search_id_count", m);
+		}
+		
+		//search_ptag_count
+		public List<FeedVo> search_ptag_count(Map m){
+			return sqlSession.selectList(NAMESPACE+"search_ptag_count", m);
+		}
+		
+		//search_ptag_count
+		public List<FeedVo> search_htag_count(Map m){
+			return sqlSession.selectList(NAMESPACE+"search_htag_count", m);
 		}
 }

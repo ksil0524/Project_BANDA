@@ -171,6 +171,36 @@
 	<update id = "pwdfind_update" parameterType="accountVo">
 		UPDATE ACCOUNT SET PASSWORD = #{password} WHERE ID = #{id}
 	</update>
+	
+	<!-- search_id -->
+	<select id = "search_id" parameterType="String" resultMap="feedVo">
+		SELECT * FROM FEED WHERE ID = #{keyword}
+	</select>
+	
+	<!-- search_id_count -->
+	<select id = "search_id_count" resultMap="feedVo">
+		SELECT ROWNUM, F.* FROM(SELECT * FROM FEED WHERE ID = #{keyword} ORDER BY FEED_REGDATE) F WHERE ROWNUM BETWEEN 1 AND #{count}
+	</select>
+	
+	<!-- search_ptag -->
+	<select id = "search_ptag" parameterType="String" resultMap="feedVo">
+		SELECT * FROM FEED WHERE FEED_PTAG LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- search_ptag_count -->
+	<select id = "search_ptag_count" resultMap="feedVo">
+		SELECT ROWNUM, F.* FROM(SELECT * FROM FEED WHERE FEED_PTAG LIKE '%'||#{keyword}||'%' ORDER BY FEED_REGDATE) F WHERE ROWNUM BETWEEN 1 AND #{count}
+	</select>
+	
+	<!-- search_htag -->
+	<select id = "search_htag" parameterType="String" resultMap="feedVo">
+		SELECT * FROM FEED WHERE FEED_HTAG LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- search_htag_count -->
+	<select id = "search_htag_count" resultMap="feedVo">
+		SELECT ROWNUM, F.* FROM(SELECT * FROM FEED WHERE FEED_HTAG LIKE '%'||#{keyword}||'%' ORDER BY FEED_REGDATE) F WHERE ROWNUM BETWEEN 1 AND #{count}
+	</select>
 </mapper>
 
 

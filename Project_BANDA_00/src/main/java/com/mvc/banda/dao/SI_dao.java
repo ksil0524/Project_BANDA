@@ -1,5 +1,7 @@
 package com.mvc.banda.dao;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -333,16 +335,35 @@ public class SI_dao {
 		
 		List<ChatVo> chat_list = null;
 		
-//		ChatVo tmp = new ChatVo();
-//		tmp.setS_id(id);
-//		tmp.setG_id(id);
-		
 		try {
 			
 			chat_list = sqlSession.selectList(NAMESPACE+"chat_selectlist", id);	
 			
 		} catch (Exception e) {
 			System.out.println("[error] : chat_selectlist");
+			e.printStackTrace();
+		}
+		
+
+		return chat_list;
+	}
+
+	public List<ChatVo> mychat_selectonelist(String userid, String otherid) {
+		
+		List<ChatVo> chat_list = null;
+		
+		Map<String, String> usermap = new HashMap<String, String>();
+		usermap.put("userid", userid);
+		usermap.put("otherid", otherid);
+		
+		System.out.println("usermap : "+usermap);
+		
+		try {
+			
+			chat_list = sqlSession.selectList(NAMESPACE+"mychat_selectonelist", usermap);	
+			
+		} catch (Exception e) {
+			System.out.println("[error] : mychat_selectonelist");
 			e.printStackTrace();
 		}
 		

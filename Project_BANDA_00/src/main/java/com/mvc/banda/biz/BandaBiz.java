@@ -115,6 +115,10 @@ public class BandaBiz {
 		return si_dao.myChat_selectlist(id);
 	}
 
+	public List<ChatVo> mychat_selectonelist(String userid, String otherid) {
+		return si_dao.mychat_selectonelist(userid, otherid);
+	}
+
 	
 	// < 김성일 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -405,6 +409,7 @@ public class BandaBiz {
 	public int boardComDelete(int com_no) {
 		return nk_dao.boardComDelete(com_no);
 	}
+
 
 
 

@@ -96,6 +96,10 @@
 		SELECT * FROM CHAT WHERE S_ID = #{id} OR G_ID = #{id} ORDER BY CHAT_REGDATE DESC
 	</select>
 	
+	<select id="mychat_selectonelist" parameterType="hashMap" resultType="chatVo">
+		SELECT * FROM CHAT WHERE (S_ID = #{userid} and G_ID = #{otherid}) OR (S_ID = #{otherid} and G_ID = #{userid}) ORDER BY CHAT_NO ASC
+	</select>
+	
 </mapper>
 
 

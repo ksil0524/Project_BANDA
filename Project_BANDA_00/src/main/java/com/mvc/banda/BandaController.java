@@ -584,6 +584,29 @@ public class BandaController {
 		return "temp/myChat";
 	}
 	
+	@RequestMapping("/change_chatroom.do")
+	@ResponseBody
+	public Map<String, List<ChatVo>> change_chatroom(HttpSession session, @RequestBody String otherid){
+		
+		System.out.println("change_chatroom");
+		
+		AccountVo nowvo = (AccountVo)session.getAttribute("vo");
+		String userid = nowvo.getId();
+		System.out.println("userid : "+userid);
+		
+		String anotherid = otherid.substring(1, otherid.length()-1);
+		System.out.println("anotherid : "+anotherid);
+						
+		List<ChatVo> chatlist = biz.mychat_selectonelist(userid, anotherid);
+		System.out.println(chatlist);
+		
+		Map<String, List<ChatVo>> resMap = new HashMap<String, List<ChatVo>>();
+		resMap.put("chatlist", chatlist);
+		
+		return resMap;
+	}
+	
+	
 	
 	
 	

@@ -1,7 +1,6 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Set"%>
-<%@page import="java.util.Date"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="com.mvc.banda.model.vo.ChatVo"%>
 <%@page import="java.util.List"%>
@@ -15,27 +14,6 @@
 <html lang="en">
 <head>
 	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
-	
-	<!-- ==============================================
-	Scripts
-	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-	<script type="text/javascript">
-	
-	function getFormatDate(date){
-	    var year = date.getFullYear();              //yyyy
-	    var month = (1 + date.getMonth());          //M
-	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-	    var day = date.getDate();                   //d
-	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    return  year + '-' + month + '-' + day;
-	}
-	
-	</script>
-	
 </head>
 <body>
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
@@ -143,7 +121,7 @@
 					<c:set var="userid" value="<%=vo.getId() %>"></c:set>
 					<c:forEach var="chatvo" items="<%=select_chat %>">
 						<li>
-						<div class="user-message-details" id="${(chatvo eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }" onclick="change_chatroom(this.id);">
+						<div class="user-message-details">
 						 <div class="user-message-img">
 						  <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${chatvo.s_id }/image.jpg" class="img-responsive img-circle" alt="">
 						 </div>
@@ -170,129 +148,47 @@
 		   
 			<div class="conversation-header">
 			 <div class="user-message-details">
-			  <div class="user-message-img" style="margin: 0 0 2% 0;">
-			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" class="img-responsive img-circle" id="nchat_img">
+			  <div class="user-message-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" class="img-responsive img-circle" alt="" id="nchat_img">
 			  </div>
-			  <div class="user-message-info" style="padding-left:2%; padding-top: 2%">
-			   <h4 id="nchat_name">Please choice chat room</h4>
+			  <div class="user-message-info">
+			   <h4 id="nchat_name">John Doe</h4>
 			   <!-- 
 			    <p>Online</p>
 			    -->
 			  </div><!--/ user-message-info -->
 			 </div><!--/ user-message-details -->
-			 <!-- 			 
 			 <a href="#" title=""><i class="fa fa-ellipsis-v"></i>?????????????</a>
-			  -->
 			</div><!--/ conversation-header -->
 			
-<script type="text/javascript">
-	//목록 클릭시 그 상대방과 대화한 리스트 DB 에서 가져와 뿌리기
-	function change_chatroom(anotheruser){
-		
-		var userid = "<%=vo.getId() %>";
-		var otherid = anotheruser;
-		console.log('otherid : '+otherid);
-
-		$.ajax({
-			
-			type:'post',
-			url:'change_chatroom.do',
-			data:JSON.stringify(otherid),
-			contentType:'application/json',
-			dataType:'json',
-			success : function(data){
-				console.log("success");	
-				
-				var chatlist = data.chatlist;
-				console.log(chatlist)
-				
-				//사진, 이름 바꾸기
-				var srctag = "<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"+otherid+"/image.jpg";
-				$("#nchat_img").attr("src",srctag);
-				$("#nchat_name").html("");
-				$("#nchat_name").html(otherid);
-				
-				
-				//채팅뿌려주기
-				$("#nchat_space").html("");
-				var tagset = "";
-				
-				for(var i=0; i<chatlist.length ; i++){
-					
-					var chatvo = chatlist[i	];
-					
-					if(chatvo.s_id == userid){
-						
-						tagset += "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message'><p>"
-									+chatvo.chat_content+"</p></div><span>"+getFormatDate(new Date(chatvo.chat_regdate))+
-									"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
-									+chatvo.s_id+"/image.jpg' class='img-responsive img-circle'></div></div>";
-									
-					}else{
-						
-						tagset += "<div class='convo-box convo-left'><div class='convo-area convo-left'><div class='convo-message'><p>"
-						  			+chatvo.chat_content+"</p></div><span>"
-						   			+getFormatDate(new Date(chatvo.chat_regdate))
-						  			+"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
-									+chatvo.s_id+"/image.jpg' class='img-responsive img-circle'></div></div>";
-									
-					}
-					
-				}
-				
-				
-				
-				$("#nchat_space").append(tagset);
-				$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
-				
-
-			},
-			error : function(){
-				console.log("fail");
-			}
-			
-		});
-		
-		
-		
-	}
-
-	
-
-
-</script>						
-			<div class="conversation-container" id="nchat_space">
-<!-- 채팅이 들어갈 곳 -->
+			<div class="conversation-container">
 
 
 
 
 
 
-<!-- 채팅 내용 부분  -->
-		<!-- 오른쪽(내가 보낸 메세지) -->
-		
+
+<!--  -->
+
 			 <div class="convo-box pull-right">
-			  <div class="convo-area pull-right">
+			  <div class="convo-area">
 			   <div class="convo-message">
-				<p> zㅋㅋㅋㅋㅋㅋ내가 말한 내용스</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor.</p>
 			   </div><!--/ convo-message-->
-			   <span>채팅 시간</span>
+			   <span>Sat, Aug 23, 1:08 PM</span>
 			  </div><!--/ convo-area -->
 			  <div class="convo-img">
 			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/2.jpg" alt="" class="img-responsive img-circle">
 			  </div><!--/ convo-img -->
 			 </div><!--/ convo-box -->
 
-
-		<!-- 왼쪽 (상대방이 보낸 메세지) -->
-		
 			 <div class="convo-box convo-left">
 			  <div class="convo-area convo-left">
 			   <div class="convo-message">
-				<p>상대방이 말한 내용스</p>
+				<p>Cras ultricies ligula.</p>
 			   </div><!--/ convo-message-->
-			   <span>채팅 시간</span>
+			   <span>5 minutes ago</span>
 			  </div><!--/ convo-area -->
 			  <div class="convo-img">
 			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" alt="" class="img-responsive img-circle">
@@ -302,7 +198,85 @@
 
 
 
-<!--  -->
+
+<!-- 
+
+
+
+
+ -->
+
+			 <div class="convo-box pull-right">
+			  <div class="convo-area">
+			   <div class="convo-message">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor.</p>
+			   </div><!--/ convo-message-->
+			   <span>Sat, Aug 23, 1:08 PM</span>
+			  </div><!--/ convo-area -->
+			  <div class="convo-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/2.jpg" alt="" class="img-responsive img-circle">
+			  </div><!--/ convo-img -->
+			 </div><!--/ convo-box -->
+
+			 <div class="convo-box convo-left">
+			  <div class="convo-area convo-left">
+			   <div class="convo-message">
+				<p>Cras ultricies ligula.</p>
+			   </div><!--/ convo-message-->
+			   <span>5 minutes ago</span>
+			  </div><!--/ convo-area -->
+			  <div class="convo-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" alt="" class="img-responsive img-circle">
+			  </div><!--/ convo-img -->
+			 </div><!--/ convo-box -->
+
+			 <div class="convo-box pull-right">
+			  <div class="convo-area">
+			   <div class="convo-message">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor.</p>
+			   </div><!--/ convo-message-->
+			   <span>Sat, Aug 23, 1:08 PM</span>
+			  </div><!--/ convo-area -->
+			  <div class="convo-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/2.jpg" alt="" class="img-responsive img-circle">
+			  </div><!--/ convo-img -->
+			 </div><!--/ convo-box -->
+
+			 <div class="convo-box convo-left">
+			  <div class="convo-area convo-left">
+			   <div class="convo-message">
+				<p>Lorem ipsum dolor sit amet</p>
+			   </div><!--/ convo-message-->
+			   <span>2 minutes ago</span>
+			  </div><!--/ convo-area -->
+			  <div class="convo-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" alt="" class="img-responsive img-circle">
+			  </div><!--/ convo-img -->
+			 </div><!--/ convo-box -->
+
+			 <div class="convo-box pull-right">
+			  <div class="convo-area">
+			   <div class="convo-message">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor.</p>
+			   </div><!--/ convo-message-->
+			   <span>Sat, Aug 23, 1:08 PM</span>
+			  </div><!--/ convo-area -->
+			  <div class="convo-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/2.jpg" alt="" class="img-responsive img-circle">
+			  </div><!--/ convo-img -->
+			 </div><!--/ convo-box -->
+
+			 <div class="convo-box convo-left">
+			  <div class="convo-area convo-left">
+			   <div class="convo-message">
+				<p>Typing...</p>
+			   </div><!--/ convo-message-->
+			   <span>2 minutes ago</span>
+			  </div><!--/ convo-area -->
+			  <div class="convo-img">
+			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" alt="" class="img-responsive img-circle">
+			  </div><!--/ convo-img -->
+			 </div><!--/ convo-box -->
 									
 			</div><!--/ conversation-container -->
             <div class="type_messages">  
@@ -329,7 +303,13 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 
-    
+    <!-- ==============================================
+	Scripts
+	=============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 	
 	<!-- ==============================================
 	HEADER CIRCLE Scripts

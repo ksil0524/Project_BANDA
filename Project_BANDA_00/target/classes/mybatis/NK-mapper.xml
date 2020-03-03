@@ -86,6 +86,14 @@
 		DELETE FROM BOARD
 		WHERE BOARD_NO=#{board_no}
 	</delete>
+	
+	<!-- 댓글 목록 -->
+	<select id="selectBoardCom" parameterType="int" resultType="commentVo">
+		SELECT COM_NO, COM_CATE, ID, COM_CONTENT, COM_REGDATE, COM_PNO 
+		FROM TEST_COMMENTS
+		WHERE COM_PNO=#{com_pno}
+		ORDER BY COM_REGDATE ASC 
+	</select>
 
 	<!-- 댓글 작성 -->
 	<insert id="insertBoardCom" parameterType="commentVo">
@@ -105,6 +113,66 @@
 		DELETE FROM TEST_COMMENTS
 		WHERE COM_NO=#{com_no}
 	</delete>
+
+
+
+
+
+
+	<!-- 페이징 - 무나 -->
+	<select id="pagingListSh" resultType="boardVo" parameterType="com.mvc.banda.common.SearchCriteria">	
+		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH
+		 FROM ( 
+		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, 
+		               ROW_NUMBER() OVER(ORDER BY BOARD_NO DESC) AS RNUM
+		         FROM TEST_BOARD 
+		         WHERE 1=1 AND BOARD_CATE='SH' AND BOARD_NYN='N'
+		         	<include refid="boardSearch"/>
+		                       ) B
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="listCountSh" resultType="int" parameterType="com.mvc.banda.common.SearchCriteria">
+		SELECT COUNT(BOARD_NO)
+		 FROM TEST_BOARD
+		 WHERE 1=1 AND BOARD_CATE='SH' AND BOARD_NYN='N' 
+		 <include refid="boardSearch"/>
+		 AND BOARD_NO > 0
+	</select>
+	
+	<!-- 페이징 - 교환 -->
+	<select id="pagingListEx" resultType="boardVo" parameterType="com.mvc.banda.common.SearchCriteria">	
+		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH
+		 FROM ( 
+		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, 
+		               ROW_NUMBER() OVER(ORDER BY BOARD_NO DESC) AS RNUM
+		         FROM TEST_BOARD 
+		         WHERE 1=1 AND BOARD_CATE='EX' AND BOARD_NYN='N'
+		         	<include refid="boardSearch"/>
+		                       ) B
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="listCountEx" resultType="int" parameterType="com.mvc.banda.common.SearchCriteria">
+		SELECT COUNT(BOARD_NO)
+		 FROM TEST_BOARD
+		 WHERE 1=1 AND BOARD_CATE='EX' AND BOARD_NYN='N' 
+		 <include refid="boardSearch"/>
+		 AND BOARD_NO > 0
+	</select>
+	
+	<!-- 검색 -->
+	<sql id="boardSearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND BOARD_TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND ID LIKE '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
+	
+	
 
 </mapper>
 

@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boarddetail.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color: #f4f4f4;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
@@ -89,6 +90,12 @@
 	    <!-- style="width: inherit;" -->
 		
          <div class="cardbox">
+         
+         <form name="readForm" role="form" method="post">
+         	<input type="hidden" id="bno" name="board_no" value="${detail.board_no}" />
+  			<input type="hidden" id="page" name="page" value="${scri.page}">  
+  			<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}"> 
+  			<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}"> 
 		 
           <div class="cardbox-heading">
            <!-- START dropdown-->
@@ -107,9 +114,7 @@
 			   <c:when test="${fn:contains(noticeChk, 'N')}">
 	         	 <a class="dropdown-item" href="boardSetNotice.do?board_no=${detail.board_no }">공지등록</a>
 	           </c:when>
-	         </c:choose>
-			
-	         
+	         </c:choose>    
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->
@@ -147,6 +152,7 @@
 		      <p id="pHash"></p>
 		     </div><!--/ cardbox-hashtag -->
 		    </div>
+		   </form><!--/ form -->
           </div><!--/ cardbox-item -->
 	      
 	      <!-- 구분선  -->
@@ -172,7 +178,7 @@
                       <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/17.jpeg" class="img-responsive img-circle" alt="Image"/>
                     </div>
                     <div class="comment-text">
-                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span><span class=""> <i class="fas fa-pen" id="boardComUpdate"></i></span><span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
+                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span><span class=""> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span><span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
                       <p>${comments.com_content }</p> 
                     </div>
                   </li><!--/ li -->
@@ -181,15 +187,26 @@
 		     </c:choose>
             </ul><!--/ comment-list -->
             <script type="text/javascript">
-              $("#boardComUpdate").click(function(){
-            	  var comContent = $
-              });
+            	function commentEdit(com_content, com_no, com_pno) {
+            		var comPut = document.getElementById("comment-put");
+            		var comEdit = document.getElementById("comment-edit");
+            		var comEditor = document.getElementById("comEditor");
+            		var comNo = document.getElementById("com_no");
+            		var comPNo = document.getElementById("com_pno");
+            		
+            		comPut.setAttribute("style", "display: none;");
+            		comEdit.setAttribute("style", "display: flex;");
+//            		comEditor.setAttribute("value", com_content);
+					comEditor.value=com_content;
+					comNo.value=com_no;
+					comPNo.value=com_pno;
+            	}
             </script>
            </div><!--/ cardbox-comment-list -->
 		   
 		   <div class="comment-bottom">  
 		    	 	 
-			<div class="comment-put">
+			<div class="comment-put" id="comment-put">
 			   <table style="width: 800px;">
 		   	    <tr>
 		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
@@ -197,7 +214,7 @@
 		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
 		   	         <input type="hidden" name="com_cate" value="B"/>
 		   	         <input type="hidden" name="id" value="test"/>
-		   	         <input class="form-control input-sm" type="text" name="com_content" placeholder="댓글을 입력하세요"/>
+		   	         <input class="form-control input-sm" type="text" name="com_content" value="" placeholder="댓글을 입력하세요"/>
 		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
 		   	       </form:form>
 		   	     </td>
@@ -211,14 +228,13 @@
 		   	    <tr>
 		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
 		   	     <td>
-		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
-		   	         <input type="hidden" name="com_cate" value="B"/>
-		   	         <input type="hidden" name="id" value="test"/>
-		   	         <input class="form-control input-sm" type="text" name="com_content" placeholder="댓글을 입력하세요"/>
-		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
+		   	       <form:form name="commentUpdateForm" id="commentUpdateForm" action="boardComUpdate.do">
+		   	         <input class="form-control input-sm" type="text" id="comEditor" name="com_content" placeholder="댓글을 입력하세요"/>
+		   	         <input type="hidden" name="com_no" id="com_no" value=""/>
+		   	         <input type="hidden" name="com_pno" id="com_pno" value=""/>
 		   	       </form:form>
 		   	     </td>
-		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="$('#commentForm').submit();"></i></td>
+		   	     <td style="width: 50px;"><<i class="fas fa-edit" onclick="$('#commentUpdateForm').submit();"></i></td>
 		   	    </tr>
 		   	   </table>  
 			 </div><!--/ comment-edit -->

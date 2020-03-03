@@ -53,9 +53,9 @@
 
 	<!-- 나경 -->
 	<br>
-	<a href="boardListExchange_test.do">boardListExchange TEST</a>	
+	<a href="listTestEx.do">boardListExchange TEST</a>	
 	<br>
-	<a href="boardListFree_test.do">boardListFree TEST</a>	
+	<a href="listTestSh.do">boardListFree TEST</a>	
 	<!--/ 나경 -->
 	
 	<!-- 재호 -->

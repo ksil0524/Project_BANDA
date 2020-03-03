@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mvc.banda.common.SearchCriteria;
 import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.CommentVo;
 
@@ -15,6 +16,68 @@ public class NK_dao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	//페이징검색/////////////////////////////////////////////////////////////////////////
+	
+	//무료나눔 게시글 갯수
+	public int listCountSh(SearchCriteria scri) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"listCountSh", scri);
+			System.out.println("list count SHARE : "+res);
+		} catch(Exception e) {			
+			System.out.println("[ERROR] SHARE BOARD COUNT");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	//무료나눔 게시판 페이징
+	public List<BoardVo> pagingListSh(SearchCriteria scri) {
+		List<BoardVo> list = new ArrayList<BoardVo>();
+	
+		try {
+			list = sqlSession.selectList(NAMESPACE+"pagingListSh", scri);
+		} catch(Exception e) {
+			System.out.println("[ERROR] Share Board Select List PAGING");
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	//물물교환 게시글 갯수
+	public int listCountEx(SearchCriteria scri) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"listCountEx", scri);
+			System.out.println("list count EXCHANGE : "+res);
+		} catch(Exception e) {			
+			System.out.println("[ERROR] EXCHANGE BOARD COUNT");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	//물물교환 게시판 페이징
+	public List<BoardVo> pagingListEx(SearchCriteria scri) {
+		List<BoardVo> list = new ArrayList<BoardVo>();
+		
+		try {
+			list = sqlSession.selectList(NAMESPACE+"pagingListEx", scri);
+		} catch(Exception e) {
+			System.out.println("[ERROR] EXCHANGE Board Select List PAGING");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	//페이징검색끝/////////////////////////////////////////////////////////////////////////
 	
 	//무료나눔 게시글 목록 불러오기
 	public List<BoardVo> selectListSh() {
@@ -29,6 +92,8 @@ public class NK_dao {
 			
 		return list;
 	}
+	
+	
 		
 	//무료나눔 공지 목록 불러오기
 	public List<BoardVo> selectListShNotice() {

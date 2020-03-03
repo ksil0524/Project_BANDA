@@ -78,19 +78,6 @@
 	   	width: 400px !important;
 	   }
 	   </style>
-	   
-	   <!-- 
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_stories.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의피드</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_profile.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>내계정</span>
-	   </a>
-	   </div>
-	    -->
 	    
 	  </div>
 	</section>
@@ -192,7 +179,18 @@
 			  </div>
 			  <div class="row btns" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <input type="button" value="작성" onclick="$('#updateForm').submit();">
-			    <input type="button" value="목록" onclick="javascript:history.back()">
+			    <input type="button" value="목록" onclick="listBtn();">
+			    
+			    <!-- 목록 스크립트 시작 -->
+			    <script type="text/javascript">
+				    function listBtn() {
+						var cate = document.getElementById("boardtab");
+						var getCate = cate.options[cate.selectedIndex].value; 
+						event.preventDefault();
+						location.href="detailTest.do?board_no=${detail.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}";		 
+					 }	
+			    </script>
+			    <!-- 목록 스크립트 끝 -->
 			    
 			  </div>
 			  </form:form>

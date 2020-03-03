@@ -763,8 +763,10 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 정재호 파트  시작 >  
 	
-	@RequestMapping("/index_search_test")
-	public String index_search_test() {
+	@RequestMapping("/circleheader_searchindex.do")
+	public String circleheader_searchindex(Model model, String category, String keyword) {
+		
+		System.out.println("검색 : cate: " + category +"/ keyworkd: " + keyword);
 		
 		return null;
 	}
@@ -1378,9 +1380,9 @@ public class BandaController {
 		 * @version 1.0
 		 * @date 200219
 		*/
-		System.out.println("동이름: " + dong);
 		
 		/* 검색조건 map */
+		dong = dong.replaceAll("[0-9]동","동");
 		HashMap<String, String> searchMap = new HashMap<String, String>();
 		searchMap.put("dong", dong);
 		searchMap.put("mapcate", mapcate);
@@ -1394,6 +1396,8 @@ public class BandaController {
 		
 		return map;
 	}
+	
+	
 	
 	
 	// < 주희진 파트  끝 > 

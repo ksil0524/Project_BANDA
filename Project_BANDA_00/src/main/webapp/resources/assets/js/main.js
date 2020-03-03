@@ -50,7 +50,6 @@ function loginChk(){
 
 		}
 		
-		
 	});
 }
 
@@ -192,11 +191,8 @@ $("#email").blur(function(){
 	//영문자 숫자 4~10
 	var loginIdRex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[0-9a-zA-Z]$/i;
 
-
-
 	if(!loginIdRex.test(id)){
 	
-		
 		isjoin++;
 		$("#email").val("");
 		
@@ -448,9 +444,10 @@ function close(){
 			$("#header").toggleClass('hide');
 			isLogin = 0;
 		})
-		
-	});
 
+	});
+	
+    
 })(jQuery);
 
 $(document).ready(function(){
@@ -476,4 +473,12 @@ $(document).ready(function(){
 
        
 });
+
+/***********************************
+검색어  @author 주희진
+***********************************/
+
+$(function(){
+
+ });
 

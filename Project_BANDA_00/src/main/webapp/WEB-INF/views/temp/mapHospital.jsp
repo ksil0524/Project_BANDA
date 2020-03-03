@@ -13,8 +13,11 @@
 <!-- HEAD CSS -->
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 <script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-</head>
 
+<!-- index_circle_custom CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+</head>
+		
 <body>
 <!-- Session set -->
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>

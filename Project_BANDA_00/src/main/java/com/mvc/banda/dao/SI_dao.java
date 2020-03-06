@@ -370,6 +370,22 @@ public class SI_dao {
 
 		return chat_list;
 	}
+
+	public int insert_chat(ChatVo vo) {
+		
+		int res = 0;
+		
+		try {
+			
+			res = sqlSession.insert(NAMESPACE+"chat_insert",vo);
+			
+		} catch (Exception e) {
+			System.out.println("[error] : insert_chat");
+			e.printStackTrace();			
+		}
+		
+		return res;
+	}
 	
 	
 	

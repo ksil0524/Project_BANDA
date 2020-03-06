@@ -82,6 +82,7 @@ import com.mvc.banda.model.vo.MapVo;
 @Controller
 public class BandaController {
 	
+	
 	@Autowired
 	public HttpSession session;
 	
@@ -606,7 +607,33 @@ public class BandaController {
 		return resMap;
 	}
 	
-	
+	@RequestMapping("/insertchat.do")
+	@ResponseBody
+	public Map<String, Boolean> insertchat(@RequestBody Map<String, String> data){
+		
+		System.out.println("insertchat");
+		
+		System.out.println(data);
+		
+		ChatVo vo = new ChatVo();
+		vo.setS_id(data.get("s_id"));
+		vo.setG_id(data.get("g_id"));
+		vo.setChat_content(data.get("chat_content"));
+		
+		System.out.println(vo);
+		
+		int res = biz.insert_chat(vo);
+				
+		Map<String, Boolean> resMap = new HashMap<String, Boolean>();
+		
+		if(res>0) {
+			resMap.put("res", true);
+		}else {
+			resMap.put("res", false);
+		}
+		
+		return resMap;
+	}
 	
 	
 	

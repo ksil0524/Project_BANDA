@@ -100,6 +100,10 @@
 		SELECT * FROM CHAT WHERE (S_ID = #{userid} and G_ID = #{otherid}) OR (S_ID = #{otherid} and G_ID = #{userid}) ORDER BY CHAT_NO ASC
 	</select>
 	
+	<insert id="chat_insert" parameterType="chatVo">
+		INSERT INTO CHAT VALUES(CHAT_SEQ.NEXTVAL, #{s_id}, #{g_id}, #{chat_content}, 'N', SYSDATE)
+	</insert>
+	
 </mapper>
 
 

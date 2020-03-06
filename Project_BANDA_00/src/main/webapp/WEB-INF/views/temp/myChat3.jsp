@@ -15,16 +15,7 @@
 <html lang="en">
 <head>
 	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
-
-	<!-- 
-	 ip바꿔주기
-	 -->
-	<script src="http://172.30.1.35:3000/socket.io/socket.io.js"></script>
 	
-
-
-
-
 	<!-- ==============================================
 	Scripts
 	=============================================== -->
@@ -44,6 +35,15 @@
 	}
 	
 	</script>
+	
+</head>
+<body>
+<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
+
+	<!-- ==============================================
+	HeaderSection
+	=============================================== -->
+	<jsp:include page="/WEB-INF/views/circle-header.jsp"></jsp:include>
 
 <%
 	AccountVo vo = (AccountVo)session.getAttribute("vo");
@@ -97,29 +97,7 @@
 	}
 	
 %>
-  	
-	
-	
-</head>
-<body>
-<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
-
-
-
-
-
-<ul id="messages"></ul>
-<form name="chatform" method="post">
-  <input id="chat_content" autocomplete="off"/>
-  <button onclick="gochat();">Send</button>
-</form>
-
-
-	<!-- ==============================================
-	HeaderSection
-	=============================================== -->
-	<jsp:include page="/WEB-INF/views/circle-header.jsp"></jsp:include>
-
+  
 	 <!-- ==============================================
 	 Modal Section
 	 =============================================== -->
@@ -165,12 +143,12 @@
 					<c:set var="userid" value="<%=vo.getId() %>"></c:set>
 					<c:forEach var="chatvo" items="<%=select_chat %>">
 						<li>
-						<div class="user-message-details" id="${(userid eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }" onclick="change_chatroom(this.id);">
+						<div class="user-message-details" id="${(chatvo eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }" onclick="change_chatroom(this.id);">
 						 <div class="user-message-img">
 						  <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${chatvo.s_id }/image.jpg" class="img-responsive img-circle" alt="">
 						 </div>
 						 <div class="user-message-info">
-						  <h4>${(userid eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }</h4>
+						  <h4>${(chatvo eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }</h4>
 						  <p>${chatvo.chat_content }</p>
 						  <span class="time-posted"><fmt:formatDate value="${chatvo.chat_regdate }"/></span>
 					     </div><!--/ user-message-info -->
@@ -208,123 +186,11 @@
 			</div><!--/ conversation-header -->
 			
 <script type="text/javascript">
-//ip바꿔주기
-
-var uid = "<%=vo.getId()%>";
-var oid = "otherId";
-
-//현재 대화중인 사람의 아이디
-var aotherid = "";
- 
-var nowRnum = 0;
-  
-const name = "<%=vo.getId() %>";
-const socket = io("http://172.30.1.35:3000");
-let room = ['room1', 'room2'];
-let num = 0;
-
-socket.emit('joinRoom', num, name);
-
-////////
-$('select').change(function() {
- // socket.emit('makeRoom', uid, oid);
-  socket.emit('leaveRoom', num, name);
-  num++;
-  num = num % 2;
-  socket.emit('joinRoom', num, name);
-});
-
-socket.on('leaveRoom', function(num, name){
-//  $('#messages').append($('<li>').text(name + '    leaved '
-//    + room[num] + ' :('));
-	console.log("leaveRoom");
-});
-
-socket.on('joinRoom', function(num, name){
-//  $('#messages').append($('<li>').text(name + '    joined '
-//    + room[num] + ':)'));
-	console.log("joinRoom");
-
-});
-////////
-
-
-$('form').submit(function() {
-//	  socket.emit('chat message', nowRnum, name, $('#chat_content').val());
-//	  $('#chat_content').val('');
-	  return false;
-});
-
-socket.on('chat message', function(name, msg) {
-  //$('#messages').append($('<li>').text(name + '  :  ' +
-  //  msg));
-  write(name,msg);
-});
-
-socket.on('passRoomNum', function(changedRname ,changedRnum){
-	console.log("changedRname : "+ changedRname);
-	console.log("changedRnum : "+ changedRnum);
-	console.log("-----nowRnum : "+ nowRnum);
-	nowRnum = changedRnum;
-	console.log("nowRnum : "+ nowRnum);
-	var rnum = changedRnum;
-    joinroom(rnum,name);
-
-	
-});
-
-
-function makeroom(id1, id2){
-	socket.emit('leaveRoom', nowRnum, name);
-    socket.emit('makeRoom', id1, id2);
-}
-
-function joinroom(rnum, nameid){
-	console.log("rnum : "+rnum);
-    socket.emit('joinRoom', rnum, nameid);
-
-}
-
-function gochat(){
-	//ip바꿔주기
-	var s_id = "<%=vo.getId()%>";
-	var g_id = aotherid;
-	var chat_content = $('#chat_content').val();
-	var chat_fyn = 'N';
-	
-	var data = {s_id : s_id, g_id : g_id, chat_content : chat_content};
-	
-	
-	$.ajax({
-		type:'post',
-		url:'insertchat.do',
-		data:JSON.stringify(data),
-		contentType:'application/json',
-		dataType:'json',
-		success:function(data){
-			console.log("success");
-		},
-		error:function(){
-			console.log("fail gochat()");
-		}
-		
-	});
-	
-	
-	socket.emit('chat message', nowRnum, name, $('#chat_content').val());
-	$('#chat_content').val('');
-	  
-	
-	  
-}
-
-
 	//목록 클릭시 그 상대방과 대화한 리스트 DB 에서 가져와 뿌리기
 	function change_chatroom(anotheruser){
 		
 		var userid = "<%=vo.getId() %>";
 		var otherid = anotheruser;
-		aotherid = anotheruser;
 		console.log('otherid : '+otherid);
 
 		$.ajax({
@@ -337,14 +203,6 @@ function gochat(){
 			success : function(data){
 				console.log("success");	
 				
-			    //socket.emit('makeRoom', userid, otherid);
-			    
-			    arrayid = [userid, otherid];
-			    arrayid.sort();
-			    console.log("sort() 후 arrayid : "+arrayid) 
-
-			    makeroom(arrayid[0], arrayid[1]);
-			    
 				var chatlist = data.chatlist;
 				console.log(chatlist)
 				
@@ -397,25 +255,12 @@ function gochat(){
 		
 		
 		
-		
 	}
-  
-  function write(name, msg){
-	var tagset = "";
+
 	
-	tagset = "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message'><p>"
-							+msg+"</p></div><span>"+name+
-							"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
-							+"ADMIN"+"/image.jpg' class='img-responsive img-circle'></div></div>";
-		
-	$("#nchat_space").append(tagset);
-	$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
-  }
-  
-  
-  
-</script>
-			
+
+
+</script>						
 			<div class="conversation-container" id="nchat_space">
 <!-- 채팅이 들어갈 곳 -->
 

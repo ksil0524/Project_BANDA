@@ -10,6 +10,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +21,7 @@
 	<!-- 
 	 ip바꿔주기
 	 -->
-	<script src="http://172.30.1.35:3000/socket.io/socket.io.js"></script>
+	<script src="http://192.168.0.9:3000/socket.io/socket.io.js"></script>
 	
 
 
@@ -109,10 +111,6 @@
 
 
 <ul id="messages"></ul>
-<form name="chatform" method="post">
-  <input id="chat_content" autocomplete="off"/>
-  <button onclick="gochat();">Send</button>
-</form>
 
 
 	<!-- ==============================================
@@ -145,7 +143,7 @@
 			</div><!--/ message-header-->
 								
 			<div class="messages-list">
-			  <ul>
+			  <ul id="chat_ul">
 <!--  -->
 			<c:choose>
 				<c:when test="<%=select_chat.isEmpty() %>">
@@ -171,7 +169,7 @@
 						 </div>
 						 <div class="user-message-info">
 						  <h4>${(userid eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }</h4>
-						  <p>${chatvo.chat_content }</p>
+						  <p id="${(userid eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }_ptag">${(fn:length(chatvo.chat_content)<6) ? chatvo.chat_content : fn:substring(chatvo.chat_content,0,5)}...</p>
 						  <span class="time-posted"><fmt:formatDate value="${chatvo.chat_regdate }"/></span>
 					     </div><!--/ user-message-info -->
 					    </div><!--/ user-message-details -->
@@ -193,9 +191,9 @@
 			<div class="conversation-header">
 			 <div class="user-message-details">
 			  <div class="user-message-img" style="margin: 0 0 2% 0;">
-			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" class="img-responsive img-circle" id="nchat_img">
+			   <img src="" class="img-responsive img-circle" id="nchat_img">
 			  </div>
-			  <div class="user-message-info" style="padding-left:2%; padding-top: 2%">
+			  <div class="user-message-info" id="nchat_namediv" style="padding-left:30%; padding-top: 2%">
 			   <h4 id="nchat_name">Please choice chat room</h4>
 			   <!-- 
 			    <p>Online</p>
@@ -219,7 +217,7 @@ var aotherid = "";
 var nowRnum = 0;
   
 const name = "<%=vo.getId() %>";
-const socket = io("http://172.30.1.35:3000");
+const socket = io("http://192.168.0.9:3000");
 let room = ['room1', 'room2'];
 let num = 0;
 
@@ -248,31 +246,57 @@ socket.on('joinRoom', function(num, name){
 });
 ////////
 
-
-$('form').submit(function() {
-//	  socket.emit('chat message', nowRnum, name, $('#chat_content').val());
-//	  $('#chat_content').val('');
+$('#chatform').submit(function() {
 	  return false;
 });
+
 
 socket.on('chat message', function(name, msg) {
   //$('#messages').append($('<li>').text(name + '  :  ' +
   //  msg));
+  console.log("now aotherid : "+aotherid);
   write(name,msg);
+  change_li(name, msg);
 });
 
 socket.on('passRoomNum', function(changedRname ,changedRnum){
-	console.log("changedRname : "+ changedRname);
-	console.log("changedRnum : "+ changedRnum);
-	console.log("-----nowRnum : "+ nowRnum);
 	nowRnum = changedRnum;
-	console.log("nowRnum : "+ nowRnum);
 	var rnum = changedRnum;
     joinroom(rnum,name);
-
-	
 });
 
+socket.on('ontext', function(userid, textY){
+	var yn = textY;
+	var nowuser = "<%=vo.getId()%>";
+	if(nowuser != userid && yn == 'y'){
+		var textloadingtag = $("#textloading").val();
+		if(textloadingtag == null){
+			var tag = "<div class='convo-box convo-left' id='textloadingdiv'><input type='hidden' value='y' id='textloading'>"
+						+"<div class='convo-area convo-left'><div class='convo-message'>"
+						+"<img alt='chationg' src='<%=request.getContextPath() %>/resources/images/filemanager/chat/chating.gif' height='60px;' style='border-radius: 70%;'></div><span></span>"
+			  			+"</div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
+			  			+aotherid+"/image.jpg' alt='' class='img-responsive img-circle'>"
+			  			+"</div></div></div>";
+			$("#nchat_space").append(tag);
+			$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
+		}else if(textloadingtag == 'y'){
+			console.log("이미 있어염")
+		}
+	}
+})
+
+socket.on('offtext', function(userid, textN){
+	var yn = textN;
+	var nowuser = "<%=vo.getId()%>";
+	if(nowuser != userid && yn == 'y'){
+		var textloadingtag = $("#textloading").val();
+		if(textloadingtag == null){
+			console.log("이미 없어염")
+		}else if(textloadingtag == 'y'){
+			$("#textloadingdiv").remove();
+		}
+	}
+})
 
 function makeroom(id1, id2){
 	socket.emit('leaveRoom', nowRnum, name);
@@ -285,6 +309,26 @@ function joinroom(rnum, nameid){
 
 }
 
+function ontexty(nowuserid, textY){
+	socket.emit('ontext', nowRnum, nowuserid, textY);
+}
+
+function offtextn(nowuserid, textN){
+	socket.emit('offtext', nowRnum, nowuserid, textN);
+}
+
+function change_li(userid, msg){
+	var id = "#"+userid;
+	var ptagid = "#"+userid+"_ptag";
+	
+	$(ptagid).text(msg.substring(0,5)+"...");
+	
+	var litag = $(id).closest("li");
+	$("#chat_ul").children().eq(0).before(litag);
+	
+}
+
+
 function gochat(){
 	//ip바꿔주기
 	var s_id = "<%=vo.getId()%>";
@@ -293,7 +337,6 @@ function gochat(){
 	var chat_fyn = 'N';
 	
 	var data = {s_id : s_id, g_id : g_id, chat_content : chat_content};
-	
 	
 	$.ajax({
 		type:'post',
@@ -310,12 +353,11 @@ function gochat(){
 		
 	});
 	
-	
 	socket.emit('chat message', nowRnum, name, $('#chat_content').val());
 	$('#chat_content').val('');
-	  
 	
-	  
+	change_li(g_id, chat_content);
+	    
 }
 
 
@@ -325,7 +367,7 @@ function gochat(){
 		var userid = "<%=vo.getId() %>";
 		var otherid = anotheruser;
 		aotherid = anotheruser;
-		console.log('otherid : '+otherid);
+		//console.log('otherid : '+otherid);
 
 		$.ajax({
 			
@@ -346,9 +388,10 @@ function gochat(){
 			    makeroom(arrayid[0], arrayid[1]);
 			    
 				var chatlist = data.chatlist;
-				console.log(chatlist)
+				//console.log(chatlist)
 				
 				//사진, 이름 바꾸기
+				$("#nchat_namediv").css('padding-left','2%');
 				var srctag = "<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"+otherid+"/image.jpg";
 				$("#nchat_img").attr("src",srctag);
 				$("#nchat_name").html("");
@@ -365,29 +408,22 @@ function gochat(){
 					
 					if(chatvo.s_id == userid){
 						
-						tagset += "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message'><p>"
+						tagset += "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
 									+chatvo.chat_content+"</p></div><span>"+getFormatDate(new Date(chatvo.chat_regdate))+
 									"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
 									+chatvo.s_id+"/image.jpg' class='img-responsive img-circle'></div></div>";
 									
 					}else{
-						
 						tagset += "<div class='convo-box convo-left'><div class='convo-area convo-left'><div class='convo-message'><p>"
 						  			+chatvo.chat_content+"</p></div><span>"
 						   			+getFormatDate(new Date(chatvo.chat_regdate))
 						  			+"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
 									+chatvo.s_id+"/image.jpg' class='img-responsive img-circle'></div></div>";
-									
 					}
-					
 				}
-				
-				
 				
 				$("#nchat_space").append(tagset);
 				$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
-				
-
 			},
 			error : function(){
 				console.log("fail");
@@ -402,18 +438,15 @@ function gochat(){
   
   function write(name, msg){
 	var tagset = "";
-	
-	tagset = "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message'><p>"
-							+msg+"</p></div><span>"+name+
+	var date = new Date();
+	tagset = "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
+							+msg+"</p></div><span>"+date.getHours()+":"+date.getMinutes()+
 							"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
-							+"ADMIN"+"/image.jpg' class='img-responsive img-circle'></div></div>";
+							+name+"/image.jpg' class='img-responsive img-circle'></div></div>";
 		
 	$("#nchat_space").append(tagset);
 	$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
   }
-  
-  
-  
 </script>
 			
 			<div class="conversation-container" id="nchat_space">
@@ -430,46 +463,85 @@ function gochat(){
 			 <div class="convo-box pull-right">
 			  <div class="convo-area pull-right">
 			   <div class="convo-message">
-				<p> zㅋㅋㅋㅋㅋㅋ내가 말한 내용스</p>
 			   </div><!--/ convo-message-->
-			   <span>채팅 시간</span>
 			  </div><!--/ convo-area -->
 			  <div class="convo-img">
-			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/2.jpg" alt="" class="img-responsive img-circle">
 			  </div><!--/ convo-img -->
 			 </div><!--/ convo-box -->
 
 
 		<!-- 왼쪽 (상대방이 보낸 메세지) -->
 		
-			 <div class="convo-box convo-left">
+			 <div class="convo-box convo-left" >
+			 <input type="hidden" value="y" id="textloading">
 			  <div class="convo-area convo-left">
 			   <div class="convo-message">
-				<p>상대방이 말한 내용스</p>
-			   </div><!--/ convo-message-->
-			   <span>채팅 시간</span>
-			  </div><!--/ convo-area -->
+			   </div>
+			  </div>
 			  <div class="convo-img">
-			   <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/6.jpg" alt="" class="img-responsive img-circle">
-			  </div><!--/ convo-img -->
-			 </div><!--/ convo-box -->
+			  </div>
+			 </div>
+			</div>
+			
 
-
-
+			
 
 <!--  -->
-									
-			</div><!--/ conversation-container -->
-            <div class="type_messages">  
-             <div class="input-field">
-              <textarea placeholder="Type something &amp; press enter"></textarea>
-			  <ul class="imoji">
-			   <li><a href="#"><i class="fa fa-smile"></i></a></li>
-			   <li><a href="#"><i class="fa fa-image"></i></a></li>
-			   <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
-			  </ul><!--/ imoji -->
-             </div><!--/ input-field -->
-            </div><!--/ type_messages -->
+<script type="text/javascript">
+$(function(){
+	$('#chatform').submit(function() {
+		  return false;
+	});
+	
+	$("#chat_content").on('keypress',function(event){
+        
+		if(event.keyCode ==13){
+            gochat();
+        	$('#chat_content').val('');
+        	return false;
+        }
+		
+    });
+	
+	$("#chat_content").on('keyup',function(event){
+		
+		var textvalue = $("#chat_content").val();
+		var nowuserid = "<%=vo.getId()%>";
+		
+		if(textvalue != ''){
+			var textY = 'y';
+			ontexty(nowuserid, textY);
+		}else if(textvalue == ''){
+			var textN = 'n';
+			offtextn(nowuserid, textN);
+		}
+		
+	});
+	
+	
+})
+
+</script>
+            <form name="chatform" id="chatform" method="post">
+	            <div class="type_messages">  
+	             <div class="input-field">
+	             <!-- 
+					  <input id="chat_content" autocomplete="off"  placeholder="Type something &amp; press enter"/>
+	              -->	             
+	              <textarea id="chat_content" placeholder="Type something &amp; press enter"></textarea>
+				  <ul class="imoji">
+				  	<li>
+	  					<button onclick="gochat();">Send</button>				  	
+				  	</li>
+				  	<!-- 
+					   <li><a href="#"><i class="fa fa-smile"></i></a></li>
+					   <li><a href="#"><i class="fa fa-image"></i></a></li>
+					   <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
+				  	 -->
+				  </ul><!--/ imoji -->
+	             </div><!--/ input-field -->
+	            </div><!--/ type_messages -->
+			</form>          
 								
            </div><!--main-conversation-box end-->
 		  </div><!--/ col-lg-8 -->

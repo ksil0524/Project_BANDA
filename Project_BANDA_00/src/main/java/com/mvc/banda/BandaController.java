@@ -580,7 +580,12 @@ public class BandaController {
 		System.out.println(accvo);
 		System.out.println("chat_list : "+chat_list);
 		
+		//검색할 수 있게 존재하는 모든 아이디 가져오기
+		List<String> id_list = biz.mychat_searchidlist();
+		System.out.println(id_list);
+		
 		session.setAttribute("vo", accvo);
+		session.setAttribute("id_list", id_list);
 		
 		return "temp/myChat";
 	}

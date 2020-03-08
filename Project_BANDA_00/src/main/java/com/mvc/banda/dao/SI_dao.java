@@ -386,6 +386,23 @@ public class SI_dao {
 		
 		return res;
 	}
+
+	public List<String> select_allid() {
+		
+		List<String> res = null;
+		
+		try {
+			
+			res = sqlSession.selectList(NAMESPACE+"select_allid");	
+			
+		} catch (Exception e) {
+			System.out.println("[error] : select_allid");
+			e.printStackTrace();
+		}
+		
+
+		return res;
+	}
 	
 	
 	

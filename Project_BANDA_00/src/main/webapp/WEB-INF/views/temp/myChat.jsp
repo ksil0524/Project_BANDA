@@ -11,44 +11,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
-
-	<!-- 
-	 ip바꿔주기
-	 -->
-	<script src="http://192.168.0.9:3000/socket.io/socket.io.js"></script>
-	
-
-
-
-
-	<!-- ==============================================
-	Scripts
-	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-	<script type="text/javascript">
-	
-	function getFormatDate(date){
-	    var year = date.getFullYear();              //yyyy
-	    var month = (1 + date.getMonth());          //M
-	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-	    var day = date.getDate();                   //d
-	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    return  year + '-' + month + '-' + day;
-	}
-	
-	</script>
 
 <%
 	AccountVo vo = (AccountVo)session.getAttribute("vo");
+	List<String> id_list = (ArrayList<String>)session.getAttribute("id_list");	
+
 
 	List<ChatVo> vo_chatlist = vo.getChat_list();
 	
@@ -99,6 +71,39 @@
 	}
 	
 %>
+
+	<link rel="stylesheet"href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+
+	<!-- 
+	 ip바꿔주기
+	 -->
+	<script src="http://192.168.137.1:3000/socket.io/socket.io.js"></script>
+
+
+	<!-- ==============================================
+	Scripts
+	=============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+	<script type="text/javascript">
+	
+	function getFormatDate(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;
+	}
+	
+	</script>
+	
+
+	
+
   	
 	
 	
@@ -136,8 +141,8 @@
 			 </div><!--/ message-title-->
              <div class="search-area">  
               <div class="input-field">
-               <input placeholder="Search" type="text">
-               <i class="fa fa-search"></i>
+               <input placeholder="Search" type="text" id="searchid">
+               <i class="fa fa-search" onclick="search();"></i>
               </div>
              </div><!--/ search-area-->			 
 			</div><!--/ message-header-->
@@ -217,8 +222,8 @@ var aotherid = "";
 var nowRnum = 0;
   
 const name = "<%=vo.getId() %>";
-const socket = io("http://192.168.0.9:3000");
-let room = ['room1', 'room2'];
+const socket = io("http://192.168.137.1:3000");
+let room = ['room0'];
 let num = 0;
 
 socket.emit('joinRoom', num, name);
@@ -319,15 +324,32 @@ function offtextn(nowuserid, textN){
 
 function change_li(userid, msg){
 	var id = "#"+userid;
-	var ptagid = "#"+userid+"_ptag";
+	//해당하는 채팅 리스트가 있는지 확인
+	var fyn = $(id).length;
+	console.log(fyn);
 	
-	$(ptagid).text(msg.substring(0,5)+"...");
-	
-	var litag = $(id).closest("li");
-	$("#chat_ul").children().eq(0).before(litag);
-	
-}
+	if(fyn == 0 && userid != "<%=vo.getId()%>"){
+		
+		var tag = "<li><div class='user-message-details' id='"+ userid +"' onclick='change_chatroom(this.id);'><div class='user-message-img'>"
+				  +"<img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"+userid+"/image.jpg' class='img-responsive img-circle' alt=''>"
+		 	  	  +"</div><div class='user-message-info'><h4>"+userid
+				  +"</h4><p id='"+userid+"_ptag'>"+msg+"</p><span class='time-posted'></span></div></div></li>";
+		
+		
+		//$("#chat_ul").append(tag);
+		$("#chat_ul").children().eq(0).before(tag);
 
+	}else{
+	
+		var ptagid = "#"+userid+"_ptag";
+		$(ptagid).text(msg.substring(0,5)+"...");
+		
+		//closest 가장 가까운 부모 태그
+		var litag = $(id).closest("li");
+		$("#chat_ul").children().eq(0).before(litag);
+
+	}
+}
 
 function gochat(){
 	//ip바꿔주기
@@ -357,86 +379,90 @@ function gochat(){
 	$('#chat_content').val('');
 	
 	change_li(g_id, chat_content);
-	    
+	
 }
 
-
 	//목록 클릭시 그 상대방과 대화한 리스트 DB 에서 가져와 뿌리기
-	function change_chatroom(anotheruser){
-		
-		var userid = "<%=vo.getId() %>";
-		var otherid = anotheruser;
-		aotherid = anotheruser;
-		//console.log('otherid : '+otherid);
-
+function change_chatroom(anotheruser){
+	
+	var userid = "<%=vo.getId() %>";
+	var otherid = anotheruser;
+	aotherid = anotheruser;
+	//console.log('otherid : '+otherid);
 		$.ajax({
+		
+		type:'post',
+		url:'change_chatroom.do',
+		data:JSON.stringify(otherid),
+		contentType:'application/json',
+		dataType:'json',
+		success : function(data){
+			console.log("success");	
 			
-			type:'post',
-			url:'change_chatroom.do',
-			data:JSON.stringify(otherid),
-			contentType:'application/json',
-			dataType:'json',
-			success : function(data){
-				console.log("success");	
-				
-			    //socket.emit('makeRoom', userid, otherid);
-			    
-			    arrayid = [userid, otherid];
-			    arrayid.sort();
-			    console.log("sort() 후 arrayid : "+arrayid) 
-
+		    //socket.emit('makeRoom', userid, otherid);
+		    
+		    arrayid = [userid, otherid];
+		    arrayid.sort();
+		    console.log("sort() 후 arrayid : "+arrayid) 
 			    makeroom(arrayid[0], arrayid[1]);
-			    
-				var chatlist = data.chatlist;
-				//console.log(chatlist)
+		    
+			var chatlist = data.chatlist;
+			//console.log(chatlist)
+			
+			//사진, 이름 바꾸기
+			$("#nchat_namediv").css('padding-left','2%');
+			var srctag = "<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"+otherid+"/image.jpg";
+			$("#nchat_img").attr("src",srctag);
+			$("#nchat_name").html("");
+			$("#nchat_name").html(otherid);
+			
+			//채팅뿌려주기
+			$("#nchat_space").html("");
+			var tagset = "";
+			
+			if(chatlist == null){
 				
-				//사진, 이름 바꾸기
-				$("#nchat_namediv").css('padding-left','2%');
-				var srctag = "<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"+otherid+"/image.jpg";
-				$("#nchat_img").attr("src",srctag);
-				$("#nchat_name").html("");
-				$("#nchat_name").html(otherid);
+				tagset += "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
+							+"</p></div><span>"
+							+"</span></div><div class='convo-img'></div></div>";
+							
+				tagset += "<div class='convo-box convo-left'><div class='convo-area convo-left'><div class='convo-message'><p>"
+		  					+"</p></div><span>"
+		   					+"</span></div><div class='convo-img'></div></div>";
 				
 				
-				//채팅뿌려주기
-				$("#nchat_space").html("");
-				var tagset = "";
+			}else{
 				
 				for(var i=0; i<chatlist.length ; i++){
 					
 					var chatvo = chatlist[i	];
 					
 					if(chatvo.s_id == userid){
-						
 						tagset += "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
 									+chatvo.chat_content+"</p></div><span>"+getFormatDate(new Date(chatvo.chat_regdate))+
 									"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
 									+chatvo.s_id+"/image.jpg' class='img-responsive img-circle'></div></div>";
-									
 					}else{
 						tagset += "<div class='convo-box convo-left'><div class='convo-area convo-left'><div class='convo-message'><p>"
 						  			+chatvo.chat_content+"</p></div><span>"
 						   			+getFormatDate(new Date(chatvo.chat_regdate))
-						  			+"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
+							  			+"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
 									+chatvo.s_id+"/image.jpg' class='img-responsive img-circle'></div></div>";
 					}
 				}
-				
-				$("#nchat_space").append(tagset);
-				$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
-			},
-			error : function(){
-				console.log("fail");
 			}
 			
-		});
-		
-		
-		
-		
-	}
+			$("#nchat_space").append(tagset);
+			$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
+		},
+		error : function(){
+			console.log("fail");
+		}
+	});		
+	
+}
   
-  function write(name, msg){
+function write(name, msg){
 	var tagset = "";
 	var date = new Date();
 	tagset = "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
@@ -446,20 +472,16 @@ function gochat(){
 		
 	$("#nchat_space").append(tagset);
 	$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);
-  }
+}
+
 </script>
 			
 			<div class="conversation-container" id="nchat_space">
 <!-- 채팅이 들어갈 곳 -->
 
 
-
-
-
-
 <!-- 채팅 내용 부분  -->
 		<!-- 오른쪽(내가 보낸 메세지) -->
-		
 			 <div class="convo-box pull-right">
 			  <div class="convo-area pull-right">
 			   <div class="convo-message">
@@ -471,7 +493,6 @@ function gochat(){
 
 
 		<!-- 왼쪽 (상대방이 보낸 메세지) -->
-		
 			 <div class="convo-box convo-left" >
 			 <input type="hidden" value="y" id="textloading">
 			  <div class="convo-area convo-left">
@@ -482,13 +503,21 @@ function gochat(){
 			  </div>
 			 </div>
 			</div>
-			
-
-			
 
 <!--  -->
 <script type="text/javascript">
 $(function(){
+	
+	var id_list = [];
+	
+	<%
+		for(int i=0; i<id_list.size() ; i++){	
+	%>
+		id_list.push("<%=id_list.get(i)%>");
+	<%		
+		}
+	%>    	
+	
 	$('#chatform').submit(function() {
 		  return false;
 	});
@@ -518,6 +547,33 @@ $(function(){
 		
 	});
 	
+	//자동완성 기능
+	// 글자 순서대로 검색: matchContains: true / 입력한 글자가 들어간 모든 검색어를 보여주기: matchContains: false
+	$("#searchid").autocomplete({
+        source : id_list,    // source 는 자동 완성 대상
+		matchContains: true,
+		select : function(event, ui) {    //아이템 선택시
+            console.log(ui.item.value);
+			//선택시 채팅창 바꾸기	
+			var newuserid = ui.item.value;
+            change_chatroom(newuserid);
+        },
+        focus : function(event, ui) {    //포커스 가면
+            return false;//한글 에러 잡기용도로 사용됨
+        },
+        minLength: 1,// 최소 글자수
+        autoFocus: true, //첫번째 항목 자동 포커스 기본값 false
+        classes: {    //잘 모르겠음
+            "ui-autocomplete": "highlight"
+        },
+        delay: 500,    //검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간(ms)
+						//disabled: true, //자동완성 기능 끄기
+        position: { my : "right top", at: "right bottom" },    //잘 모르겠음
+        close : function(event){    //자동완성창 닫아질때 호출
+//            console.log(event);
+        	$("#searchid").val('');
+        }
+	});
 	
 })
 
@@ -556,6 +612,9 @@ $(function(){
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 
+
+    
+    
     
 	
 	<!-- ==============================================
@@ -567,6 +626,7 @@ $(function(){
 	<!-- main 외  페이지 전용 -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Auto Script -->
+	
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
   </body>

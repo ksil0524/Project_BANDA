@@ -104,6 +104,10 @@
 		INSERT INTO CHAT VALUES(CHAT_SEQ.NEXTVAL, #{s_id}, #{g_id}, #{chat_content}, 'N', SYSDATE)
 	</insert>
 	
+	<select id="select_allid" resultType="String">
+		SELECT ID FROM ACCOUNT ORDER BY ID ASC
+	</select>
+	
 </mapper>
 
 

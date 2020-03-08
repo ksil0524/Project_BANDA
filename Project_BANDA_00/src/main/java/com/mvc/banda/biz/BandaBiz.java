@@ -123,6 +123,10 @@ public class BandaBiz {
 		return si_dao.insert_chat(vo);
 	}
 
+	public List<String> mychat_searchidlist() {
+		return si_dao.select_allid();
+	}
+
 	
 	// < 김성일 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -413,6 +417,7 @@ public class BandaBiz {
 	public int boardComDelete(int com_no) {
 		return nk_dao.boardComDelete(com_no);
 	}
+
 
 
 

@@ -742,6 +742,115 @@ public class BandaController {
 	}
 	
 	
+
+@RequestMapping(value = "/google.do", method = {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public Map<String,Boolean> googlelogin(HttpServletRequest request ,@RequestBody AccountVo vo) throws Exception {
+		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
+		System.out.println("aasldkfjalskdf jalsdk jf");
+		Boolean chk = true;
+	      //1. code이용하여 access token 받기
+	      //2. access token이용하여 사용자 profile 정보 가져오기
+	      //4. 존재하는 경우 로그인, 아닌경우 계정 생성
+	      //3. db에 해당 유저 존재하는지 체크
+	    System.out.println(vo.getId());
+		String id = vo.getId();
+	      
+	     
+
+		
+	      
+	      AccountVo avo = new AccountVo();
+	      avo.setId(id);
+	      
+	      AccountVo real_vo = biz.jy_login(avo);
+	      
+	      //AccountVo avo2 = null;
+	      
+	      if(real_vo == null) {
+	         
+	         System.out.println("아이디 없음");
+	         
+	         String pwd = passwordEncoder.encode("1234");
+	         
+	         real_vo = new AccountVo(id, pwd, id, "010-1111-1111");
+	         
+	         int res = biz.naver_register(real_vo);
+	         
+	         if(res > 0 ) {
+	            System.out.println("구글로 회원가입 성공");
+	            
+	            session.setAttribute("vo", real_vo);
+	            session.setMaxInactiveInterval(60*60);
+	         } else {
+	            System.out.println("구글로 회원가입 실패");
+	         }
+	         
+	      } else {
+	         
+	         System.out.println(real_vo+"아이디 존재");
+	         session.setAttribute("vo", real_vo);
+	         session.setMaxInactiveInterval(60*60);
+	         
+	      }
+	      
+	 
+	      
+	      String path = request.getSession().getServletContext()
+	               .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + real_vo.getId());
+
+	         File Folder = new File(path);
+
+	         // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+	         if (!Folder.exists()) {
+	            try {
+	               Folder.mkdir(); // 폴더 생성합니다.
+	               System.out.println("폴더가 생성되었습니다.");
+	            } catch (Exception e) {
+	               e.getStackTrace();
+	            }
+	         } else {
+	            System.out.println("이미 폴더가 생성되어 있습니다.");
+	         }
+
+	         // 원본 파일경로
+	         String oriFilePath = request.getSession().getServletContext()
+	               .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	         // 복사될 파일경로
+	         String copyFilePath = path + "\\image.jpg";
+
+	         // 파일객체생성
+	         File oriFile = new File(oriFilePath);
+	         // 복사파일객체생성
+	         File copyFile = new File(copyFilePath);
+
+	         try {
+
+	            FileInputStream fis = new FileInputStream(oriFile); // 읽을파일
+	            FileOutputStream fos = new FileOutputStream(copyFile); // 복사할파일
+
+	            int fileByte = 0;
+	            // fis.read()가 -1 이면 파일을 다 읽은것
+	            while ((fileByte = fis.read()) != -1) {
+	               fos.write(fileByte);
+	            }
+	            // 자원사용종료
+	            fis.close();
+	            fos.close();
+
+	         } catch (FileNotFoundException e) {
+	            e.printStackTrace();
+	         } catch (IOException e) {
+	            e.printStackTrace();
+	         }
+	      
+	      resmap.put("chk", chk);
+	      return resmap;
+	}
+
+
+
+	
 	
 	// < 김재익 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

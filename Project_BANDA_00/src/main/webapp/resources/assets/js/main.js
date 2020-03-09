@@ -102,7 +102,6 @@ $("#id").blur(function(){
 		
 		isjoin++;
 		$("#id").val("");
-		//$("#id::-webkit-input-placeholder").css({"color" : "red"});
 		$("#id").attr("placeholder","id는 숫자,소문자 4~10자리만 입력가능합니다.");
 		$("#id").css({"font-size":"12px"})
 		return false;
@@ -123,10 +122,6 @@ $("#id").blur(function(){
 			
 			if(rres){
 				$("#id").val("");
-//				$("#id::-webkit-input-placeholder").css({"color" : "red"});
-//				$("#id::-moz-placeholder").css({"color" : "red"});
-//				$("#id:-ms-input-placeholder").css({"color" : "red"});
-//				$("#id:-moz-placeholder ").css({"color" : "red"});
 				$("#id").attr("placeholder","아이디가 중복되었습니다.");
 			}
 		}, 
@@ -149,7 +144,6 @@ $("#password").blur(function(){
 		
 		isjoin++;
 		$("#password").val("");
-		//$("#id::-webkit-input-placeholder").css({"color" : "red"});
 		$("#password").attr("placeholder","비밀번호는 숫자,소문자 4~10자리만 입력가능합니다.");
 		$("#password").css({"font-size":"10px"})
 		return false;
@@ -214,7 +208,7 @@ $("#phone").blur(function(){
 		isjoin++;
 		$("#phone").val("");
 		
-		$("#phone").attr("placeholder","000-0000-0000 형식으로 입력해주세요");
+		$("#phone").attr("placeholder","010-0000-0000 형식으로 입력해주세요");
 		$("#phone").css({"font-size":"10px"})
 		return false;
 	}
@@ -280,16 +274,9 @@ function joinChk(){
 		success : function(msg){
 			
 			if(msg.res){
-				alert("가입 성공")
-				$(".closeBtn").show();
-				$("#logincontent").show();
-				$("#header").toggleClass('show');
-				$("#content").hide();
-				$("#loginchk").css("display","none");
-				$("#phone").val("");
-				$("#id").val("");
-				$("#password").val("");
-				$("#email").val("");
+				alert("가입 완료되었습니다")
+			
+				
 				
 			}else{
 				alert("가입 실패")
@@ -298,7 +285,6 @@ function joinChk(){
 				$("#logincontent").hide();
 				$("#header").toggleClass('hide');
 				$("#content").hide();
-				$("#loginchk").css("display","none");
 			}
 			
 		}, 

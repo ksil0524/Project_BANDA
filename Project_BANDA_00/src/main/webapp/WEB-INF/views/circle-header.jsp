@@ -24,7 +24,7 @@
                                     <a class="circle github" href="${naver_url}" >
                                         <img src = "<%=request.getContextPath() %>/resources/images/naver.png" style = "width:23px;height:25px" id="naverlogo">
                                     </a>
-                                    <a id="google_login" class="circle google" href="#">
+                                    <a id="google_login" class="circle google" href="#" onclick="onSignIn();">
                                         <i class="fa fa-google-plus fa-fw"></i>
                                     </a>
                                     <a id="facebook_login" class="circle facebook" href="#">
@@ -153,8 +153,86 @@
 					<a href="#" class="button hidden"><span>Let's Go</span></a>
 				</div>
 			</header>
-			
+			<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 			<script>
+			
+			/////////////구글 로그인 부분
+			
+function init(){
+	console.log('init');
+	gapi.load('auth2',function(){
+		console.log('auth2');
+		window.gauth = gapi.auth2.init({
+			client_id:'846381888752-6m25mk1r1djr3grme9po411b9mh45bev.apps.googleusercontent.com'
+		})
+		
+		gauth.then(function(){
+			console.log('sucusse');
+			
+		},function(){
+			console.log('fail');
+		});
+	});
+}
+
+function onSignIn() {
+		console.log('askjfalksdjflaskjflkjs')
+		gauth.signIn();
+		console.log(gauth.isSignedIn.get());
+		if(gauth.isSignedIn.get()){
+			console.log('logined');
+			var profile = gauth.currentUser.get().getBasicProfile();
+			console.log(profile);
+			var id = profile.getEmail();   		
+
+			console.log(id);
+			} else {
+			console.log('logouted');
+			}
+			 var login_set = {
+							"id":id		
+					};
+					
+					$.ajax({
+						
+						url : "google.do",
+						type : "post",
+						data : JSON.stringify(login_set),
+						contentType: "application/json",
+						dataType:"json",
+						success : function(msg){
+							console.log(msg.chk);
+							if(msg.chk){
+								isLogin = 1;
+								$(".closeBtn").hide();
+								$("#logincontent").hide();
+								$("#header").toggleClass('hide');
+								$("#content").hide();
+								$("#error_login").css("display","none");
+								
+								location.href = "index.jsp";
+								
+								} else {
+									
+									$("#error_login").css("display","block");
+									
+									return;
+								}
+								
+						},
+						error:function(request,status,error){
+							
+							alert("통신실패");
+							alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+						}
+						
+						
+					});
+}
+			
+			
+//////////////////////////////////////			
 			
 			
 			function idFind(){

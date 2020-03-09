@@ -78,7 +78,7 @@
 	<!-- 
 	 ip바꿔주기
 	 -->
-	<script src="http://192.168.137.1:3000/socket.io/socket.io.js"></script>
+	<script src="http://192.168.130.222:3000/socket.io/socket.io.js"></script>
 
 
 	<!-- ==============================================
@@ -222,7 +222,7 @@ var aotherid = "";
 var nowRnum = 0;
   
 const name = "<%=vo.getId() %>";
-const socket = io("http://192.168.137.1:3000");
+const socket = io("http://192.168.130.222:3000");
 let room = ['room0'];
 let num = 0;
 
@@ -264,6 +264,16 @@ socket.on('chat message', function(name, msg) {
   change_li(name, msg);
 });
 
+socket.on('change_litag', function(s_id, g_id, msg){
+	
+	var nowuser = "<%=vo.getId()%>";
+	
+	if(g_id == nowuser){
+		change_li(s_id, msg);
+	}
+	
+});
+
 socket.on('passRoomNum', function(changedRname ,changedRnum){
 	nowRnum = changedRnum;
 	var rnum = changedRnum;
@@ -293,15 +303,18 @@ socket.on('ontext', function(userid, textY){
 socket.on('offtext', function(userid, textN){
 	var yn = textN;
 	var nowuser = "<%=vo.getId()%>";
-	if(nowuser != userid && yn == 'y'){
+	if(nowuser != userid && yn == 'n'){
 		var textloadingtag = $("#textloading").val();
 		if(textloadingtag == null){
 			console.log("이미 없어염")
 		}else if(textloadingtag == 'y'){
+			console.log("삭제!");
 			$("#textloadingdiv").remove();
 		}
 	}
 })
+
+
 
 function makeroom(id1, id2){
 	socket.emit('leaveRoom', nowRnum, name);
@@ -326,7 +339,7 @@ function change_li(userid, msg){
 	var id = "#"+userid;
 	//해당하는 채팅 리스트가 있는지 확인
 	var fyn = $(id).length;
-	console.log(fyn);
+	console.log("fyn : "+fyn);
 	
 	if(fyn == 0 && userid != "<%=vo.getId()%>"){
 		
@@ -378,6 +391,7 @@ function gochat(){
 	socket.emit('chat message', nowRnum, name, $('#chat_content').val());
 	$('#chat_content').val('');
 	
+	socket.emit('change_litag', s_id, g_id, chat_content);
 	change_li(g_id, chat_content);
 	
 }
@@ -465,10 +479,21 @@ function change_chatroom(anotheruser){
 function write(name, msg){
 	var tagset = "";
 	var date = new Date();
-	tagset = "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
-							+msg+"</p></div><span>"+date.getHours()+":"+date.getMinutes()+
-							"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
-							+name+"/image.jpg' class='img-responsive img-circle'></div></div>";
+	
+	var userid = "<%=vo.getId()%>";
+	
+	if(name == userid){
+		tagset = "<div class='convo-box pull-right'><div class='convo-area pull-right'><div class='convo-message' style='float:right;'><p style='padding:10px 10px 10px 10px; width:80%; text-align:center;'>"
+								+msg+"</p></div><span>"+date.getHours()+":"+date.getMinutes()+
+								"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
+								+name+"/image.jpg' class='img-responsive img-circle'></div></div>";		
+	}else{
+		tagset = "<div class='convo-box convo-left'><div class='convo-area convo-left'><div class='convo-message'><p>"
+  				+msg+"</p></div><span>"
+   				+date.getHours()+":"+date.getMinutes()
+	  			+"</span></div><div class='convo-img'><img src='<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/"
+				+name+"/image.jpg' class='img-responsive img-circle'></div></div>";
+	}
 		
 	$("#nchat_space").append(tagset);
 	$("#nchat_space").scrollTop($("#nchat_space")[0].scrollHeight);

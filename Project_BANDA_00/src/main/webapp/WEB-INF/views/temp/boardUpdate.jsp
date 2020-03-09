@@ -86,9 +86,10 @@
 		  	<span style="border-bottom: 1px;"><h3>글 수정</h3></span>
 		  </div><!--/ board-form-title -->
 		  <div class="board-form">
-			<form:form method="post" enctype="multipart/form-data" name="updateForm" id="updateForm" modelAttribute="BoardVo" action="boardUpdateRes.do">
+			<form method="post" name="updateForm" id="updateForm"  action="boardUpdateRes.do">
 <!-- 			  <input type="hidden" value="<accvo.getId() %>" name="id"/>	 -->
-			  <input type="hidden" value="test" name="id"/>
+			  <input type="hidden" value="${detail.board_no }" name="board_no"/>
+			  <input type="hidden" value="${detail.id }" name="id"/>
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
 			      <label for="boardtab">게시판선택</label>
@@ -133,10 +134,10 @@
 			  
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
-			      <label for="board_file">첨부파일</label>
+			      <!-- <label for="board_file">첨부파일</label>  -->
 			    </div>
 			    <div class="custom-file col-75 ">
-			      <input type="file" class="custom-file-input" id="board_file" name="boardfile">
+			      <input type="hidden" class="custom-file-input" id="board_file" name="boardfile" value="">
 			      <label class="custom-file-label" for="board_file"></label>
 			    </div>
 			  </div>
@@ -148,12 +149,12 @@
 			    <script type="text/javascript">
 				    function detailBtn() {
 						event.preventDefault();
-						location.href="detailTest.do?board_no=${detail.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}";		 
+						location.href="detailTest.do?board_no=${detail.board_no }";		 
 					 }	
 			    </script>
 			    <!-- 목록 스크립트 끝 -->    
 			  </div><!--/ row btns -->
-			  </form:form>
+			  </form>
 			  
 		  </div><!--/ board-form -->
           			        

@@ -1,3 +1,4 @@
+<%@page import="com.mvc.banda.model.vo.BoardVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.mvc.banda.model.vo.AccountVo"%>
@@ -11,6 +12,7 @@
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
 
 	<%
 		AccountVo accvo = (AccountVo)session.getAttribute("vo");
@@ -95,9 +97,13 @@
 		     <em class="fa fa-ellipsis-h"></em>
 			</button>
             <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+             <c:set var="boardtf" value="${(detail.id eq vo.id)?'y':'n' }"/>
+             <c:if test="${'y' eq boardtf }">
 	         <a class="dropdown-item" href="boardUpdateForm.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">수정</a>
 			 <a class="dropdown-item" href="boardDelete.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">삭제</a>
+             </c:if>
 			 <c:set var="noticeChk" value="${detail.board_nyn}"/>
+			 <c:if test='${("ADMIN" eq vo.id)?true:false}'>
 			 <c:choose>
 			   <c:when test="${fn:contains(noticeChk, 'Y')}">
 	         	 <a class="dropdown-item" href="boardSetNoticeCancel.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">공지해제</a>
@@ -106,9 +112,17 @@
 	         	 <a class="dropdown-item" href="boardSetNotice.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">공지등록</a>
 	           </c:when>
 	         </c:choose>    
+			 </c:if>
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->
+           <script type="text/javascript">
+           $(function(){
+        	   var a = '${detail.id}';
+        	   var b = '${vo.id}';
+        	   console.log(a+b);
+        	   });
+           </script>
            
            <!-- 게시글 정보 - 제목, 글쓴이, 작성일자, 조회수 -->
            <div class="detail-info" style="margin-top: 10px; margin-bottom: 10px; padding-left: 10px;">
@@ -282,7 +296,7 @@
     <!-- ==============================================
 	Scripts
 	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+	
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>

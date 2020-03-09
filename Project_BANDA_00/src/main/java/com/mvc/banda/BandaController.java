@@ -1840,13 +1840,15 @@ public class BandaController {
 	
 	//게시글 수정
 	@RequestMapping(value="/boardUpdateRes.do", method=RequestMethod.POST)
-	public String boardUpdate(HttpServletRequest request, Model model, BoardVo vo, MultipartFile updateboardfile) throws IllegalStateException, IOException {
+	public String boardUpdate(HttpServletRequest request, Model model, BoardVo vo) throws IllegalStateException, IOException {
+		System.out.println("aaaaaaaaaaaaa: "+vo);
 		int res = biz.boardUpdate(vo);
 		
-		//수정하려는 파일의 원본 이름을 가져옴
-		String fileName = updateboardfile.getOriginalFilename();
 		
-		if(fileName == "") {
+		//수정하려는 파일의 원본 이름을 가져옴
+//		String fileName = updateboardfile.getOriginalFilename();
+		
+/*		if(fileName == "") {
 			//기존 파일과 같을 경우
 			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
 		} else {			
@@ -1865,8 +1867,13 @@ public class BandaController {
 			
 			//원본파일(실제로 가지고온 파일 - updateBoardImg) 삭제
 			updateBoardImg.delete();
-			
-			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
+			*/
+//			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
+//		}
+		if(res>0) {			
+			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
+		} else {
+			return "redirect:boardUpdateForm.do?board_cate="+vo.getBoard_cate()+"&board_no="+vo.getBoard_no();
 		}
 	}
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -9,6 +10,11 @@
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("vo");
+	%>
+	
 	<!-- ==============================================
 	Styles
 	=============================================== -->
@@ -80,7 +86,7 @@
 		  <div class="board-form">
 			<form:form method="post" enctype="multipart/form-data" name="insertForm" modelAttribute="BoardVo" action="boardWriteRes.do">
 <!-- 			  <input type="hidden" value="<accvo.getId() %>" name="id"/>	 -->
-			  <input type="hidden" value="user06" name="id"/>
+ 			  <input type="hidden" value="<%=accvo.getId() %>" name="id"/>
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
 			      <label for="boardtab">게시판선택</label>

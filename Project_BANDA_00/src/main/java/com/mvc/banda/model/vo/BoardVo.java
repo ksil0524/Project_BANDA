@@ -131,6 +131,14 @@ public class BoardVo {
 	public void setComment_list(List<CommentVo> comment_list) {
 		this.comment_list = comment_list;
 	}
+
+	@Override
+	public String toString() {
+		return "BoardVo [board_no=" + board_no + ", board_cate=" + board_cate + ", id=" + id + ", board_title="
+				+ board_title + ", board_content=" + board_content + ", board_regdate=" + board_regdate + ", board_nyn="
+				+ board_nyn + ", board_file=" + board_file + ", board_hash=" + board_hash + ", comment_list="
+				+ comment_list + "]";
+	}
 	
 	
 }

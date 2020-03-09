@@ -1425,7 +1425,7 @@ public class BandaController {
 	//물물교환
 	@RequestMapping(value = "/listTestEx.do", method = RequestMethod.GET)
 	public String listEx(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
-		model.addAttribute("listExNotice", biz.selectListExNotice());
+		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
 		model.addAttribute("list", biz.pagingListEx(scri));
 		
 		PageMaker pageMaker = new PageMaker();
@@ -1480,24 +1480,28 @@ public class BandaController {
 
 	//게시글을 공지로 바꾸기
 	@RequestMapping(value="/boardSetNotice.do")
-	public String boardSetNotice(int board_no) {
-		int res = biz.boardSetNotice(board_no);
-		if(res>0) {
-			return "redirect:boardListFree_test.do";
+	public String boardSetNotice(BoardVo vo) {
+		int res = biz.boardSetNotice(vo.getBoard_no());
+		if(res>0 && vo.getBoard_cate().equals("SH")) {
+			return "redirect:listTestSh.do";
+		} else if(res>0 && vo.getBoard_cate().equals("EX")) {			
+			return "redirect:listTestEx.do";
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;
+			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
 		}
 	}
 
 	//공지글을 일반 게시글로 내리기
 	@RequestMapping(value="/boardSetNoticeCancel.do")
-	public String boardNoticeCancel(int board_no) {
-		int res = biz.boardNoticeCancel(board_no);
-		if(res>0) {
-			return "redirect:boardListFree_test.do";
+	public String boardNoticeCancel(BoardVo vo) {
+		int res = biz.boardNoticeCancel(vo.getBoard_no());
+		if(res>0 && vo.getBoard_cate().equals("SH")) {
+			return "redirect:listTestSh.do";
+		} else if(res>0 && vo.getBoard_cate().equals("EX")) {			
+			return "redirect:listTestEx.do";
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;
-		}		
+			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
+		}	
 	}
 	
 	//게시글 폼

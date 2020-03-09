@@ -92,8 +92,6 @@ public class NK_dao {
 			
 		return list;
 	}
-	
-	
 		
 	//무료나눔 공지 목록 불러오기
 	public List<BoardVo> selectListShNotice() {

@@ -97,7 +97,7 @@
 			      <label for="title">제목</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="title" name="board_title" placeholder="제목을 입력하세요">
+			      <input type="text" id="title" name="board_title" placeholder="제목을 입력하세요" required>
 			    </div>
 			  </div> 
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
@@ -105,7 +105,7 @@
 			      <label for="content">내용</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="content" name="board_content" placeholder="내용을 입력하세요" style="height:200px"></textarea>
+			      <textarea id="content" name="board_content" placeholder="내용을 입력하세요" style="height:200px" required></textarea>
 			    </div>
 			  </div>
 			  
@@ -140,7 +140,7 @@
 			      <label for="board_file">첨부파일</label>
 			    </div>
 			    <div class="custom-file col-75 ">
-			      <input type="file" class="custom-file-input" id="board_file" name="boardfile">
+			      <input type="file" class="custom-file-input" id="board_file" name="boardfile" required>
 			      <label class="custom-file-label" for="board_file"></label>
 			    </div>
 			  </div>

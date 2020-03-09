@@ -29,7 +29,7 @@ public class HJ_dao {
 	
 	public List<String> map_autocompleteAjax(HashMap<String, String> searchMap){
 		/*
-		 * 검색어 자동완성
+		 * 검색어 자동완성(header)
 		 * 
 		 * @author 주희진
 		 * @version 1.0
@@ -98,7 +98,7 @@ public class HJ_dao {
 	
 	public List<String> circleheader_autosearch(String keyword, String searchtype){
 		/*
-		 * 검색어 자동완성
+		 * Map 검색어 자동완성
 		 * 
 		 * @author 주희진
 		 * @version 1.0
@@ -125,6 +125,7 @@ public class HJ_dao {
 			/* tag인 경우, DB list에서 Tag 분리 */
 			if(!searchtype.equals("jh_searchid")) {
 				List<String> tmp = new ArrayList<String>();
+				
 				/* Tags #, :, 공백 제거 */
 				for(int i=0; i<list.size(); i++) {
 					if(searchtype.equals("jh_searchfeedhtag")) {
@@ -139,7 +140,9 @@ public class HJ_dao {
 						}else {
 							tag = tag.replace(":", "");
 						}
+						
 						tag = tag.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");
+						
 						if(tag.length()!=0 && tag.contains(keyword)) {
 							tmp.add(tag);
 						}
@@ -151,6 +154,7 @@ public class HJ_dao {
 				
 				/* Tags 개수 제한 */
 				List<String> tmplist = new ArrayList<String>();
+				
 				for(String st:distinct) {
 					if(cnt==5) {
 						break;
@@ -159,16 +163,14 @@ public class HJ_dao {
 						cnt++;
 					}
 				}
- 				list = new ArrayList<String>(tmplist);
 				
+ 				list = new ArrayList<String>(tmplist);
 			}
 			
 		} catch (Exception e) {
 			System.out.println("[[Error]] : circleheader_autosearch_Dao");
 			e.printStackTrace();
 		}
-		
 		return list;
 	}
-	
 }

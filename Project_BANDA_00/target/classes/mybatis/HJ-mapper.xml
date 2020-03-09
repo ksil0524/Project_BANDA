@@ -4,7 +4,7 @@
 
 <mapper namespace="HJ-mapper">
 
-	<!-- 자동검색  -->
+	<!-- Map 자동검색  -->
 	<select id="autocompleteSelect" parameterType="string" resultType="string">
 		
 		SELECT MAP_NAME 
@@ -37,7 +37,7 @@
 		</if>
 	</select>
 	
-	<!-- 자동검색  @author 주희진-->
+	<!-- Header 자동검색 -->
 	<select id="circleheader_autocompleteSelect" parameterType="hashmap" resultType="string">
 			<if test="searchtype.equals('jh_searchid')">
 				SELECT ID 
@@ -59,19 +59,3 @@
 	</select>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

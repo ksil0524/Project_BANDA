@@ -80,7 +80,7 @@
 		  <div class="board-form">
 			<form:form method="post" enctype="multipart/form-data" name="insertForm" modelAttribute="BoardVo" action="boardWriteRes.do">
 <!-- 			  <input type="hidden" value="<accvo.getId() %>" name="id"/>	 -->
-			  <input type="hidden" value="test" name="id"/>
+			  <input type="hidden" value="user06" name="id"/>
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <div class="col-25">
 			      <label for="boardtab">게시판선택</label>

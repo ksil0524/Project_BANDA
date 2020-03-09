@@ -850,13 +850,13 @@ public class BandaController {
 	// < 정재호 파트  시작 >  
 
 	
-	@RequestMapping("/circleheader_searchindex.do")
-	public String circleheader_searchindex(Model model, String category, String keyword) {
-		
-		System.out.println("검색 : cate: " + category +"/ keyworkd: " + keyword);
-		
-		return null;
-	}
+//	@RequestMapping("/circleheader_searchindex.do")
+//	public String circleheader_searchindex(Model model, String category, String keyword) {
+//		
+//		System.out.println("검색 : cate: " + category +"/ keyworkd: " + keyword);
+//		
+//		return null;
+//	}
 		
 	@RequestMapping(value="/circleheader_autosearch.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -1438,7 +1438,8 @@ public class BandaController {
 	 public String index_search(Model model, String category, String keyword) {
 	      
 	     System.out.println("검색 : cate: " + category +"/ keyworkd: " + keyword);
-	     
+	     System.out.println("하하");
+
 	     List<FeedVo> fvo = new ArrayList<FeedVo>();
 	     String keyword2 = null;
 	     
@@ -1460,8 +1461,13 @@ public class BandaController {
 
 	     model.addAttribute("frvo",fvo);
 	     model.addAttribute("keyword",keyword2);
+	     
+	     System.out.println(fvo);
 	      
-      return "search_index";
+	     
+	     
+	     return "search_index";
+
 	  }
 	 
 	 //회원탈퇴
@@ -1813,7 +1819,7 @@ public class BandaController {
 			insertImg.delete();
 			
 			//상세 보기로 이동
-			return "redirect:boardDetail_test.do?board_no="+boardno;
+			return "redirect:detailTest.do?board_no="+boardno;
 			
 		} else {
 			System.out.println("[ERROR] BOARD WRITE");

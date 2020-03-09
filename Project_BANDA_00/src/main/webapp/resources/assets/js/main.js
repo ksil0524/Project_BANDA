@@ -471,8 +471,7 @@ function close(){
 		
 	});
 
-	});
-	
+
     
 })(jQuery);
 

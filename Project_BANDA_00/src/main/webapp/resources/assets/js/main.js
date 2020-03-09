@@ -51,7 +51,6 @@ function loginChk(){
 
 		}
 		
-		
 	});
 }
 
@@ -193,11 +192,8 @@ $("#email").blur(function(){
 	//영문자 숫자 4~10
 	var loginIdRex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[0-9a-zA-Z]$/i;
 
-
-
 	if(!loginIdRex.test(id)){
 	
-		
 		isjoin++;
 		$("#email").val("");
 		
@@ -475,6 +471,9 @@ function close(){
 		
 	});
 
+	});
+	
+    
 })(jQuery);
 
 $(document).ready(function(){

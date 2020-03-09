@@ -130,6 +130,7 @@
 }
  .social .circle .fa{
     font-size: 16px;
+    font: normal normal normal 14px/1 FontAwesome; /* heejin */
 }
  .social .facebook{
     background-color: #455CA8;
@@ -139,7 +140,7 @@
     background-color: #F74933;
 }
  .social .github{
-    background-color: #403A3A;
+    background-color: #00CF38;
 }
  .facebook:hover{
     background-color: #6E83CD;
@@ -148,8 +149,9 @@
     background-color: #FF7566;
 }
  .github:hover{
-    background-color: #4D4D4d;;
+        opacity: 55%;
 }
+
  .forgot {
     color: #797979;
     margin-left: 0;
@@ -172,7 +174,6 @@
 }
  .btn-login:hover, .registerBox .btn-register:hover{
  /* 로그인 버튼 색 hover */
-    /* background-color: #00A4E4; */
     background-color: #797878;
     color: #FFFFFF;
 }
@@ -246,3 +247,12 @@
     padding: 15px;
     border-radius: 20px;
 }
+
+/* git set*/
+.social .github{
+	padding: 11px 13px !important;
+    width: 48px !important;
+	
+}
+
+

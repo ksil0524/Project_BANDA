@@ -82,7 +82,6 @@ function logout(){
 			
 			if(data.chk){
 				isLogin = 0;
-				alert("로그아웃성공");
 				location.href = "index.jsp";
 			} 
 			
@@ -265,14 +264,27 @@ function close(){
          } else {
             location.href="circleheader_searchindex.do?category="+category+"&keyword="+keyword;
          }
+//		$("#searchBtn").click(function(){
+//			
+//			// 라디오버튼 값 가져옴
+//			var category = $('input[name="jh_searchtype"]:checked').val(); 
+//			// 텍스창 값
+//			var keyword = $("#searchform #searchinput").val();
+//					
+//			if(category == null){
+//				
+//				alert("카테고리를 선택해주세요");
+//				
+//			} else if(keyword == null || keyword == ""){
+//				
+//				alert("검색어를 입력해주세요");
+//				
+//			} else {
+//				location.href="circleheader_searchindex.do?category="+category+"&keyword="+keyword;
+//			}
        })
-		
 	});
-	
-	
-
-
-})(jQuery);
+})(jQuery);       
 
 
 /***********************************

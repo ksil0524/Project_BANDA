@@ -5,7 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <!-- Map CSS -->
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-map.css" rel="stylesheet" />
@@ -13,11 +12,15 @@
 <!-- HEAD CSS -->
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 <script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-</head>
 
+<!-- index_circle_custom CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+
+</head>
 <body>
 <!-- Session set -->
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
+
 <!-- MapCate set -->
 <input type = "hidden" id = "mapcate" value="병원">
 
@@ -95,10 +98,10 @@
 							</span>
 						</div>
 					</div>
-				</div><!--/ testimgfile -->
-			</div><!--/ detail-bg-box -->
-		</div><!--/ searchCon -->
-	</section><!--/ details -->
+				</div><!--testimgfile -->
+			</div><!--detail-bg-box -->
+		</div><!--searchCon -->
+	</section><!--details -->
 
 	 <!-- ==============================================
 	 Map Script
@@ -110,8 +113,7 @@
 	 var latitude, longitude, dong, map; 
 	 var markers = [];
 		 $(function(){
-			
-			// Geolocation API에 액세스할 수 있는지를 확인
+			// Geolocation API에 액세스 확인
 	        if (navigator.geolocation) {
 	            //클라이언트 접속 위치 정보 받기
 	            var id = navigator.geolocation.watchPosition(
@@ -128,7 +130,7 @@
                     });
 	        } else {
 	            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다. 기본 지역으로 안내됩니다.");
-	            //남도빌딩 위도 경도
+	            //default 위도 경도
 	            latitude = "37.49900771922129";
    			 	longitude = "127.03284644541614";
 	        }
@@ -141,13 +143,13 @@
 			        level: 5 // 지도의 확대 레벨
 			    };
 		
-				// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+				// 지도 div, 지도 생성
 				map = new kakao.maps.Map(mapContainer, mapOption);
 				
-				// 주소-좌표 변환 객체를 생성합니다
+				// 주소-좌표 변환 객체 생성
 				var geocoder = new kakao.maps.services.Geocoder();
 				
-				/* 클라이언트 좌표 행정동 search */
+				// 클라이언트 좌표 행정동 search
 				searchAddrFromCoords(longitude, latitude, displayCenterInfo);
 			
 				function searchAddrFromCoords(longitude, latitude, callback) {
@@ -158,9 +160,8 @@
 				function displayCenterInfo(result, status) {
 				    if (status === kakao.maps.services.Status.OK) {
 				        var infoDiv = document.getElementById('centerAddr');
-
 				        for(var i = 0; i < result.length; i++) {
-				            // 행정동의 region_type 값  'H' 
+				            // 행정동의 region_type 동 체크
 				            if (result[i].region_type === 'H') {
 				                dong = result[i].address_name.split(" ");
 				                dong = dong[2];
@@ -172,7 +173,7 @@
 				    }
 				};
 				
-				//클라이언트 위치 : 전달받은 행정동으로 마커/리스트 set
+				//클라이언트 위치 : 전달받은 행정동으로 마커,리스트 set
 				function defAjax(dong){
 					var defList = [];
 					var defListName = [];
@@ -199,10 +200,9 @@
 									
 									//마커 생성 및 출력
 									for(var i=0; i<defList.length; i++){
-										// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+										// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우 생성
 										var iwContent = '<div style="padding:5px;">'+defListName[i]+'</div>'; 
 										
-										// 인포윈도우 생성
 										var infowindow = new kakao.maps.InfoWindow({
 										    content : iwContent,
 										    position: defList[i].latlng
@@ -214,16 +214,16 @@
 											 position: defList[i].latlng
 										});
 										 
-										// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+										// 마커 mouseover 이벤트와 mouseout 이벤트 등록
 										 kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 										 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));							 
 										
-										// 생성된 마커를 배열에 추가합니다
+										// 생성된 마커를 배열에 추가
 										markers.push(marker);
 									}
 									
 								}else{
-									//리스트가 없는 경우
+									//리스트가 없는 경우 Default div 생성
 									var html = "<div id='listDiv'  class='nodatalistDiv'><b>검색된 "+$("#mapcate").val()+"이 없습니다.</b></div>"
 										$("#listCon").append(html);
 								}
@@ -235,14 +235,14 @@
 						
 					})//ajax end
 					
-					// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+					// 인포윈도우 표시 클로저 생성 함수
 					function makeOverListener(map, marker, infowindow) {
 					    return function() {
 					        infowindow.open(map, marker);
 					    };
 					}
 
-					// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+					// 인포윈도우 닫는 클로저 생성 함수
 					function makeOutListener(infowindow) {
 					    return function() {
 					        infowindow.close();
@@ -267,12 +267,10 @@
 				</div>
 				<div id="map"></div>
 			</div>
-
 		</div>
-	   </div><!--/ row -->
-	   
-	  </div><!--/ container -->
-	 </section><!--/ newsfeed -->
+	   </div><!--row-->
+	  </div><!--container-->
+	 </section><!--newsfeed-->
 	 
 	 
 	 <!-- ==============================================
@@ -280,21 +278,19 @@
 	 =============================================== --> 
   	 <section id="maplist" class="newsfeed">
 	  <div class="container">
-
 		 <div class="row">
 			 <div id="listCon" class="col-xs-12">
 		 	</div>
 		 </div>
-	  </div><!--/ container -->
-	 </section><!--/ newsfeed -->
-  
+	  </div>
+	 </section>
 
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
 		   
-     <!-- ==============================================
-	 Scripts
-	 =============================================== -->
+    <!-- ==============================================
+	Scripts
+	=============================================== -->
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
@@ -304,17 +300,14 @@
     <!-- ==============================================
 	HEADER CIRCLE Scripts
 	=============================================== -->
-	
 	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
-	<!-- main 외  페이지 전용 -->
+	<!-- main 외  페이지 전용 JS -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
-	<!-- Map Script -->
+	<!-- Map JS -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/custom-map.js"></script>
-	
-	<!-- Auto Script -->
+	<!-- Auto JS -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-	
   </body>
 </html>

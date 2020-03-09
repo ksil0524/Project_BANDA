@@ -39,11 +39,13 @@
 		Auto CSS
 		=============================================== -->
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+        <!-- index_circle_custom CSS -->
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/index_circle_custom.css">
 		<!-- Login css -->
 		<!-- <link href="login/assets/css/bootstrap.css" rel="stylesheet" /> -->
 		<!-- <script src="login/assets/js/login-register.js" type="text/javascript"></script> -->
 		
+
 		<style type="text/css" >
 		::-webkit-scrollbar {
 
@@ -52,6 +54,9 @@
 		} 
 		</style>
 
+
+		
+		
 	</head>
 	<body style="overflow-y: auto" style = "-ms-overflow-style: none;">
 	<!-- TOP Button -->
@@ -264,7 +269,7 @@ else {
 		          </div>
 		          
 		          <!-- 앞 -->
-		          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+		          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="margin-left:3%;">
 		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Previous</span>
 		          </a>
@@ -325,7 +330,7 @@ else {
             
             <!-- 댓글 -->
             <div style = "height:32vh" >
-         	   <ul class="img-comment-list2" id = "feed_comment">
+         	   <ul class="img-comment-list2" id = "feed_comment" style="overflow: auto;">
          	   
          	   	
          	   
@@ -432,6 +437,7 @@ else {
 
   			<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/js/modal.js"></script>
+                
 		 <script>	
 		 
 		 $(function(){
@@ -478,6 +484,7 @@ else {
 				 });
 		 
 		
+
 		$(document).ready(function(){ 	
 			
 			var feed_no = null;
@@ -623,7 +630,7 @@ else {
 						//댓글 넣기
 							
 						if(comment_list.length == 0){
-							var url = '<ul class="img-comment-list2"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
+							var url = '<ul class="img-comment-list2" style="overflow: auto;"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
 							str2 += url;
 						} else {
 							
@@ -1032,7 +1039,7 @@ else {
 						
 						if(comment_list.length == 0){
 							
-							var url = '<ul class="img-comment-list2"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
+							var url = '<ul class="img-comment-list2" style="overflow: auto;"><li><div class="comment-img" style = "font-size:8px;color:gray;margin-top:5%;margin-left:45%">댓글없음</div></li></ul>'
 							str2 += url;
 							
 						} else {

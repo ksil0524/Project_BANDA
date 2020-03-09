@@ -21,8 +21,8 @@
 					<div id="logincontent" style="display: none;" >
 						<div class="content">
                                 <div class="social">
-                                    <a class="circle github" href="${naver_url}" style = "background-color:#00CF38">
-                                        <img src = "<%=request.getContextPath() %>/resources/images/naver.png" style = "width:23px;height:25px">
+                                    <a class="circle github" href="${naver_url}" >
+                                        <img src = "<%=request.getContextPath() %>/resources/images/naver.png" style = "width:23px;height:25px" id="naverlogo">
                                     </a>
                                     <a id="google_login" class="circle google" href="#">
                                         <i class="fa fa-google-plus fa-fw"></i>
@@ -52,7 +52,7 @@
                                 </div>
                                 
                                 <!-- 어아다찾기 -->
-                                <div class="form loginBox" id = "idfind" style = "display:none;margin-top: 20%;">
+                                <div class="form loginBox" id = "idfind" style = "display:none;">
                                     <form method="" action="" accept-charset="UTF-8">
                                     <input class="form-control" type="text" placeholder="Email" name="email" id = "findid">
                                     <input class="form-control" type="text" placeholder="Email" name="email" id = "findid_res" style = "display:none;color:red;font-weight:bold" >
@@ -134,6 +134,12 @@
 					        <div id="autoArea" style="text-align: left;"></div><!-- 자동완성 @author 주희진 -->
 							<input type="text" id="searchinput" name="keyword" value="" >
 							<div id="searchBtn" class="searchBtn" onclick = "searchFunction()"><i class="fas fa-search"></i></div>
+<!--
+
+							<div id="searchBtn" class="searchBtn" ><i class="fas fa-search"></i></div>
+							
+						  </form>
+-->
 							
 						</div>
 				      

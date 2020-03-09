@@ -4,7 +4,7 @@
 
 <mapper namespace="HJ-mapper">
 
-	<!-- 자동검색  -->
+	<!-- Map 자동검색  -->
 	<select id="autocompleteSelect" parameterType="string" resultType="string">
 		
 		SELECT MAP_NAME 
@@ -36,20 +36,26 @@
 			AND MAP_ADDR LIKE '%'||#{addr}||'%' 
 		</if>
 	</select>
+	
+	<!-- Header 자동검색 -->
+	<select id="circleheader_autocompleteSelect" parameterType="hashmap" resultType="string">
+			<if test="searchtype.equals('jh_searchid')">
+				SELECT ID 
+				FROM ACCOUNT
+				WHERE ID LIKE '%'||#{keyword}||'%'
+				<![CDATA[AND ROWNUM <= 5]]>		
+			</if>
+			<if test="searchtype.equals('jh_searchfeedptag')">
+				SELECT DISTINCT FEED_PTAG 
+				FROM FEED
+				WHERE FEED_PTAG LIKE '%'||#{keyword}||'%'
+				<![CDATA[AND ROWNUM <= 5]]>		
+			</if>
+			<if test="searchtype.equals('jh_searchfeedhtag')">
+				SELECT DISTINCT FEED_HTAG 
+				FROM FEED
+				WHERE FEED_HTAG LIKE '%'||#{keyword}||'%'
+			</if>
+	</select>
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

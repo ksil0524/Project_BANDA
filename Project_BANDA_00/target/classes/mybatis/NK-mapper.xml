@@ -46,7 +46,7 @@
 	
 	<!-- selectOne -->	
 	<select id="selectOneBoard" parameterType="int" resultType="boardVo">
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
+		SELECT BOARD_NO, BOARD_CATE, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_NYN, BOARD_FILE, BOARD_HASH 
 		FROM BOARD
 		WHERE BOARD_NO=#{board_no}
 	</select>

@@ -140,7 +140,8 @@
 		       	${detail.board_content }
 		     </div>
 		     <div class="cardbox-hashtag">
-		      <p id="pHash"></p>
+		      <p id="pHash">
+		      </p>
 		     </div><!--/ cardbox-hashtag -->
 		    </div>
 		   </form><!--/ form -->
@@ -286,6 +287,7 @@
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 	<script type="text/javascript">
+		var category = '${detail.board_cate}';
 		var hashtags = '${detail.board_hash }';
 		var hash = hashtags.split(",");
 		var inner ='';

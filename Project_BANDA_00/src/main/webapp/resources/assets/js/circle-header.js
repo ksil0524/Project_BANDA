@@ -48,11 +48,10 @@ function loginChk(){
 			$("#error_login").css("display","none");
 			location.href = "index.jsp";
 			
-			
-			
 			} else {
 				
-				$("#error_login").css("display","block");
+				$("#error_login").css("display", "block");
+				$("#error_login").html(msg.msg);
 				
 				return;
 			}
@@ -156,19 +155,7 @@ function close(){
 		xsmall:	'(max-width: 480px)'
 	});
 	
-	$(function() {
-		
-		var session = $("#hidden_session").val();
-		   console.log(session);
-
-		   if(session == 'AccountVo') {
-		      
-		      isLogin = 1;
-		      
-		   } else {
-		      
-		   }
-		
+	$(function() {		
 		
 		var	$window = $(window),
 			$body = $('body'),
@@ -260,28 +247,24 @@ function close(){
 		})
 		
 		// 재호
-		$("#searchBtn").click(function(){
-			
-			// 라디오버튼 값 가져옴
-			var radioVal = $('input[name="searchtype"]:checked').val(); 
-			
-			// 텍스창 값
-			var text = $("#searchform #searchinput").val();
-					
-			if(radioVal == null){
-				
-				alert("카테고리를 선택해주세요");
-				
-			} else if(text == null || text == ""){
-				
-				alert("검색어를 입력해주세요");
-				
-			} else {
-				
-				alert("radioVal: " + radioVal + "\n" + text);
-				location.href="index_search.do";
-			}
-			   
+      $("#searchBtn").click(function(){
+         
+         // 라디오버튼 값 가져옴
+         var category = $('input[name="jh_searchtype"]:checked').val(); 
+         // 텍스창 값
+         var keyword = $("#searchinput").val();
+               
+         if(category == null){
+            
+            alert("카테고리를 선택해주세요");
+            
+         } else if(keyword == null || keyword == ""){
+            
+            alert("검색어를 입력해주세요");
+            
+         } else {
+            location.href="circleheader_searchindex.do?category="+category+"&keyword="+keyword;
+         }
        })
 		
 	});

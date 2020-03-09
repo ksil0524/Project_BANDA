@@ -325,7 +325,7 @@
            <div class="follow-box" style="text-align: center; margin-top: 50px; margin-bottom: 70px;">
 		    <button id="updatebtn" class="kafe-btn kafe-btn-mint" onclick="conform();">수   정</button>
 		    <button id="cfbtn" class="kafe-btn kafe-btn-mint" style="display: none;" onclick="confirm()">수정완료</button>
-		    <button class="kafe-btn kafe-btn-mint">회원 탈퇴</button>
+		    <button class="kafe-btn kafe-btn-mint" onclick = "delete_user('<%=accvo.getId() %>')">회원 탈퇴</button>
            </div><!--/ dropdown -->
 		   </div>
           </div><!--/ details-box -->
@@ -350,6 +350,11 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 	<!-- Auto Script -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		function delete_user(id){
+			location.href = 'delete_user.do?id='+id;
+		}
+	</script>
 	
   </body>
 </html>

@@ -44,8 +44,16 @@
 		<!-- <link href="login/assets/css/bootstrap.css" rel="stylesheet" /> -->
 		<!-- <script src="login/assets/js/login-register.js" type="text/javascript"></script> -->
 		
+		<style type="text/css" >
+		::-webkit-scrollbar {
+
+		display:none;
+
+		} 
+		</style>
+
 	</head>
-	<body style="overflow: auto;">
+	<body style="overflow-y: auto" style = "-ms-overflow-style: none;">
 	<!-- TOP Button -->
 	<a id="back-to-top" href="#" class="back-to-top" role="button" data-placement="left" data-toggle="modal" data-target="#myModal2" >
 	<i class="fas fa-plus-circle"></i></a>	
@@ -107,6 +115,8 @@
 			
 			
 			feed.add(feed_image);
+			//System.out.println(feed+"아이디 o follow o");
+		
 		
 		}	
 		
@@ -141,6 +151,8 @@
 			
 			
 			feed.add(rfeed_image);
+			//System.out.println(feed+"아이디 o follow x");
+			
 			
 		}
 		
@@ -208,7 +220,7 @@ else {
 		           			<!-- modal -->
 							<a data-toggle="modal" data-target="#myModal" data-title = "${list.get(0) }">
 								<video class="testexplorebox"
-						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;" autoplay loop>
+						  		  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;" autoplay loop muted>
 						  		  		<source src="<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}" type="video/mp4"> 
 						  		</video>
 			               	</a>
@@ -420,7 +432,51 @@ else {
 
   			<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
 			<script src="<%=request.getContextPath() %>/resources/assets/js/modal.js"></script>
-		 <script>		
+		 <script>	
+		 
+		 $(function(){
+				$("#searchinput").autocomplete({
+						appendTo: "#autoArea",
+					    source: function(request, response){
+					    	var searchtype=$("input[name='jh_searchtype']:checked").val();
+					    	
+					    	if(searchtype == null || searchtype == ""){
+					    		alert("검색 카테고리를 선택해주세요.");
+					    		$("#searchform #searchinput").val("");
+					    		return;
+					    	}
+					    	
+					       $.ajax({
+					          type:"post",
+					          url:"circleheader_autosearch.do",
+					          data:{keyword:request.term, searchtype:searchtype},
+					          dataType:"json",
+					          success: function(result){
+					             if(result.success==true){
+					                response(
+					                   $.map(result.list, function(item){
+					                      return{
+					                         label:item,
+					                         value:item
+					                      }
+					                   })
+					                )
+					             }
+					          },
+					          error: function(){
+					             alert("ajax 서버와 통신 실패");
+					          }
+					          
+					       })
+					    },
+					    minLength:1,
+					    select:function(event, ui){
+					    
+					    }
+					 });
+				    
+				 });
+		 
 		
 		$(document).ready(function(){ 	
 			
@@ -538,7 +594,7 @@ else {
 								} else {
 									
 									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1];
-									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop muted><source src="'+url+'" type="video/mp4">  </video><br></div>';
 	  							str += url_real;
 
 								}
@@ -552,7 +608,7 @@ else {
 								} else {
 									
 									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i];
-									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop muted><source src="'+url+'" type="video/mp4">  </video><br></div>';
 	  							str += url_real;
 
 								}

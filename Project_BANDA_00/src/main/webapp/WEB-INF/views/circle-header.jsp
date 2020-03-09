@@ -43,7 +43,7 @@
                                     <form id="loginForm" method="" action="login.do" accept-charset="UTF-8">
                                     <input id="login-email" class="form-control" type="text" placeholder="Id" name="email">
                                     <input id="login-password" class="form-control" type="password" placeholder="Password" name="password">
-                                    <p id = "error_login" style = "color:red;display:none">아이디와 비밀번호가 맞지 않습니다.</p>
+                                    <p id = "error_login" style = "color:red;display:none"></p>
                                     <a href = "#" style = "color:lightgray" id = "idFind" onclick = "idFind()">아이디찾기</a>&nbsp;&nbsp;
                                     <a href = "#" style = "color:lightgray" id = "pwdFind" onclick = "pwdFind()">비밀번호찾기</a>
                                     <input id="login-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="loginChk()">                         
@@ -126,18 +126,14 @@
 						
 						<div id="searchinputBox">
 						  
-						  <form action="search_feedlist.do" id="searchform" method="get">
-						    
-						  <div>
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
-					        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
-					      </div>
+							  <div>
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
+						      </div>
 					        <div id="autoArea" style="text-align: left;"></div><!-- 자동완성 @author 주희진 -->
 							<input type="text" id="searchinput" name="keyword" value="" >
-							<div id="searchBtn" class="searchBtn" onclick="#"><i class="fas fa-search"></i></div>
-							
-						  </form>
+							<div id="searchBtn" class="searchBtn" onclick = "searchFunction()"><i class="fas fa-search"></i></div>
 							
 						</div>
 				      

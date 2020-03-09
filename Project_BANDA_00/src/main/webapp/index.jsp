@@ -10,11 +10,8 @@
 	<br>
 	<a href="index.do">index</a>	
 	<br>
-	
-	
 	<a href="boardDetail.do">boardDetail</a>	
-	<br>
-	
+	<br>	
 	<a href="boardListExchange.do">boardListExchange</a>	
 	<br>
 	<a href="boardListFree.do">boardListFree</a>	

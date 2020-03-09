@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mvc.banda.model.vo.AccountVo;
+import com.mvc.banda.model.vo.BoardVo;
 import com.mvc.banda.model.vo.CommentVo;
 import com.mvc.banda.model.vo.FeedVo;
 import com.mvc.banda.model.vo.FollowVo;
@@ -120,6 +121,23 @@ public class JY_dao {
 		public List<FollowVo> main_selectFollow(String id){
 			
 			return follow_list(id);
+		}
+		
+		//main_follow_feed - 로그인 o, 팔로우 o후에 팔로우들의 피드 반환
+		public List<FeedVo> main_follow_feed(List<FollowVo> fvo){
+			
+			List<String> fd_list = new ArrayList<String>();
+			
+			for(FollowVo f : fvo) {
+				
+				fd_list.add(f.getFd_id());
+				
+			}
+			
+			Map<String, Object> m = new HashMap<String, Object>();
+			m.put("fd_name", fd_list);
+			
+			return main_follow_feed_sql(m);
 		}
 		
 		//my_feedList - 내 피드가져오기
@@ -263,6 +281,154 @@ public class JY_dao {
 			return pwdfind_update_sql(vo);
 		}
 		
+		//search_id
+		public List<FeedVo> search_id(String keyword){
+			
+			List<FeedVo> flist = search_id_sql(keyword);
+		
+			int count = flist.size();
+			
+			if(count < 4) {
+				System.out.println("4개 미만의 게시물");
+			}
+			else if(count % 4 != 0) {
+				count = count - (count%4);
+			}
+			
+			Map m = new HashMap();
+			m.put("keyword", keyword);
+			m.put("count", count);
+			
+			flist = search_id_count(m);
+			
+			for(FeedVo v : flist) {
+				
+				List<CommentVo> c = select_comment(v.getFeed_no());
+				v.setComment_list(c);
+				
+				List<LikesVo> l = select_like(v.getFeed_no());
+				v.setLike_list(l);
+
+			}
+
+			return flist;
+		}
+		
+		//search_htag
+		public List<FeedVo> search_ptag(String keyword){
+			
+			List<FeedVo> flist = search_ptag_sql(keyword);
+			
+			int count = flist.size();
+			
+			if(count < 4) {
+				System.out.println("4개 미만의 게시물");
+			}
+			else if(count % 4 != 0) {
+				count = count - (count%4);
+			}
+			
+			Map m = new HashMap();
+			m.put("keyword", keyword);
+			m.put("count", count);
+			
+			flist = search_ptag_count(m);
+			
+			for(FeedVo v : flist) {
+				
+				List<CommentVo> c = select_comment(v.getFeed_no());
+				v.setComment_list(c);
+				
+				List<LikesVo> l = select_like(v.getFeed_no());
+				v.setLike_list(l);
+			}
+			
+			return flist;			
+		}
+		
+		//search_htag
+		public List<FeedVo> search_htag(String keyword){
+			
+			List<FeedVo> flist = search_htag_sql(keyword);
+			
+			int count = flist.size();
+			
+			if(count < 4) {
+				System.out.println("4개 미만의 게시물");
+			}
+			else if(count % 4 != 0) {
+				count = count - (count%4);
+			}
+			
+			Map m = new HashMap();
+			m.put("keyword", keyword);
+			m.put("count", count);
+			
+			flist = search_htag_count(m);
+			
+			for(FeedVo v : flist) {
+				
+				List<CommentVo> c = select_comment(v.getFeed_no());
+				v.setComment_list(c);
+				
+				List<LikesVo> l = select_like(v.getFeed_no());
+				v.setLike_list(l);
+			}
+			
+			return flist;	
+			
+		}
+		
+		//delete_user
+		public Map<String, Object> delete_user(String id) {
+
+			//좋아요, 팔로우, 댓글, 채팅 삭제
+			int count = 0;
+			
+			//db삭제후 해당 파일 삭제 위한 과정
+			//feed, board - db에 파일존재, pet은 db에 파일 존재하지않음, acount는 파일 존재하지 않음
+			Map<String, Object> res = new HashMap<String, Object>();
+
+			//feed
+			List<FeedVo> fvo = feed_list_nocount(id);
+			List<Integer> fvo_feedno = new ArrayList<Integer>();
+			
+			for(FeedVo f : fvo) {
+				fvo_feedno.add(f.getFeed_no());
+			}
+
+			res.put("feed_no", fvo_feedno);
+			
+			//pet
+			List<PetVo> pvo = select_pet_list(id);
+			List<Integer> pvo_pno = new ArrayList<Integer>();
+			
+			for(PetVo p : pvo) {
+				
+				pvo_pno.add(p.getP_no());
+			}
+			
+			res.put("pet_no", pvo_pno);	
+			
+			//board
+			List<BoardVo> bvo = select_board_list(id);
+			List<Integer> bvo_boardno = new ArrayList<Integer>();
+			
+			for(BoardVo b : bvo) {
+				bvo_boardno.add(b.getBoard_no());
+			}
+			
+			res.put("board_no", bvo_boardno);
+			
+			//account
+			res.put("id",id);
+			
+			count = delete_user_sql(id);			
+			res.put("count", count);
+			
+			return res;
+		}
+		
 		///////////////////////////////////////////////////////////////////////////////////////
 		//sql
 		
@@ -283,6 +449,13 @@ public class JY_dao {
 		public List<FeedVo> feed_list_random(int count){
 			
 			return sqlSession.selectList(NAMESPACE + "main_selectList_feed_random", count);
+		}
+		
+		//main_follow_feed
+		public List<FeedVo> main_follow_feed_sql(Map<String, Object> fvo){
+			
+			
+			return sqlSession.selectList(NAMESPACE+"main_follow_feed", fvo);
 		}
 		
 		//feed count - default
@@ -372,4 +545,63 @@ public class JY_dao {
 		public int pwdfind_update_sql(AccountVo vo) {
 			return sqlSession.update(NAMESPACE+"pwdfind_update", vo);
 		}
+		
+		//search_id
+		public List<FeedVo> search_id_sql(String keyword){
+			return sqlSession.selectList(NAMESPACE+"search_id", keyword);
+		}
+		
+		//search_ptag
+		public List<FeedVo> search_ptag_sql(String keyword){
+			return sqlSession.selectList(NAMESPACE+"search_ptag", keyword);
+		}
+		
+		//search_htag
+		public List<FeedVo> search_htag_sql(String keyword){
+			return sqlSession.selectList(NAMESPACE+"search_htag", keyword);
+		}
+		
+		//search_id_count
+		public List<FeedVo> search_id_count(Map m){
+			return sqlSession.selectList(NAMESPACE+"search_id_count", m);
+		}
+		
+		//search_ptag_count
+		public List<FeedVo> search_ptag_count(Map m){
+			return sqlSession.selectList(NAMESPACE+"search_ptag_count", m);
+		}
+		
+		//search_ptag_count
+		public List<FeedVo> search_htag_count(Map m){
+			return sqlSession.selectList(NAMESPACE+"search_htag_count", m);
+		}
+		
+		//select_board_list
+		public List<BoardVo> select_board_list(String id){
+			return sqlSession.selectList(NAMESPACE+"select_board_list",id);
+		}
+		
+		//delete_user_chat
+		public int delete_user_sql(String id) {
+			
+			int count = 0;
+			int res = 0;
+			
+			
+			sqlSession.delete(NAMESPACE+"delete_user_chat", id);			
+			sqlSession.delete(NAMESPACE+"delete_user_follow", id);
+			sqlSession.delete(NAMESPACE+"delete_user_like", id);
+			sqlSession.delete(NAMESPACE+"delete_user_comment", id);
+			sqlSession.delete(NAMESPACE+"delete_user_feed", id);
+			sqlSession.delete(NAMESPACE+"delete_user_pet",id);
+			sqlSession.delete(NAMESPACE+"delete_user_board", id); 
+			
+			res = sqlSession.delete(NAMESPACE + "delete_user_account", id);
+			if(res>0) {
+				count++;
+			}
+
+			return count;
+		}
+
 }

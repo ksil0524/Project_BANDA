@@ -19,8 +19,18 @@
    <link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
    <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
    
+   <style type="text/css">
+	
+		::-webkit-scrollbar {
+
+		display:none;
+
+		} 
+
+</style>
+   
 </head>
-<body style = "background-color:#f4f4f4">
+<body style = "background-color:#f4f4f4;-ms-overflow-style: none;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 <%
@@ -183,7 +193,7 @@
 			                  background-position: center center;
 			                  -webkit-background-size: cover;
 			                  -moz-background-size: cover;
-			                  -o-background-size: cover;" autoplay loop>
+			                  -o-background-size: cover;" autoplay loop muted>
 			               <source src="<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}" type="video/mp4">    
 			          </video>
 			          
@@ -502,7 +512,7 @@
 								} else {
 									
 									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[1];
-									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop muted><source src="'+url+'" type="video/mp4">  </video><br></div>';
 	  							str += url_real;
 
 								}
@@ -516,7 +526,7 @@
 								} else {
 									
 									var url = "<%=request.getContextPath() %>/resources/images/filemanager/feed/" + feedno + "/" + file_list[i];
-									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop><source src="'+url+'" type="video/mp4">  </video><br></div>';
+									var url_real = '<div class = "carousel-item active" ><video class="d-block img-fluid"  style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat; background-size: cover; background-position: center center;width:474.9px;height:474.9px;" autoplay loop muted><source src="'+url+'" type="video/mp4">  </video><br></div>';
 	  							str += url_real;
 
 								}

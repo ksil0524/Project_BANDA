@@ -37,7 +37,8 @@ function loginChk(){
 			
 			} else {
 				
-				$("#error_login").css("display","block");
+				$("#error_login").css("display", "block");
+				$("#error_login").html(msg.msg);
 				
 				return;
 			}

@@ -115,6 +115,8 @@
 			
 			
 			feed.add(feed_image);
+			//System.out.println(feed+"아이디 o follow o");
+		
 		
 		}	
 		
@@ -149,6 +151,8 @@
 			
 			
 			feed.add(rfeed_image);
+			//System.out.println(feed+"아이디 o follow x");
+			
 			
 		}
 		

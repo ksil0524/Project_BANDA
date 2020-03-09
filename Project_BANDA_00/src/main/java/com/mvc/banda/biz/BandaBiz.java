@@ -192,7 +192,7 @@ public class BandaBiz {
 			return jy_dao.main_selectList(id);
 		}
 	
-		//main_selectListN - 비로그인/ 팔로우없을떄
+		//main_selectListN - 비로그인/ 팔로우없을떄/ 
 		public List<FeedVo> main_selectListN() {
 			
 			return jy_dao.main_selectListN();
@@ -201,6 +201,11 @@ public class BandaBiz {
 		//main_selectFollow - 로그인시 팔로우 판단
 		public List<FollowVo> main_selectFollow(String id) {
 			return jy_dao.main_selectFollow(id);
+		}
+		
+		//팔로우들의 피드 가져오기
+		public List<FeedVo> main_follow_feed(List<FollowVo> fvo){
+			return jy_dao.main_follow_feed(fvo);
 		}
 		
 		//내피드가져오기
@@ -281,6 +286,11 @@ public class BandaBiz {
 		//htag로 검색
 		public List<FeedVo> search_htag(String keyword){
 			return jy_dao.search_htag(keyword);
+		}
+		
+		//회원 삭제
+		public Map<String, Object> delete_user(String id) {
+			return jy_dao.delete_user(id);
 		}
 	
 	// < 최주예 파트  끝 > 

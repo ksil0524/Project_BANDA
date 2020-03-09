@@ -43,7 +43,7 @@
                                     <form id="loginForm" method="" action="login.do" accept-charset="UTF-8">
                                     <input id="login-email" class="form-control" type="text" placeholder="Id" name="email">
                                     <input id="login-password" class="form-control" type="password" placeholder="Password" name="password">
-                                    <p id = "error_login" style = "color:red;display:none">아이디와 비밀번호가 맞지 않습니다.</p>
+                                    <p id = "error_login" style = "color:red;display:none"></p>
                                     <a href = "#" style = "color:lightgray" id = "idFind" onclick = "idFind()">아이디찾기</a>&nbsp;&nbsp;
                                     <a href = "#" style = "color:lightgray" id = "pwdFind" onclick = "pwdFind()">비밀번호찾기</a>
                                     <input id="login-loginBtn" class="btn btn-default btn-login" type="button" value="Login" onclick="loginChk()">                         

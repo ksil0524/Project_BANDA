@@ -48,11 +48,10 @@ function loginChk(){
 			$("#error_login").css("display","none");
 			location.href = "index.jsp";
 			
-			
-			
 			} else {
 				
-				$("#error_login").css("display","block");
+				$("#error_login").css("display", "block");
+				$("#error_login").html(msg.msg);
 				
 				return;
 			}

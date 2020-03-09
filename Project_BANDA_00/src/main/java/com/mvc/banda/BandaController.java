@@ -792,29 +792,35 @@ public class BandaController {
 	//login
 	@ResponseBody
 	@RequestMapping(value = "/jy_login.do", method = RequestMethod.POST)
-	public Map<String, Boolean> jy_login(@RequestBody AccountVo vo, HttpServletRequest request) {
-		System.out.println("jy_login");
+	public Map<String, Object> jy_login(@RequestBody AccountVo vo, HttpServletRequest request) {
 
+		Map<String, Object> m = new HashMap<String, Object>();
 		Boolean chk = true;
 		
 		//입력비밀번호
 		String input_pwd = vo.getPassword();
-
 		AccountVo vo2 = biz.jy_login(vo);
 		
 		//디비비밀번호
-		String db_pwd = vo2.getPassword();
-		
-		if(passwordEncoder.matches(input_pwd, db_pwd)) {
+		try {
 			
-			session.setAttribute("vo", vo2);
-			session.setMaxInactiveInterval(60*60);
+			String db_pwd = vo2.getPassword();
 			
-		} else {
+			if(passwordEncoder.matches(input_pwd, db_pwd)) {
+				
+				session.setAttribute("vo", vo2);
+				session.setMaxInactiveInterval(60*60);
+				
+			} else {
+				chk = false;
+				m.put("msg","아이디와 비밀번호가 맞지 않습니다.");
+			}
+
+		} catch(Exception e) {
 			chk = false;
+			m.put("msg", "아이디가 존재하지 않습니다.");
 		}
 
-		Map<String, Boolean> m = new HashMap<String, Boolean>();
 		m.put("chk", chk);
 		
 		return m;
@@ -842,23 +848,58 @@ public class BandaController {
 	@RequestMapping("/main_selectList.do")
 	public String main_selectList(Model model) {
 		
-		
+		//로그인 했을 떄
 		if(session.getAttribute("vo") != null) {
 			
 			AccountVo vo = (AccountVo)session.getAttribute("vo");
 			String id = vo.getId();
-			System.out.println("세션존재");
 			
+			//로그인의 팔로우 여부 판단
 			List<FollowVo> fvo = biz.main_selectFollow(id);
+			
+			//로그인 시 팔로우 존재, 그후 그 팔로우의 피드 여부
+			List<FeedVo> feedvo = new ArrayList<FeedVo>();
+			
+			if(fvo.size() != 0) {
+				feedvo = biz.main_follow_feed(fvo);
+			} else {
+				feedvo = null;
+			}
 
+			//로그인 아이디의 팔로우가 존재할떄
 			if(fvo.size() != 0) {
 				
-				AccountVo vo2 = (AccountVo)biz.main_selectList(id);
-				//System.out.println(vo2);
+				//팔로우들의 피드가존재할떄
+				if(feedvo.size() != 0) {
+					
+					System.out.println("팔로우들의 피드 존재");
+					
+					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
+					
+					model.addAttribute("fvo", vo2);
+
+				} 
+				//팔로우들의 피드가존재하지 않을 때
+				else {
 				
-				model.addAttribute("fvo", vo2);
-				
-			} else {
+					System.out.println("팔로우들의 피드가 존재하지 않음");
+					
+					List<FeedVo> fvo3 = biz.main_selectListN();
+					
+					AccountVo accvo = new AccountVo();
+					
+					accvo.setId(id);
+					accvo.setFeed_list(fvo3);
+					
+					
+					model.addAttribute("fvo",accvo);
+					
+					
+				}
+			} 
+			
+			//로그인 아이디의 팔로우가 존재하지 않을 때
+			else {
 				
 				System.out.println("로그인성공/ 팔로우 없음");
 				List<FeedVo> fvo2 = biz.main_selectListN();
@@ -867,7 +908,9 @@ public class BandaController {
 			}
 
 			
-		} else {
+		} 
+		//로그인하지 않았을 경우
+		else {
 			
 			System.out.println("세션없음");
 			List<FeedVo> fvo = biz.main_selectListN();
@@ -893,7 +936,7 @@ public class BandaController {
 		SNSLogin snslogin = new SNSLogin(naverSns);
 		
 		User profile = snslogin.getUserProfile(code);	
-		System.out.println(profile + " 네이버 프로필 입니다.");
+		//System.out.println(profile + " 네이버 프로필 입니다.");
 
 		String email = profile.getEmail();
 		
@@ -980,8 +1023,6 @@ public class BandaController {
 	      } catch (IOException e) {
 	         e.printStackTrace();
 	      }
-
-	      System.out.println(path);
 		
 		
 		return "redirect:main_selectList.do";
@@ -1328,6 +1369,100 @@ public class BandaController {
 	      
       return "search_index";
 	  }
+	 
+	 //회원탈퇴
+	 @RequestMapping("/delete_user.do")
+	 public String delete_user(String id, HttpServletRequest request) {
+		 
+		 Map<String, Object> res = biz.delete_user(id);
+		 
+		 //feed 삭제
+		 List<Integer> remove_feedno = (List)res.get("feed_no");
+		 
+		 if(remove_feedno.size() != 0) {
+			 for(Integer feedno : remove_feedno) {
+				 
+				 String feed_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\feed\\"+feedno);
+				 
+				 File feed_folder = new File(feed_path);
+				 File[] feed_folder_list = feed_folder.listFiles();
+				 
+				 for(int i=0; i<feed_folder_list.length; i++) {
+					 feed_folder_list[i].delete();
+				 }
+				 
+				 if(feed_folder.isDirectory()) {
+					 feed_folder.delete();
+				 }
+				 	 
+			 }
+		 }
+		 
+		 //pet 삭제
+		 List<Integer> remove_petno = (List)res.get("pet_no");
+		 
+		 if(remove_petno.size() != 0) {
+			 for(Integer petno : remove_petno) {
+				 
+				 String pet_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+petno);
+				 
+				 File pet_folder = new File(pet_path);
+				 File[] pet_folder_list = pet_folder.listFiles();
+
+					 pet_folder_list[0].delete();
+				 				 
+				 if(pet_folder.isDirectory()) {
+					 pet_folder.delete();
+				 }
+				 
+			 }	 
+		 }
+		 
+		 //board 삭제
+		 List<Integer> remove_boardno = (List)res.get("board_no");
+		 
+		 if(remove_boardno.size() != 0) {
+			 for(Integer boardno : remove_boardno) {
+				 
+				 String board_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+boardno);
+				 
+				 File board_folder = new File(board_path);
+				 File[] board_folder_list = board_folder.listFiles();
+
+				 board_folder_list[0].delete();
+				 				 
+				 if(board_folder.isDirectory()) {
+					 board_folder.delete();
+				 }
+				 
+			 }	 
+		 }
+		 
+		 //account 삭제
+		 String remove_id = res.get("id").toString();
+		 
+		 String	account_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\account\\account_profile\\"+remove_id);
+
+		 File account_folder = new File(account_path);
+		 File[] acc_file_list = account_folder.listFiles();
+		 
+		 acc_file_list[0].delete();
+		 
+		 if(account_folder.isDirectory()) {
+			 account_folder.delete();
+		 }
+		 
+		 //최종
+		 if(res.get("count").equals(1)) {
+			 System.out.println("아이디 삭제 성공");
+			 session.invalidate();
+			 return "redirect:main_selectList.do";
+		 } else {
+			 System.out.println("아이디 삭제 실패");
+			 return "temp/mypageAccount";
+		 }
+		 
+	 }
 	
 	
 	// < 최주예 파트  끝 > 

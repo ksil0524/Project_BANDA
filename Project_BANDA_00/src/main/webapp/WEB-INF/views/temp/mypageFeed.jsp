@@ -18,28 +18,28 @@
 	 =============================================== -->
 	 <!-- jquery.min.js -->
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   
-   <!-- bootstrp.min.js -->
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+    <!-- ==============================================
+	HEADER CIRCLE Scripts
+	=============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
 	<!-- Auto Script -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
-   
-   
-	
+		
 
 <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />

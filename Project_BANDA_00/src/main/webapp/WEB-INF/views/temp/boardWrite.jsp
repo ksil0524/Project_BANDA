@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
@@ -12,7 +14,7 @@
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color: #f4f4f4;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
@@ -25,35 +27,37 @@
 	=============================================== -->
 	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>무료나눔</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>물물교환</span>
-	   </a>
-	   </div>
+	   <c:set var="prevPage" value="${category }"/>
+	     <c:if test="${fn:contains(prevPage, 'SH')}">
+	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
+	         <a class="nav-icon" href="boardListFree_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>무료나눔</span>
+	         </a>
+	       </div>
+	       <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
+	         <a class="nav-icon" href="boardListExchange_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>물물교환</span>
+	         </a>
+	       </div> 
+	     </c:if>
+	     <c:if test="${fn:contains(prevPage, 'EX')}">
+	       <div class="p-2 nav-icon-lg clean-black"style="height: 59px;">
+	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>무료나눔</span>
+	         </a>
+	       </div>
+	       <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
+	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+		       <span>물물교환</span>
+	         </a>
+	       </div> 
+	     </c:if>
 	   
 	   <style>
 	   .nav-icon-lg {
 	   	width: 400px !important;
 	   }
 	   </style>
-	   
-	   <!-- 
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_stories.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의피드</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_profile.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>내계정</span>
-	   </a>
-	   </div>
-	    -->
 	    
 	  </div>
 	</section>
@@ -83,8 +87,8 @@
 			    </div>
 			    <div class="col-75">
 			      <select id="boardtab" name="board_cate">
-			        <option value="SH">무료나눔</option>
-			        <option value="EX">물물교환</option>
+			        <option value="SH" <c:if test="${category eq 'SH' }"> selected</c:if>>무료나눔</option>
+			        <option value="EX" <c:if test="${category eq 'EX' }"> selected</c:if>>물물교환</option>
 			      </select>
 			    </div>
 			  </div>
@@ -93,7 +97,7 @@
 			      <label for="title">제목</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="title" name="board_title" placeholder="제목을 입력하세요">
+			      <input type="text" id="title" name="board_title" placeholder="제목을 입력하세요" required>
 			    </div>
 			  </div> 
 			  <div class="row" style="padding-left: 5% !important; padding-right: 5% !important;">
@@ -101,7 +105,7 @@
 			      <label for="content">내용</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="content" name="board_content" placeholder="내용을 입력하세요" style="height:200px"></textarea>
+			      <textarea id="content" name="board_content" placeholder="내용을 입력하세요" style="height:200px" required></textarea>
 			    </div>
 			  </div>
 			  
@@ -136,15 +140,23 @@
 			      <label for="board_file">첨부파일</label>
 			    </div>
 			    <div class="custom-file col-75 ">
-			      <input type="file" class="custom-file-input" id="board_file" name="boardfile">
+			      <input type="file" class="custom-file-input" id="board_file" name="boardfile" required>
 			      <label class="custom-file-label" for="board_file"></label>
 			    </div>
 			  </div>
+			  
+			  <!-- 버튼 -->
 			  <div class="row btns" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <input type="submit" value="작성">
-			    <input type="button" value="목록" onclick="javascript:history.back()">
-			    
+			    <c:if test="${category eq 'SH' }">
+			      <input type="button" value="목록" onclick="location.href='listTestSh.do'">
+			    </c:if>
+			    <c:if test="${category eq 'EX' }">
+			      <input type="button" value="목록" onclick="location.href='listTestEx.do'">
+			    </c:if> 
 			  </div>
+			  <!--/ 버튼 끝 -->
+			  
 			  </form:form>
 		  </div><!--/ board-form -->
           			        

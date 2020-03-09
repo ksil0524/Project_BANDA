@@ -1,20 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("vo");
+	%>
+	
 	<!-- ==============================================
 	Styles
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boarddetail.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color: #f4f4f4;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
@@ -55,26 +62,11 @@
 	     </c:when>
 	   </c:choose>
 	  
-	   
 	   <style>
 	   .nav-icon-lg {
 	   	width: 400px !important;
 	   }
-	   </style>
-	   
-	   <!-- 
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_stories.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의피드</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_profile.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>내계정</span>
-	   </a>
-	   </div>
-	    -->
-	    
+	   </style>    
 	  </div>
 	</section>
   
@@ -89,6 +81,12 @@
 	    <!-- style="width: inherit;" -->
 		
          <div class="cardbox">
+         
+         <form name="readForm" role="form" method="post">
+         	<input type="hidden" id="bno" name="board_no" value="${detail.board_no}" />
+  			<input type="hidden" id="page" name="page" value="${scri.page}">  
+  			<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}"> 
+  			<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}"> 
 		 
           <div class="cardbox-heading">
            <!-- START dropdown-->
@@ -102,14 +100,12 @@
 			 <c:set var="noticeChk" value="${detail.board_nyn}"/>
 			 <c:choose>
 			   <c:when test="${fn:contains(noticeChk, 'Y')}">
-	         	 <a class="dropdown-item" href="boardSetNoticeCancel.do?board_no=${detail.board_no }">공지해제</a>
+	         	 <a class="dropdown-item" href="boardSetNoticeCancel.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">공지해제</a>
 	           </c:when>
 			   <c:when test="${fn:contains(noticeChk, 'N')}">
-	         	 <a class="dropdown-item" href="boardSetNotice.do?board_no=${detail.board_no }">공지등록</a>
+	         	 <a class="dropdown-item" href="boardSetNotice.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">공지등록</a>
 	           </c:when>
-	         </c:choose>
-			
-	         
+	         </c:choose>    
             </div>
            </div><!--/ dropdown -->
            <!-- END dropdown-->
@@ -121,7 +117,7 @@
            <!-- END title -->
             <div class="media m-0">
              <div class="d-flex mr-3">
-			  <a href="#"><img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/18.jpg" alt="User"></a>
+			  <a href="#"><img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${detail.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="User"></a>
 			 </div>
              <div class="media-body">
               <p class="m-0">${detail.id }</p>
@@ -137,7 +133,7 @@
           <!-- 본문 -->
 		  <div class="cardbox-item">
 		    <div class="cardbox-img">
-		      <img class="img-responsive" src="<%=request.getContextPath() %>/resources/images/filemanager/board/${detail.board_no }/boardImg.jpg" alt="MaterialImg">
+		      <img class="img-responsive" src="<%=request.getContextPath() %>/resources/images/filemanager/board/${detail.board_no }/boardImg.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/logo_profile.png'" alt="MaterialImg">
 		    </div>
 		    <div class="cardbox-content">
 		     <div class="cardbox-text">
@@ -147,6 +143,7 @@
 		      <p id="pHash"></p>
 		     </div><!--/ cardbox-hashtag -->
 		    </div>
+		   </form><!--/ form -->
           </div><!--/ cardbox-item -->
 	      
 	      <!-- 구분선  -->
@@ -162,17 +159,17 @@
 		  <div class="cardbox-comment-list">
 		   <ul class="img-comment-list">
 		    <c:choose>
-		      <c:when test="${empty boardComList }">
+		      <c:when test="${empty detail.comment_list }">
 		        <li style="text-align: center;">등록된 댓글이 없습니다. 댓글을 달아주세요!</li>
 		      </c:when>
-		      <c:when test="${not empty boardComList }">
-		        <c:forEach items="${boardComList }" var="comments">
+		      <c:when test="${not empty detail.comment_list }">
+		        <c:forEach items="${detail.comment_list }" var="comments">
 		          <li>
                     <div class="comment-img">
-                      <img src="<%=request.getContextPath() %>/resources/temp/assets/img/users/17.jpeg" class="img-responsive img-circle" alt="Image"/>
+                      <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${comments.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" class="img-responsive img-circle" alt="User"/>
                     </div>
                     <div class="comment-text">
-                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span><span class=""> <i class="fas fa-pen" id="boardComUpdate"></i></span><span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
+                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span><span class=""> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span><span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
                       <p>${comments.com_content }</p> 
                     </div>
                   </li><!--/ li -->
@@ -180,16 +177,11 @@
 		      </c:when>
 		     </c:choose>
             </ul><!--/ comment-list -->
-            <script type="text/javascript">
-              $("#boardComUpdate").click(function(){
-            	  var comContent = $
-              });
-            </script>
            </div><!--/ cardbox-comment-list -->
 		   
 		   <div class="comment-bottom">  
 		    	 	 
-			<div class="comment-put">
+			<div class="comment-put" id="comment-put" style="">
 			   <table style="width: 800px;">
 		   	    <tr>
 		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
@@ -197,38 +189,77 @@
 		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
 		   	         <input type="hidden" name="com_cate" value="B"/>
 		   	         <input type="hidden" name="id" value="test"/>
-		   	         <input class="form-control input-sm" type="text" name="com_content" placeholder="댓글을 입력하세요"/>
+		   	         <input class="form-control input-sm" type="text" name="com_content" value="" placeholder="댓글을 입력하세요"/>
 		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
 		   	       </form:form>
 		   	     </td>
-		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="$('#commentForm').submit();"></i></td>
+		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="chkComment1()"></i></td>
 		   	    </tr>
 		   	   </table>  
 			 </div><!--/ comment-put -->
 			 
-			 <div class="comment-edit" style="display: none;">
+			 <div class="comment-edit" id="comment-edit" style="display: none;">
 			   <table style="width: 800px;">
 		   	    <tr>
 		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
 		   	     <td>
-		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
-		   	         <input type="hidden" name="com_cate" value="B"/>
-		   	         <input type="hidden" name="id" value="test"/>
-		   	         <input class="form-control input-sm" type="text" name="com_content" placeholder="댓글을 입력하세요"/>
-		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
+		   	       <form:form name="commentUpdateForm" id="commentUpdateForm" action="boardComUpdate.do">
+		   	         <input class="form-control input-sm" type="text" id="comEditor" name="com_content" placeholder="댓글을 입력하세요"/>
+		   	         <input type="hidden" name="com_no" id="com_no" value=""/>
+		   	         <input type="hidden" name="com_pno" id="com_pno" value=""/>
 		   	       </form:form>
 		   	     </td>
-		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="$('#commentForm').submit();"></i></td>
+		   	     <td style="width: 50px;"><<i class="fas fa-edit" onclick="chkComment2()"></i></td>
 		   	    </tr>
 		   	   </table>  
 			 </div><!--/ comment-edit -->
 			 
+			 <!-- comment js start -->
+             <script type="text/javascript">
+            	function commentEdit(com_content, com_no, com_pno) {
+            		var comPut = document.getElementById("comment-put");
+            		var comEdit = document.getElementById("comment-edit");
+            		var comEditor = document.getElementById("comEditor");
+            		var comNo = document.getElementById("com_no");
+            		var comPNo = document.getElementById("com_pno");
+            		
+            		comPut.setAttribute("style", "display: none;");
+            		comEdit.setAttribute("style", "display: flex;");
+					comEditor.value=com_content;
+					comNo.value=com_no;
+					comPNo.value=com_pno;
+            	}
+            	
+			 	function chkComment1() {
+			 		var comContent = document.getElementById("comInput").value;
+			 		var comForm = document.commentForm;
+			 		
+			 		if(!comContent) {
+			 			alert('내용을 입력해주세요!');
+			 		} else {
+			 			comForm.submit();
+			 		}
+			 	}
+			 	
+			 	function chkComment2() {			 		
+			 		var comContent = document.getElementById("comEditor").value;
+			 		var comForm = document.commentUpdateForm;
+			 		
+			 		if(!comContent) {
+			 			alert('내용을 입력해주세요!');
+			 		} else {
+			 			comForm.submit();
+			 		}
+			 	}
+             </script>
+			 <!-- comment js end-->
+			 
 			 <div class="list-btn">
 			   <c:if test="${detail.board_cate eq 'SH' }">
-		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListFree_test.do'">목록</button>
+		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='listTestSh.do?page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}'">목록</button>
 			   </c:if>
 			   <c:if test="${detail.board_cate eq 'EX' }">
-		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListExchange_test.do'">목록</button>
+		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='listTestEx.do?page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}'">목록</button>
 			   </c:if>			   
 		     </div><!--/ list-btn -->
 		   
@@ -254,15 +285,20 @@
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		var hashtags = '${detail.board_hash }';
 		var hash = hashtags.split(",");
 		var inner ='';
 		      
-		console.log(hash);
-		      
+		console.log('해시태그 : '+hash);
+		console.log('카테고리 : '+category);
+
 		for(var i=0 ; i<hash.length ; i++) {
-			inner += '<a href="#" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';
+			if (category == 'SH') {
+				inner += '<a href="listTestSh.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';		
+			} else if (category == 'EX') {
+				inner += '<a href="listTestEx.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';						
+			}
 		}
 		document.getElementById("pHash").innerHTML = inner;
 		      

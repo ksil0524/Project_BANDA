@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mvc.banda.common.SearchCriteria;
 import com.mvc.banda.dao.HJ_dao;
 import com.mvc.banda.dao.JH_dao;
 import com.mvc.banda.dao.JI_dao;
@@ -357,6 +358,27 @@ public class BandaBiz {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 하나경 파트  시작 >  
+	
+	//페이징검색//////////////////////////////////////////
+	//무료나눔
+	public List<BoardVo> pagingListSh(SearchCriteria scri) throws Exception {
+		return nk_dao.pagingListSh(scri);
+	}
+	
+	public int listCountSh(SearchCriteria scri) throws Exception {
+		return nk_dao.listCountSh(scri);
+	}
+	
+	//물물교환
+	public List<BoardVo> pagingListEx(SearchCriteria scri) throws Exception {
+		return nk_dao.pagingListEx(scri);
+	}
+	
+	public int listCountEx(SearchCriteria scri) throws Exception {
+		return nk_dao.listCountEx(scri);
+	}	
+	
+	//페이징검색끝///////////////////////////////////////////
 	
 	//무료나눔 공지목록 출력
 	public List<BoardVo> selectListShNotice() {

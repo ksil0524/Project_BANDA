@@ -57,6 +57,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,6 +68,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mvc.banda.auth.SNSLogin;
 import com.mvc.banda.auth.Snsvalue;
 import com.mvc.banda.biz.BandaBiz;
+import com.mvc.banda.common.PageMaker;
+import com.mvc.banda.common.SearchCriteria;
 import com.mvc.banda.model.vo.AccountVo;
 import com.mvc.banda.model.vo.CommentVo;
 import com.mvc.banda.model.vo.FeedNoVo;
@@ -1652,6 +1655,53 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 하나경 파트  시작 >  
 	
+	
+	//////////////////////////////////
+	//무나
+	@RequestMapping(value = "/listTestSh.do", method = RequestMethod.GET)
+	public String listSh(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
+		model.addAttribute("listShareNotice", biz.selectListShNotice());
+		model.addAttribute("list", biz.pagingListSh(scri));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(biz.listCountSh(scri));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "temp/boardListFree";
+		
+	}
+	
+	//물물교환
+	@RequestMapping(value = "/listTestEx.do", method = RequestMethod.GET)
+	public String listEx(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
+		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
+		model.addAttribute("list", biz.pagingListEx(scri));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(biz.listCountEx(scri));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "temp/boardListExchange";
+		
+	}
+	
+	//게시글 상세
+	@RequestMapping(value = "/detailTest.do", method = RequestMethod.GET)
+	public String read(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
+		model.addAttribute("detail", biz.selectOneBoard(vo.getBoard_no()));
+		model.addAttribute("scri", scri);
+		return "temp/boardDetail";
+	}
+	
+	
+	
+	//////////////////////////////////	
+	
+	
 	//무료나눔
 	@RequestMapping(value="/boardListFree_test.do")
 	public String listShare(Model model) {
@@ -1675,36 +1725,43 @@ public class BandaController {
 	public String boardDetail(Model model, int board_no) {
 //		logger.info("BOARD DETAIL");
 		model.addAttribute("detail", biz.selectOneBoard(board_no));
+		model.addAttribute("boardComList", biz.selectBoardComList(board_no));
 		return "temp/boardDetail";
 	}	
 
 	//게시글을 공지로 바꾸기
 	@RequestMapping(value="/boardSetNotice.do")
-	public String boardSetNotice(int board_no) {
-		int res = biz.boardSetNotice(board_no);
-		if(res>0) {
-			return "redirect:boardListFree_test.do";
+	public String boardSetNotice(BoardVo vo) {
+		int res = biz.boardSetNotice(vo.getBoard_no());
+		if(res>0 && vo.getBoard_cate().equals("SH")) {
+			return "redirect:listTestSh.do";
+		} else if(res>0 && vo.getBoard_cate().equals("EX")) {			
+			return "redirect:listTestEx.do";
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;
+			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
 		}
 	}
 
 	//공지글을 일반 게시글로 내리기
 	@RequestMapping(value="/boardSetNoticeCancel.do")
-	public String boardNoticeCancel(int board_no) {
-		int res = biz.boardNoticeCancel(board_no);
-		if(res>0) {
-			return "redirect:boardListFree_test.do";
+	public String boardNoticeCancel(BoardVo vo) {
+		int res = biz.boardNoticeCancel(vo.getBoard_no());
+		if(res>0 && vo.getBoard_cate().equals("SH")) {
+			return "redirect:listTestSh.do";
+		} else if(res>0 && vo.getBoard_cate().equals("EX")) {			
+			return "redirect:listTestEx.do";
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;
-		}		
+			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
+		}	
 	}
 	
 	//게시글 폼
 	@RequestMapping(value="/boardWriteForm.do")
-	public String boardWriteForm(Model model, String board_cate) {
-		model.addAttribute("category", board_cate);
-		System.out.println("카테고리 : "+board_cate);
+	public String boardWriteForm(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) {
+		model.addAttribute("category", vo.getBoard_cate());
+		System.out.println("카테고리 : "+vo.getBoard_cate());
+		
+		model.addAttribute("scri", scri);
 		
 		return "temp/boardWrite";
 	}
@@ -1768,8 +1825,9 @@ public class BandaController {
 	
 	//게시글 수정 폼
 	@RequestMapping(value="/boardUpdateForm.do")
-	public String boardUpdateForm(Model model, int board_no) {
-		model.addAttribute("detail", biz.selectOneBoard(board_no));
+	public String boardUpdateForm(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri ,Model model) {
+		model.addAttribute("detail", biz.selectOneBoard(vo.getBoard_no()));
+		model.addAttribute("scri", scri);
 		
 		return "temp/boardUpdate";
 	}
@@ -1833,13 +1891,14 @@ public class BandaController {
 	}
 	
 	//댓글 수정
-	public String boardComUpdate(CommentVo vo, int board_no) {
+	@RequestMapping(value="/boardComUpdate.do")
+	public String boardComUpdate(CommentVo vo, int com_pno) {
 		int res = biz.boardComUpdate(vo);
 		
 		if(res>0) {
-			return "redirect:boardDetail_test.do?board_no="+board_no;			
+			return "redirect:boardDetail_test.do?board_no="+com_pno;			
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;			
+			return "redirect:boardDetail_test.do?board_no="+com_pno;			
 		}
 	}
 	

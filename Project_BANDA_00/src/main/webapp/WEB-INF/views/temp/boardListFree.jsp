@@ -1,22 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.mvc.banda.model.vo.AccountVo"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>       
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>      
     
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+	
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("vo");
+	%>
 
 	<!-- ==============================================
 	Styles
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardlist.css" rel="stylesheet" />
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-page.css" rel="stylesheet" />
-	
 </head>
-<body>
+<body style="background-color: #f4f4f4;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
@@ -30,12 +35,12 @@
 	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
 	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="listTestSh.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>무료나눔</span>
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="listTestEx.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>물물교환</span>
 	   </a>
 	   </div>
@@ -45,19 +50,6 @@
 	   	width: 400px !important;
 	   }
 	   </style>
-	   
-	   <!-- 
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_stories.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의피드</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="photo_profile.jsp" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>내계정</span>
-	   </a>
-	   </div>
-	    -->
 	    
 	  </div>
 	</section>
@@ -68,19 +60,37 @@
 	 
 	 <section class="button-menu">
 	  <div class="container">
-	  	<!-- 검색창 부분 -->
+	  	<!-- 검색 부분 시작 -->
 	  	<span id="searchinputBox">
-		  	<select id="searchSelect">
-		  		<option>제목</option>
-		  		<option>내용</option>
-		  		<option>글쓴이</option>
+		  	<select name="searchType" id="searchType">
+		  		<option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : '' }"/>>제목</option>
+		  		<option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : '' }"/>>내용</option>
+		  		<option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : '' }"/>>글쓴이</option>
 		  	</select>
-			<input type="text" id="searchKeyword" placeholder="검색어를 입력하세요"/>
-			<div id="searchBtn" onclick=""><i class="fas fa-search" style="width: 25px; height: 25px;"></i></div>
+			<input type="text" name="keyword" id="searchKeyword" value="${scri.keyword }" placeholder="검색어를 입력하세요"/>
+			<div id="searchBtn" onclick="boardSearch();"><i class="fas fa-search" style="width: 25px; height: 25px;"></i></div>
 		</span>
-	  	<!-- -------- -->
+		
+		<!-- 검색 자바스크립트 -->
+	 	<script type="text/javascript">
+		 	function boardSearch() {
+		 		var btn = document.getElementById('searchBtn');
+		 		var searchType = document.getElementById('searchType');
+		 		var selected = searchType.options[searchType.selectedIndex].value;
+		 		var keyword = document.getElementById('searchKeyword').value;
+		 		
+		 		location.href="listTestSh.do" + '${pageMaker.makeQuery(1)}' + "&searchType=" + selected + "&keyword=" + keyword;
+		 	}	
+	 	</script>
+	  	<!-- 검색부분 끝 -->
 	  	
-	   	<button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardWriteForm.do'" style="position: relative;">Upload</button>
+	  	<!-- 글쓰기 버튼 시작 -->
+	  	<form action="boardWriteForm.do">
+		  	<input type="hidden" name="board_cate" value="SH"/>
+		   	<button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em;">글쓰기</button>
+	   	</form>
+	  	<!-- 글쓰기 버튼 끝 -->
+	   	
 	  </div>
 	 </section>
 	 
@@ -91,7 +101,7 @@
 	 <section class="boardlist">
 	  <div class="container">
 	  
-	   <!-- 공지사항 부분 -->	   
+	   <!-- 공지사항 부분 시작 -->	   
 	   <div class="row">
 	   	<div class="upper-notice" style="padding: 1em;">
 	   	  <table>
@@ -102,43 +112,47 @@
 	   	  	  <col style="width: 100px;">
 	   	  	  <col style="width: 100px;">
 	   	  	</colgroup>
-	   	  	<thead>
-		   	  <tr>
-		   	  	<th><!-- 공지 --></th>
-		   	  	<th>제목</th>
-		   	  	<th>글쓴이</th>
-		   	  	<th>작성일</th>
-		   	  	<th>조회수</th>
-		   	  </tr>
-	   	  	</thead>
-	   	  	<c:choose>
-	   	  	  <c:when test="${not empty listShareNotice}">
-	   	  	   <c:forEach items="${listShareNotice }" var="listShNotice">	   	  	
-		   	  	<tbody>
-		   	  	  <tr>
-		   	  	  	<td class="td_notice" style="font-weight: 700;">공지</td>
-		   	  	  	<td class="td_title"><a href="boardDetail_test.do?board_no=${listShNotice.board_no }">${listShNotice.board_title }</a></td>
-		   	  	  	<td class="td_writer">${listShNotice.id }</td>
-		   	  	  	<td class="td_date"><fmt:formatDate value="${listShNotice.board_regdate }" pattern="yyyy-MM-dd"/></td>
-		   	  	  	<td class="td_view">100</td>
-		   	  	  </tr>
-		   	  	</tbody>
-	   	  	   </c:forEach>	   	  	
-	   	  	  </c:when>	   	  	
-	   	  	</c:choose>
+	   	  	<c:if test="${not empty list }">
+	   	  	  <c:if test="${not empty listShareNotice}">
+	   	  	    <thead>
+		   	      <tr>
+		   	  	    <th><!-- 공지 --></th>
+		   	  	    <th>제목</th>
+		   	  	    <th>글쓴이</th>
+		   	  	    <th>작성일</th>
+		   	  	    <th>조회수</th>
+		   	      </tr>
+	   	  	    </thead>
+	   	  	     <c:forEach items="${listShareNotice }" var="listShNotice">	   	  	
+		   	  	  <tbody>
+		   	  	    <tr>
+		   	  	  	  <td class="td_notice" style="font-weight: 700;">공지</td>
+		   	  	  	  <td class="td_title"><a href="boardDetail_test.do?board_no=${listShNotice.board_no }">${listShNotice.board_title }</a><span> [${fn:length(listShNotice.comment_list)}]</span></td>
+		   	  	  	  <td class="td_writer">${listShNotice.id }</td>
+		   	  	  	  <td class="td_date"><fmt:formatDate value="${listShNotice.board_regdate }" pattern="yyyy-MM-dd"/></td>
+		   	  	  	  <td class="td_view">100</td>
+		   	  	    </tr>
+		   	  	  </tbody>
+	   	  	     </c:forEach>   	  	
+	   	  	  </c:if>
+	   	  	</c:if>
 	   	  </table>
 	   	</div><!--/ upper-notice -->
 	   </div><!--/ div row -->
-	   <!--/ 공지사항 부분 -->
+	   <!--/ 공지사항 부분 끝 -->
 	  
+	   <!-- 게시글 부분 시작 -->
 	   <div class="row">   
 	     <c:choose>
-	       <c:when test="${not empty listShare }">
-	         <c:forEach items="${listShare}" var="listSh">
+	       <c:when test="${empty list }">
+	       	 <h3 style="text-align:center;">등록된 게시물이 없습니다.</h3>
+	       </c:when>
+	       <c:when test="${not empty list }">
+	         <c:forEach items="${list}" var="listSh">
 			    <div class="col-lg-4">
-				 <a href="boardDetail_test.do?board_no=${listSh.board_no }">
+				 <a href="detailTest.do?board_no=${listSh.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}">
 				 <div class="explorebox" 
-				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/${listSh.board_file }') no-repeat;
+				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/board/${listSh.board_no }/boardImg.jpg'), url('<%=request.getContextPath() %>/resources/images/boardlist_noimg.png') no-repeat;
 				          background-size: cover;
 		                  background-position: center center;
 		                  -webkit-background-size: cover;
@@ -146,12 +160,12 @@
 		                  -o-background-size: cover;">
 				  <div class="explore-top">
 				   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-				   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
+				   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>${fn:length(listSh.comment_list)}</span></div>
 		          </div>		
 		
 		          <div class="story-body">
 		           <h3>${listSh.board_title }</h3>
-		           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
+		           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${listSh.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="user"></div>
 		           <h4>${listSh.id }</h4>
 		           <p><fmt:formatDate value="${listSh.board_regdate }" pattern="yyyy-MM-dd"/></p>
 		          </div>  
@@ -162,83 +176,8 @@
 		   </c:when>
 		 </c:choose>
 	   </div><!--/ row -->
-	   
-	   <div class="row">
-	   
-	    <div class="col-lg-4">
-		 <a href="boardDetail.do">
-		 <div class="explorebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/25.jpg') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">
-		  <div class="explore-top">
-		   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-		   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
-          </div>		
+	   <!--/ 게시글 부분 끝 -->
 
-          <div class="story-body">
-           <h3>TITLE</h3>
-           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>Clifford Graham</h4>
-           <p>2020-01-01</p>
-          </div>  	  
-		 </div>
-		 </a>
-		</div><!--/ col-lg-4 -->
-	   
-	    <div class="col-lg-4">
-		 <a href="boardDetail.do">
-		 <div class="explorebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/36.jpg') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">
-		  <div class="explore-top">
-		   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-		   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
-          </div>		
-
-          <div class="story-body">
-           <h3>TITLE</h3>
-           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>Clifford Graham</h4>
-           <p>2020-01-01</p>
-          </div>  			  
-		 </div>
-		 </a>
-		</div><!--/ col-lg-4 -->
-	   
-	    <div class="col-lg-4">
-		 <a href="boardDetail.do">
-		 <div class="explorebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/temp/assets/img/posts/26.jpg') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">
-		  <div class="explore-top">
-		   <div class="explore-like"><i class="fas fa-eye"></i> <span>14,100</span></div>
-		   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>100</span></div>
-          </div>		
-
-          <div class="story-body">
-           <h3>TITLE</h3>
-           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
-           <h4>Clifford Graham</h4>
-           <p>2020-01-01</p>
-          </div>  		  
-		 </div>
-		 </a>
-		</div><!--/ col-lg-4 -->
-		
-	   </div><!--/ row -->
-	   
 	  </div><!--/ container -->
 	 </section><!--/ newsfeed -->
 	 
@@ -248,30 +187,23 @@
 	 
 	 <nav aria-label="Page navigation example" style="background-color: #f4f4f4; padding-bottom:100px;">
 	  <ul class="pagination justify-content-end">
-		  <!-- « » -->
-		  <li><a href="#">❮❮</a></li>
-		  <li><a href="#">❮</a></li>
-		  <li><a href="#">1</a></li>
-		  <li><a class="active" href="#">2</a></li>
-		  <li><a href="#">3</a></li>
-		  <li><a href="#">4</a></li>
-		  <li><a href="#">5</a></li>
-		  <li><a href="#">6</a></li>
-		  <li><a href="#">7</a></li>
-		  <li><a href="#">❯</a></li>
-		  <li><a href="#">❯❯</a></li>
-		</ul>
+	   <div class="container">
+	 	<div class="row">
+		  <ul class="pagination justify-content-end">
+			  <!-- « » -->
+			<c:if test="${pageMaker.prev }">
+			    <li><a href="listTestSh.do${pageMaker.makeSearch(pageMaker.startPage-1)}">❮❮</a></li>
+			</c:if>	
+			<c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			  <li><a href="listTestSh.do${pageMaker.makeSearch(idx)}">${idx}</a></li>
+			</c:forEach>
+			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                  <li><a href="listTestSh.do${pageMaker.makeSearch(pageMaker.endPage+1)}">❯❯</a></li>
+            </c:if>
+			</ul>
+	 	</div><!--/ row -->
+	   </div><!--/ container -->
 	 </nav>
-	
-	  <script>
-		var _hmt = _hmt || [];
-		(function() {
-			var hm = document.createElement("script");
-			hm.src = "//hm.baidu.com/hm.js?73c27e26f610eb3c9f3feb0c75b03925";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s);
-		})();
-	  </script>
 	 
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>

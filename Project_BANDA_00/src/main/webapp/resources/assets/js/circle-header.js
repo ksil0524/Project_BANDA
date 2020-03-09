@@ -100,6 +100,8 @@ function joinUser(){
 	$("#joincontent").show();
 }
 
+
+////////////////////김재익
 function joinChk(){
 	var email = $("#joinForm #email").val();
 	var id = $("#joinForm #id").val();
@@ -115,7 +117,220 @@ function joinChk(){
 		close();
 	}
 }
+//id 중복체크 placeholder 변경 ajax
+$("#id").blur(function(){
+	var id = $("#joinForm #id").val();
 
+	var id_set = {
+			"id":id,
+	}; 
+	
+	
+	//영문자 숫자 4~10
+	var loginIdRex =  /^[a-z0-9]{4,10}$/g;
+
+	if(!loginIdRex.test(id)){
+	
+		
+		isjoin++;
+		$("#id").val("");
+		//$("#id::-webkit-input-placeholder").css({"color" : "red"});
+		$("#id").attr("placeholder","id는 숫자,소문자 4~10자리만 입력가능합니다.");
+		$("#id").css({"font-size":"12px"})
+		return false;
+	}
+	
+	//isjoin = 0;
+	
+	$.ajax({
+		url: "idoverlab.do",
+		type:"post",
+		data: JSON.stringify(id_set),
+		contentType:"application/json",
+		dataType:"json",
+		success : function(msg){
+			
+			var rres = msg.res;
+		
+			
+			if(rres){
+				$("#id").val("");
+				$("#id").attr("placeholder","아이디가 중복되었습니다.");
+			}
+		}, 
+		error:function(request,status,error){
+				
+				alert("통신실패");
+				alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+			}
+	});
+});
+//비밀번호 4~10글자 영소 숫자
+$("#password").blur(function(){
+	var id = $("#joinForm #password").val();
+	//영문자 숫자 4~10
+	var loginIdRex =  /^[a-z0-9]{4,10}$/g;
+
+	if(!loginIdRex.test(id)){
+	
+		
+		isjoin++;
+		$("#password").val("");
+		$("#password").attr("placeholder","비밀번호는 숫자,소문자 4~10자리만 입력가능합니다.");
+		$("#password").css({"font-size":"10px"})
+		return false;
+	}
+	
+})
+function inputPhoneNumber(obj) {
+
+
+
+    var number = obj.value.replace(/[^0-9]/g, "");
+    var phone = "";
+
+
+
+    if(number.length < 4) {
+        return number;
+    } else if(number.length < 7) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3);
+    } else if(number.length < 11) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 3);
+        phone += "-";
+        phone += number.substr(6);
+    } else {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 4);
+        phone += "-";
+        phone += number.substr(7);
+    }
+    obj.value = phone;
+}
+//비밀번호 4~10글자 영소 숫자
+$("#email").blur(function(){
+	var id = $("#joinForm #email").val();
+	//영문자 숫자 4~10
+	var loginIdRex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[0-9a-zA-Z]$/i;
+
+	if(!loginIdRex.test(id)){
+	
+		isjoin++;
+		$("#email").val("");
+		
+		$("#email").attr("placeholder","이메일 형식으로 입력해주세요");
+		$("#email").css({"font-size":"10px"})
+		return false;
+	}
+	
+})
+$("#phone").blur(function(){
+	var id = $("#joinForm #phone").val();
+	
+	var loginIdRex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+
+	if(!loginIdRex.test(id)){
+	
+		
+		isjoin++;
+		$("#phone").val("");
+		
+		$("#phone").attr("placeholder","010-0000-0000 형식으로 입력해주세요");
+		$("#phone").css({"font-size":"10px"})
+		return false;
+	}
+	
+})
+//id 중복체크로 변경된 placeholder 제자리
+$("#phone").focus(function(){
+	$("#phone").attr("placeholder","phone")
+	$("#phone").css({"font-size":"16px"})
+})
+//id 중복체크로 변경된 placeholder 제자리
+$("#email").focus(function(){
+	$("#email").attr("placeholder","email")
+	$("#email").css({"font-size":"16px"})
+})
+//id 중복체크로 변경된 placeholder 제자리
+$("#id").focus(function(){
+	$("#id").attr("placeholder","Id")
+	$("#id").css({"font-size":"16px"})
+})
+//password 중복체크로 변경된 placeholder 제자리
+$("#password").focus(function(){
+	$("#password").attr("placeholder","password")
+	$("#password").css({"font-size":"16px"})
+})
+
+
+
+
+function joinChk(){
+	var email = $("#joinForm #email").val();
+	var id = $("#joinForm #id").val();
+	var pw = $("#joinForm #password").val();
+	var phone = $("#joinForm #phone").val();
+	
+
+
+    //010-3013-7673형식
+ 
+	var register_set = {
+			"email":email,
+			"password":pw,
+			"id":id,
+			"phone":phone
+	}; 
+	
+	alert("email: " + email + "ID: " + id+  "pw: " + pw + "phone:" + phone);
+	
+	/* 정규식 및 데이터 입력 체크 - login 담당 */
+	if(email == null || email != "" ||id == null|| id == "" || pw == null||pw != "" ||phone ==null || phone != ""){
+		close();
+	}else{
+		alert("정보를 모두 입력하세요.");
+	}
+
+	
+	$.ajax({
+		url: "joinregister.do",
+		type:"post",
+		data: JSON.stringify(register_set),
+		contentType:"application/json",
+		dataType:"json",
+		success : function(msg){
+			
+			if(msg.res){
+				alert("가입 완료되었습니다.")
+				
+			}else{
+				alert("가입 실패")
+				$("#joincontent").show();
+				$(".closeBtn").show();
+				$("#logincontent").hide();
+				$("#header").toggleClass('hide');
+				$("#content").hide();
+				$("#loginchk").css("display","none");
+			}
+			
+		}, 
+		error:function(request,status,error){
+			alert("통신실패");
+			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+		}
+	});
+	
+
+
+
+}
+///////////////
 function close(){
 	
 	

@@ -80,7 +80,7 @@ div.m-0 {
 	margin-bottom: 30px;
 }
 
-.comment-put {
+.comment-put, .comment-edit {
 	display: flex; 
 	justify-content: center;
 }

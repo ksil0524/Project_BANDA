@@ -1698,7 +1698,9 @@ public class BandaController {
 	//게시글 상세
 	@RequestMapping(value = "/detailTest.do", method = RequestMethod.GET)
 	public String read(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
-		model.addAttribute("detail", biz.selectOneBoard(vo.getBoard_no()));
+		BoardVo vo2 = biz.selectOneBoard(vo.getBoard_no());
+		System.out.println("bbbbbbbbbb: "+vo2);
+		model.addAttribute("detail", vo2);
 		model.addAttribute("scri", scri);
 		return "temp/boardDetail";
 	}
@@ -1894,12 +1896,12 @@ public class BandaController {
 	
 	//댓글 작성
 	@RequestMapping(value="/boardComWrite.do")
-	public String boardComWrite(CommentVo vo, int com_pno) {
-		int res = biz.boardComWrite(vo, com_pno);
+	public String boardComWrite(CommentVo vo) {
+		int res = biz.boardComWrite(vo);
 		if(res>0) {
-			return "redirect:boardDetail_test.do?board_no="+com_pno;			
+			return "redirect:detailTest.do?board_no="+vo.getCom_pno();			
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+com_pno;			
+			return "redirect:detailTest.do?board_no="+vo.getCom_pno();			
 		}
 	}
 	
@@ -1909,9 +1911,9 @@ public class BandaController {
 		int res = biz.boardComUpdate(vo);
 		
 		if(res>0) {
-			return "redirect:boardDetail_test.do?board_no="+com_pno;			
+			return "redirect:detailTest.do?board_no="+com_pno;			
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+com_pno;			
+			return "redirect:detailTest.do?board_no="+com_pno;			
 		}
 	}
 	
@@ -1921,9 +1923,9 @@ public class BandaController {
 		int res = biz.boardComDelete(com_no);
 		
 		if(res>0) {
-			return "redirect:boardDetail_test.do?board_no="+board_no;			
+			return "redirect:detailTest.do?board_no="+board_no;			
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;			
+			return "redirect:detailTest.do?board_no="+board_no;			
 		}
 	}
 	

@@ -137,7 +137,7 @@
               <p class="m-0">${detail.id }</p>
 			  <small><span><fmt:formatDate value="${detail.board_regdate }" pattern="yyyy-MM-dd"/></span></small>
 			  <div class="detail-view">
-			 	<i class="fas fa-eye"></i><span> 786,286</span>
+			 	<!-- <i class="fas fa-eye"></i><span> 786,286</span>  -->
 			  </div>
              </div>
             </div><!--/ media -->
@@ -177,36 +177,40 @@
 		      <c:when test="${empty detail.comment_list }">
 		        <li style="text-align: center;">등록된 댓글이 없습니다. 댓글을 달아주세요!</li>
 		      </c:when>
-		      <c:when test="${not empty detail.comment_list }">
+		      <c:otherwise>
 		        <c:forEach items="${detail.comment_list }" var="comments">
 		          <li>
                     <div class="comment-img">
                       <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${comments.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" class="img-responsive img-circle" alt="User"/>
                     </div>
                     <div class="comment-text">
-                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span><span class=""> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span><span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
+                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span>
+                      <c:set var="commenttf" value="${(comments.id eq vo.id)?'y':'n' }"/>
+             		  <c:if test="${'y' eq commenttf }">
+                      <span class=""> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span>
+                      <span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
+                      </c:if>
                       <p>${comments.com_content }</p> 
                     </div>
                   </li><!--/ li -->
 		        </c:forEach>
-		      </c:when>
+		      </c:otherwise>
 		     </c:choose>
             </ul><!--/ comment-list -->
            </div><!--/ cardbox-comment-list -->
 		   
 		   <div class="comment-bottom">  
-		    	 	 
 			<div class="comment-put" id="comment-put" style="">
 			   <table style="width: 800px;">
 		   	    <tr>
-		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
+		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" alt="Image"></td>
 		   	     <td>
-		   	       <form:form name="commentForm" id="commentForm" action="boardComWrite.do">
+		   	       <form name="commentForm" id="commentForm" action="boardComWrite.do">
 		   	         <input type="hidden" name="com_cate" value="B"/>
-		   	         <input type="hidden" name="id" value="test"/>
-		   	         <input class="form-control input-sm" type="text" name="com_content" value="" placeholder="댓글을 입력하세요"/>
+		   	         <input type="hidden" name="id" value="${vo.id }"/>
+		   	         <input class="form-control input-sm" type="text" name="com_content" id="comInput" placeholder="댓글을 입력하세요"/>
 		   	         <input type="hidden" name="com_pno" value="${detail.board_no }"/>
-		   	       </form:form>
+		   	       </form>
 		   	     </td>
 		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="chkComment1()"></i></td>
 		   	    </tr>
@@ -216,15 +220,15 @@
 			 <div class="comment-edit" id="comment-edit" style="display: none;">
 			   <table style="width: 800px;">
 		   	    <tr>
-		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="http://bootdey.com/img/Content/user_3.jpg" alt="Image"></td>
+		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" alt="Image"></td>
 		   	     <td>
-		   	       <form:form name="commentUpdateForm" id="commentUpdateForm" action="boardComUpdate.do">
+		   	       <form name="commentUpdateForm" id="commentUpdateForm" action="boardComUpdate.do">
 		   	         <input class="form-control input-sm" type="text" id="comEditor" name="com_content" placeholder="댓글을 입력하세요"/>
 		   	         <input type="hidden" name="com_no" id="com_no" value=""/>
 		   	         <input type="hidden" name="com_pno" id="com_pno" value=""/>
-		   	       </form:form>
+		   	       </form>
 		   	     </td>
-		   	     <td style="width: 50px;"><<i class="fas fa-edit" onclick="chkComment2()"></i></td>
+		   	     <td style="width: 50px;"><i class="fas fa-edit" onclick="chkComment2()"></i></td>
 		   	    </tr>
 		   	   </table>  
 			 </div><!--/ comment-edit -->

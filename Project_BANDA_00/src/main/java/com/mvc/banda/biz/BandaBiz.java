@@ -442,8 +442,8 @@ public class BandaBiz {
 	}
 
 	//댓글 작성
-	public int boardComWrite(CommentVo vo, int board_no) {
-		return nk_dao.boardComWrite(vo, board_no);
+	public int boardComWrite(CommentVo vo) {
+		return nk_dao.boardComWrite(vo);
 	}
 	
 	//댓글 수정

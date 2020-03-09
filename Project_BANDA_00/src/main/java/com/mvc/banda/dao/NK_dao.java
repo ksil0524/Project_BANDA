@@ -141,6 +141,9 @@ public class NK_dao {
 		
 		try {
 			vo = sqlSession.selectOne(NAMESPACE+"selectOneBoard", board_no);
+			
+			List<CommentVo> comList = selectBoardComList(vo.getBoard_no());
+			vo.setComment_list(comList);
 		} catch(Exception e) {
 			System.out.println("[ERROR] Board Select One");
 			e.printStackTrace();
@@ -251,7 +254,7 @@ public class NK_dao {
 	}
 	
 	//댓글 작성
-	public int boardComWrite(CommentVo vo, int board_no) {
+	public int boardComWrite(CommentVo vo) {
 		int res=0;
 		
 		try {

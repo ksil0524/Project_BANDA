@@ -47,13 +47,6 @@
 	
 	
 	<br><a href="index_go.do">real_index</a><!-- 주예 -->
-
-	<!-- 나경 -->
-	<br>
-	<a href="listTestEx.do">boardListExchange TEST</a>	
-	<br>
-	<a href="listTestSh.do">boardListFree TEST</a>	
-	<!--/ 나경 -->
 	
 	<!-- 재호 -->
 	<br>

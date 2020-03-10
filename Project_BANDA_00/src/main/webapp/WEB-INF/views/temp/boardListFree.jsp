@@ -35,12 +35,12 @@
 	<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
 	   <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	   <a class="nav-icon" href="listTestSh.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>무료나눔</span>
 	   </a>
 	   </div>
 	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="listTestEx.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	   <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>물물교환</span>
 	   </a>
 	   </div>
@@ -79,7 +79,7 @@
 		 		var selected = searchType.options[searchType.selectedIndex].value;
 		 		var keyword = document.getElementById('searchKeyword').value;
 		 		
-		 		location.href="listTestSh.do" + '${pageMaker.makeQuery(1)}' + "&searchType=" + selected + "&keyword=" + keyword;
+		 		location.href="boardListFree.do" + '${pageMaker.makeQuery(1)}' + "&searchType=" + selected + "&keyword=" + keyword;
 		 	}	
 	 	</script>
 	  	<!-- 검색부분 끝 -->
@@ -127,7 +127,7 @@
 		   	  	  <tbody>
 		   	  	    <tr>
 		   	  	  	  <td class="td_notice" style="font-weight: 700;">공지</td>
-		   	  	  	  <td class="td_title"><a href="boardDetail_test.do?board_no=${listShNotice.board_no }">${listShNotice.board_title }</a><span> [${fn:length(listShNotice.comment_list)}]</span></td>
+		   	  	  	  <td class="td_title"><a href="boardDetail.do?board_no=${listShNotice.board_no }">${listShNotice.board_title }</a><span> [${fn:length(listShNotice.comment_list)}]</span></td>
 		   	  	  	  <td class="td_writer">${listShNotice.id }</td>
 		   	  	  	  <td class="td_date"><fmt:formatDate value="${listShNotice.board_regdate }" pattern="yyyy-MM-dd"/></td>
 		   	  	  	  <!-- <td class="td_view">100</td>  -->
@@ -150,7 +150,7 @@
 	       <c:when test="${not empty list }">
 	         <c:forEach items="${list}" var="listSh">
 			    <div class="col-lg-4">
-				 <a href="detailTest.do?board_no=${listSh.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}">
+				 <a href="boardDetail.do?board_no=${listSh.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}">
 				 <div class="explorebox" 
 				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/board/${listSh.board_no }/boardImg.jpg'), url('<%=request.getContextPath() %>/resources/images/boardlist_noimg.png') no-repeat;
 				          background-size: cover;
@@ -192,13 +192,13 @@
 		  <ul class="pagination justify-content-end">
 			  <!-- « » -->
 			<c:if test="${pageMaker.prev }">
-			    <li><a href="listTestSh.do${pageMaker.makeSearch(pageMaker.startPage-1)}">❮❮</a></li>
+			    <li><a href="boardListFree.do${pageMaker.makeSearch(pageMaker.startPage-1)}">❮❮</a></li>
 			</c:if>	
 			<c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			  <li><a href="listTestSh.do${pageMaker.makeSearch(idx)}">${idx}</a></li>
+			  <li><a href="boardListFree.do${pageMaker.makeSearch(idx)}">${idx}</a></li>
 			</c:forEach>
 			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                  <li><a href="listTestSh.do${pageMaker.makeSearch(pageMaker.endPage+1)}">❯❯</a></li>
+                  <li><a href="boardListFree.do${pageMaker.makeSearch(pageMaker.endPage+1)}">❯❯</a></li>
             </c:if>
 			</ul>
 	 	</div><!--/ row -->

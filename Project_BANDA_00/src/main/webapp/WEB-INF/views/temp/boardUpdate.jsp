@@ -37,12 +37,12 @@
 	   <c:choose>
 	     <c:when test="${fn:contains(category, 'SH')}">
 	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	         <a class="nav-icon" href="boardListFree_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>무료나눔</span>
 	         </a>
 	       </div>
 	       <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	         <a class="nav-icon" href="boardListExchange_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>물물교환</span>
 	         </a>
 	       </div> 
@@ -149,7 +149,7 @@
 			    <script type="text/javascript">
 				    function detailBtn() {
 						event.preventDefault();
-						location.href="detailTest.do?board_no=${detail.board_no }";		 
+						location.href="boardDetail.do?board_no=${detail.board_no }";		 
 					 }	
 			    </script>
 			    <!-- 목록 스크립트 끝 -->    

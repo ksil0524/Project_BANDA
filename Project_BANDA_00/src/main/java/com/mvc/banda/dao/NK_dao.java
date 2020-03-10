@@ -40,6 +40,11 @@ public class NK_dao {
 	
 		try {
 			list = sqlSession.selectList(NAMESPACE+"pagingListSh", scri);
+			
+			for(BoardVo vo : list) {
+				List<CommentVo> cList = selectBoardComList(vo.getBoard_no());
+				vo.setComment_list(cList);
+			}
 		} catch(Exception e) {
 			System.out.println("[ERROR] Share Board Select List PAGING");
 			e.printStackTrace();
@@ -69,6 +74,11 @@ public class NK_dao {
 		
 		try {
 			list = sqlSession.selectList(NAMESPACE+"pagingListEx", scri);
+			
+			for(BoardVo vo : list) {
+				List<CommentVo> comList = selectBoardComList(vo.getBoard_no());
+				vo.setComment_list(comList);
+			}
 		} catch(Exception e) {
 			System.out.println("[ERROR] EXCHANGE Board Select List PAGING");
 			e.printStackTrace();

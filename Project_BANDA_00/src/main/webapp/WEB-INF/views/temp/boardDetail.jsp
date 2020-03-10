@@ -40,12 +40,12 @@
 	   <c:choose>
 	     <c:when test="${fn:contains(boardCate, 'SH')}">
 	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	         <a class="nav-icon" href="boardListFree_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>무료나눔</span>
 	         </a>
 	       </div>
 	       <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	         <a class="nav-icon" href="boardListExchange_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>물물교환</span>
 	         </a>
 	       </div> 
@@ -275,10 +275,10 @@
 			 
 			 <div class="list-btn">
 			   <c:if test="${detail.board_cate eq 'SH' }">
-		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='listTestSh.do?page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}'">목록</button>
+		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListFree.do?page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}'">목록</button>
 			   </c:if>
 			   <c:if test="${detail.board_cate eq 'EX' }">
-		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='listTestEx.do?page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}'">목록</button>
+		         <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardListExchange.do?page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}'">목록</button>
 			   </c:if>			   
 		     </div><!--/ list-btn -->
 		   
@@ -315,9 +315,9 @@
 
 		for(var i=0 ; i<hash.length ; i++) {
 			if (category == 'SH') {
-				inner += '<a href="listTestSh.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';		
+				inner += '<a href="boardListFree.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';		
 			} else if (category == 'EX') {
-				inner += '<a href="listTestEx.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';						
+				inner += '<a href="boardListExchange.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';						
 			}
 		}
 		document.getElementById("pHash").innerHTML = inner;

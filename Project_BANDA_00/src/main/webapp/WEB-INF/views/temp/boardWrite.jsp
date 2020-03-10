@@ -36,12 +36,12 @@
 	   <c:set var="prevPage" value="${category }"/>
 	     <c:if test="${fn:contains(prevPage, 'SH')}">
 	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
-	         <a class="nav-icon" href="boardListFree_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>무료나눔</span>
 	         </a>
 	       </div>
 	       <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	         <a class="nav-icon" href="boardListExchange_test.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>물물교환</span>
 	         </a>
 	       </div> 
@@ -155,10 +155,10 @@
 			  <div class="row btns" style="padding-left: 5% !important; padding-right: 5% !important;">
 			    <input type="submit" value="작성">
 			    <c:if test="${category eq 'SH' }">
-			      <input type="button" value="목록" onclick="location.href='listTestSh.do'">
+			      <input type="button" value="목록" onclick="location.href='boardListFree.do'">
 			    </c:if>
 			    <c:if test="${category eq 'EX' }">
-			      <input type="button" value="목록" onclick="location.href='listTestEx.do'">
+			      <input type="button" value="목록" onclick="location.href='boardListExchange.do'">
 			    </c:if> 
 			  </div>
 			  <!--/ 버튼 끝 -->

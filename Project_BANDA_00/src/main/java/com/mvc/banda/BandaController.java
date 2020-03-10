@@ -1773,7 +1773,8 @@ public class BandaController {
 	
 	//////////////////////////////////
 	//무나
-	@RequestMapping(value = "/listTestSh.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "/listTestSh.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardListFree.do", method = RequestMethod.GET)
 	public String listSh(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
 		model.addAttribute("listShareNotice", biz.selectListShNotice());
 		model.addAttribute("list", biz.pagingListSh(scri));
@@ -1789,7 +1790,8 @@ public class BandaController {
 	}
 	
 	//물물교환
-	@RequestMapping(value = "/listTestEx.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "/listTestEx.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardListExchange.do", method = RequestMethod.GET)
 	public String listEx(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
 		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
 		model.addAttribute("list", biz.pagingListEx(scri));
@@ -1805,7 +1807,8 @@ public class BandaController {
 	}
 	
 	//게시글 상세
-	@RequestMapping(value = "/detailTest.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "/detailTest.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
 	public String read(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
 		BoardVo vo2 = biz.selectOneBoard(vo.getBoard_no());
 		System.out.println("bbbbbbbbbb: "+vo2);
@@ -1851,11 +1854,11 @@ public class BandaController {
 	public String boardSetNotice(BoardVo vo) {
 		int res = biz.boardSetNotice(vo.getBoard_no());
 		if(res>0 && vo.getBoard_cate().equals("SH")) {
-			return "redirect:listTestSh.do";
+			return "redirect:boardListFree.do";
 		} else if(res>0 && vo.getBoard_cate().equals("EX")) {			
-			return "redirect:listTestEx.do";
+			return "redirect:boardListExchange.do";
 		} else {
-			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
+			return "redirect:boardDetail.do?board_no="+vo.getBoard_no();
 		}
 	}
 
@@ -1864,11 +1867,11 @@ public class BandaController {
 	public String boardNoticeCancel(BoardVo vo) {
 		int res = biz.boardNoticeCancel(vo.getBoard_no());
 		if(res>0 && vo.getBoard_cate().equals("SH")) {
-			return "redirect:listTestSh.do";
+			return "redirect:boardListFree.do";
 		} else if(res>0 && vo.getBoard_cate().equals("EX")) {			
-			return "redirect:listTestEx.do";
+			return "redirect:boardListExchange.do";
 		} else {
-			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
+			return "redirect:boardDetail.do?board_no="+vo.getBoard_no();
 		}	
 	}
 	
@@ -1930,7 +1933,7 @@ public class BandaController {
 			insertImg.delete();
 			
 			//상세 보기로 이동
-			return "redirect:detailTest.do?board_no="+boardno;
+			return "redirect:boardDetail.do?board_no="+boardno;
 			
 		} else {
 			System.out.println("[ERROR] BOARD WRITE");
@@ -1982,7 +1985,7 @@ public class BandaController {
 //			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
 //		}
 		if(res>0) {			
-			return "redirect:detailTest.do?board_no="+vo.getBoard_no();
+			return "redirect:boardDetail.do?board_no="+vo.getBoard_no();
 		} else {
 			return "redirect:boardUpdateForm.do?board_cate="+vo.getBoard_cate()+"&board_no="+vo.getBoard_no();
 		}
@@ -1995,11 +1998,11 @@ public class BandaController {
 		
 		int res = biz.boardDelete(board_no);
 		if(res>0 && board_cate.equals("SH")) {
-			return "redirect:boardListFree_test.do";							
+			return "redirect:boardListFree.do";							
 		} else if(res>0 && board_cate.equals("EX")) {
-			return "redirect:boardListExchange_test.do";						
+			return "redirect:boardListExchange.do";						
 		} else {
-			return "redirect:boardDetail_test.do?board_no="+board_no;						
+			return "redirect:boardDetail.do?board_no="+board_no;						
 		}
 	}
 	
@@ -2008,9 +2011,9 @@ public class BandaController {
 	public String boardComWrite(CommentVo vo) {
 		int res = biz.boardComWrite(vo);
 		if(res>0) {
-			return "redirect:detailTest.do?board_no="+vo.getCom_pno();			
+			return "redirect:boardDetail.do?board_no="+vo.getCom_pno();			
 		} else {
-			return "redirect:detailTest.do?board_no="+vo.getCom_pno();			
+			return "redirect:boardDetail.do?board_no="+vo.getCom_pno();			
 		}
 	}
 	
@@ -2020,9 +2023,9 @@ public class BandaController {
 		int res = biz.boardComUpdate(vo);
 		
 		if(res>0) {
-			return "redirect:detailTest.do?board_no="+com_pno;			
+			return "redirect:boardDetail.do?board_no="+com_pno;			
 		} else {
-			return "redirect:detailTest.do?board_no="+com_pno;			
+			return "redirect:boardDetail.do?board_no="+com_pno;			
 		}
 	}
 	
@@ -2032,9 +2035,9 @@ public class BandaController {
 		int res = biz.boardComDelete(com_no);
 		
 		if(res>0) {
-			return "redirect:detailTest.do?board_no="+board_no;			
+			return "redirect:boardDetail.do?board_no="+board_no;			
 		} else {
-			return "redirect:detailTest.do?board_no="+board_no;			
+			return "redirect:boardDetail.do?board_no="+board_no;			
 		}
 	}
 	

@@ -12,41 +12,28 @@
 		<result property="board_nyn" column="BOARD_NYN"/>
 		<result property="board_file" column="BOARD_FILE"/>
 		<result property="board_hash" column="BOARD_HASH"/>
+		<result property="board_view" column="BOARD_VIEW"/>
 	</resultMap>
 	
-	<!-- 무료나눔 selectList -->
+	<!-- 무료나눔 공지 selectList -->
 	<select id="selectListShNotice" resultType="boardVo">
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH
+		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW  
 		FROM BOARD
 		WHERE BOARD_CATE='SH' AND BOARD_NYN='Y'
 		ORDER BY BOARD_NO DESC
 	</select>
-	
-	<select id="selectListSh" resultType="boardVo">
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
-		FROM BOARD
-		WHERE BOARD_CATE='SH' AND BOARD_NYN='N'
-		ORDER BY BOARD_NO DESC
-	</select>
 
-	<!-- 물물교환 selectList -->
+	<!-- 물물교환 공지 selectList -->
 	<select id="selectListExNotice" resultType="boardVo">
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
+		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW 
 		FROM BOARD
 		WHERE BOARD_CATE='EX' AND BOARD_NYN='Y'
-		ORDER BY BOARD_NO DESC
-	</select>
-
-	<select id="selectListEx" resultType="boardVo">
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH 
-		FROM BOARD
-		WHERE BOARD_CATE='EX' AND BOARD_NYN='N'
 		ORDER BY BOARD_NO DESC
 	</select>
 	
 	<!-- selectOne -->	
 	<select id="selectOneBoard" parameterType="int" resultType="boardVo">
-		SELECT BOARD_NO, BOARD_CATE, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_NYN, BOARD_FILE, BOARD_HASH 
+		SELECT BOARD_NO, BOARD_CATE, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_NYN, BOARD_FILE, BOARD_HASH, BOARD_VIEW 
 		FROM BOARD
 		WHERE BOARD_NO=#{board_no}
 	</select>
@@ -70,7 +57,7 @@
 	
 	<!-- 게시글 작성 -->
 	<insert id="insertBoard" parameterType="boardVo">
-		INSERT INTO BOARD
+		INSERT INTO BOARD(BOARD_NO, BOARD_CATE, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_NYN, BOARD_FILE, BOARD_HASH) 
 		VALUES(BOARD_SEQ.NEXTVAL, #{board_cate}, #{id}, #{board_title}, #{board_content}, SYSDATE, 'N', ' ', #{board_hash})
 	</insert>
 	
@@ -86,6 +73,13 @@
 		DELETE FROM BOARD
 		WHERE BOARD_NO=#{board_no}
 	</delete>
+	
+	<!-- 게시글 조회수 -->
+	<update id="boardViewCnt" parameterType="int">
+		UPDATE BOARD
+		SET BOARD_VIEW = BOARD_VIEW + 1
+		WHERE BOARD_NO=#{board_no}
+	</update>
 	
 	<!-- 댓글 목록 -->
 	<select id="selectBoardCom" parameterType="int" resultType="commentVo">
@@ -115,15 +109,11 @@
 	</delete>
 
 
-
-
-
-
 	<!-- 페이징 - 무나 -->
 	<select id="pagingListSh" resultType="boardVo" parameterType="com.mvc.banda.common.SearchCriteria">	
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH
+		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW 
 		 FROM ( 
-		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, 
+		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW, 
 		               ROW_NUMBER() OVER(ORDER BY BOARD_NO DESC) AS RNUM
 		         FROM BOARD 
 		         WHERE 1=1 AND BOARD_CATE='SH' AND BOARD_NYN='N'
@@ -143,9 +133,9 @@
 	
 	<!-- 페이징 - 교환 -->
 	<select id="pagingListEx" resultType="boardVo" parameterType="com.mvc.banda.common.SearchCriteria">	
-		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH
+		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW 
 		 FROM ( 
-		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, 
+		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW, 
 		               ROW_NUMBER() OVER(ORDER BY BOARD_NO DESC) AS RNUM
 		         FROM BOARD 
 		         WHERE 1=1 AND BOARD_CATE='EX' AND BOARD_NYN='N'

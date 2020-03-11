@@ -88,20 +88,6 @@ public class NK_dao {
 	}
 	
 	//페이징검색끝/////////////////////////////////////////////////////////////////////////
-	
-	//무료나눔 게시글 목록 불러오기
-	public List<BoardVo> selectListSh() {
-		List<BoardVo> list = new ArrayList<BoardVo>();
-			
-		try {
-			list = sqlSession.selectList(NAMESPACE+"selectListSh");
-		} catch(Exception e) {
-			System.out.println("[ERROR] Share Board Select List");
-			e.printStackTrace();
-		}
-			
-		return list;
-	}
 		
 	//무료나눔 공지 목록 불러오기
 	public List<BoardVo> selectListShNotice() {
@@ -114,20 +100,6 @@ public class NK_dao {
 			e.printStackTrace();
 		}
 			
-		return list;
-	}
-	
-	//물물교환 게시글 목록 불러오기
-	public List<BoardVo> selectListEx() {
-		List<BoardVo> list = new ArrayList<BoardVo>();
-		
-		try {
-			list = sqlSession.selectList(NAMESPACE+"selectListEx");
-		} catch(Exception e) {
-			System.out.println("[ERROR] Exchange Board Select List");
-			e.printStackTrace();
-		}
-		
 		return list;
 	}
 	
@@ -247,6 +219,11 @@ public class NK_dao {
 		}
 		
 		return res;
+	}
+	
+	//조회수
+	public void boardViewCnt(int board_no) {
+		sqlSession.update(NAMESPACE+"boardViewCnt", board_no);
 	}
 	
 	//댓글 목록

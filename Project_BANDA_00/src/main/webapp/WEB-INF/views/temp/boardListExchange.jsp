@@ -117,7 +117,7 @@
 		   	  	    <th>제목</th>
 		   	  	    <th>글쓴이</th>
 		   	  	    <th>작성일</th>
-		   	  	    <!-- <th>조회수</th>  -->
+		   	  	    <th>조회수</th>
 		   	      </tr>
 	   	  	    </thead>
 	   	  	    <c:forEach items="${listExchangeNotice }" var="listExNotice">	   	  	
@@ -127,7 +127,7 @@
 		   	  	  	  <td class="td_title"><a href="boardDetail.do?board_no=${listExNotice.board_no }">${listExNotice.board_title }</a><span> [${fn:length(listExNotice.comment_list)}]</span></td>
 		   	  	  	  <td class="td_writer">${listExNotice.id }</td>
 		   	  	  	  <td class="td_date"><fmt:formatDate value="${listExNotice.board_regdate }" pattern="yyyy-MM-dd"/></td>
-		   	  	  	  <!-- <td class="td_view">100</td>  -->
+		   	  	  	  <td class="td_view">${listExNotice.board_view }</td>
 		   	  	    </tr>
 		   	  	  </tbody>
 	   	  	    </c:forEach>	   	  	
@@ -156,7 +156,7 @@
 		                  -moz-background-size: cover;
 		                  -o-background-size: cover;">
 				  <div class="explore-top">
-				   <div class="explore-like"><i class="fas fa-eye"></i> <span></span></div>
+				   <div class="explore-like"><i class="fas fa-eye"></i> <span>${listEx.board_view }</span></div>
 				   <div class="explore-circle pull-right"><i class="fa fa-comments"></i> <span>${fn:length(listEx.comment_list)}</span></div>
 		          </div>		
 		

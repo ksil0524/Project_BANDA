@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mvc.banda.common.SearchCriteria;
 import com.mvc.banda.dao.HJ_dao;
@@ -385,23 +387,14 @@ public class BandaBiz {
 		return nk_dao.selectListShNotice();
 	}
 
-	//무료나눔 게시글목록 출력
-	public List<BoardVo> selectListSh() {
-		return nk_dao.selectListSh();
-	}
-
 	//물물교환 공지목록 출력
 	public List<BoardVo> selectListExNotice() {
 		return nk_dao.selectListExNotice();
 	}
 	
-	//물물교환 게시글목록 출력
-	public List<BoardVo> selectListEx() {
-		return nk_dao.selectListEx();
-	}
-	
 	//게시글 상세 보기
-	public BoardVo selectOneBoard(int board_no) {
+	public BoardVo selectOneBoard(int board_no) throws Exception {
+		nk_dao.boardViewCnt(board_no);
 		return nk_dao.selectOneBoard(board_no);
 	}	
 
@@ -425,7 +418,6 @@ public class BandaBiz {
 		return nk_dao.boardWrite(vo);
 	}
 
-
 	//게시글 수정
 	public int boardUpdate(BoardVo vo) {
 		return nk_dao.boardUpdate(vo);
@@ -435,6 +427,7 @@ public class BandaBiz {
 	public int boardDelete(int board_no) {
 		return nk_dao.boardDelete(board_no);
 	}
+	
 	
 	//댓글 목록
 	public List<CommentVo> selectBoardComList(int board_no) {

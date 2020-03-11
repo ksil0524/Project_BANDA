@@ -137,7 +137,7 @@
               <p class="m-0">${detail.id }</p>
 			  <small><span><fmt:formatDate value="${detail.board_regdate }" pattern="yyyy-MM-dd"/></span></small>
 			  <div class="detail-view">
-			 	<!-- <i class="fas fa-eye"></i><span> 786,286</span>  -->
+			 	<i class="fas fa-eye"></i><span> ${detail.board_view }</span>
 			  </div>
              </div>
             </div><!--/ media -->

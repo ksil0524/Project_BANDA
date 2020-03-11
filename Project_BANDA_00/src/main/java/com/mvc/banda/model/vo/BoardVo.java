@@ -14,6 +14,7 @@ public class BoardVo {
 	private String board_nyn;		//공지여부(Y/N)
 	private String board_file;		//첨부파일
 	private String board_hash;		//해시태그
+	private int board_view;			//조회수
 	private List<CommentVo> comment_list; //현재 게시판글의 댓글들
 	
 	public BoardVo() {
@@ -21,7 +22,7 @@ public class BoardVo {
 	}
 
 	public BoardVo(int board_no, String board_cate, String id, String board_title, String board_content,
-			Date board_regdate, String board_nyn, String board_file, String board_hash, List<CommentVo> comment_list) {
+			Date board_regdate, String board_nyn, String board_file, String board_hash, int board_view, List<CommentVo> comment_list) {
 		super();
 		this.board_no = board_no;
 		this.board_cate = board_cate;
@@ -32,12 +33,13 @@ public class BoardVo {
 		this.board_nyn = board_nyn;
 		this.board_file = board_file;
 		this.board_hash = board_hash;
+		this.board_view = board_view;
 		this.comment_list = comment_list;
 	}
 	
 
 	public BoardVo(int board_no, String board_cate, String id, String board_title, String board_content,
-			Date board_regdate, String board_nyn, String board_file, String board_hash) {
+			Date board_regdate, String board_nyn, String board_file, String board_hash, int board_view) {
 		super();
 		this.board_no = board_no;
 		this.board_cate = board_cate;
@@ -48,6 +50,7 @@ public class BoardVo {
 		this.board_nyn = board_nyn;
 		this.board_file = board_file;
 		this.board_hash = board_hash;
+		this.board_view = board_view;
 		this.comment_list = null;
 
 	}
@@ -124,6 +127,14 @@ public class BoardVo {
 		this.board_hash = board_hash;
 	}
 
+	public int getBoard_view() {
+		return board_view;
+	}
+
+	public void setBoard_view(int board_view) {
+		this.board_view = board_view;
+	}
+
 	public List<CommentVo> getComment_list() {
 		return comment_list;
 	}
@@ -136,9 +147,10 @@ public class BoardVo {
 	public String toString() {
 		return "BoardVo [board_no=" + board_no + ", board_cate=" + board_cate + ", id=" + id + ", board_title="
 				+ board_title + ", board_content=" + board_content + ", board_regdate=" + board_regdate + ", board_nyn="
-				+ board_nyn + ", board_file=" + board_file + ", board_hash=" + board_hash + ", comment_list="
-				+ comment_list + "]";
+				+ board_nyn + ", board_file=" + board_file + ", board_hash=" + board_hash + ", board_view=" + board_view
+				+ ", comment_list=" + comment_list + "]";
 	}
+
 	
 	
 }

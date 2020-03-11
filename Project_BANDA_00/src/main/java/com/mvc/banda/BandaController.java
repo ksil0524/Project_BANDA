@@ -1811,7 +1811,7 @@ public class BandaController {
 	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
 	public String read(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
 		BoardVo vo2 = biz.selectOneBoard(vo.getBoard_no());
-		System.out.println("bbbbbbbbbb: "+vo2);
+		
 		model.addAttribute("detail", vo2);
 		model.addAttribute("scri", scri);
 		return "temp/boardDetail";
@@ -1820,34 +1820,6 @@ public class BandaController {
 	
 	
 	//////////////////////////////////	
-	
-	
-	//무료나눔
-	@RequestMapping(value="/boardListFree_test.do")
-	public String listShare(Model model) {
-//		logger.info("BOARD SHARE LIST");		
-		model.addAttribute("listShareNotice", biz.selectListShNotice());
-		model.addAttribute("listShare", biz.selectListSh());
-		return "temp/boardListFree";
-	}
-
-	//물물교환
-	@RequestMapping(value="/boardListExchange_test.do")
-	public String listExchange(Model model) {
-//		logger.info("BOARD EXCHANGE LIST");
-		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
-		model.addAttribute("listExchange", biz.selectListEx());
-		return "temp/boardListExchange";
-	}
-	
-	//게시글 상세
-	@RequestMapping(value="/boardDetail_test.do")
-	public String boardDetail(Model model, int board_no) {
-//		logger.info("BOARD DETAIL");
-		model.addAttribute("detail", biz.selectOneBoard(board_no));
-		model.addAttribute("boardComList", biz.selectBoardComList(board_no));
-		return "temp/boardDetail";
-	}	
 
 	//게시글을 공지로 바꾸기
 	@RequestMapping(value="/boardSetNotice.do")
@@ -1888,7 +1860,7 @@ public class BandaController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value="/boardWriteRes.do", method=RequestMethod.POST)
-	public String boardWrite(HttpServletRequest request, Model model, BoardVo vo, MultipartFile boardfile) throws IllegalStateException, IOException {
+	public String boardWrite(HttpServletRequest request, Model model, BoardVo vo, MultipartFile boardfile) throws Exception {
 		System.out.println(vo);
 		int res = biz.boardWrite(vo);
 		
@@ -1945,7 +1917,7 @@ public class BandaController {
 	
 	//게시글 수정 폼
 	@RequestMapping(value="/boardUpdateForm.do")
-	public String boardUpdateForm(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri ,Model model) {
+	public String boardUpdateForm(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri ,Model model) throws Exception {
 		model.addAttribute("detail", biz.selectOneBoard(vo.getBoard_no()));
 		model.addAttribute("scri", scri);
 		

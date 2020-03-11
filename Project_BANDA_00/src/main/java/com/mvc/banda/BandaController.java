@@ -676,7 +676,9 @@ public class BandaController {
 	public Map<String,Boolean> joinregister(HttpServletRequest request ,@RequestBody AccountVo vo) {
 		
 		System.out.println("asdasdasd"+vo);
-	
+		
+		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+		System.out.println("ㅁㄴ이ㅏ러민아ㅓㄹ미나어리만얼"+vo.getPassword());
 		int res = biz.joinregister(vo);
 		
 		Map<String,Boolean> resmap = new HashMap<String, Boolean>();

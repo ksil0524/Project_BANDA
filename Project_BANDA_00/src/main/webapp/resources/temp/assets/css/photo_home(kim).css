@@ -28,7 +28,7 @@ label {
 }
 
 .btns input {
-  background-color: #05cb95;
+  background-color: #ff7f73;
   color: white;
   padding: 0px 20px 12px 20px;
   margin-left: 10px;
@@ -40,7 +40,7 @@ label {
 }
 
 .btns input:hover {
-  background-color: #1fa881;
+  background-color: gray;
 }
 
 .container {

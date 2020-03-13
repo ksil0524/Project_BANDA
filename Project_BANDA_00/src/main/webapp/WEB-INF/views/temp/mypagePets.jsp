@@ -89,7 +89,40 @@
 	   </a>
 	   </div>
 	  </div>
-	</section>		
+	</section>	
+	
+	<!-- ==============================================
+		뒤에배경
+	 =============================================== --> 
+	 <section class="profile">
+	  <div class="container-fluid">
+	   <div class="row">
+	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/pet_bg.png">
+       </div><!--/ row-->	
+	  </div><!--/ container -->
+	 </section><!--/ profile -->
+  
+	 <!-- ==============================================
+	 	사람사진
+	 =============================================== --> 
+	 <section class="user-profile">
+	  <div class="container-fluid">
+	   <div class="row">
+	   
+	    <div class="col-lg-12">
+		   <div class="post-content">
+		    <div class="author-post text-center">
+		     <img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" 
+		     											   alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'" onclick="location.href='mypage_accountpage.do'">
+
+		    </div><!-- /author -->
+		   </div><!-- /.post-content -->		
+		</div><!-- /col-sm-12 -->
+		
+       </div><!--/ row-->	
+	  </div><!--/ container -->
+	 </section><!--/ profile -->
+  	
   
 	 <!-- ==============================================
 	 News Feed Section

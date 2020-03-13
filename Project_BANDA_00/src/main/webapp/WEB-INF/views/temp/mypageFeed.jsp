@@ -22,23 +22,7 @@
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
-    <!-- ==============================================
-	HEADER CIRCLE Scripts
-	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
-	<!-- main 외  페이지 전용 -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
-  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   
-	<!-- Auto Script -->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
 		
 
 <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -62,13 +46,12 @@
 
 </head>
 <body style = "-ms-overflow-style: none;">
-<input type = "hidden" id = "hidden_session" value = '<%=session.getAttribute("vo") %>'>
+<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
+
 
 <form id="delete_feed" action="mypage_deletefeed.do" method="post">
 	<input type="hidden" name="deletefeed_no" id="deletefeed_no" value="">
 </form>
-
-
 
 	<!-- ==============================================
 	HeaderSection
@@ -148,54 +131,7 @@
 	 <section class="profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   
-	   <div class="col-lg-3">
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/kangaroo.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/cat2.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-	   <div class="col-lg-6">
-		 <div class="profilebox-large hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/chicken.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-	   <div class="col-lg-3">
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/rhinoceros.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-		 <div class="profilebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/penguin.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-		
+	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/feed_bg.png">
        </div><!--/ row-->	
 	  </div><!--/ container -->
 	 </section><!--/ profile -->
@@ -1405,6 +1341,23 @@
 		
 		
 		</script>
-	   
+		
+	     <!-- ==============================================
+	HEADER CIRCLE Scripts
+	=============================================== -->
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
+	<!-- main 외  페이지 전용 -->
+	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
+	<!-- Auto Script -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </body>
 </html>

@@ -110,7 +110,7 @@
 			<div id="main">
 				<div class="inner">
 				
-					<div style = "color:lightgray;font-size:30px;font-weight:bold;padding-top:2%;padding-bottom:2%"><p style ="color:rgb(5,203,149);font-weight:bold;float:left">${keyword}</p>(으)로 검색한 결과입니다.</div>
+					<div style = "color:lightgray;font-size:30px;font-weight:bold;padding-top:2%;padding-bottom:2%"><p style ="color:#ff7f73;font-weight:bold;float:left">${keyword}</p>(으)로 검색한 결과입니다.</div>
 				
 					<div class="columns">
 					

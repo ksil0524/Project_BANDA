@@ -13,7 +13,7 @@
 						<h2></h2>
 						
 						<!-- 닫힘 버튼 -->
-						<a href="#" id="loginBtn" class="button big alt"><span>Login</span></a>
+						<a id="loginBtn" class="button big alt" onclick = "reset_login()"><span>Login</span></a>
 						
 						<a href="#" id="feedBtn" class="feedBtn button big alt"><span>Feed</span></a>
 					</div>
@@ -232,7 +232,16 @@ function onSignIn() {
 }
 			
 			
-//////////////////////////////////////			
+//////////////////////////////////////	
+
+			reset_login = function(){
+				
+				$("#error_login").css("display","none");
+				$("#idfind").css("display","none");
+				$("#pwdfind").css("display","none");
+				$("#login").css("display","block");
+				
+			}
 			
 			
 			function idFind(){
@@ -250,8 +259,7 @@ function onSignIn() {
 						
 						'email'  : email						
 				}
-				
-				console.log(findid_set.email.length);
+
 				
 				if(findid_set.email.length != 0){
 				
@@ -388,6 +396,8 @@ function onSignIn() {
 				$('#return_login_pwd').hide();
 				
 			}
+
+			
 			</script>
 			
 

@@ -670,7 +670,6 @@ else {
 									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div><div class="comment-text"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong><p>'+list['com_content']+'</p> <span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span></div></li>';
-									console.log(real_url);
 								}
 							
 										
@@ -1051,7 +1050,6 @@ else {
 			if(session_id == 'null'){
 				
 				alert('로그인이 필요합니다.');
-				location.href = 'index.jsp';
 				
 			} else {
 				  					

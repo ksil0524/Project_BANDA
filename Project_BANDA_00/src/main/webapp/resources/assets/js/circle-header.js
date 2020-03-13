@@ -134,7 +134,6 @@ $("#id").blur(function(){
 		
 		isjoin++;
 		$("#id").val("");
-		//$("#id::-webkit-input-placeholder").css({"color" : "red"});
 		$("#id").attr("placeholder","id는 숫자,소문자 4~10자리만 입력가능합니다.");
 		$("#id").css({"font-size":"12px"})
 		return false;
@@ -304,21 +303,16 @@ function joinChk(){
 			success : function(msg){
 				
 				if(msg.res){
-					alert("가입 완료되었습니다")
-					$("#joincontent").hide();
-					$(".closeBtn").show();
-					$("#logincontent").show();
-					$("#content").hide();
+					alert("가입 완료되었습니다");
 					$("#joinForm #email").val("");
 					$("#joinForm #id").val("");
 					$("#joinForm #password").val("");
 					$("#joinForm #phone").val("");
 				}else{
-					alert("가입 실패")
+					alert("가입 실패");
 					$("#joincontent").show();
 					$(".closeBtn").show();
 					$("#logincontent").hide();
-					$("#header").toggleClass('hide');
 					$("#content").hide();
 				}
 				

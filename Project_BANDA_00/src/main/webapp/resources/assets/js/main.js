@@ -271,21 +271,16 @@ function joinChk(){
 			success : function(msg){
 				
 				if(msg.res){
-					alert("가입 완료되었습니다")
-					$("#joincontent").hide();
-					$(".closeBtn").show();
-					$("#logincontent").show();
-					$("#content").hide();
+					alert("가입 완료되었습니다");
 					$("#joinForm #email").val("");
 					$("#joinForm #id").val("");
 					$("#joinForm #password").val("");
 					$("#joinForm #phone").val("");
 				}else{
-					alert("가입 실패")
+					alert("가입 실패");
 					$("#joincontent").show();
 					$(".closeBtn").show();
 					$("#logincontent").hide();
-					$("#header").toggleClass('hide');
 					$("#content").hide();
 				}
 				

@@ -57,7 +57,7 @@ thead th {
 	text-decoration: none;
 }
 
-.td_title a:hover{
+.td_title a:hover, .td_title a:focus, .td_title a:active {
 	color: #ff7f73 !important;
 }
 
@@ -72,4 +72,9 @@ thead th {
 	background: gray !important;
 	color: #fff !important;
 	text-decoration: none;
+}
+
+/* 페이징 */
+.pagination a:hover, .pagination a:focus, .pagination a:active {
+	color: #ff7f73 !important;
 }

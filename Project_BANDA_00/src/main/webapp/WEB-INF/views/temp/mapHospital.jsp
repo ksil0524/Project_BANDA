@@ -8,11 +8,9 @@
 <head>
 <!-- Map CSS -->
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-map.css" rel="stylesheet" />
-
 <!-- HEAD CSS -->
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 <script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-
 <!-- index_circle_custom CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
 
@@ -52,7 +50,7 @@
 					</a>
 				</div>
 				<div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-					<a class="nav-icon" href="#" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+					<a class="nav-icon" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 						<span></span>
 					</a>
 				</div>
@@ -113,27 +111,10 @@
 	 var latitude, longitude, dong, map; 
 	 var markers = [];
 		 $(function(){
-			// Geolocation API에 액세스 확인
-	        if (navigator.geolocation) {
-	            //클라이언트 접속 위치 정보 받기
-	            var id = navigator.geolocation.watchPosition(
-                    function(pos) {
-                    	//위도 set
-                        latitude = pos.coords.latitude;
-           			 	//경도 set
-                    	longitude = pos.coords.longitude;
-           			 	console.log("위도: " + latitude +"/경도: " + longitude);
-           			 	//맵 호출
-           			 	map(); 
-           			 	//위치 감지 중지
-           			 	navigator.geolocation.clearWatch(id);
-                    });
-	        } else {
-	            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다. 기본 지역으로 안내됩니다.");
-	            //default 위도 경도
-	            latitude = "37.49900771922129";
-   			 	longitude = "127.03284644541614";
-	        }
+            //default 위도 경도
+            latitude = "37.49900771922129";
+		 	longitude = "127.03284644541614";
+			map(); 
 		});
 		 function map(){
 				// 지도를 표시할 div 
@@ -188,7 +169,6 @@
 								if(result.list.length > 0){
 									//마커 배열 생성
 									$.each(result.list, function(index, item){
-										console.log(item.map_latitude+"//"+item.map_longitude);
 										defList.push({latlng: new kakao.maps.LatLng(item.map_latitude, item.map_longitude)});
 										defListName.push(item.map_name);
 										var html = "<div id='listDiv'  class=''>"+

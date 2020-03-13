@@ -73,6 +73,9 @@
 %>
 
 	<link rel="stylesheet"href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- index_circle_custom CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+	
 	<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 
 	<!-- 
@@ -80,7 +83,7 @@
 	 -->
 	<script src="http://192.168.130.222:3000/socket.io/socket.io.js"></script>
 
-
+	
 	<!-- ==============================================
 	Scripts
 	=============================================== -->

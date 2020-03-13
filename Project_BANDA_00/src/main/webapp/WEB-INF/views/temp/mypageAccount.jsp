@@ -9,7 +9,9 @@
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
-
+	<!-- index_circle_custom CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+	
      <!-- ==============================================
 	 Scripts
 	 =============================================== -->

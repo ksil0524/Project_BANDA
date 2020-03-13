@@ -36,6 +36,8 @@
    <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <!-- index_circle_custom CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
    
 	<!-- Auto Script -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -18,6 +18,8 @@
    =============================================== -->
    <link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
    <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
+   <!-- index_circle_custom CSS -->
+   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
    
    <style type="text/css">
 	

@@ -15,6 +15,8 @@
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardlist.css" rel="stylesheet" />
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-page.css" rel="stylesheet" />
+	<!-- index_circle_custom CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
 	
 </head>
 <body style="background-color: #f4f4f4;">

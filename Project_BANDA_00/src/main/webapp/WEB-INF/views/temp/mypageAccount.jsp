@@ -55,6 +55,11 @@
 			   	  }
 			   	}	
 	   	
+	  	
+
+	  		
+	  		
+	  		
 	   </script>
 
 
@@ -216,6 +221,110 @@
 
 	 	}
 	 	
+function inputPhoneNumber1(obj) {
+			
+
+
+		    var number = obj.value.replace(/[^0-9]/g, "");
+		    var phone = "";
+		
+		
+		
+		    if(number.length < 4) {
+		        return number;
+		    } else if(number.length < 7) {
+		        phone += number.substr(0, 3);
+		        phone += "-";
+		        phone += number.substr(3);
+		    } else if(number.length < 11) {
+		        phone += number.substr(0, 3);
+		        phone += "-";
+		        phone += number.substr(3, 3);
+		        phone += "-";
+		        phone += number.substr(6);
+		    } else {
+		        phone += number.substr(0, 3);
+		        phone += "-";
+		        phone += number.substr(3, 4);
+		        phone += "-";
+		        phone += number.substr(7);
+		    }
+		    obj.value = phone;
+		}
+$(document).ready(function(){
+	 	//비밀번호 4~10글자 영소 숫자
+  		$("#ckpassword").blur(function(){
+
+  			var id = $("#ckpassword").val();
+  			//영문자 숫자 4~10
+  			var loginIdRex =  /^[a-z0-9]{4,10}$/g;
+
+  			if(!loginIdRex.test(id)){
+  				$("#ckpassword").val("");
+  				$("#ckpassword").attr("placeholder","숫자,소문자 4~10자리만 입력해주세요.");
+  				$("#ckpassword").css({"font-size":"12pt"})
+  				return false;
+  			}
+  			
+  		})
+  		$("#ckphone").blur(function(){
+			var id = $("#ckphone").val();
+			
+			var loginIdRex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+		
+			if(!loginIdRex.test(id)){
+				
+				$("#ckphone").val("");
+				
+				$("#ckphone").attr("placeholder","010-0000-0000 형식으로 입력해주세요");
+				$("#ckphone").css({"font-size":"12pt"})
+				return false;
+			}
+			
+		})
+  		
+  		
+  	//비밀번호 4~10글자 영소 숫자
+  		$("#ckemail").blur(function(){
+  			
+  			var id = $("#ckemail").val();
+  			
+  			//영문자 숫자 4~10
+			var loginIdRex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[0-9a-zA-Z]$/i;
+
+  			if(!loginIdRex.test(id)){
+  				$("#ckemail").val("");
+  				
+  				$("#ckemail").attr("placeholder","이메일 형식으로 입력해주세요");
+  				$("#ckemail").css({"font-size":"12pt"})
+  				return false;
+  			}
+  			
+  		})
+  		
+  		
+		//id 중복체크로 변경된 placeholder 제자리
+		$("#ckphone").focus(function(){
+			$("#ckphone").attr("placeholder","phone")
+			$("#ckphone").css({"font-size":"20pt"})
+		})
+		//id 중복체크로 변경된 placeholder 제자리
+		$("#ckemail").focus(function(){
+			
+			$("#ckemail").attr("placeholder","email")
+			$("#ckemail").css({"font-size":"20pt"})
+		})
+	
+		//password 중복체크로 변경된 placeholder 제자리
+		$("#ckpassword").focus(function(){
+			$("#ckpassword").attr("placeholder","password")
+			$("#ckpassword").css({"font-size":"20pt"})
+		})
+})
+	 	
+	 	
+	 	
+	 	
 	 	
 	 </script>
 	 
@@ -284,7 +393,7 @@
             			<p style="font-size: 20pt;">EMAIL</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" id="ckemail" name="email" value="<%=accvo.getEmail() %>"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" style="width:275px; height:35px;" id="ckemail" name="email" placeholder="Email" value="<%=accvo.getEmail() %>"></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -292,7 +401,7 @@
             			<p style="font-size: 20pt;">PHONE</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" id="ckphone" name="phone" value="<%=accvo.getPhone() %>"></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="text" style="width:275px; height:35px;" id="ckphone" onKeyup="inputPhoneNumber1(this);" placeholder="Phone" maxlength="13" name="phone" value="<%=accvo.getPhone() %>"></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -300,7 +409,7 @@
             			<p style="font-size: 20pt;">PASSWORD</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" id="ckpassword" name="password" value=""></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" style="width:275px; height:35px;" id="ckpassword" name="password" placeholder="Password" value=""></span><p>
              		</td>
              	</tr>
              	<tr>
@@ -308,7 +417,7 @@
             			<p style="font-size: 20pt;">PASSWORD CHECK</p>
              		</td>
              		<td style="text-align: center;     padding: 3.75em 0.75em">
-             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" id="ckpasswordck" name="passwordck" value=""></span><p>
+             			<p style="font-size: 20pt;"><span class="hashtag"><input type="password" style="width:275px; height:35px;" id="ckpasswordck" placeholder="Password" name="passwordck" value=""></span><p>
              		</td>
              	</tr>
              </table>

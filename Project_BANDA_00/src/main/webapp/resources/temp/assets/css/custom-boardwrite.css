@@ -41,7 +41,7 @@ input[type=submit]:hover {
 */
 
 .btns input, button {
-  background-color: #05cb95;
+  background-color: #ff7f73;
   color: white;
   margin: 5px;
   padding: 0px 30px 10px 30px;
@@ -52,7 +52,7 @@ input[type=submit]:hover {
 }
 
 .btns input:hover {
-  background-color: #1fa881;
+  background-color: gray;
 }
 
 .board-form {

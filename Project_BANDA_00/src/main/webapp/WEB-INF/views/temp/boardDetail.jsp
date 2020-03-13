@@ -39,7 +39,7 @@
 	   <c:set var="boardCate" value="${detail.board_cate}"/>
 	   <c:choose>
 	     <c:when test="${fn:contains(boardCate, 'SH')}">
-	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
+	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px; background-color: #ff7f73 !important;">
 	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>무료나눔</span>
 	         </a>
@@ -56,7 +56,7 @@
 		       <span>무료나눔</span>
 	         </a>
 	       </div>
-	       <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
+	       <div class="p-2 nav-icon-lg mint-green" style="height: 59px; background-color: #ff7f73 !important;">
 	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>물물교환</span>
 	         </a>
@@ -187,8 +187,8 @@
                       <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span>
                       <c:set var="commenttf" value="${(comments.id eq vo.id)?'y':'n' }"/>
              		  <c:if test="${'y' eq commenttf }">
-                      <span class=""> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span>
-                      <span class=""> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
+                      <span class="comment-edit-del"> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span>
+                      <span class="comment-edit-del"> <i class="fas fa-times" onclick="location.href='boardComDelete.do?board_no=${detail.board_no }&com_no=${comments.com_no}'"></i></span>
                       </c:if>
                       <p>${comments.com_content }</p> 
                     </div>

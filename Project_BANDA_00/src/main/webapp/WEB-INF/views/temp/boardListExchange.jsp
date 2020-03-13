@@ -35,7 +35,7 @@
 		<span>무료나눔</span>
 	   </a>
 	   </div>
-	   <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
+	   <div class="p-2 nav-icon-lg mint-green" style="height: 59px; background-color: #ff7f73 !important;">
 	   <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>물물교환</span>
 	   </a>
@@ -64,7 +64,7 @@
 		  		<option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : '' }"/>>글쓴이</option>
 		  	</select>
 			<input type="text" name="keyword" id="searchKeyword" value="${scri.keyword }" placeholder="검색어를 입력하세요"/>
-			<div id="searchBtn" onclick="boardSearch();"><i class="fas fa-search" style="width: 25px; height: 25px;"></i></div>
+			<div id="searchBtn" onclick="boardSearch();"><i class="fas fa-search" style="width: 25px; height: 25px; color: #ff7f73 !important;"></i></div>
 		</span>
 		
 		<!-- 검색 자바스크립트 -->
@@ -84,7 +84,7 @@
 	  	<!-- 글쓰기 버튼 시작 -->
 	  	<form action="boardWriteForm.do">
 		  	<input type="hidden" name="board_cate" value="EX"/>
-		   	<button type="submit" class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em;">글쓰기</button>
+		   	<button type="submit" class="kafe-btn pull-right btn-sm board-write-btn" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em;">글쓰기</button>
 	   	</form>
 	  	<!-- 글쓰기 버튼 끝 -->
 	  	
@@ -107,7 +107,7 @@
 	   	  	  <col>
 	   	  	  <col style="width: 130px;">
 	   	  	  <col style="width: 100px;">
-	   	  	  <!-- <col style="width: 100px;"> -->
+	   	  	  <col style="width: 100px;">
 	   	  	</colgroup>
 	   	  	<c:if test="${not empty list}">
 	   	  	  <c:if test="${not empty listExchangeNotice}">

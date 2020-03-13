@@ -36,7 +36,7 @@
 	   <c:set var="category" value="${detail.board_cate }"/>
 	   <c:choose>
 	     <c:when test="${fn:contains(category, 'SH')}">
-	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px;">
+	       <div class="p-2 nav-icon-lg mint-green"style="height: 59px; background-color: #ff7f73 !important;">
 	         <a class="nav-icon" href="boardListFree.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>무료나눔</span>
 	         </a>
@@ -53,7 +53,7 @@
 		       <span>무료나눔</span>
 	         </a>
 	       </div>
-	       <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
+	       <div class="p-2 nav-icon-lg mint-green" style="height: 59px; background-color: #ff7f73 !important;">
 	         <a class="nav-icon" href="boardListExchange.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		       <span>물물교환</span>
 	         </a>

@@ -56,3 +56,20 @@ thead th {
 	color: #333333;
 	text-decoration: none;
 }
+
+.td_title a:hover{
+	color: #ff7f73 !important;
+}
+
+.board-write-btn {
+	background: #ff7f73 !important;
+	color: #ffffff !important;
+	font-size: 12px;
+    padding: 4px;
+}
+	   	
+.board-write-btn:hover {
+	background: gray !important;
+	color: #fff !important;
+	text-decoration: none;
+}

@@ -429,6 +429,30 @@ public class JY_dao {
 			return res;
 		}
 		
+		//follow_insert
+		public int detail_follow_insert(FollowVo fvo) {
+			return detail_follow_insert_sql(fvo);
+		}
+		
+		//deatil_follow_delete
+		public int deatil_follow_delete(FollowVo fvo) {
+			return deatil_follow_delete_sql(fvo);
+		}
+		
+		//follow_list_yn
+		public int follow_list_yn(FollowVo fvo) {
+			
+			int followNum = 0;
+			
+			FollowVo fvo2 = follow_list_yn_sql(fvo);
+			
+			if(fvo2 != null) {
+				followNum = 1;
+			} 
+			
+			return followNum;
+		}
+		
 		///////////////////////////////////////////////////////////////////////////////////////
 		//sql
 		
@@ -602,6 +626,22 @@ public class JY_dao {
 			}
 
 			return count;
+		}
+		
+		//detail_follow_insert
+		public int detail_follow_insert_sql(FollowVo fvo) {
+			return sqlSession.insert(NAMESPACE+"detail_follow_insert", fvo);
+		}
+		
+		//deatil_follow_delete
+		public int deatil_follow_delete_sql(FollowVo fvo) {
+			return sqlSession.delete(NAMESPACE+"deatil_follow_delete", fvo);
+		}
+		
+		
+		//follow_list_yn
+		public FollowVo follow_list_yn_sql(FollowVo fvo) {
+			return sqlSession.selectOne(NAMESPACE+"follow_list_yn",fvo);
 		}
 
 }

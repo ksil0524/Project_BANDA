@@ -41,6 +41,8 @@
 	 -->
 	<!-- 성일 -->
 	 <br><a href="mypage_followpage.do">mypage_followpage.do</a> <!-- 성일 -->
+	 
+	 
 	<br><a href="mypage_feedpage.do">mypage_feedpage.do</a> <!-- 성일 -->
 	
 	<br><a href="streaming_test.do">streaming_test.do</a> <!-- 성일 -->

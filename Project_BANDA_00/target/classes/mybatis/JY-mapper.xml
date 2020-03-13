@@ -271,7 +271,21 @@
 	<delete id = "delete_user_board" parameterType="String">
 		DELETE FROM BOARD WHERE ID = #{id}
 	</delete>
-
+	
+	<!-- detail_follow_insert -->
+	<insert id = "detail_follow_insert" parameterType="followVo">
+		INSERT INTO FOLLOW VALUES(#{fr_id}, #{fd_id})
+	</insert>
+	
+	<!-- follow_list_yn -->
+	<select id = "follow_list_yn" parameterType="followVo" resultType="followVo">
+		SELECT * FROM FOLLOW WHERE FR_ID = #{fr_id} AND FD_ID = #{fd_id}
+	</select>
+	
+	<!-- deatil_follow_delete -->
+	<delete id = "deatil_follow_delete" parameterType = "followVo">
+		DELETE FROM FOLLOW WHERE FR_ID = #{fr_id} AND FD_ID = #{fd_id}
+	</delete>
 </mapper>
 
 

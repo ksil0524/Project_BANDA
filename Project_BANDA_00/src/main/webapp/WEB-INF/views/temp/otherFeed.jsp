@@ -107,30 +107,23 @@
            <li>
          <div class="user-info">
           <div class="image">
-            <a href="photo_profile_two.html">
+            <div>
             <img style = "height:121px" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=vo.getId()%>/image.jpg" class="img-responsive img-circle" alt="User" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
             <span class="online-status online"></span>
-           </a>
+           </div>
           </div>
            <div class="detail">
-           <h4 style = "color:#05CB95"><%=vo.getId() %></h4>
+           <h4 style = "color:#05CB95"><%=vo.getId()%></h4>
            <small>@<%=vo.getId() %></small>                        
-          </div>
-          <div class="row">
-           <div class="col-12">
-            <a title="facebook" href="#" class=" waves-effect waves-block"><i class="fab fa-facebook"></i></a>
-            <a title="twitter" href="#" class=" waves-effect waves-block"><i class="fab fa-twitter"></i></a>
-            <a title="instagram" href="#" class=" waves-effect waves-block"><i class="fab fa-instagram"></i></a>
-           </div>                                
           </div>
          </div>
            </li>
            
            <!-- 게시글 팔로워 팔로잉 -->
            <li>
-            <small class="text-muted"><%=feed.size() %> Posts <em class="fa fa-angle-right pull-right"></em> </small><br/>
-            <small class="text-muted"><%=followed_count %> Followers<em class="fa fa-angle-right pull-right"></em></small><br/>
-            <small class="text-muted"><%=follow_count %> Following<em class="fa fa-angle-right pull-right"></em></small>
+            <small class="text-muted"><%=feed.size() %> Posts</small><br/>
+            <small class="text-muted"><%=followed_count %> Followers</small><br/>
+            <small class="text-muted"><%=follow_count %> Following</small>
             <hr>
             <small class="text-muted"><b>Phone: </b></small>
             <p><%=vo.getPhone() %></p>
@@ -276,11 +269,21 @@
          	<!-- 작성자 -->
             <div class="img-poster clearfix" style = "padding-top:10%">
             
-             <a href="">
+             <div>
              	<img id = "feed_p_image" class="img-responsive img-circle" src="" alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
-             </a>
+             </div>
              <strong><a href="#" id = "feed_id"></a></strong>
-		     <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
+		    
+		    <!-- following --> 
+			<c:set var = "sessionid" value = "<%=id%>"/>
+			<c:choose>
+				<c:when test = "${not empty sessionid}">
+					<div id="following_section" style = "display:inline">
+						
+					</div>
+				</c:when>
+			</c:choose>
+
             </div><!--/ img-poster -->
            
           <!-- 내용 -->
@@ -419,6 +422,7 @@
 				$('#feed_comment * ').remove();
 				$('#feed_like * ').remove();
 				$('#feed_heart * ').remove();
+				$('#following_section * ').remove();
 				
 			 var button = $(e.relatedTarget);
 			 feedno = button.data('title');
@@ -621,6 +625,43 @@
 							$('#feed_follow').html(like_list.length);
 						/////////////////
 						
+						//팔로우 여부
+						var fstr = "";
+						
+						var following_set_yn = {
+								'fr_id' : session_id,
+								'fd_id' : id
+						};
+						
+						
+						$.ajax({
+							
+							url : 'follow_list_yn.do',
+							type : 'post',
+							data : JSON.stringify(following_set_yn),
+							contentType: "application/json",
+							dataType:"json",
+							success : function(data){
+								
+								if(data.chk){
+									var fstr = '<a onclick = "unfollowing()" class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+									$('#following_section').append(fstr);
+									
+								} else {
+									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+									$('#following_section').append(nfstr);
+								}
+								
+							},
+							error:function(request,status,error){
+		  						
+		  						alert("통신실패");
+		  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+		  					}						
+							
+						});
+						
 						//팔로우 목록
 						var str3 = "";
 						
@@ -646,7 +687,7 @@
 					}
 					
 				},
-			error:function(request,status,error){
+				error:function(request,status,error){
 					
 					alert("통신실패");
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
@@ -659,6 +700,83 @@
 
 		
 		});
+			
+			//unfollowing function : follow -> unfollow
+			unfollowing = function(){
+				
+				var following_set = {
+						'fr_id' : session_id,
+						'fd_id' : id
+					};
+				
+				$.ajax({
+					
+					url : 'deatil_follow_delete.do',
+  					type : 'post',
+					data : JSON.stringify(following_set),
+  					contentType: "application/json",
+  					dataType:"json",
+  					success : function(data){
+  						
+  						if(data.chk){  							
+  							$('#following_section * ').remove();
+							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+							$('#following_section').append(nfstr);
+							
+  						} else {
+  							alert('팔로우 삭제실패');
+  						}
+  						
+  					},
+					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  					}
+					
+					
+				});
+				
+			}
+			
+			//following function : unfollow -> follow
+			following = function(){
+				
+				var following_set = {
+					'fr_id' : session_id,
+					'fd_id' : id
+				};
+				
+				$.ajax({
+					
+					url : 'detail_follow_insert.do',
+  					type : 'post',
+					data : JSON.stringify(following_set),
+  					contentType: "application/json",
+  					dataType:"json",
+  					success : function(data){
+  						
+  						if(data.chk){
+  							$('#following_section * ').remove();
+							var nfstr = '<a class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+							$('#following_section').append(nfstr);
+  							
+  						} else {
+  							alert('팔로우 삽입 실패');
+  						}
+  						
+  					},
+					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  					}
+					
+				});
+				
+			}
 			
   			//heart : before -> after
   			changeheart_b = function(){

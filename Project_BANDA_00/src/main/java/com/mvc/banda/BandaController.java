@@ -1435,7 +1435,7 @@ public class BandaController {
 		AccountVo avo = biz.find_id(email);
 		if(avo == null) {
 			chk = true;
-			m.put("id", "※이메일에 맞는 아이디가 없습니다.");
+			m.put("id", "※아이디가 존재하지 않습니다");
 			m.put("chk", chk);
 			
 		} else {
@@ -1450,8 +1450,7 @@ public class BandaController {
 		
 		return m;
 	}
-	
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
 	
@@ -1672,7 +1671,66 @@ public class BandaController {
 		 }
 		 
 	 }
+	 
+	 //following
+	 @RequestMapping("/detail_follow_insert.do")
+	 @ResponseBody
+	 public Map<String, Object> detail_follow_insert(@RequestBody FollowVo fvo){
+		 
+		 Map<String, Object> m = new HashMap<String, Object>();
+		 Boolean chk = false;
+		 
+		 System.out.println(fvo);
+		 
+		 int res = biz.detail_follow_insert(fvo);
+		 
+		 if(res>0) {
+			 chk = true;
+		 }
+ 
+		 m.put("chk", chk);
+		 
+		 return m;
+	 }
+	 
+	 //unfollowing
+	 @RequestMapping("/deatil_follow_delete.do")
+	 @ResponseBody
+	 public Map<String, Object> deatil_follow_delete(@RequestBody FollowVo fvo){
+		 
+		 Map<String, Object> m = new HashMap<String, Object>();
+		 Boolean chk = false;
+		 
+		 int res = biz.deatil_follow_delete(fvo);
+		 
+		 if(res > 0) {
+			 chk = true;
+		 }
+		 
+		 m.put("chk", chk);
+		 
+		 return m;
+	 }
 	
+	 //모달 - 팔로우 여부
+	 @RequestMapping("/follow_list_yn")
+	 @ResponseBody
+	 public Map<String, Object> follow_list_yn(@RequestBody FollowVo fvo){
+		 
+		 Map<String, Object> m = new HashMap<String, Object>();
+		 Boolean chk = false;
+		 
+		 int fovo = biz.follow_list_yn(fvo);
+		 
+		 if(fovo == 1) {
+			 chk = true;
+		 }
+		 
+		 m.put("chk",chk);
+		 
+		 return m;
+		 
+	 }
 	
 	// < 최주예 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------

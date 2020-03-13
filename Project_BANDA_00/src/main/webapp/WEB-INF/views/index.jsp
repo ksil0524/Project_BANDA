@@ -58,14 +58,12 @@
 		
 		
 	</head>
-	<body style="overflow-y: auto" style = "-ms-overflow-style: none;">
+	<body style="overflow-y: auto" style = "-ms-overflow-style: noSne;">
 	<!-- TOP Button -->
-	<a id="back-to-top" href="#" class="back-to-top" role="button" data-placement="left" data-toggle="modal" data-target="#myModal2" >
-	<i class="fas fa-plus-circle"></i></a>	
+	<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>	
+	
 	<!-- Header -->
 	<jsp:include page="./circle-header.jsp"></jsp:include>	
-	
-	<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 	
 		<!-- Main -->
 			<div id="main">
@@ -240,6 +238,15 @@ else {
 				</div>
 			</div>
 			
+			<c:set var = "sessionid" value = "<%=id%>"/>
+			<c:choose>
+				<c:when test = "${not empty sessionid}">
+					<a id="back-to-top" href="mypageFeed_list.do" class="back-to-top" role="button" data-placement="left">
+						<i class="fas fa-plus-circle"></i>
+					</a>
+				</c:when>
+			</c:choose>
+			
 	 <!-- ==============================================
 	 Modal Section
 	 =============================================== -->
@@ -262,10 +269,7 @@ else {
 		        <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
 		         
 		          <div class="carousel-inner" role="listbox" id = "modal_image" style = "width:474.9px;height:474.9px;margin-left:3%">
-		          
-	
-				
-		            
+
 		          </div>
 		          
 		          <!-- 앞 -->
@@ -305,11 +309,20 @@ else {
 			<!-- 작성자 -->
             <div class="img-poster clearfix" style = "padding-top:10%">
             
-             <a href="">
+             <div>
              	<img id = "feed_p_image" class="img-responsive img-circle" src="" alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
-             </a>
+             </div>
              <strong><a href="#" id = "feed_id"></a></strong>
-		     <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
+
+			<!-- following -->
+			<c:choose>
+				<c:when test = "${not empty sessionid}">
+					<div id="following_section" style = "display:inline">
+						
+					</div>
+				</c:when>
+			</c:choose>
+				     
             </div><!--/ img-poster -->
 			 
 			<!-- 내용 -->
@@ -508,6 +521,7 @@ else {
 				$('#feed_comment * ').remove();
 				$('#feed_like * ').remove();
 				$('#feed_heart * ').remove();
+				$('#following_section * ').remove();
 				
 			 var button = $(e.relatedTarget);
 			 feedno = button.data('title');
@@ -526,9 +540,9 @@ else {
 			url : 'each_feed.do',
 			type : 'post',
 			data : JSON.stringify(feed_set),
-				contentType: "application/json",
-				dataType:"json",
-				success : function(data){
+			contentType: "application/json",
+			dataType:"json",
+			success : function(data){
 					
 					if(data.chk){
 						var arr = data.feed;
@@ -651,8 +665,7 @@ else {
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
 											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
-											'</li>';
-								console.log(real_url);  									
+											'</li>';  									
 								} else {
 									var img_url = '<%=request.getContextPath() %>/resources/images/filemanager/account/'+list['id']+'/profile.jpg';
 									var onerr = "'<%=request.getContextPath() %>/resources/images/logo_profile.png'";									
@@ -706,9 +719,46 @@ else {
 							str4 += real_url;
 							console.log(str4 + "str"); 							
 							$('#feed_heart').append(str4);
-							console.log(like_list.length);
 							$('#feed_follow').html(like_list.length);
 						/////////////////
+						
+						//팔로우 여부
+						var fstr = "";
+						
+						var following_set_yn = {
+								'fr_id' : session_id,
+								'fd_id' : id
+						};
+						
+						
+						$.ajax({
+							
+							url : 'follow_list_yn.do',
+							type : 'post',
+							data : JSON.stringify(following_set_yn),
+							contentType: "application/json",
+							dataType:"json",
+							success : function(data){
+								
+								if(data.chk){
+									var fstr = '<a onclick = "unfollowing()" class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+									$('#following_section').append(fstr);
+									
+								} else {
+									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+									$('#following_section').append(nfstr);
+								}
+								
+							},
+							error:function(request,status,error){
+		  						
+		  						alert("통신실패");
+		  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+		  					}						
+							
+						});
+						
 						
 						//팔로우 목록
 						var str3 = "";
@@ -735,7 +785,7 @@ else {
 					}
 					
 				},
-			error:function(request,status,error){
+				error:function(request,status,error){
 					
 					alert("통신실패");
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
@@ -748,6 +798,83 @@ else {
 
 		
 		});
+			
+			//unfollowing function : follow -> unfollow
+			unfollowing = function(){
+				
+				var following_set = {
+						'fr_id' : session_id,
+						'fd_id' : id
+					};
+				
+				$.ajax({
+					
+					url : 'deatil_follow_delete.do',
+  					type : 'post',
+					data : JSON.stringify(following_set),
+  					contentType: "application/json",
+  					dataType:"json",
+  					success : function(data){
+  						
+  						if(data.chk){  							
+  							$('#following_section * ').remove();
+							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+							$('#following_section').append(nfstr);
+							
+  						} else {
+  							alert('팔로우 삭제실패');
+  						}
+  						
+  					},
+					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  					}
+					
+					
+				});
+				
+			}
+			
+			//following function : unfollow -> follow
+			following = function(){
+				
+				var following_set = {
+					'fr_id' : session_id,
+					'fd_id' : id
+				};
+				
+				$.ajax({
+					
+					url : 'detail_follow_insert.do',
+  					type : 'post',
+					data : JSON.stringify(following_set),
+  					contentType: "application/json",
+  					dataType:"json",
+  					success : function(data){
+  						
+  						if(data.chk){
+  							$('#following_section *').remove();
+							var nfstr = '<a class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+							$('#following_section').append(nfstr);
+  							
+  						} else {
+  							alert('팔로우 삽입 실패');
+  						}
+  						
+  					},
+					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  					}
+					
+				});
+				
+			}
 			
   			//heart : before -> after
   			changeheart_b = function(){

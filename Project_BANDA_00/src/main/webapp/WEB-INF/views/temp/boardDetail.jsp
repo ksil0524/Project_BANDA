@@ -131,7 +131,7 @@
            <!-- END title -->
             <div class="media m-0">
              <div class="d-flex mr-3">
-			  <a href="#"><img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${detail.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="User"></a>
+			  <img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${detail.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="User">
 			 </div>
              <div class="media-body">
               <p class="m-0">${detail.id }</p>
@@ -155,6 +155,8 @@
 		     </div>
 		     <div class="cardbox-hashtag">
 		      <p id="pHash">
+		      	<span id="pHashIcon"></span>
+		      	<span id="pHashTags"></span>
 		      </p>
 		     </div><!--/ cardbox-hashtag -->
 		    </div>
@@ -162,7 +164,9 @@
           </div><!--/ cardbox-item -->
 	      
 	      <!-- 구분선  -->
-	      <div class="img-poster"></div>
+	      <div>
+	      <div class="img-poster" style="margin-left: 15px; margin-right: 15px;"></div>
+	      </div>
 	      
 	      <!-- 댓글 -->
           <div class="cardbox-comments">     
@@ -184,7 +188,7 @@
                       <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${comments.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" class="img-responsive img-circle" alt="User"/>
                     </div>
                     <div class="comment-text">
-                      <strong><a href="">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span>
+                      <strong>${comments.id }</strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span>
                       <c:set var="commenttf" value="${(comments.id eq vo.id)?'y':'n' }"/>
              		  <c:if test="${'y' eq commenttf }">
                       <span class="comment-edit-del"> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span>
@@ -320,7 +324,14 @@
 				inner += '<a href="boardListExchange.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';						
 			}
 		}
-		document.getElementById("pHash").innerHTML = inner;
+		
+		if(hash=='' || hash==null) {	
+			document.getElementById("pHashIcon").innerHTML='';
+			document.getElementById("pHashTags").innerHTML = '';
+		} else {
+			document.getElementById("pHashIcon").innerHTML='<i class="fas fa-tag" style="color: #ff7f73 !important;"></i>';
+			document.getElementById("pHashTags").innerHTML = inner;
+		}
 		      
 	</script>
 	

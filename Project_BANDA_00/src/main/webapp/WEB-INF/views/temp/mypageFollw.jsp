@@ -147,7 +147,7 @@
 		<span>나의피드</span>
 	   </a>
 	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
+	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
 	   <a class="nav-icon" href="mypage_accountpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>내계정</span>
 	   </a>
@@ -160,55 +160,8 @@
 	 =============================================== --> 
 	 <section class="profile">
 	  <div class="container-fluid">
-	   <div class="row">
-	   
-	   <div class="col-lg-3">
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/dog.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/koala.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-	   <div class="col-lg-6">
-		 <div class="profilebox-large hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/crocodile.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-	   <div class="col-lg-3">
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/squirrel.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-		 <div class="profilebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/flamingo.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-		
+	   <div class="row" >
+	   	<img alt="ffbg" src="<%=request.getContextPath()%>/resources/images/bg/ff_bg.png">
        </div><!--/ row-->	
 	  </div><!--/ container -->
 	 </section><!--/ profile -->
@@ -223,11 +176,9 @@
 	    <div class="col-lg-12">
 		   <div class="post-content">
 		    <div class="author-post text-center">
-		<form:form action="mypage_acco_changeprofileimg.do" method="post" enctype="multipart/form-data" id="profileform">
-	   		 <input type="hidden" name="account_id" value="<%=accvo.getId()%>"> 
-	   		 <input type="file" id="profile_img" name="profile_img" src="" style="display: none;" accept=".jpg" onchange="profileimginp();">
-		     <img id="changeprofileimg" class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" alt="Image" onclick="profileimg();">
-	  	 </form:form>		    </div><!-- /author -->
+				 <img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=accvo.getId() %>/image.jpg" 
+		     											   alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'" onclick="location.href='mypage_accountpage.do'">
+			</div><!-- /author -->
 		   </div><!-- /.post-content -->		
 		</div><!-- /col-sm-12 -->
 		
@@ -246,9 +197,11 @@
           <div class="details-box row">
 		   <div class="col-lg-12">
            <div class="content-box">
-		     <h4>@<%=accvo.getId() %> <i class="fa fa-check"></i></h4>
+		     <h4>@<%=accvo.getId() %> <i class="fa fa-check" style="background: #ff7f73"></i></h4>
+		     <!-- 
              <p>Welcome to the offical account of Anna Morgan. Success is in the PIXELS,(후에 소개 추가 예정) <span class="hashtag">#pixels</span></p>
-			 <small><span class="hashtag" style="color:#0fc19e;">
+		      -->
+			 <small><span class="hashtag" style="color:#ff7f73;">
 			 	<c:choose>
 			 		<c:when test="<%=accvo.getPet_list().isEmpty() %>">
 			 		( 반려동물을 추가해주세요. )
@@ -312,10 +265,10 @@
 	
 %>
           <li id="followersNum">
-          	<a id="FollowersTab" class="" href="#frends" data-toggle="tab">Followers<span><%=fd_count %></span></a>
+          	<a id="FollowersTab" class="" href="#frends" data-toggle="tab">Followers<span style="background-color: #ff7f73"><%=fd_count %></span></a>
           </li>
           <li>
-          	<a id="FollowingTab" class="" href="#frends-req" data-toggle="tab">Following<span><%=fr_count %></span></a>
+          	<a id="FollowingTab" class="" href="#frends-req" data-toggle="tab">Following<span style="background-color: #ff7f73"><%=fr_count %></span></a>
           </li>
          </ul>
 		</div>

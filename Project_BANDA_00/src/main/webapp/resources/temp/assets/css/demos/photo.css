@@ -572,7 +572,7 @@ a.navbar-brand:hover {
 }
 
 .mint-green {
-  background-color: #0fc19e;
+  background-color: #ff7f73;
 }
 
 @media(max-width:768px) {
@@ -1469,7 +1469,7 @@ a.navbar-brand:hover {
   color: #848484;  
 }
 .details .content-box p span.hashtag{
-  color: #0fc19e !important;
+  color: #ff7f73 !important;
 }
 .details .content-box small span{
   font-family: 'Abhaya Libre', serif;

@@ -1,22 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "com.mvc.banda.model.vo.AccountVo" %>
+<link href="icheck-bootstrap.css" rel="stylesheet">
 
 			<header id="header">
-				<div class="inner" style="position:relative;">
-					<div class="closeBtn">
-						<a href="#" id="closeBtn" class=""><i class="fas fa-times-circle"></i></a>
-					</div>					
-					<div id="content" class="content">
-						<img id="testlogo" src="<%=request.getContextPath()%>/resources/images/logo_profile.png">
-						<!-- <h1>Radius</h1> -->
-						<h2></h2>
-						
-						<!-- 닫힘 버튼 -->
-						<a id="loginBtn" class="button big alt" onclick = "reset_login()"><span>Login</span></a>
-						
-						<a href="#" id="feedBtn" class="feedBtn button big alt"><span>Feed</span></a>
-					</div>
+
+				<div class="inner" style="position:relative; background: url(/banda/resources/images/logo_pink_nt.png);
+    background-size: contain;">
+	               <div class="closeBtn">
+	                  <a href="#" id="closeBtn" class=""><i class="fas fa-times-circle"></i></a>
+	               </div>               
+	               <div id="content" class="content">
+	                  <img id="testlogo" src="<%=request.getContextPath()%>/resources/images/logo_text.png" style="width: 80%; height: 50%; margin-top: 120px;">
+	                  <!-- <h1>Radius</h1> -->
+	                  <h2></h2>
+	                  
+	                  <!-- 닫힘 버튼 -->
+	                  <a id="loginBtn" class="button big alt" onclick = "reset_login()" style="background: none; color:white;"><span>Login</span></a>
+	                  
+	                  <a href="#" id="feedBtn" class="feedBtn button big alt" style="background: none; color:white;"><span>Feed</span></a>
+	               </div>
+
 					
 					<div id="logincontent" style="display: none;" >
 						<div class="content">
@@ -93,12 +97,15 @@
 					</div>
 					
 					<div class="content" id="isLogin" style="display: none">
-						<div>
+						<div style="margin-top: 30px;">
 							<!-- 알림  -->
-							<a class="islogin-icon-left" href="#" >
-								<i class="fa fa-bell noti-icon"></i>
+							<a class="islogin-icon-left">
+								<i class="fa fa-bell noti-icon" style="color: #ff7f73"></i>
+								<!-- 
 								<span class="badge badge-danger badge-pill noti-icon-badge">4</span>
+								 -->
 							</a>
+
 							
 							<%
 								String id = null;
@@ -109,50 +116,79 @@
 								}
 							%>
 							<!-- 프로필사진 -->
-							<a href="photo_profile.do"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=id %>/image.jpg" alt="Image" onerror="this.src = '<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/image.jpg'"></a>
+							<a href="mypage_accountpage.do"><img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=id %>/image.jpg" alt="Image" onerror="this.src = '<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/image.jpg'"></a>
 							<!-- 메일 -->
-							<a class="islogin-icon-right" href="myChatpage.do" >
+							
+							<a id="chaticon" class="islogin-icon-right" href="myChatpage.do" style="color: white;">
 								<i class="fas fa-comments"></i>
-								<span class="badge badge-success badge-pill noti-icon-badge">6</span>
+								<!-- 
+								 <span class="badge badge-success badge-pill noti-icon-badge">6</span>
+								 -->
 							</a>
 						</div>
-						<div class="iconBox">
-							<a href="rank.do" id="menuBtn1" class="" style="color:#21b77b;"><i class="fas fa-award"></i></a>
-							<a href="boardListFree.do" id="menuBtn2" class="" style="color:#80b8ff;"><i class="fas fa-user-friends"></i></a>
-							<a href="mapHospital.do" id="menuBtn3" class="" style="color:#f79689;"><i class="fas fa-map-marked-alt"></i></a>
-							<a href="mypage_followpage.do" id="menuBtn4" class="" style="color:#ec3d6e;"><i class="fas fa-user"></i></a>
-							
+						<div class="iconBox" style="margin-top: 15px; margin-bottom: 30px;">
+							<a href="index_go.do" id="menuBtn1" class="" style="color:#21b77b;"><img alt="menuhome" id="menuhome" class="menubar" src="<%=request.getContextPath() %>/resources/images/zoo/outline_png/004-bear.png" width="18%"></a>
+							<a href="boardListFree.do" id="menuBtn2" class="" style="color:#80b8ff;"><img alt="menuboard" id="menuboard" class="menubar" src="<%=request.getContextPath() %>/resources/images/zoo/outline_png/020-monkey.png" width="18%"></a>
+							<a href="mapHospital.do" id="menuBtn3" class="" style="color:#f79689;"><img alt="menumap" id="menumap" class="menubar" src="<%=request.getContextPath() %>/resources/images/zoo/outline_png/017-lion.png" width="18%"></a>
+							<a href="mypage_followpage.do" id="menuBtn4" class="" style="color:#ec3d6e;"><img alt="menumypage" id="menumypage" class="menubar" src="<%=request.getContextPath() %>/resources/images/zoo/outline_png/006-chameleon.png" width="18%"></a>
 						</div>
 						
 						<div id="searchinputBox">
-						  
-							  <div>
-						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid"> 계정
-						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag"> 반려동물
-						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag"> 해시태그
-						      </div>
 					        <div id="autoArea" style="text-align: left;"></div><!-- 자동완성 @author 주희진 -->
 							<input type="text" id="searchinput" name="keyword" value="" >
-							<div id="searchBtn" class="searchBtn" onclick = "searchFunction()"><i class="fas fa-search"></i></div>
-<!--
-
-							<div id="searchBtn" class="searchBtn" ><i class="fas fa-search"></i></div>
-							
-						  </form>
--->
-							
+							<div id="searchBtn" class="searchBtn" onclick = "searchFunction()"><i class="fas fa-search" style="color:white"></i></div>					
+							  <div class="radio icheck-default">
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchid" id="jh_searchid" style="display: none;"><label for="jh_searchid" style="font-size: 15pt; color:white;"> 계정</label>
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedptag" id="jh_searchfeedptag" style="display: none;"><label for="jh_searchfeedptag" style="font-size: 15pt; color:white;"> 반려동물</label>
+						        <input type="radio" class="jh_searchtype" name="jh_searchtype" value="jh_searchfeedhtag" id="jh_searchfeedhtag" style="display: none;"><label for="jh_searchfeedhtag" style="font-size: 15pt; color:white;"> 해시태그</label>
+						      </div>
 						</div>
 				      
 						
 					</div>				
 					<div id="logOut">
-						<button onclick = "logout();" style = "background : none;"><i class="fas fa-sign-out-alt"></i></button>
+						<button onclick = "logout();" style = "background : none;"><i class="fas fa-sign-out-alt" style="color:white"></i></button>
 					</div>
 					
 					<!-- 닫혔을때 열기 버튼  -->
 					<a href="#" class="button hidden"><span>Let's Go</span></a>
 				</div>
 			</header>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+		$(function(){
+			//성일 써클헤더에서 메뉴바 이미지 변경하기
+			$(".menubar").mouseenter(function(){
+				var id = $(this).attr("id");
+				if(id == "menuhome"){
+					$("#menuhome").attr("src","<%=request.getContextPath()%>/resources/images/zoo/color_png/004-bear.png");
+				}else if(id=="menuboard"){
+					$("#menuboard").attr("src","<%=request.getContextPath()%>/resources/images/zoo/color_png/020-monkey.png");
+				}else if(id=="menumap"){
+					$("#menumap").attr("src","<%=request.getContextPath()%>/resources/images/zoo/color_png/017-lion.png");
+				}else if(id == "menumypage"){
+					$("#menumypage").attr("src","<%=request.getContextPath()%>/resources/images/zoo/color_png/006-chameleon.png");
+				}
+			});
+			
+			$(".menubar").mouseleave(function(){
+				var id = $(this).attr("id");
+				if(id == "menuhome"){
+					$("#menuhome").attr("src","<%=request.getContextPath()%>/resources/images/zoo/outline_png/004-bear.png");
+				}else if(id=="menuboard"){
+					$("#menuboard").attr("src","<%=request.getContextPath()%>/resources/images/zoo/outline_png/020-monkey.png");
+				}else if(id=="menumap"){
+					$("#menumap").attr("src","<%=request.getContextPath()%>/resources/images/zoo/outline_png/017-lion.png");
+				}else if(id == "menumypage"){
+					$("#menumypage").attr("src","<%=request.getContextPath()%>/resources/images/zoo/outline_png/006-chameleon.png");
+				}
+			});
+			
+
+			
+		});
+</script>		
+	
 			<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 			<script>
 			
@@ -400,5 +436,8 @@ function onSignIn() {
 			
 			</script>
 			
-
-			
+		<style type="text/css">
+			#chaticon:hover{
+				color:gray !important;
+			}
+		</style>

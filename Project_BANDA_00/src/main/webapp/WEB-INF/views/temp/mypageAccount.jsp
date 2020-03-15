@@ -109,52 +109,8 @@
 	 <section class="profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   <div class="col-lg-3">
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/chick.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/frog.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-	   <div class="col-lg-6">
-		 <div class="profilebox-large hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/flamingo.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
-	   <div class="col-lg-3">
-		 <div class="profilebox hidden-xs hidden-sm" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/sheep.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-		 <div class="profilebox" 
-		   style="background: linear-gradient( rgba(34,34,34,0.45), rgba(34,34,34,0.45)), url('<%=request.getContextPath() %>/resources/images/animal_icon_c/cat.png') no-repeat;
-		          background-size: cover;
-                  background-position: center center;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;">		  
-		 </div>
-	   </div>
+		
+		<img alt="accountbg" src="<%=request.getContextPath() %>/resources/images/bg/acc_bg.png" width="100%" style="">
 		
        </div><!--/ row-->	
 	  </div><!--/ container -->
@@ -340,7 +296,7 @@ $(document).ready(function(){
           <div class="details-box row" style="margin-bottom: 200px;">
 		   <div class="col-lg-9" style="width: 1140px;">
            <div class="content-box">
-		     <h4 style="margin-bottom: 50px;margin-top: 30px;text-align: center;">ID.   <%=accvo.getId() %> <i class="fa fa-check"></i></h4>
+		     <h4 style="margin-bottom: 50px;margin-top: 30px;text-align: center;">ID.   <%=accvo.getId() %> <i class="fa fa-check" style="background: #ff7f73;"></i></h4>
              <table id="tprofile">
              	<col width="300px;">
              	<col width="300px;">

@@ -232,9 +232,9 @@
 			<!-- 작성자 -->
             <div class="img-poster clearfix" style = "padding-top:10%">
             
-             <a href="">
+             <div>
              	<img id = "feed_p_image" class="img-responsive img-circle" src="" alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
-             </a>
+             </div>
              <strong><a href="#" id = "feed_id"></a></strong>
 		     <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
             </div><!--/ img-poster -->

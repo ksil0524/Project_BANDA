@@ -468,11 +468,7 @@
 				                  -webkit-background-size: cover;
 				                  -moz-background-size: cover;
 				                  -o-background-size: cover;">
-				          
-				          <!-- 좋아요수 --> 
-						  <div class="explore-top">
-						   <div class="explore-like"><i class="fa fa-heart"></i> <span>${list.get(2)}</span></div>
-				          </div>	
+				     
 				          	  
 						 </div>
 						 </a>
@@ -578,13 +574,10 @@
          	<!-- 작성자 -->
             <div class="img-poster clearfix" style = "padding-top:10%">
             
-             <a href="">
+             <div>
              	<img id = "feed_p_image" class="img-responsive img-circle" src="" alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
-             </a>
+             </div>
              <strong><a href="#" id = "feed_id"></a></strong>
-		     <!-- 
-		      <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i> Following</a>
-		      -->
                <p class="date sub-text" id = "feed_regdate" style="font-size: 9px; text-align: right; margin: 3px 0 0;"></p>
             </div><!--/ img-poster -->
             

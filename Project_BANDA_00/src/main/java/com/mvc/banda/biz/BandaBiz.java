@@ -299,7 +299,21 @@ public class BandaBiz {
 		public Map<String, Object> delete_user(String id) {
 			return jy_dao.delete_user(id);
 		}
+		
+		//팔로우 삽입
+		public int detail_follow_insert(FollowVo fvo) {
+			return jy_dao.detail_follow_insert(fvo);
+		}
+		
+		//팔로우 삭제
+		public int deatil_follow_delete(FollowVo fvo) {
+			return jy_dao.deatil_follow_delete(fvo);
+		}
 	
+		//팔로우 여부
+		public int follow_list_yn(FollowVo fvo) {
+			return jy_dao.follow_list_yn(fvo);
+		}
 	// < 최주예 파트  끝 > 
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------

@@ -13,7 +13,7 @@
 						<h2></h2>
 						
 						<!-- 닫힘 버튼 -->
-						<a href="#" id="loginBtn" class="button big alt"><span>Login</span></a>
+						<a id="loginBtn" class="button big alt" onclick = "reset_login()"><span>Login</span></a>
 						
 						<a href="#" id="feedBtn" class="feedBtn button big alt"><span>Feed</span></a>
 					</div>
@@ -54,8 +54,8 @@
                                 <!-- 어아다찾기 -->
                                 <div class="form loginBox" id = "idfind" style = "display:none;">
                                     <form method="" action="" accept-charset="UTF-8">
-                                    <input class="form-control" type="text" placeholder="Email" name="email" id = "findid">
-                                    <input class="form-control" type="text" placeholder="Email" name="email" id = "findid_res" style = "display:none;color:red;font-weight:bold" >
+                                    <input class="form-control" type="text" placeholder="Email" name="email" id = "findid" required="required">
+                                    <input class="form-control" type="text" placeholder="Email" name="email" id = "findid_res" style = "display:none;color:red;font-weight:bold">
                                     <input class="btn btn-default btn-login" type="button" value="아이디찾기" onclick="idFindChk_res()" id = "idFindChk_res_id">
                                     <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login()" id = "return_login_id" style = "display:none">
                                     </form>
@@ -232,7 +232,16 @@ function onSignIn() {
 }
 			
 			
-//////////////////////////////////////			
+//////////////////////////////////////	
+
+			reset_login = function(){
+				
+				$("#error_login").css("display","none");
+				$("#idfind").css("display","none");
+				$("#pwdfind").css("display","none");
+				$("#login").css("display","block");
+				
+			}
 			
 			
 			function idFind(){
@@ -250,42 +259,44 @@ function onSignIn() {
 						
 						'email'  : email						
 				}
-				
-				$.ajax({
-					
-					url : 'idFind.do',
-					type : 'post',
-					data : JSON.stringify(findid_set),
-  					contentType: "application/json",
-  					dataType:"json",
-  					success : function(data){
-  						
-  						if(data.chk){
-  							
-  							alert('아이디 찾기 성공');
-  							$('#findid_res').show();
-  							$('#findid').hide();
-  							
-  							alert(data.id);
-  							$('#findid_res').val(data.id);
-  							
-  							$('#idFindChk_res_id').hide();
-  							$('#return_login_id').show();
-  							
-  							
-  						} else {
-  							alert('아이디 찾기 실패');
-  						}
-  						
-  					},
-					error:function(request,status,error){
-						
-						alert("통신실패");
-						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
-					}
-					
-				});
+				
+				if(findid_set.email.length != 0){
+				
+					$.ajax({
+						
+						url : 'idFind.do',
+						type : 'post',
+						data : JSON.stringify(findid_set),
+	  					contentType: "application/json",
+	  					dataType:"json",
+	  					success : function(data){
+	  						
+	  						if(data.chk){
+	  							
+	  							$('#findid_res').show();
+	  							$('#findid').hide();
+	
+	  							$('#findid_res').val(data.id);
+	  							
+	  							$('#idFindChk_res_id').hide();
+	  							$('#return_login_id').show();
+	  							
+	  							
+	  						} else {
+	  							alert('아이디 찾기 실패');
+	  						}
+	  						
+	  					},
+						error:function(request,status,error){
+							
+							alert("통신실패");
+							alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+	
+						}
+						
+					});
+				} 
 				
 			}
 			
@@ -326,43 +337,41 @@ function onSignIn() {
 					'email' : findpwd_email						
 				}
 				
-				$.ajax({
-					
-					url : 'pwdFind.do',
-					type : 'post',
-					data : JSON.stringify(findpwd_set),
-  					contentType: "application/json",
-  					dataType:"json",
-  					success : function(data){
-  						
-  						if(data.chk){
-  							
-  							alert('비밀번호 찾기 성공');
-  							alert(data['id']);
-  							
-  							$('#findpwd_res').show();
-  							$('#findpwd_id').hide();
-  							$('#findpwd_email').hide();
-  							
-  							$('#findpwd_res').html(data.id);
-  							$('#idFindChk_res_pwd').hide();
-  							$('#return_login_pwd').show();
-  							
-  							
-  							
-  						} else {
-  							alert('비밀번호 찾기 실패');
-  						}
-  						
-  					},
-					error:function(request,status,error){
+				if(findpwd_set.id.length != 0 && findpwd_set.email.length != 0){
+					$.ajax({
 						
-						alert("통신실패");
-						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-
-					}
-					
-				});
+						url : 'pwdFind.do',
+						type : 'post',
+						data : JSON.stringify(findpwd_set),
+	  					contentType: "application/json",
+	  					dataType:"json",
+	  					success : function(data){
+	  						
+	  						if(data.chk){
+	  							
+	  							$('#findpwd_res').show();
+	  							$('#findpwd_id').hide();
+	  							$('#findpwd_email').hide();
+	  							
+	  							$('#findpwd_res').html(data.id);
+	  							$('#idFindChk_res_pwd').hide();
+	  							$('#return_login_pwd').show();
+	  							
+	
+	  						} else {
+	  							alert('비밀번호 찾기 실패');
+	  						}
+	  						
+	  					},
+						error:function(request,status,error){
+							
+							alert("통신실패");
+							alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+	
+						}
+						
+					});
+				}
 				
 				
 				
@@ -387,6 +396,8 @@ function onSignIn() {
 				$('#return_login_pwd').hide();
 				
 			}
+
+			
 			</script>
 			
 

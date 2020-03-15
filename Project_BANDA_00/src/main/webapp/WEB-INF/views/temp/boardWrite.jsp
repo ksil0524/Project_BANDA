@@ -19,6 +19,9 @@
 	Styles
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />
+	<!-- index_circle_custom CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+	
 </head>
 <body style="background-color: #f4f4f4;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>

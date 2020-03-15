@@ -9,10 +9,12 @@
 <head>
 <!-- Map CSS -->
 <link href="<%=request.getContextPath() %>/resources/assets/css/custom-map.css" rel="stylesheet" />
-
 <!-- HEAD CSS -->
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
 <script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+<!-- index_circle_custom CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+
 </head>
 
 <body>
@@ -110,28 +112,10 @@
 	 var latitude, longitude, dong, map; 
 	 var markers = [];
 		 $(function(){
-			
-			// Geolocation API에 액세스할 수 있는지를 확인
-	        if (navigator.geolocation) {
-	            //클라이언트 접속 위치 정보 받기
-	            var id = navigator.geolocation.watchPosition(
-                    function(pos) {
-                    	//위도 set
-                        latitude = pos.coords.latitude;
-           			 	//경도 set
-                    	longitude = pos.coords.longitude;
-           			 	console.log("위도: " + latitude +"/경도: " + longitude);
-           			 	//맵 호출
-           			 	map(); 
-           			 	//위치 감지 중지
-           			 	navigator.geolocation.clearWatch(id);
-                    });
-	        } else {
-	            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다. 기본 지역으로 안내됩니다.");
-	            //남도빌딩 위도 경도
-	            latitude = "37.49900771922129";
-   			 	longitude = "127.03284644541614";
-	        }
+			//default 위도 경도
+            latitude = "37.49900771922129";
+		 	longitude = "127.03284644541614";
+			map(); 
 		});
 		 function map(){
 				// 지도를 표시할 div 

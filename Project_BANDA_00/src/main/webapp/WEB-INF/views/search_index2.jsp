@@ -39,7 +39,8 @@
 		Auto CSS
 		=============================================== -->
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+		<!-- index_circle_custom CSS -->
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/index_circle_custom.css">
 		<!-- Login css -->
 		<!-- <link href="login/assets/css/bootstrap.css" rel="stylesheet" /> -->
 		<!-- <script src="login/assets/js/login-register.js" type="text/javascript"></script> -->

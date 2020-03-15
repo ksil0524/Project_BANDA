@@ -23,6 +23,8 @@
 	Styles
 	=============================================== -->
 	<link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
+	<!-- index_circle_custom CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
 	
 	<%
 		AccountVo accvo = (AccountVo)session.getAttribute("accvo");

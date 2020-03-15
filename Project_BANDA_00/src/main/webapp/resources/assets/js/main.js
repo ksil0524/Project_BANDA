@@ -144,7 +144,7 @@ $("#password").blur(function(){
 		
 		isjoin++;
 		$("#password").val("");
-		$("#password").attr("placeholder","비밀번호는 숫자,소문자 4~10자리만 입력가능합니다.");
+		$("#password").attr("placeholder","숫자,소문자 4~10자리만 입력해주세요.");
 		$("#password").css({"font-size":"10px"})
 		return false;
 	}
@@ -258,41 +258,41 @@ function joinChk(){
 	alert("email: " + email + "ID: " + id+  "pw: " + pw + "phone:" + phone);
 	
 	/* 정규식 및 데이터 입력 체크 - login 담당 */
-	if(email == null || email != "" ||id == null|| id == "" || pw == null||pw != "" ||phone ==null || phone != ""){
-		close();
-	}else{
+	if(email === null || email === '' || id === null || id === '' || pw === null || pw === '' || phone === null || phone === ''){
 		alert("정보를 모두 입력하세요.");
+	}else{
+
+		$.ajax({
+			url: "joinregister.do",
+			type:"post",
+			data: JSON.stringify(register_set),
+			contentType:"application/json",
+			dataType:"json",
+			success : function(msg){
+				
+				if(msg.res){
+					alert("가입 완료되었습니다");
+					$("#joinForm #email").val("");
+					$("#joinForm #id").val("");
+					$("#joinForm #password").val("");
+					$("#joinForm #phone").val("");
+				}else{
+					alert("가입 실패");
+					$("#joincontent").show();
+					$(".closeBtn").show();
+					$("#logincontent").hide();
+					$("#content").hide();
+				}
+				
+			}, 
+			error:function(request,status,error){
+				alert("통신실패");
+				alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			}
+		});
+		
 	}
 
-	
-	$.ajax({
-		url: "joinregister.do",
-		type:"post",
-		data: JSON.stringify(register_set),
-		contentType:"application/json",
-		dataType:"json",
-		success : function(msg){
-			
-			if(msg.res){
-				alert("가입 완료되었습니다")
-			
-				
-				
-			}else{
-				alert("가입 실패")
-				$("#joincontent").show();
-				$(".closeBtn").show();
-				$("#logincontent").hide();
-				$("#header").toggleClass('hide');
-				$("#content").hide();
-			}
-			
-		}, 
-		error:function(request,status,error){
-			alert("통신실패");
-			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-		}
-	});
 	
 
 

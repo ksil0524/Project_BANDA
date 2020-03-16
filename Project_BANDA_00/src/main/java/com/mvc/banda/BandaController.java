@@ -945,7 +945,6 @@ public class BandaController {
 		 * @version 1.0
 		 * @date 200219
 		*/
-		System.out.println("재호 - 자동검색 데이터 확인: " + keyword + "/ " + searchtype);
 		List<String> list = biz.circleheader_autosearch(keyword, searchtype);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

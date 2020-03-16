@@ -13,7 +13,6 @@ public class MapVo {
 	private double map_longitude;		//경도
 	
 	public MapVo() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public MapVo(int map_no, String map_cate, String map_name, String map_addr, String map_naddr, String map_zipcode,
@@ -108,7 +107,5 @@ public class MapVo {
 				+ map_addr + ", map_naddr=" + map_naddr + ", map_zipcode=" + map_zipcode + ", map_phone=" + map_phone
 				+ ", map_latitude=" + map_latitude + ", map_longitude=" + map_longitude + "]";
 	}
-	
-	
 	
 }

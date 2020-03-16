@@ -408,4 +408,11 @@
 	size: 15px;
 	text-align: center;
 	vertical-align: middle;
-	padding-top: 40px !important;}
+	padding-top: 40px !important;
+}
+
+.update-menu a:hover,.update-menu a:focus, .update-menu a:active, .update-menu a.active {
+	color: white !important;
+	cursor: default;
+}	
+	

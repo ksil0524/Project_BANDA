@@ -27,7 +27,7 @@ $(function(){
 					}
 				},
 				error: function(){
-					alert("ajax 서버와 통신 실패");
+					alert("서버와 통신에 실패하였습니다. 다시 시도해주세요.");
 				}
 			})//ajax end
 		},//source end
@@ -346,7 +346,7 @@ function searchAjax(city, district, neighborhood, keyword){
 			}
 		},
 		error: function(){
-			alert("ajax 서버와 통신 실패");
+			alert("서버와 통신에 실패하였습니다. 다시 시도해주세요.");
 		}
 		
 	})//ajax end

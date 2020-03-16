@@ -49,9 +49,9 @@
 						<span>공원</span>
 					</a>
 				</div>
-				<div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-					<a class="nav-icon" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-						<span></span>
+				<div class="p-2 nav-icon-lg dark-black update-menu" style="height: 59px;">
+					<a class="nav-icon" href="#" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
+						<span>업데이트 예정</span>
 					</a>
 				</div>
 			 </div>
@@ -210,7 +210,7 @@
 							}
 						},
 						error: function(){
-							alert("ajax 서버와 통신 실패");
+							alert("서버와 통신에 실패하였습니다. 다시 시도해주세요.");
 						}
 						
 					})//ajax end

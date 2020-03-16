@@ -2,18 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "com.mvc.banda.model.vo.AccountVo" %>
 <link href="icheck-bootstrap.css" rel="stylesheet">
-<style>
-	#return_login_id2:hover{
-		background-color:#ccc !important;
-	}
-</style>
 			<header id="header">
 
 				<div id="circle_header_bg" class="inner" style="position:relative; background: url(/banda/resources/images/logo_pink_nt.png);
     background-size: contain;">
 	               <div class="closeBtn">
 	                  <a href="#" id="closeBtn" class=""><i class="fas fa-times-circle"></i></a>
-	               </div>               
+	               </div>                
 	               <div id="content" class="content">
 	                  <img id="testlogo" src="<%=request.getContextPath()%>/resources/images/logo_text.png" style="width: 80%; height: 50%; margin-top: 120px;">
 	                  <!-- <h1>Radius</h1> -->
@@ -65,7 +60,7 @@
                                     <input class="form-control" type="email" placeholder="Email" name="email" id = "findid" required="required">
                                     <input class="form-control" type="text" placeholder="Email" name="email" id = "findid_res" style = "display:none;color:red;font-weight:bold">
                                     <input class="btn btn-default btn-login" type="button" value="아이디찾기" onclick="idFindChk_res()" id = "idFindChk_res_id">
-                                    <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login()" id = "return_login_id2" style ="display:inline; background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
+                                    <input class="btn btn-default btn-login" type="button" value="돌아가기" onclick="return_login()" id = "return_login_id2" style ="display:inline; background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
                                     <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login()" id = "return_login_id" style = "display:none">
                                     </form>
                                 </div>
@@ -77,7 +72,8 @@
                                     <input class="form-control" type="email" placeholder="이메일" name="email" id = "findpwd_email">
                                     <p style = "color:red;font-weight:bold;display:none" id = "findpwd_res"></p>
                                     <input class="btn btn-default btn-login" type="button" value="비밀번호찾기" onclick="pwdFindChk_res()" id = "idFindChk_res_pwd">
-                                    <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login2()" id = "return_login_pwd" style = "display:none">
+                                    <input class="btn btn-default btn-login" type="button" value="돌아가기" onclick="return_login2()" id = "return_login_pwd2" style ="display:inline; background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
+                                    <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login2()" id = "return_login_pwd" style = "display:none;background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
                                     </form>
                                 </div>
                              </div>
@@ -395,6 +391,7 @@ function onSignIn() {
 	  							$('#findpwd_res').show();
 	  							$('#findpwd_id').hide();
 	  							$('#findpwd_email').hide();
+	  							$('#return_login_pwd2').hide();
 	  							
 	  							$('#findpwd_res').html(data.id);
 	  							$('#idFindChk_res_pwd').hide();
@@ -430,6 +427,7 @@ function onSignIn() {
 				$('#idfind').hide();
 				$('#login').show();
 				$('#pwdfind').hide();
+				$('#return_login_pwd2').show();
 				
 				//아이디찾기 이후
 				$('#findpwd_res').hide();

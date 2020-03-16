@@ -481,7 +481,6 @@ $(document).ready(function(){
        
        $('#back-to-top').tooltip('show');
        // 하기싫습니다.......집에 보내주세요....... 우리조원은 왜 학원을 안나오는 걸까요....
-
        
 });
 

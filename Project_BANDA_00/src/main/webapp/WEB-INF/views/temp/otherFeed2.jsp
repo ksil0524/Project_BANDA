@@ -1,40 +1,35 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page import = "com.mvc.banda.model.vo.AccountVo" %>
 <%@ page import = "com.mvc.banda.model.vo.FeedVo" %>
+<%@ page import = "com.mvc.banda.model.vo.PetVo" %>
 <%@ page import = "java.util.*" %>
 <%@ page session = "true" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-     <!-- ==============================================
-	 Scripts
-	 =============================================== -->
-	 <!-- jquery.min.js -->
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
-
-
-
-		
-
-<link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/resources/temp/assets/css/custom-boardwrite.css" rel="stylesheet" />
-
-<style type="text/css">
-	@font-face { font-family: 'BMHANNAAir'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff'); font-weight: normal; font-style: normal; }
-</style>
-
-<style type="text/css">
+<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+   <!-- ==============================================
+   Styles
+   =============================================== -->
+   <link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
+   <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
+   <!-- index_circle_custom CSS -->
+   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+        <!-- ==============================================
+    Scripts
+    =============================================== -->
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+     
+   <style type="text/css">
 	
 		::-webkit-scrollbar {
 
@@ -43,348 +38,136 @@
 		} 
 
 </style>
-
-<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
-
+   
+   
 </head>
-<body style = "-ms-overflow-style: none;">
+<body style = "background-color:#f4f4f4;-ms-overflow-style: none;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
-
-<form id="delete_feed" action="mypage_deletefeed.do" method="post">
-	<input type="hidden" name="deletefeed_no" id="deletefeed_no" value="">
-</form>
-
-	<!-- ==============================================
-	HeaderSection
-	=============================================== -->
-	<jsp:include page="/WEB-INF/views/circle-header.jsp"></jsp:include>
+<%
 	
-	<!-- ==============================================
-	Navbar Second Section
-	=============================================== -->
-		<section class="nav-sec" style="margin-top: 15px; height: 60px;">
-	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg dark-black"style="height: 59px;">
-	   <a class="nav-icon" href="mypage_followpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>F / F</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg clean-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypage_allselect.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의 반려동물</span>
-	   </a>
-	   </div>
-	   
-	   <div class="p-2 nav-icon-lg mint-green" style="height: 59px;">
-	   <a class="nav-icon" href="mypageFeed.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>나의피드</span>
-	   </a>
-	   </div>
-	   <div class="p-2 nav-icon-lg dark-black" style="height: 59px;">
-	   <a class="nav-icon" href="mypage_accountpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
-		<span>내계정</span>
-	   </a>
-	   </div>
-	  </div>
-	</section>		
-			
-  
-	 <!-- ==============================================
-	 News Feed Section
-	 =============================================== --> 
-	 
-	 <%
-	 	
-		AccountVo vo = (AccountVo)session.getAttribute("vo");
-	 	String id = vo.getId();
-	 	
-	 	
-	 	
-	 	List<FeedVo> fvo = (List)request.getAttribute("fvo");
+	AccountVo real_vo = null;
+	String id = null;
 
-	 	
-	 	String str[] = null;
-	 	List feed = new ArrayList();
-	 
-		for(FeedVo f : fvo){
-			
-			List rfeed_image = new ArrayList();
-			List rfeed_file = new ArrayList();
-			
-			rfeed_image.add(f.getFeed_no());
-			
-			str = f.getFeed_file().split("@");
-			rfeed_image.add(str[1]);
-			
-			rfeed_image.add(f.getLike_list().size());
-			
-			feed.add(rfeed_image);
-			
-		}
-	 	
-	 	
-	 
-	 %>
-	 
-	 <!-- ==============================================
-		뒤에배경
-	 =============================================== --> 
-	 <section class="profile">
-	  <div class="container-fluid">
-	   <div class="row">
-	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/feed_bg.png">
-       </div><!--/ row-->	
-	  </div><!--/ container -->
-	 </section><!--/ profile -->
-  
-	 <!-- ==============================================
-	 	사람사진
-	 =============================================== --> 
-	 <section class="user-profile">
-	  <div class="container-fluid">
-	   <div class="row">
-	   
-	    <div class="col-lg-12">
-		   <div class="post-content">
-		    <div class="author-post text-center">
-		     <img class="img-fluid img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=id %>/image.jpg" 
-		     											   alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'" onclick="location.href='mypage_accountpage.do'">
-
-		    </div><!-- /author -->
-		   </div><!-- /.post-content -->		
-		</div><!-- /col-sm-12 -->
+	if(session.getAttribute("vo") != null){
 		
-       </div><!--/ row-->	
-	  </div><!--/ container -->
-	 </section><!--/ profile -->
-  
-	 <!-- ==============================================
-	 	글올리기
-	 =============================================== --> 
-	 <script type="text/javascript">
-	 	var pettaglist = new Array;
-	 	var hashtaglist = new Array;
-	 	
-	 	function pettaginsert(val){
-	 		var spantag = $("<span>").addClass("tag").html(":"+val+"<a onclick='deletepetspan(this)'>x</a>");
-	 		$("#pettags").append(spantag);
-	 		$("#pettaginp").val("");
-	 		pettaglist.push(val);
-	 		
-	 	}
-	 	
-	 	function hashtaginsert(val){
-	 		var spantag = $("<span>").addClass("tag").html("#"+val+"<a onclick='deletehashspan(this)'>x</a>");
-	 		$("#hashtags").append(spantag);
-	 		$("#hashtaginp").val("");
-	 		hashtaglist.push(val);
-	 	}
-	 	
-	 	function deletepetspan(atag){
-	 		
-	 		var pa = atag.parentNode;
-	 		var patext = pa.innerText;
-	 		var patextck = patext.substr(1,patext.length-2);
-	 		console.log(patextck);
-
-	 		for(var i=0 ; i<pettaglist.length ; i++){
-	 			if(pettaglist[i] == patextck){
-	 				pettaglist.splice(i,1);
-	 			}
-	 		}	 		
-	 		atag.remove();
-	 		pa.remove();
-	 	}
-	 	
-	 	function deletehashspan(atag){
-	 		var pa = atag.parentNode;
-	 		var patext = pa.innerText;
-	 		var patextck = patext.substr(1,patext.length-2);
-	 		console.log(patextck);
-	 		
-	 		
-	 		for(var i=0 ; i<hashtaglist.length ; i++){
-	 			if(hashtaglist[i] == patextck){
-	 				hashtaglist.splice(i,1);
-	 			}
-	 		}	
-	 		atag.remove();
-	 		pa.remove();	 	
-	 	}
-	 	
-	 	function insertfeed(){
-	 		
-	 		$("#ptaglist").val(pettaglist);
-	 		$("#hteglist").val(hashtaglist);
-	 		
-			var insert_confirm = confirm("새로운 피드를 생성하시겠습니까?");
-			
-			if(insert_confirm){
-				$("#insertfeedform").submit();			
-			}
-	 		
-	 	}
-	 	
-	 	
-	 	
-	 	
-	 
-	 </script>
-	 
-	 
-	 <section class="details">
-	  <div class="container">
-	   
-	   <div class="row">
-	    <div class="col-lg-12">  
-		
-	     <div class="box">
-		  <form:form action="mypage_insertfeed.do" method="post"  modelAttribute="feedVo" enctype="multipart/form-data" id="insertfeedform" >
-		  <input type="hidden" id="feedid" name="id" value="<%=vo.getId() %>">
-		  <table>
-		  	<tr>
-		  		<td colspan="2">
-		  			<textarea name="feed_content" class="form-control no-border" rows="3" placeholder="내용을 입력해주세요..." ></textarea>
-		  		</td>
-		  	</tr>
-		  	<tr>
-		  		<td class="tags-input-wrapper" id="pettags" width="30%;">
-		   			<input id="pettaginp" type="text" class="form-control no-border" placeholder="태그할 반려동물을 입력해주세요..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {pettaginsert(this.value)}"/>
-		  			<input type="hidden" id="ptaglist" name="ptaglist" value="">
-		  		</td>
-		  		<td class="tags-input-wrapper" id="hashtags" width="70%;">
-		   			<input id="hashtaginp" type="text" class="form-control no-border" placeholder="해시태그를 입력해주세요..." style="width: 100%; margin-bottom: 3%;" onKeypress="javascript:if(event.keyCode==13) {hashtaginsert(this.value)}"/>
-		  			<input type="hidden" id="hteglist" name="hteglist" value="">
-		  		</td>
-		  	</tr>
-		  </table>
-		  <div class="box-footer clearfix">
-		   <input type="button" class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="insertfeed()" value="Upload">
-		   <ul class="nav nav-pills nav-sm" id="filetagpa">
-		   	<li id="li1" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
-		   	<li id="li2" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
-		   	<li id="li3" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
-		   	<li id="li4" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
-		   	<li id="li5" style="display: none"><p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" style="margin-top:10px; margin-bottom:5px; margin-left:5px; width: 15px; height: 15px;"></p></li>
-		   </ul>
-		   <ul class="nav nav-pills nav-sm">
-			<li class="nav-item"><a class="nav-link" href="javascript:void(0);" id="file_select1"><i class="fa fa-camera text-muted"></i></a></li>
-			<li class="nav-item"><a class="nav-link" href="javascript:void(0);" id="file_select2"><i class="fa fa-video text-muted"></i></a></li>
-			
-		   	<input type="file" id="file_1" name="file_1" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_2" name="file_2" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_3" name="file_3" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_4" name="file_4" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	<input type="file" id="file_5" name="file_5" style="display: none" accept="video/mp4, image/jpeg, image/png">
-		   	
-		   </ul>
-		  </div>
-		 </form:form>
-		 </div>	
-		 
-		</div>
-	   </div>
-	  
-	  </div><!--/ container -->
-	 </section><!--/ profile -->	
-    
-    <script type="text/javascript">
-    	
-    	$(function(){
+	%>
+		<script type="text/javascript">
+			$(function(){
+				$("#circle_header_bg").css("background","#ff7f73");
+			})
+		</script>
+	<%	
 	
-    		var filecount = 1;
-    		
-    		$("#file_select1").on('click', function(){
-    			if(filecount > 5){
-    				alert("더 이상 파일을 첨부할 수 없습니다.");
-    				return false;
-    			}
-    			$("#file_"+filecount).click();
-    		});
-    		$("#file_select2").on('click', function(){
-    			if(filecount > 5){
-    				alert("더 이상 파일을 첨부할 수 없습니다.");
-    				return false;
-    			}
-    			$("#file_"+filecount).click();
-    		});
-    		
-    		
-    		$("#file_1").on('change', function(){
-    			console.log(this);
-    			filecount = filecount+1;
-    			$("#li1").css("display","block")
-    		});
-    		$("#file_2").on('change', function(){
-    			console.log(this);
-    			filecount = filecount+1;
-    			$("#li2").css("display","block")
+		real_vo = (AccountVo)session.getAttribute("vo");
+		id = real_vo.getId();
+	}
 
-    		});
-    		$("#file_3").on('change', function(){
-    			console.log(this);
-    			filecount = filecount+1;
-    			$("#li3").css("display","block")
+	Map<String, Object> m = (HashMap)request.getAttribute("acc");
+	
+	//acc
+	AccountVo vo = (AccountVo)m.get("acc");
+	List<FeedVo> fvo = vo.getFeed_list();
+	pageContext.setAttribute("fvo", fvo);
+	List<PetVo> pvo = vo.getPet_list();
+	
+	//count
+	int follow_count = (Integer)m.get("follow_count");
+	int followed_count = (Integer)m.get("follower_count");
+	
+	String str[] = null;
+	List feed = new ArrayList();
+	
+	for(FeedVo f : fvo){
+		
+		List rfeed_image = new ArrayList();
+		
+		rfeed_image.add(f.getFeed_no());
+		
+		str = f.getFeed_file().split("@");
+		rfeed_image.add(str[1]);
+		rfeed_image.add(f.getFeed_file());
+		
+		rfeed_image.add(f.getId());
+		rfeed_image.add(f.getFeed_content());
+		rfeed_image.add(f.getFeed_ptag());
+		rfeed_image.add(f.getFeed_hteg());
+		rfeed_image.add(f.getFeed_regdate());
+		rfeed_image.add(f.getLike_list());
+		rfeed_image.add(f.getComment_list());
+		
+		//feed
+		feed.add(rfeed_image);
 
-    		});
-    		$("#file_4").on('change', function(){
-    			console.log(this);
-    			filecount = filecount+1;
-    			$("#li4").css("display","block")
+		System.out.println(pvo);
+		
+	}
 
-    		});
-    		$("#file_5").on('change', function(){
-    			console.log(this);
-    			filecount = filecount+1;
-    			$("#li5").css("display","block")
-    		});
-    		
-    		
-    		
-    		
-    		$('input[type="button"]').keydown(function() {
-    			  if (event.keyCode === 13) {
-    			    event.preventDefault();
-    			  };
-    			});
+%>
 
-    		
-    	});
-    	
-    	
-    	
-    	function deletefeed(){
-    		
-    		var delfeed_no = $("#delfeed_no").text();
-    		alert(delfeed_no);
-    		
-    		var delconfirm = confirm("피드를 삭제하시겠습니까?");
-    		
-    		if(delconfirm){
-    			
-    			$("#deletefeed_no").val(delfeed_no);
-    			$("#delete_feed").submit();
-				    			
-    		}    		
-    		
-    		
-    	}
-    </script>
-    
-    
-    
-	 <!-- ==============================================
-	  피드부분
-	 =============================================== --> 
-	 <section class="newsfeed">
-	  <div class="container">
-	  
-	  
-	   <div class="row">
-	   
-	   <c:choose>
-	   <c:when test = "${not empty fvo}">
+   <!-- ==============================================
+   HeaderSection
+   =============================================== -->
+   <jsp:include page="/WEB-INF/views/circle-header.jsp"></jsp:include>
+   
+
+    <!-- ==============================================
+    News Feed Section
+    =============================================== --> 
+    <section class="profile-two">
+     <div class="container-fluid">
+      <div class="row">
+
+      <div class="col-lg-3" style = "background-color:#fff;margin-top:2%;height:90vh">
+         <aside id="leftsidebar" class="sidebar">        
+        <ul class="list">
+        
+        <!-- 개인정보 -->
+           <li>
+         <div class="user-info">
+          <div class="image">
+            <div>
+            <img style = "height:121px" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=vo.getId()%>/image.jpg" class="img-responsive img-circle" alt="User" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
+            <span class="online-status online"></span>
+           </div>
+          </div>
+           <div class="detail">
+           <h4 style = "color:#05CB95"><%=vo.getId()%></h4>
+           <small>@<%=vo.getId() %></small>                        
+          </div>
+         </div>
+           </li>
+           
+           <!-- 게시글 팔로워 팔로잉 -->
+           <li>
+            <small class="text-muted"><%=feed.size() %> Posts</small><br/>
+            <small class="text-muted"><%=followed_count %> Followers</small><br/>
+            <small class="text-muted"><%=follow_count %> Following</small>
+            <hr>
+            <small class="text-muted"><b>Phone: </b></small>
+            <p><%=vo.getPhone() %></p>
+            <hr>
+            <small class="text-muted"><b>Email: </b></small>
+            <p><%=vo.getEmail() %> </p> 
+            <hr> 
+            <small class="text-muted"><b>Pet: </b></small>
+            <p style = "font-size:10px">
+            <c:forEach items = "<%=pvo %>" var = "plist">
+            ${plist.p_Name}&nbsp;
+            </c:forEach>     
+            </p>                 
+           </li> 
+                              
+          </ul>
+         </aside>            
+      </div><!--/ col-lg-3-->
+      
+      <div class="col-lg-6" style="width: 1330px;margin-left:5%">
+       
+       <div class="row">
+       
+       <c:choose>
+	  	 <c:when test = "${not empty fvo}">
 	   
 			<c:forEach items="<%=feed %>" var="list">
 					<c:set var = "file" value = "${list.get(1)}"/>
@@ -393,31 +176,31 @@
 					
 					<c:choose>
 					<c:when test = "${file_type ne 'mp4'}">	
-						<div class="col-lg-4">
-						 <a href="#myModal" data-toggle="modal" data-title = "${list.get(0)}">
-						 
-						 <!-- 사진 -->
-						 <div class="explorebox" 
-						   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}') no-repeat;
-						          background-size: cover;
-				                  background-position: center center;
-				                  -webkit-background-size: cover;
-				                  -moz-background-size: cover;
-				                  -o-background-size: cover;">
-				     
-				          	  
-						 </div>
-						 </a>
-						</div><!--/ col-lg-4 -->
+						
+						<div class="col-lg-6" style="width:33%">
+         				 <a href="#myModal" data-toggle="modal" data-title = "${list.get(0)}" >
+     					     <div class="explorebox" 
+    				        	style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}') no-repeat;
+				                 background-size: cover;
+				                 background-position: center center;
+				                 -webkit-background-size: cover;
+				                 -moz-background-size: cover;
+				                 -o-background-size: cover;">
+				                 
+				          	       
+				          </div>
+				          </a>
+				        </div>
+				        
 		            </c:when>
+		            
 		            <c:otherwise>
-		            <div class="col-lg-4">
+		           <div class="col-lg-6" style="width:33%">
 					 <a href="#myModal" data-toggle="modal" data-title = "${list.get(0)}">
 					 
-					 <!-- 동영상 -->
 					 <div>
 					 <video class="explorebox" 
-					 		style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)),  no-repeat;
+					 		style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), no-repeat;
 					          background-size: cover;
 			                  background-position: center center;
 			                  -webkit-background-size: cover;
@@ -426,10 +209,6 @@
 			               <source src="<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}" type="video/mp4">    
 			          </video>
 			          
-			          <!-- 좋아요수 --> 
-					  <div class="explore-top" style = "margin-top:-121%;color:black">
-						   <div class="explore-like"><i class="fa fa-heart"></i> <span>${list.get(2)}</span></div>
-			     	  </div>
 			          	  
 					 </div>
 					 </a>
@@ -438,11 +217,11 @@
 		            </c:otherwise>
 		            </c:choose>
 			</c:forEach>
-	
+		
 		</c:when>
 		
 		<c:otherwise>
-	            	<div style = "color : rgb(5,203,149);font-weight:bold;text-align : center;font-size : 20px; width : 100%;">
+	            	<div style = "color : rgb(5,203,149);font-weight:bold;text-align : center;font-size : 20px; width : 100%; margin-top: 30%;">
 	            		<br>
 	            		피드가 존재하지 않습니다.
 	            		<br><br><br>
@@ -451,18 +230,20 @@
 	    </c:otherwise>
 		
 		</c:choose>
-		
-	   </div>
 
-	   
-	   
-	  </div><!--/ container -->
-	 </section><!--/ newsfeed -->
+
+       </div><!--/ row -->
+
+      </div>
+      
+       </div><!--/ row-->   
+     </div><!--/ container -->
+    </section><!--/ profile -->
   
-	 <!-- ==============================================
-	 Modal Section
-	 =============================================== -->
-          <div id="myModal" class="modal fade">
+    <!-- ==============================================
+    Modal Section
+    =============================================== -->
+     <div id="myModal" class="modal fade">
       <div class="modal-dialog">
        <div class="modal-content" style = "width:160%;margin-left:-28%;margin-top:-20%">
         <div class="modal-body">
@@ -489,13 +270,10 @@
           </a>
           
           <!-- 좋아요 -->
-		        <div style = "float:left;width:13%;margin-left:3%;margin-top: -1%;" id = "feed_heart">
-			 	
+		        <div style = "float:left;width:20%;margin-left:3%;margin-top: -1%;" id = "feed_heart">
+
 			 	</div>
 			 	
-			 	 <p class="kafe-btn kafe-btn-mint-small pull-right btn-sm" onclick="deletefeed()"
-			 	 style="margin-top:2.5px; width: 15px; height: 15px; background-color: #ff4343; padding: 1px;font-size: 3px;">X</p>
-			 	 <p id="delfeed_no" style="display: none;"></p>
         </div>
 	<!-- --------------------------------------------------- -->
           </div><!--/ col-md-8 -->
@@ -514,18 +292,28 @@
              	<img id = "feed_p_image" class="img-responsive img-circle" src="" alt="이미지 없음" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
              </div>
              <strong><a href="#" id = "feed_id"></a></strong>
-               <p class="date sub-text" id = "feed_regdate" style="font-size: 9px; text-align: right; margin: 3px 0 0;"></p>
+		    
+		    <!-- following --> 
+			<c:set var = "sessionid" value = "<%=id%>"/>
+			<c:choose>
+				<c:when test = "${not empty sessionid}">
+					<div id="following_section" style = "display:inline">
+						
+					</div>
+				</c:when>
+			</c:choose>
+
             </div><!--/ img-poster -->
-            
            
           <!-- 내용 -->
 			<div style = "height:15vh">
             <ul class="img-comment-list" >
              <li>
-              <div class="comment-text" style="width: 200px;">
-               <p id = "feed_content"  style="margin-bottom: 10%;"></p> 
-               <p style = "font-size : 12px;color:rgb(5,203,149)" id = "feed_ptag"></p>
-               <p style = "font-size : 12px;color:rgb(5,203,149)" id = "feed_htag"></p>
+              <div class="comment-text">
+               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_ptag"></p>
+               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_htag"></p>
+               <p id = "feed_content"></p> 
+               <span class="date sub-text" id = "feed_regdate"></span>
               </div>
              </li><!--/ li -->
             </ul><!--/ comment-list -->
@@ -545,9 +333,9 @@
 			  <!-- 댓글쓰기 -->
 			  <li>
 			   <div class="comment-body" style = "width:115%;margin-top:10%">
-				 <input class="form-control input-sm" type="text" placeholder="Write your comment..." style = "float:left; margin-left: 5%; width:82%" name = "comment" id = "comment">
+				 <input class="form-control input-sm" type="text" placeholder="Write your comment..." style = "float:left" name = "comment" id = "comment">
 				 <div style = "float:left;margin-left:2%;margin-top:8%">
-				 	<a class="modal-comment" href="#" style = "float:right" name = "insertcomment" id = "insertcomment"><i class="fa fa-comments"></i></a>
+				 	<a class="modal-comment" href="#" name = "insertcomment" id = "insertcomment" style = "float:right"><i class="fa fa-comments"></i></a>
 				 </div>
 			   </div><!--/ comment-body -->	
               </li>
@@ -560,8 +348,8 @@
         
          </div><!--/ row -->
          
-                  <!-- -------------------팔로워 ---------------------------------------------------------------------------------------- -->   
-      <div style = "display:none;" id = "second">
+               <!-- -------------------팔로워 ---------------------------------------------------------------------------------------- -->   
+      <div class="container" style = "display:none;" id = "second">
 	  
 	   <div class="row">
 		<div class="col-lg-12" style="background: #fff;">
@@ -599,21 +387,16 @@
       
        </div><!--/ modal-content -->
       </div><!--/ modal-dialog -->
-     </div><!--/ modal -->  
-	   
-	<!-- Footer -->
-	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>	   
-	   
+     </div><!--/ modal -->    
 
 
+      
+    <!-- Footer -->
+   <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
+         
+ 
 
-
-    <!-- ==============================================
-	HEADER CIRCLE Scripts
-	=============================================== -->
-	
-   
-      <script>		
+    <script>		
 		
 		$(document).ready(function(){ 	
 			
@@ -638,6 +421,7 @@
 				$('#feed_comment * ').remove();
 				$('#feed_like * ').remove();
 				$('#feed_heart * ').remove();
+				$('#following_section * ').remove();
 				
 			 var button = $(e.relatedTarget);
 			 feedno = button.data('title');
@@ -840,6 +624,43 @@
 							$('#feed_follow').html(like_list.length);
 						/////////////////
 						
+						//팔로우 여부
+						var fstr = "";
+						
+						var following_set_yn = {
+								'fr_id' : session_id,
+								'fd_id' : id
+						};
+						
+						
+						$.ajax({
+							
+							url : 'follow_list_yn.do',
+							type : 'post',
+							data : JSON.stringify(following_set_yn),
+							contentType: "application/json",
+							dataType:"json",
+							success : function(data){
+								
+								if(data.chk){
+									var fstr = '<a onclick = "unfollowing()" class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+									$('#following_section').append(fstr);
+									
+								} else {
+									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+									$('#following_section').append(nfstr);
+								}
+								
+							},
+							error:function(request,status,error){
+		  						
+		  						alert("통신실패");
+		  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+		  					}						
+							
+						});
+						
 						//팔로우 목록
 						var str3 = "";
 						
@@ -865,7 +686,7 @@
 					}
 					
 				},
-			error:function(request,status,error){
+				error:function(request,status,error){
 					
 					alert("통신실패");
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
@@ -878,6 +699,83 @@
 
 		
 		});
+			
+			//unfollowing function : follow -> unfollow
+			unfollowing = function(){
+				
+				var following_set = {
+						'fr_id' : session_id,
+						'fd_id' : id
+					};
+				
+				$.ajax({
+					
+					url : 'deatil_follow_delete.do',
+  					type : 'post',
+					data : JSON.stringify(following_set),
+  					contentType: "application/json",
+  					dataType:"json",
+  					success : function(data){
+  						
+  						if(data.chk){  							
+  							$('#following_section * ').remove();
+							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+							$('#following_section').append(nfstr);
+							
+  						} else {
+  							alert('팔로우 삭제실패');
+  						}
+  						
+  					},
+					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  					}
+					
+					
+				});
+				
+			}
+			
+			//following function : unfollow -> follow
+			following = function(){
+				
+				var following_set = {
+					'fr_id' : session_id,
+					'fd_id' : id
+				};
+				
+				$.ajax({
+					
+					url : 'detail_follow_insert.do',
+  					type : 'post',
+					data : JSON.stringify(following_set),
+  					contentType: "application/json",
+  					dataType:"json",
+  					success : function(data){
+  						
+  						if(data.chk){
+  							$('#following_section * ').remove();
+							var nfstr = '<a class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+							$('#following_section').append(nfstr);
+  							
+  						} else {
+  							alert('팔로우 삽입 실패');
+  						}
+  						
+  					},
+					error:function(request,status,error){
+  						
+  						alert("통신실패");
+  						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+  					}
+					
+				});
+				
+			}
 			
   			//heart : before -> after
   			changeheart_b = function(){
@@ -1336,26 +1234,19 @@
 		
 		
 		</script>
-		
+
     <!-- ==============================================
-	HEADER CIRCLE Scripts
-	=============================================== -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
-	<!-- main 외  페이지 전용 -->
-	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
-  	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+   HEADER CIRCLE Scripts
+   =============================================== -->
+   <script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
+   <!-- main 외  페이지 전용 -->
+   <script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   <!-- index_circle_custom CSS -->
-	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+   <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
    
-	<!-- Auto Script -->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
   </body>
 </html>

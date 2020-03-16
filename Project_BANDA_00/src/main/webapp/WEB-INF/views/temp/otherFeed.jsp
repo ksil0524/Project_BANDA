@@ -12,14 +12,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+        <!-- ==============================================
+    Scripts
+    =============================================== -->
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
+   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
+     
+
    <!-- ==============================================
    Styles
    =============================================== -->
    <link href="<%=request.getContextPath() %>/resources/temp/assets/css/photo_home(kim).css" rel="stylesheet" />
-   <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
    <!-- index_circle_custom CSS -->
    <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
+   <link href="<%=request.getContextPath() %>/resources/assets/css/bootstrap.min.css" rel="stylesheet">
+   
+<jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+   
    
    <style type="text/css">
 	
@@ -31,6 +43,7 @@
 
 </style>
    
+   
 </head>
 <body style = "background-color:#f4f4f4;-ms-overflow-style: none;">
 <input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
@@ -41,6 +54,14 @@
 	String id = null;
 
 	if(session.getAttribute("vo") != null){
+		
+	%>
+		<script type="text/javascript">
+			$(function(){
+				$("#circle_header_bg").css("background","#ff7f73");
+			})
+		</script>
+	<%	
 	
 		real_vo = (AccountVo)session.getAttribute("vo");
 		id = real_vo.getId();
@@ -377,16 +398,8 @@
     <!-- Footer -->
    <jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
          
+         
      <!-- ==============================================
-    Scripts
-    =============================================== -->
-   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/jquery.min.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/bootstrap.min.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/base.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/temp/assets/plugins/slimscroll/jquery.slimscroll.js"></script>
-   <script src="<%=request.getContextPath() %>/resources/temp/assets/js/follwer.js"></script>
-      
-    <!-- ==============================================
    HEADER CIRCLE Scripts
    =============================================== -->
    <script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>
@@ -398,7 +411,7 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <script src="<%=request.getContextPath() %>/resources/assets/jquery/jquery.min.js"></script>
    <script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle.min.js"></script>
-   
+
     <script>		
 		
 		$(document).ready(function(){ 	
@@ -1239,5 +1252,6 @@
 		</script>
 
 
+   
   </body>
 </html>

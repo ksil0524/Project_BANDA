@@ -84,6 +84,14 @@
 	//로그인 o, 팔로우 o
 	if(session.getAttribute("vo") != null){
 		
+		%>
+		<script type="text/javascript">
+			$(function(){
+				$("#circle_header_bg").css("background","#ff7f73");
+			})
+		</script>
+		<%
+		
 		real_vo = (AccountVo)session.getAttribute("vo");
 	    id = real_vo.getId();
 		

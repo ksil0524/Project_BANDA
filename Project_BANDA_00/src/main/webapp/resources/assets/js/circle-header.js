@@ -547,5 +547,12 @@ $("#searchinput").autocomplete({
     
  });
 
+$(function(){
+	
+	$("#circle_header_bg").css("background","#ff7f73");
+	
+})
+
+
 
 

@@ -5,7 +5,7 @@
 
 			<header id="header">
 
-				<div class="inner" style="position:relative; background: url(/banda/resources/images/logo_pink_nt.png);
+				<div id="circle_header_bg" class="inner" style="position:relative; background: url(/banda/resources/images/logo_pink_nt.png);
     background-size: contain;">
 	               <div class="closeBtn">
 	                  <a href="#" id="closeBtn" class=""><i class="fas fa-times-circle"></i></a>

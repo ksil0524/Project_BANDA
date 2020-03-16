@@ -371,7 +371,7 @@
 					<ul class="nearby-contct">
 					<!-- 팔로우 하는 사람 -->
 <%
-					if(fd_count == 0){
+					if(fr_count == 0){
 %>
 					<li>
 						<p align="center"> 현 계정이 팔로우 한 사람이 없습니다. </p>

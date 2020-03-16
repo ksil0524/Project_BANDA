@@ -132,7 +132,6 @@
           <div class="image">
             <div>
             <img style = "height:121px" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=vo.getId()%>/image.jpg" class="img-responsive img-circle" alt="User" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
-            <span class="online-status online"></span>
            </div>
           </div>
            <div class="detail">

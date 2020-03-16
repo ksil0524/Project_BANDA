@@ -133,7 +133,7 @@
 	 <section class="profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/feed_bg.png">
+	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/feed_bg.png" width="100%">
        </div><!--/ row-->	
 	  </div><!--/ container -->
 	 </section><!--/ profile -->

@@ -1521,7 +1521,7 @@ a.navbar-brand:hover {
   font-weight: 700;
 }
 .home-menu .menu-category li span{
-  background-color: #0fc19e;
+  background-color: #ff7f73;
   padding: 3px;
   border-radius: 50%;
   color: #fff;
@@ -1533,7 +1533,7 @@ a.navbar-brand:hover {
 }
 .home-menu .menu-category ul li a:hover {
   font-size: 16px;
-  color: #0fc19e !important;
+  color: #ff7f73 !important;
   text-decoration: none;
 }
 

@@ -31,7 +31,7 @@
                                     <a id="google_login" class="circle google" href="#" onclick="onSignIn();">
                                         <i class="fa fa-google-plus fa-fw"></i>
                                     </a>
-                                    <a id="facebook_login" class="circle facebook" href="#">
+                                    <a id="facebook_login" class="circle facebook" href="#" onclick="alert('현재 준비중인 기능입니다.')">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </a>
                                 </div>

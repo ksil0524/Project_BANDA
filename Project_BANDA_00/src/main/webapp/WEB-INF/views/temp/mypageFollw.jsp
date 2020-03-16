@@ -69,7 +69,7 @@
 						var res = data.res;
 
 						if(res){
-							$("#followbtn_fd_"+fdid).css("background","#0fc19e");							
+							$("#followbtn_fd_"+fdid).css("background","#ff7f73");							
 							$("#followbtn_fd_"+fdid).attr("onclick","follow_func('f','"+frid+"','"+fdid+"')");
 							$("#followbtn_fd_"+fdid).text("add follow");							
 						}else{
@@ -161,7 +161,7 @@
 	 <section class="profile">
 	  <div class="container-fluid">
 	   <div class="row" >
-	   	<img alt="ffbg" src="<%=request.getContextPath()%>/resources/images/bg/ff_bg.png">
+	   	<img alt="ffbg" src="<%=request.getContextPath()%>/resources/images/bg/ff_bg.png" width="100%">
        </div><!--/ row-->	
 	  </div><!--/ container -->
 	 </section><!--/ profile -->

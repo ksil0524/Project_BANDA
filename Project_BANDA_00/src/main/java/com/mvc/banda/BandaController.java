@@ -107,7 +107,6 @@ public class BandaController {
 		session.setMaxInactiveInterval(60*60);
 			
 		AccountVo accvo = biz.mypage_allselect(votmp.getId());
-		System.out.println(accvo);
 		
 		session.setAttribute("vo", accvo);
 		System.out.println("mypage_allselect");
@@ -140,7 +139,6 @@ public class BandaController {
 		
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(p_birthtmp);
-			System.out.println(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -152,18 +150,14 @@ public class BandaController {
 		///////////////////////////////////////////////
 		
 		String filename = updateimgInp.getOriginalFilename();
-		
-		System.out.println("filename : "+filename);
-		
+				
 		//파일을 새로 업로드 하지 않았다면 바로 return
 		if(filename == "") {
 			return "redirect:mypage_allselect.do";
 		}
 			
 		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+petVo.getP_no());
-		
-		System.out.println(savepath);
-		
+				
 		File updateimg = new File(savepath+"\\"+filename);
 		
 		updateimgInp.transferTo(updateimg);
@@ -214,9 +208,7 @@ public class BandaController {
 		}
 		
 		petVo.setP_birth(date);
-		
-		System.out.println(petVo);
-		
+				
 		int res = biz.mypage_pet_insert(petVo);
 		
 		////////////////////////////////////////////////////
@@ -282,10 +274,9 @@ public class BandaController {
 		session.setMaxInactiveInterval(60*60);
 		
 		AccountVo accvo = biz.mypage_allselect(votmp.getId());
-		System.out.println(accvo);
 		
 		session.setAttribute("vo", accvo);
-		System.out.println("mypage_allselect");
+		System.out.println("mypage_accountpage");
 		
 		return "temp/mypageAccount";
 	}
@@ -302,7 +293,6 @@ public class BandaController {
 		System.out.println(filename);
 		
 		File updateprofileimg = new File(savepath+"\\"+filename);
-		System.out.println(updateprofileimg);
 		profile_img.transferTo(updateprofileimg);
 		
 		//image.jpg 가지는 객체
@@ -349,15 +339,12 @@ public class BandaController {
 		String id = "ADMIN";
 		
 		AccountVo accvo = biz.mypage_allselect(votmp.getId());
-		System.out.println(accvo);
 		
 		// 해당하는 아이디가  팔로우하고 있는 계정들 정보 리스트
 		List<AccountVo> fr_acclist = biz.mypage_fr_accountSelectList(accvo.getId());
-		System.out.println("fr_acclist : " + fr_acclist);
 
 		// 해당하는 아이디를  팔로우하고 있는 계정들 정보 리스트
 		List<AccountVo> fd_acclist = biz.mypage_fd_accountSelectList(accvo.getId());
-		System.out.println("fd_acclist : " + fd_acclist);
 		
 		session.setAttribute("vo", accvo);
 		model.addAttribute("fr_acclist", fr_acclist);
@@ -428,7 +415,6 @@ public class BandaController {
 		session.setMaxInactiveInterval(60*60);
 				
 		AccountVo accvo = biz.mypage_allselect(votmp.getId());
-		System.out.println(accvo);
 
 		session.setAttribute("vo", accvo);
 		
@@ -478,8 +464,6 @@ public class BandaController {
 		}
 		
 		feedVo.setFeed_file(feed_file);
-
-		System.out.println("insert 할 feedVo : "+feedVo);
 		
 		int res = biz.mypage_insertfeed(feedVo);
 		
@@ -580,12 +564,10 @@ public class BandaController {
 		List<ChatVo> chat_list = biz.myChat_selectlist(votmp.getId());
 		accvo.setChat_list(chat_list);
 		
-		System.out.println(accvo);
 		System.out.println("chat_list : "+chat_list);
 		
 		//검색할 수 있게 존재하는 모든 아이디 가져오기
 		List<String> id_list = biz.mychat_searchidlist();
-		System.out.println(id_list);
 		
 		session.setAttribute("vo", accvo);
 		session.setAttribute("id_list", id_list);
@@ -601,13 +583,10 @@ public class BandaController {
 		
 		AccountVo nowvo = (AccountVo)session.getAttribute("vo");
 		String userid = nowvo.getId();
-		System.out.println("userid : "+userid);
 		
 		String anotherid = otherid.substring(1, otherid.length()-1);
-		System.out.println("anotherid : "+anotherid);
 						
 		List<ChatVo> chatlist = biz.mychat_selectonelist(userid, anotherid);
-		System.out.println(chatlist);
 		
 		Map<String, List<ChatVo>> resMap = new HashMap<String, List<ChatVo>>();
 		resMap.put("chatlist", chatlist);
@@ -620,16 +599,12 @@ public class BandaController {
 	public Map<String, Boolean> insertchat(@RequestBody Map<String, String> data){
 		
 		System.out.println("insertchat");
-		
-		System.out.println(data);
-		
+				
 		ChatVo vo = new ChatVo();
 		vo.setS_id(data.get("s_id"));
 		vo.setG_id(data.get("g_id"));
 		vo.setChat_content(data.get("chat_content"));
-		
-		System.out.println(vo);
-		
+				
 		int res = biz.insert_chat(vo);
 				
 		Map<String, Boolean> resMap = new HashMap<String, Boolean>();

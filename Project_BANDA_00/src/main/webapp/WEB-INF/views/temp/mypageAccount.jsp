@@ -110,7 +110,7 @@
 	  <div class="container-fluid">
 	   <div class="row">
 		
-		<img alt="accountbg" src="<%=request.getContextPath() %>/resources/images/bg/acc_bg.png" width="100%" style="">
+		<img alt="accountbg" src="<%=request.getContextPath() %>/resources/images/bg/acc_bg.png" width="100%" >
 		
        </div><!--/ row-->	
 	  </div><!--/ container -->

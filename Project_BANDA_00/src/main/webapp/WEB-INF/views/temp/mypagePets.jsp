@@ -99,7 +99,7 @@
 	 <section class="profile">
 	  <div class="container-fluid">
 	   <div class="row">
-	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/pet_bg.png">
+	   	<img alt="feedbg" src="<%=request.getContextPath()%>/resources/images/bg/pet_bg.png" width="100%">
        </div><!--/ row-->	
 	  </div><!--/ container -->
 	 </section><!--/ profile -->
@@ -156,7 +156,7 @@
 		                  onclick="change_div(this.id)" id="${pet.p_no }">
 		           <div class="pet_no" id="pet_no" style="display: none">${pet.p_no }</div>
 		           <div class="story-body text-center">
-		           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/temp/assets/img/users/10.jpg" alt="user"></div>
+		           <div class=""><img class="img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/pet/pet_profile/${pet.p_no}/image.jpg" alt="petimage"></div>
 		           <h4>${pet.p_Name }</h4>
 		          </div>		  
 				</div>

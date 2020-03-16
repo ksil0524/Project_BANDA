@@ -357,7 +357,6 @@
     	function deletefeed(){
     		
     		var delfeed_no = $("#delfeed_no").text();
-    		alert(delfeed_no);
     		
     		var delconfirm = confirm("피드를 삭제하시겠습니까?");
     		
@@ -464,7 +463,7 @@
 	 =============================================== -->
           <div id="myModal" class="modal fade">
       <div class="modal-dialog">
-       <div class="modal-content" style = "width:160%;margin-left:-28%;margin-top:-20%">
+       <div class="modal-content" style = "width:150%;margin-left:-28%;margin-top:-20%">
         <div class="modal-body">
       
          <div class="row" style = "float:left;display:block" id = "first">
@@ -524,8 +523,8 @@
              <li>
               <div class="comment-text" style="width: 200px;">
                <p id = "feed_content"  style="margin-bottom: 10%;"></p> 
-               <p style = "font-size : 12px;color:rgb(5,203,149)" id = "feed_ptag"></p>
-               <p style = "font-size : 12px;color:rgb(5,203,149)" id = "feed_htag"></p>
+               <p style = "font-size : 12px;color:#ff7f73" id = "feed_ptag"></p>
+               <p style = "font-size : 12px;color:#ff7f73" id = "feed_htag"></p>
               </div>
              </li><!--/ li -->
             </ul><!--/ comment-list -->
@@ -804,8 +803,8 @@
 							l = arr['like_list'];
 							
 							var str4 = '';
-							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>'+
-							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:#ff7f73"></i></a>'+
+							'<a href = "#" style = "color:#ff7f73;margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
 							
 							
 						if(l == null){
@@ -823,10 +822,9 @@
 	  								var idid = list2['id'];
 
 		  							if(idid == session_id){
-										
-		  								alert('같음');
-										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
-										'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+
+										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:#ff7f73;display:block"></i></a>' + 
+										'<a href = "#" style = "color:#ff7f73;margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
 
 									} 
 		  						}
@@ -905,8 +903,7 @@
 	  							
 	  							//second 넣기
 	  							$('#feed_like *').remove();
-	  							
-	  							alert('좋아요 삽입 성공');
+
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -976,8 +973,7 @@
 	  							
 	  							//second 넣기
 	  							$('#feed_like *').remove();
-	  							
-	  							alert('좋아요 삭제 성공');
+
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -1081,8 +1077,6 @@
 						
 						if(data.chk){
 							
-							alert('삽입성공');
-							
 							comment_list = data['comment_list'];
 							console.log(comment_list);	
 
@@ -1160,7 +1154,6 @@
 				success : function(data){
 					
 					if(data.chk){
-						alert('삭제성공');
 						console.log(data.comment_list);
 						
 						comment_list = data.comment_list;
@@ -1231,8 +1224,6 @@
 		
 		//댓글 수정
 		update_comment = function(i){
-			
-			alert(i);
 			$('div[name=before_update'+i+']').hide();
 			$('div[name=after_update'+i+']').show();
 			
@@ -1258,8 +1249,7 @@
 				dataType:"json",
 				success : function(data){
 					if(data.chk){
-						
-						alert('갱신성공'); 
+
 						
 					comment_list = data.comment_list;
 						

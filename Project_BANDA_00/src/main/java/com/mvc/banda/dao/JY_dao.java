@@ -61,7 +61,7 @@ public class JY_dao {
 			//System.out.println(count);
 			
 			if(count < 4) {
-				System.out.println("4개 미만의 게시물");
+
 			}
 			else if(count % 4 != 0) {
 				count = count - (count%4);
@@ -177,8 +177,7 @@ public class JY_dao {
 			
 			List<CommentVo> comment_list = select_comment(feedno);
 			f.setComment_list(comment_list);			
-			
-			System.out.println(f);
+
 			
 			return f;
 		}
@@ -289,7 +288,7 @@ public class JY_dao {
 			int count = flist.size();
 			
 			if(count < 4) {
-				System.out.println("4개 미만의 게시물");
+
 			}
 			else if(count % 4 != 0) {
 				count = count - (count%4);
@@ -322,7 +321,7 @@ public class JY_dao {
 			int count = flist.size();
 			
 			if(count < 4) {
-				System.out.println("4개 미만의 게시물");
+
 			}
 			else if(count % 4 != 0) {
 				count = count - (count%4);
@@ -354,7 +353,7 @@ public class JY_dao {
 			int count = flist.size();
 			
 			if(count < 4) {
-				System.out.println("4개 미만의 게시물");
+
 			}
 			else if(count % 4 != 0) {
 				count = count - (count%4);

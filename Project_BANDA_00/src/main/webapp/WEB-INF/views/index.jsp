@@ -167,7 +167,6 @@
 			
 		}
 		
-		System.out.println();
 		
 	}
 		
@@ -199,13 +198,6 @@ else {
 			feed.add(rfeed_image);
 
 		}
-		
-		
-		for(int i = 0 ; i<feed.size();i++){
-			System.out.print(feed.get(i) + ",");
-		}
-			
-		System.out.println();
 		
 }
 %>
@@ -338,8 +330,8 @@ else {
             <ul class="img-comment-list" >
              <li>
               <div class="comment-text">
-               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_ptag"></p>
-               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_htag"></p>
+               <p style = "font-size : 8px;color:#ff7f73" id = "feed_ptag"></p>
+               <p style = "font-size : 8px;color:#ff7f73" id = "feed_htag"></p>
                <p id = "feed_content"></p> 
                <span class="date sub-text" id = "feed_regdate"></span>
               </div>
@@ -694,8 +686,8 @@ else {
 							l = arr['like_list'];
 							
 							var str4 = '';
-							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>'+
-							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:#ff7f73"></i></a>'+
+							'<a href = "#" style = "color:#ff7f73;margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
 							
 							
 						if(l == null){
@@ -713,10 +705,9 @@ else {
 	  								var idid = list2['id'];
 
 		  							if(idid == session_id){
-										
-		  								alert('같음');
-										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
-										'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+
+										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:#ff7f73;display:block"></i></a>' + 
+										'<a href = "#" style = "color:#ff7f73;margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
 
 									} 
 		  						}
@@ -748,11 +739,11 @@ else {
 							success : function(data){
 								
 								if(data.chk){
-									var fstr = '<a onclick = "unfollowing()" class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+									var fstr = '<a onclick = "unfollowing()" id = "unfollowing"><i class="fa fa-check-square" style = "color:#ff7f73;cursor:pointer"></i></a>';
 									$('#following_section').append(fstr);
 									
 								} else {
-									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
 									$('#following_section').append(nfstr);
 								}
 								
@@ -825,7 +816,7 @@ else {
   						
   						if(data.chk){  							
   							$('#following_section * ').remove();
-							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
 							$('#following_section').append(nfstr);
 							
   						} else {
@@ -864,7 +855,7 @@ else {
   						
   						if(data.chk){
   							$('#following_section *').remove();
-							var nfstr = '<a class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+							var nfstr = '<a onclick = "unfollowing()" id = "unfollowing"><i class="fa fa-check-square" style = "color:#ff7f73;cursor:pointer"></i></a>';
 							$('#following_section').append(nfstr);
   							
   						} else {
@@ -909,8 +900,7 @@ else {
 	  							
 	  							//second 넣기
 	  							$('#feed_like *').remove();
-	  							
-	  							alert('좋아요 삽입 성공');
+
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -980,8 +970,7 @@ else {
 	  							
 	  							//second 넣기
 	  							$('#feed_like *').remove();
-	  							
-	  							alert('좋아요 삭제 성공');
+
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -1084,8 +1073,6 @@ else {
 						
 						if(data.chk){
 							
-							alert('삽입성공');
-							
 							comment_list = data['comment_list'];
 							console.log(comment_list);	
 
@@ -1163,7 +1150,7 @@ else {
 				success : function(data){
 					
 					if(data.chk){
-						alert('삭제성공');
+
 						console.log(data.comment_list);
 						
 						comment_list = data.comment_list;
@@ -1235,7 +1222,6 @@ else {
 		//댓글 수정
 		update_comment = function(i){
 			
-			alert(i);
 			$('div[name=before_update'+i+']').hide();
 			$('div[name=after_update'+i+']').show();
 			
@@ -1261,8 +1247,7 @@ else {
 				dataType:"json",
 				success : function(data){
 					if(data.chk){
-						
-						alert('갱신성공'); 
+				
 						
 					comment_list = data.comment_list;
 						

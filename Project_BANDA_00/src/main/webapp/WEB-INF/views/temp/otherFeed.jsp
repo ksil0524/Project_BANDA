@@ -103,8 +103,6 @@
 		//feed
 		feed.add(rfeed_image);
 
-		System.out.println(pvo);
-		
 	}
 
 %>
@@ -131,11 +129,13 @@
          <div class="user-info">
           <div class="image">
             <div>
-            <img style = "height:121px" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=vo.getId()%>/image.jpg" class="img-responsive img-circle" alt="User" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
+
+            <img style = "width:80%;margin-left:10%" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=vo.getId()%>/image.jpg" class="img-responsive img-circle" alt="User" onerror="this.src = '<%=request.getContextPath() %>/resources/images/logo_profile.png'">
+
            </div>
           </div>
            <div class="detail">
-           <h4 style = "color:#05CB95"><%=vo.getId()%></h4>
+           <h4 style = "color:#ff7f73"><%=vo.getId()%></h4>
            <small>@<%=vo.getId() %></small>                        
           </div>
          </div>
@@ -224,7 +224,7 @@
 		</c:when>
 		
 		<c:otherwise>
-	            	<div style = "color : rgb(5,203,149);font-weight:bold;text-align : center;font-size : 20px; width : 100%; margin-top: 30%;">
+	            	<div style = "color : #ff7f73;font-weight:bold;text-align : center;font-size : 20px; width : 100%; margin-top: 30%;">
 	            		<br>
 	            		피드가 존재하지 않습니다.
 	            		<br><br><br>
@@ -313,8 +313,8 @@
             <ul class="img-comment-list" >
              <li>
               <div class="comment-text">
-               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_ptag"></p>
-               <p style = "font-size : 8px;color:rgb(5,203,149)" id = "feed_htag"></p>
+               <p style = "font-size : 8px;color:#ff7f73" id = "feed_ptag"></p>
+               <p style = "font-size : 8px;color:#ff7f73" id = "feed_htag"></p>
                <p id = "feed_content"></p> 
                <span class="date sub-text" id = "feed_regdate"></span>
               </div>
@@ -603,8 +603,8 @@
 							l = arr['like_list'];
 							
 							var str4 = '';
-							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149)"></i></a>'+
-							'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+							var real_url = '<a class="modal-like" href="#"  name = "heart_before'+feedno+'" style = "display:block" onclick = "changeheart_b()"><i class="far fa-heart" style = "float:left;padding-top:6%;color:#ff7f73"></i></a>'+
+							'<a href = "#" style = "color:#ff7f73;margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
 							
 							
 						if(l == null){
@@ -623,9 +623,8 @@
 
 		  							if(idid == session_id){
 										
-		  								alert('같음');
-										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:rgb(5,203,149);display:block"></i></a>' + 
-										'<a href = "#" style = "color:rgb(5,203,149);margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
+										real_url = '<a class="modal-like" href="#"  name = "heart_after'+feedno+'"  style = "display:block" onclick = "changeheart_a()"><i class="fa fa-heart" style = "float:left;padding-top:6%;color:#ff7f73;display:block"></i></a>' + 
+										'<a href = "#" style = "color:#ff7f73;margin-left:3%" id = "feed_follow" onclick = "look_like()"></a>';
 
 									} 
 		  						}
@@ -658,11 +657,11 @@
 							success : function(data){
 								
 								if(data.chk){
-									var fstr = '<a onclick = "unfollowing()" class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
+									var fstr = '<a onclick = "unfollowing()" id = "unfollowing"><i class="fa fa-check-square" style = "color:#ff7f73;cursor:pointer"></i></a>';
 									$('#following_section').append(fstr);
 									
 								} else {
-									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
 									$('#following_section').append(nfstr);
 								}
 								
@@ -734,7 +733,7 @@
   						
   						if(data.chk){  							
   							$('#following_section * ').remove();
-							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square"></i></a>';
+							var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
 							$('#following_section').append(nfstr);
 							
   						} else {
@@ -773,8 +772,8 @@
   						
   						if(data.chk){
   							$('#following_section * ').remove();
-							var nfstr = '<a class="kafe kafe-btn-mint-small" style = "background-color:none;" id = "unfollowing"><i class="fa fa-check-square"></i></a>';
-							$('#following_section').append(nfstr);
+  							var fstr = '<a onclick = "unfollowing()" id = "unfollowing"><i class="fa fa-check-square" style = "color:#ff7f73;cursor:pointer"></i></a>';
+							$('#following_section').append(fstr);
   							
   						} else {
   							alert('팔로우 삽입 실패');
@@ -818,8 +817,7 @@
 	  							
 	  							//second 넣기
 	  							$('#feed_like *').remove();
-	  							
-	  							alert('좋아요 삽입 성공');
+
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -889,8 +887,7 @@
 	  							
 	  							//second 넣기
 	  							$('#feed_like *').remove();
-	  							
-	  							alert('좋아요 삭제 성공');
+
 	  							like_list = data['like_list'];
 	  							
 	  							var str3 = "";
@@ -993,9 +990,7 @@
 					success : function(data){
 						
 						if(data.chk){
-							
-							alert('삽입성공');
-							
+
 							comment_list = data['comment_list'];
 							console.log(comment_list);	
 
@@ -1073,7 +1068,6 @@
 				success : function(data){
 					
 					if(data.chk){
-						alert('삭제성공');
 						console.log(data.comment_list);
 						
 						comment_list = data.comment_list;
@@ -1144,8 +1138,7 @@
 		
 		//댓글 수정
 		update_comment = function(i){
-			
-			alert(i);
+
 			$('div[name=before_update'+i+']').hide();
 			$('div[name=after_update'+i+']').show();
 			
@@ -1171,8 +1164,7 @@
 				dataType:"json",
 				success : function(data){
 					if(data.chk){
-						
-						alert('갱신성공'); 
+
 						
 					comment_list = data.comment_list;
 						

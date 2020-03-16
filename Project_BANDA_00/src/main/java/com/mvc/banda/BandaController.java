@@ -630,11 +630,9 @@ public class BandaController {
 	public Map<String,Boolean> idoverlab(@RequestBody AccountVo vo) {
 		int res = 0;
 		String id = vo.getId();
-		System.out.println("asdasdasdasd"+id);
 		res = biz.idoverlab(id);
 		
 		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
-		System.out.println(res);
 		
 		if(res >=1 ) {
 			resmap.put("res", true);
@@ -642,7 +640,6 @@ public class BandaController {
 			resmap.put("res", false);
 		}
 		
-		System.out.println(resmap);
 		return resmap;
 	}
 	
@@ -650,10 +647,8 @@ public class BandaController {
 	@ResponseBody
 	public Map<String,Boolean> joinregister(HttpServletRequest request ,@RequestBody AccountVo vo) {
 		
-		System.out.println("asdasdasd"+vo);
 		
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
-		System.out.println("ㅁㄴ이ㅏ러민아ㅓㄹ미나어리만얼"+vo.getPassword());
 		int res = biz.joinregister(vo);
 		
 		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
@@ -712,7 +707,6 @@ public class BandaController {
 	         e.printStackTrace();
 	      }
 
-	      System.out.println(path);
 	      ////
 		
 		return resmap;
@@ -724,13 +718,11 @@ public class BandaController {
 	@ResponseBody
 	public Map<String,Boolean> googlelogin(HttpServletRequest request ,@RequestBody AccountVo vo) throws Exception {
 		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
-		System.out.println("aasldkfjalskdf jalsdk jf");
 		Boolean chk = true;
 	      //1. code이용하여 access token 받기
 	      //2. access token이용하여 사용자 profile 정보 가져오기
 	      //4. 존재하는 경우 로그인, 아닌경우 계정 생성
 	      //3. db에 해당 유저 존재하는지 체크
-	    System.out.println(vo.getId());
 		String id = vo.getId();
 	      
 	     
@@ -742,7 +734,6 @@ public class BandaController {
 	      
 	      AccountVo real_vo = biz.jy_login(avo);
 	      
-	      //AccountVo avo2 = null;
 	      
 	      if(real_vo == null) {
 	         

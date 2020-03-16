@@ -44,7 +44,6 @@ public class JI_dao {
 
 	public int joinregister(AccountVo vo) {
 		int res = 0;
-		System.out.println("sldkfjasldjfslkdjflsdkjf"+vo);
 		try {
 			res = sqlSession.insert(NAMESPACE + "joinregister", vo);
 		} catch (Exception e) {

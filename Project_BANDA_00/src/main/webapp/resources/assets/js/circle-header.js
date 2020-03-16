@@ -287,7 +287,6 @@ function joinChk(){
 			"phone":phone
 	}; 
 	
-	alert("email: " + email + "ID: " + id+  "pw: " + pw + "phone:" + phone);
 	
 	/* 정규식 및 데이터 입력 체크 - login 담당 */
 	if(email === null || email === '' || id === null || id === '' || pw === null || pw === '' || phone === null || phone === ''){
@@ -304,6 +303,15 @@ function joinChk(){
 				
 				if(msg.res){
 					alert("가입 완료되었습니다");
+					$("#isLogin").hide();
+					$(".closeBtn").hide();
+					$("#logOut").hide();
+					$("#header").toggleClass('hide');
+					$("#testlogo").hide();
+					$("#content").show();
+					$("#joincontent").hide();
+					
+					
 					$("#joinForm #email").val("");
 					$("#joinForm #id").val("");
 					$("#joinForm #password").val("");

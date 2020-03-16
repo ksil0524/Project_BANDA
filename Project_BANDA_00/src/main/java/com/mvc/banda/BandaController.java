@@ -1038,7 +1038,6 @@ public class BandaController {
 	public Map<String, Boolean> jy_logout() {
 		
 		session.invalidate();
-		System.out.println("로그아웃성공");
 
 		Map<String, Boolean> m = new HashMap<String, Boolean>();
 		m.put("chk", true);
@@ -1077,8 +1076,6 @@ public class BandaController {
 				//팔로우들의 피드가존재할떄
 				if(feedvo.size() != 0) {
 					
-					System.out.println("팔로우들의 피드 존재");
-					
 					AccountVo vo2 = (AccountVo)biz.main_selectList(id);
 					
 					model.addAttribute("fvo", vo2);
@@ -1086,8 +1083,6 @@ public class BandaController {
 				} 
 				//팔로우들의 피드가존재하지 않을 때
 				else {
-				
-					System.out.println("팔로우들의 피드가 존재하지 않음");
 					
 					List<FeedVo> fvo3 = biz.main_selectListN();
 					
@@ -1105,8 +1100,6 @@ public class BandaController {
 			
 			//로그인 아이디의 팔로우가 존재하지 않을 때
 			else {
-				
-				System.out.println("로그인성공/ 팔로우 없음");
 				List<FeedVo> fvo2 = biz.main_selectListN();
 				
 				model.addAttribute("frvo",fvo2);
@@ -1116,8 +1109,6 @@ public class BandaController {
 		} 
 		//로그인하지 않았을 경우
 		else {
-			
-			System.out.println("세션없음");
 			List<FeedVo> fvo = biz.main_selectListN();
 			
 			model.addAttribute("frvo",fvo);
@@ -1153,9 +1144,7 @@ public class BandaController {
 		//AccountVo avo2 = null;
 		
 		if(real_vo == null) {
-			
-			System.out.println("아이디 없음");
-			
+
 			String pwd = passwordEncoder.encode("1234");
 			
 			real_vo = new AccountVo(email, pwd, email, "010-1111-1111");
@@ -1163,17 +1152,14 @@ public class BandaController {
 			int res = biz.naver_register(real_vo);
 			
 			if(res > 0 ) {
-				System.out.println("네이버로 회원가입 성공");
 				
 				session.setAttribute("vo", real_vo);
 				session.setMaxInactiveInterval(60*60);
 			} else {
-				System.out.println("네이버로 회원가입 실패");
+
 			}
 			
 		} else {
-			
-			System.out.println(real_vo+"아이디 존재");
 			session.setAttribute("vo", real_vo);
 			session.setMaxInactiveInterval(60*60);
 			
@@ -1190,12 +1176,10 @@ public class BandaController {
 	      if (!Folder.exists()) {
 	         try {
 	            Folder.mkdir(); // 폴더 생성합니다.
-	            System.out.println("폴더가 생성되었습니다.");
 	         } catch (Exception e) {
 	            e.getStackTrace();
 	         }
 	      } else {
-	         System.out.println("이미 폴더가 생성되어 있습니다.");
 	      }
 
 	      // 원본 파일경로
@@ -1264,10 +1248,9 @@ public class BandaController {
 		
 		Boolean chk = false;
 		
-		System.out.println(f.getFeedno());
 		int feedno = f.getFeedno();
 		FeedVo feed = biz.each_feed(feedno);
-		System.out.println("feeeeeed"+feed);
+
 		Map<String, Object> m = new HashMap<String, Object>();
 		
 		if(feed != null) {
@@ -1373,8 +1356,7 @@ public class BandaController {
 	@RequestMapping("/feed_like_insert.do")
 	@ResponseBody
 	public Map<String, Object> feed_like_insert(@RequestBody LikesVo l){
-		
-		System.out.println(l);
+
 		
 		Map<String, Object> m = new HashMap<String, Object>();
 		Boolean chk = false;
@@ -1383,12 +1365,10 @@ public class BandaController {
 		List<LikesVo> llist = biz.main_like_list(l.getFeed_no());
 		
 		if(res >0) {
-			System.out.println("삽입성공");
 			chk = true;
 			m.put("chk", chk);
 			m.put("like_list",llist);
 		} else {
-			System.out.println("삽입실패");
 			m.put("chk", chk);
 			m.put("like_list",llist);
 		}
@@ -1401,8 +1381,6 @@ public class BandaController {
 	@ResponseBody
 	public Map<String, Object> feed_like_delete(@RequestBody LikesVo l){
 		
-		System.out.println(l);
-		
 		Map<String, Object> m = new HashMap<String, Object>();
 		Boolean chk = false;
 		
@@ -1410,12 +1388,10 @@ public class BandaController {
 		List<LikesVo> llist = biz.main_like_list(l.getFeed_no());
 		
 		if(res >0) {
-			System.out.println("삭제성공");
 			chk = true;
 			m.put("chk", chk);
 			m.put("like_list",llist);
 		} else {
-			System.out.println("삭제실패");
 			m.put("chk", chk);
 			m.put("like_list",llist);
 		}
@@ -1466,7 +1442,6 @@ public class BandaController {
 		Boolean chk = true;
 		
 		AccountVo avo = biz.find_vo(vo);
-		System.out.println(avo);
 		
 		if(avo == null) {
 
@@ -1523,9 +1498,7 @@ public class BandaController {
 	         
 	         //암호화
 	         vo.setPassword(passwordEncoder.encode(AuthenticationKey));
-	         
-	         System.out.println(AuthenticationKey + "a");
-	         System.out.println(vo.getPassword());
+	      
 	         
 	         int res = biz.pwdfind_update(vo);
 	         
@@ -1546,9 +1519,7 @@ public class BandaController {
 	//검색
 	 @RequestMapping("/circleheader_searchindex.do")
 	 public String index_search(Model model, String category, String keyword) {
-	      
-	     System.out.println("검색 : cate: " + category +"/ keyworkd: " + keyword);
-	     System.out.println("하하");
+	  
 
 	     List<FeedVo> fvo = new ArrayList<FeedVo>();
 	     String keyword2 = null;
@@ -1572,10 +1543,7 @@ public class BandaController {
 	     model.addAttribute("frvo",fvo);
 	     model.addAttribute("keyword",keyword2);
 	     
-	     System.out.println(fvo);
-	      
-	     
-	     
+
 	     return "search_index";
 
 	  }
@@ -1664,11 +1632,11 @@ public class BandaController {
 		 
 		 //최종
 		 if(res.get("count").equals(1)) {
-			 System.out.println("아이디 삭제 성공");
+
 			 session.invalidate();
 			 return "redirect:main_selectList.do";
 		 } else {
-			 System.out.println("아이디 삭제 실패");
+
 			 return "temp/mypageAccount";
 		 }
 		 
@@ -1681,8 +1649,6 @@ public class BandaController {
 		 
 		 Map<String, Object> m = new HashMap<String, Object>();
 		 Boolean chk = false;
-		 
-		 System.out.println(fvo);
 		 
 		 int res = biz.detail_follow_insert(fvo);
 		 

@@ -2,7 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "com.mvc.banda.model.vo.AccountVo" %>
 <link href="icheck-bootstrap.css" rel="stylesheet">
-
+<style>
+	#return_login_id2:hover{
+		background-color:#ccc !important;
+	}
+</style>
 			<header id="header">
 
 				<div id="circle_header_bg" class="inner" style="position:relative; background: url(/banda/resources/images/logo_pink_nt.png);
@@ -58,9 +62,10 @@
                                 <!-- 어아다찾기 -->
                                 <div class="form loginBox" id = "idfind" style = "display:none;">
                                     <form method="" action="" accept-charset="UTF-8">
-                                    <input class="form-control" type="text" placeholder="Email" name="email" id = "findid" required="required">
+                                    <input class="form-control" type="email" placeholder="Email" name="email" id = "findid" required="required">
                                     <input class="form-control" type="text" placeholder="Email" name="email" id = "findid_res" style = "display:none;color:red;font-weight:bold">
                                     <input class="btn btn-default btn-login" type="button" value="아이디찾기" onclick="idFindChk_res()" id = "idFindChk_res_id">
+                                    <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login()" id = "return_login_id2" style ="display:inline; background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
                                     <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login()" id = "return_login_id" style = "display:none">
                                     </form>
                                 </div>
@@ -317,6 +322,7 @@ function onSignIn() {
 	  							
 	  							$('#idFindChk_res_id').hide();
 	  							$('#return_login_id').show();
+	  							$('#return_login_id2').hide();
 	  							
 	  							
 	  						} else {
@@ -345,6 +351,7 @@ function onSignIn() {
 				$('#idfind').hide();
 				$('#login').show();
 				$('#pwdfind').hide();
+				$("#return_login_id2").show();
 				
 				//아이디찾기 이후
   				$('#findid_res').hide();

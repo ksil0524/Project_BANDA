@@ -93,7 +93,7 @@
 		   	<button class="kafe-btn pull-right btn-sm board-write-btn" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em;">글쓰기</button>
 	   	</form>
 	  	<!-- 글쓰기 버튼 끝 -->
-	   	
+
 	  </div>
 	 </section>
 	 

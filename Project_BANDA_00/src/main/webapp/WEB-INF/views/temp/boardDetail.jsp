@@ -103,9 +103,11 @@
              <c:set var="boardtf" value="${(detail.id eq vo.id)?'y':'n' }"/>
              <c:if test="${'y' eq boardtf }">
 	         <a class="dropdown-item" href="boardUpdateForm.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">수정</a>
-			 <a class="dropdown-item" href="boardDelete.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">삭제</a>
              </c:if>
 			 <c:set var="noticeChk" value="${detail.board_nyn}"/>
+			 <c:if test='${("ADMIN" eq vo.id)||(detail.id eq vo.id)?true:false}'>
+			 <a class="dropdown-item" href="boardDelete.do?board_cate=${detail.board_cate}&board_no=${detail.board_no }">삭제</a>
+             </c:if>
 			 <c:if test='${("ADMIN" eq vo.id)?true:false}'>
 			 <c:choose>
 			   <c:when test="${fn:contains(noticeChk, 'Y')}">
@@ -137,7 +139,7 @@
 			  <img class="img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${detail.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="User">
 			 </div>
              <div class="media-body">
-              <p class="m-0">${detail.id }</p>
+              <p class="m-0"><a href="main_otherfeed.do?id=${detail.id }" style="color: #88898A;">${detail.id }</a></p>
 			  <small><span><fmt:formatDate value="${detail.board_regdate }" pattern="yyyy-MM-dd"/></span></small>
 			  <div class="detail-view">
 			 	<i class="fas fa-eye"></i><span> ${detail.board_view }</span>
@@ -191,7 +193,7 @@
                       <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${comments.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" class="img-responsive img-circle" alt="User"/>
                     </div>
                     <div class="comment-text">
-                      <strong>${comments.id }</strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span>
+                      <strong><a href="main_otherfeed.do?id=${comments.id }">${comments.id }</a></strong> <span class="date sub-text">on <fmt:formatDate value="${comments.com_regdate }" pattern="yyyy-MM-dd"/></span>
                       <c:set var="commenttf" value="${(comments.id eq vo.id)?'y':'n' }"/>
              		  <c:if test="${'y' eq commenttf }">
                       <span class="comment-edit-del"> <i class="fas fa-pen" id="boardComUpdate" onclick="commentEdit('${comments.com_content}', ${comments.com_no}, ${comments.com_pno})"></i></span>
@@ -210,7 +212,9 @@
 			<div class="comment-put" id="comment-put" style="">
 			   <table style="width: 800px;">
 		   	    <tr>
-		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" alt="Image"></td>
+		   	     <td style="width: 50px;">
+		   	     <img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="Image" style="position: absolute; margin-left:0.5em;">
+    			 </td>
 		   	     <td>
 		   	       <form name="commentForm" id="commentForm" action="boardComWrite.do">
 		   	         <input type="hidden" name="com_cate" value="B"/>
@@ -227,7 +231,7 @@
 			 <div class="comment-edit" id="comment-edit" style="display: none;">
 			   <table style="width: 800px;">
 		   	    <tr>
-		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" alt="Image"></td>
+		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="Image" style="position: absolute; margin-left:0.5em;"></td>
 		   	     <td>
 		   	       <form name="commentUpdateForm" id="commentUpdateForm" action="boardComUpdate.do">
 		   	         <input class="form-control input-sm" type="text" id="comEditor" name="com_content" placeholder="댓글을 입력하세요"/>

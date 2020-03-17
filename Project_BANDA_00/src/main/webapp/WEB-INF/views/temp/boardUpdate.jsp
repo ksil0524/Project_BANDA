@@ -11,6 +11,11 @@
 <html lang="en">
 <head>
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
+
+	<%
+		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
+	%>
+
 	<!-- ==============================================
 	Styles
 	=============================================== -->
@@ -19,12 +24,10 @@
 	<!-- index_circle_custom CSS -->
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
 	
-	<%
-		AccountVo accvo = (AccountVo)session.getAttribute("accvo");
-	%>
 	
 </head>
 <body style="background-color: #f4f4f4;">
+<input type = "hidden" id = "hidden_session" value = <%=session.getAttribute("vo") %>>
 
 	<!-- ==============================================
 	HeaderSection
@@ -210,6 +213,7 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/skel.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"></script>
 	<!-- main 외  페이지 전용 -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/circle-header.js"></script>
 
   </body>

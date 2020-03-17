@@ -25,9 +25,7 @@ public class NK_dao {
 		
 		try {
 			res = sqlSession.selectOne(NAMESPACE+"listCountSh", scri);
-			System.out.println("list count SHARE : "+res);
 		} catch(Exception e) {			
-			System.out.println("[ERROR] SHARE BOARD COUNT");
 			e.printStackTrace();
 		}
 		
@@ -46,7 +44,6 @@ public class NK_dao {
 				vo.setComment_list(cList);
 			}
 		} catch(Exception e) {
-			System.out.println("[ERROR] Share Board Select List PAGING");
 			e.printStackTrace();
 		}
 
@@ -59,9 +56,7 @@ public class NK_dao {
 		
 		try {
 			res = sqlSession.selectOne(NAMESPACE+"listCountEx", scri);
-			System.out.println("list count EXCHANGE : "+res);
 		} catch(Exception e) {			
-			System.out.println("[ERROR] EXCHANGE BOARD COUNT");
 			e.printStackTrace();
 		}
 		
@@ -80,7 +75,6 @@ public class NK_dao {
 				vo.setComment_list(comList);
 			}
 		} catch(Exception e) {
-			System.out.println("[ERROR] EXCHANGE Board Select List PAGING");
 			e.printStackTrace();
 		}
 		
@@ -96,7 +90,6 @@ public class NK_dao {
 		try {
 			list = sqlSession.selectList(NAMESPACE+"selectListShNotice");
 		} catch(Exception e) {
-			System.out.println("[ERROR] Share Board Notice Select List");
 			e.printStackTrace();
 		}
 			
@@ -110,7 +103,6 @@ public class NK_dao {
 		try {
 			list = sqlSession.selectList(NAMESPACE+"selectListExNotice");
 		} catch(Exception e) {
-			System.out.println("[ERROR] Exchange Board Notice Select List");
 			e.printStackTrace();
 		}
 		
@@ -127,7 +119,6 @@ public class NK_dao {
 			List<CommentVo> comList = selectBoardComList(vo.getBoard_no());
 			vo.setComment_list(comList);
 		} catch(Exception e) {
-			System.out.println("[ERROR] Board Select One");
 			e.printStackTrace();
 		}
 		
@@ -140,8 +131,7 @@ public class NK_dao {
 			
 		try {
 			res = sqlSession.update(NAMESPACE+"updateBoardToNotice", board_no);
-		} catch(Exception e) {
-			System.out.println("[ERROR] Board Set Board to Notice");			
+		} catch(Exception e) {		
 			e.printStackTrace();
 		}
 			
@@ -155,7 +145,6 @@ public class NK_dao {
 		try {
 			res = sqlSession.update(NAMESPACE+"updateNoticeToBoard", board_no);
 		} catch(Exception e) {
-			System.out.println("[ERROR] Board Set Notice to Board");			
 			e.printStackTrace();
 		}
 			
@@ -169,7 +158,6 @@ public class NK_dao {
 		try {
 			boardno = sqlSession.selectOne(NAMESPACE+"getLastBoardSeq");
 		} catch(Exception e) {
-			System.out.println("[ERROR] GET LAST BOARD SEQ");
 			e.printStackTrace();
 		}
 		
@@ -186,7 +174,6 @@ public class NK_dao {
 		try {
 			res = sqlSession.insert(NAMESPACE+"insertBoard", vo);
 		} catch(Exception e) {
-			System.out.println("[ERROR] BOARD WRITE");
 			e.printStackTrace();
 		}
 		
@@ -200,7 +187,6 @@ public class NK_dao {
 		try {
 			res = sqlSession.update(NAMESPACE+"updateBoard", vo);
 		} catch(Exception e) {
-			System.out.println("[ERROR] BOARD UPDATE");
 			e.printStackTrace();
 		}
 		
@@ -214,7 +200,6 @@ public class NK_dao {
 		try {
 			res = sqlSession.delete(NAMESPACE+"deleteBoard", board_no);
 		} catch(Exception e) {
-			System.out.println("[ERROR] BOARD DELETE");
 			e.printStackTrace();
 		}
 		
@@ -233,7 +218,6 @@ public class NK_dao {
 		try {
 			list = sqlSession.selectList(NAMESPACE+"selectBoardCom", board_no);
 		} catch(Exception e) {			
-			System.out.println("[ERROR] BOARD COMMENTS LOAD");
 			e.printStackTrace();
 		}
 		
@@ -247,7 +231,7 @@ public class NK_dao {
 		try {
 			res = sqlSession.insert(NAMESPACE+"insertBoardCom", vo);
 		} catch(Exception e) {
-			System.out.println("[ERROR] BOARD COMMENT WRITE");
+			e.printStackTrace();
 		}
 		
 		return res;
@@ -260,7 +244,7 @@ public class NK_dao {
 		try {
 			res = sqlSession.insert(NAMESPACE+"updateBoardCom", vo);
 		} catch(Exception e) {
-			System.out.println("[ERROR] BOARD COMMENT UPDATE");
+			e.printStackTrace();
 		}
 		
 		return res;
@@ -273,7 +257,7 @@ public class NK_dao {
 		try {
 			res = sqlSession.insert(NAMESPACE+"deleteBoardCom", com_no);
 		} catch(Exception e) {
-			System.out.println("[ERROR] BOARD COMMENT UPDATE");
+			e.printStackTrace();
 		}
 		
 		return res;

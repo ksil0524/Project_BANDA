@@ -10,8 +10,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +81,7 @@
 	<!-- 
 	 ip바꿔주기
 	 -->
-	<script src="http://192.168.130.222:3000/socket.io/socket.io.js"></script>
+	<script src="http://192.168.30.28:3000/socket.io/socket.io.js"></script>
 
 	
 	<!-- ==============================================
@@ -225,7 +225,7 @@ var aotherid = "";
 var nowRnum = 0;
   
 const name = "<%=vo.getId() %>";
-const socket = io("http://192.168.130.222:3000");
+const socket = io("http://192.168.30.28:3000");
 let room = ['room0'];
 let num = 0;
 

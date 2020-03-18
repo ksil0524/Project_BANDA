@@ -17,7 +17,11 @@
 <jsp:include page="/WEB-INF/views/head.jsp"></jsp:include>
      <!-- index_circle_custom CSS -->
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/other_circle_custom.css">
-     
+     <style type="text/css">
+     	a:hover, a.active{
+     		color:#ff7f73 !important;
+     	}
+     </style>
      <!-- ==============================================
 	 Scripts
 	 =============================================== -->
@@ -316,7 +320,7 @@
 								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=fd_acclist.get(i).getId() %>/image.jpg" alt="" style="width: 100%; height: 100%;"></a>
 							</figure>
 							<div class="pepl-info">
-								<h4><a href="#" title=""><%=fd_acclist.get(i).getId() %></a></h4>
+								<h4><a href="main_otherfeed.do?id=<%=fd_acclist.get(i).getId() %>" title=""><%=fd_acclist.get(i).getId() %></a></h4>
 								<span>
 <%
 								for(PetVo tmp : fd_acclist.get(i).getPet_list()){
@@ -387,7 +391,7 @@
 								<a href="#" title=""><img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/<%=fr_acclist.get(i).getId() %>/image.jpg" alt="" style="width: 100%; height: 100%;"></a>
 							</figure>
 							<div class="pepl-info">
-								<h4><a href="#" title=""><%=fr_acclist.get(i).getId() %></a></h4>
+								<h4><a href="main_otherfeed.do?id=<%=fr_acclist.get(i).getId()%>" title=""><%=fr_acclist.get(i).getId() %></a></h4>
 								<span>
 <%
 								for(PetVo tmp : fr_acclist.get(i).getPet_list()){

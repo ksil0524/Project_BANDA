@@ -78,7 +78,7 @@ $(function(){
 ***********************************/
 function customSelect(customTarget){
 	var x, i, j, selElmnt, a, b, c;
-
+	
 	/* custom-select/custom-select2 클래스 엘리먼트 get */
 	x = document.getElementsByClassName(customTarget);
 
@@ -98,7 +98,7 @@ function customSelect(customTarget){
 		b.setAttribute("class", "select-items select-hide");
 		b.setAttribute("id", "style-1");
 		
-		for (j = 1; j < selElmnt.length; j++) {
+		for (j = 0; j < selElmnt.length; j++) {
 			/* 원본 요소의 각 옵션에 대한  div 생성*/
 			c = document.createElement("DIV");
 			c.innerHTML = selElmnt.options[j].innerHTML;
@@ -251,7 +251,7 @@ function searchFormSubmit(){
 	var keyword = $("#searchInput").val();
 	
 	/* 유효성 검사 */
-	if(city==null || city=="" || district==null || district=="" || neighborhood==null || neighborhood=="" ){
+	if(city==null || city=="" || district==null || district=="" ){
 		alert("지역을  모두 선택해주세요.");
 	}else{
 		searchAjax(city, district, neighborhood, keyword);

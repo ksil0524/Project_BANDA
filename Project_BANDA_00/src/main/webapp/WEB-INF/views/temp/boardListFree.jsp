@@ -122,7 +122,7 @@
 	   	  	  <col style="width: 100px;">
 	   	  	  <col style="width: 100px;">
 	   	  	</colgroup>
-	   	  	<c:if test="${not empty list }">
+	   	  	<c:if test="${(not empty list) && (scri.searchType ne 'title') && (scri.searchType ne 'content') && (scri.searchType ne 'writer') && (scri.searchType ne 'tag')}">
 	   	  	  <c:if test="${not empty listShareNotice}">
 	   	  	    <thead>
 		   	      <tr>

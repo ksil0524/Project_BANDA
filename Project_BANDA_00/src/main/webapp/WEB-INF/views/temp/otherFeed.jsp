@@ -165,7 +165,7 @@
          </aside>            
       </div><!--/ col-lg-3-->
       
-      <div class="col-lg-6" style="width: 1330px;margin-left:5%">
+      <div style="width: 66%;margin-left:7%;margin-top:3%">
        
        <div class="row">
        
@@ -180,7 +180,7 @@
 					<c:choose>
 					<c:when test = "${file_type ne 'mp4'}">	
 						
-						<div class="col-lg-6" style="width:33%">
+						<div style="width:30%;margin-right:3%">
          				 <a href="#myModal" data-toggle="modal" data-title = "${list.get(0)}" >
      					     <div class="explorebox" 
     				        	style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}') no-repeat;
@@ -661,7 +661,14 @@
 									$('#following_section').append(fstr);
 									
 								} else {
-									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									
+									if(session_id == id){
+										var nfstr = '<a><i class="fas fa-user-alt" style = "color:#ff7f73;"></i></a>';
+									} else{
+									
+										var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									}
+									
 									$('#following_section').append(nfstr);
 								}
 								

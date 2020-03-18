@@ -48,7 +48,7 @@ INSERT INTO FOLLOW VALUES('juihy1005@naver.com', 'ADMIN');
 INSERT INTO LIKES VALUES(7, 'juihy1005@naver.com');
 INSERT INTO COMMENTS VALUES(COM_SEQ.NEXTVAL, 'F', 'juihy1005@naver.com', '졸려', SYSDATE, 7);
 
-SELECT * FROM ACCOUNT WHERE ID = 'juihy1005@naver.com';
+SELECT * FROM ACCOUNT;
 SELECT * FROM BOARD WHERE ID = 'juihy1005@naver.com';
 SELECT * FROM PET WHERE ID = 'juihy1005@naver.com';
 SELECT * FROM FEED WHERE ID = 'juihy1005@naver.com';

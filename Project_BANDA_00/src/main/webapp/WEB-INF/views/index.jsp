@@ -318,7 +318,7 @@ else {
 			<c:choose>
 				<c:when test = "${not empty sessionid}">
 					<div id="following_section" style = "display:inline">
-						
+								
 					</div>
 				</c:when>
 			</c:choose>
@@ -743,8 +743,14 @@ else {
 									$('#following_section').append(fstr);
 									
 								} else {
-									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
-									$('#following_section').append(nfstr);
+									
+									if(session_id == id){
+										var nfstr = '<a><i class="fas fa-user-alt" style = "color:#ff7f73;"></i></a>';
+									} else{
+									
+										var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									}
+										$('#following_section').append(nfstr);
 								}
 								
 							},

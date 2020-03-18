@@ -441,6 +441,7 @@
 				$('#feed_comment * ').remove();
 				$('#feed_like * ').remove();
 				$('#feed_heart * ').remove();
+				$('#following_section * ').remove();
 				
 			 var button = $(e.relatedTarget);
 			 feedno = button.data('title');
@@ -665,7 +666,14 @@
 									$('#following_section').append(fstr);
 									
 								} else {
-									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									
+									if(session_id == id){
+										var nfstr = '<a><i class="fas fa-user-alt" style = "color:#ff7f73;"></i></a>';
+									} else{
+									
+										var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									}
+									
 									$('#following_section').append(nfstr);
 								}
 								

@@ -60,7 +60,7 @@
                                     <input class="form-control" type="email" placeholder="Email" name="email" id = "findid" required="required">
                                     <input class="form-control" type="text" placeholder="Email" name="email" id = "findid_res" style = "display:none;color:red;font-weight:bold">
                                     <input class="btn btn-default btn-login" type="button" value="아이디찾기" onclick="idFindChk_res()" id = "idFindChk_res_id">
-                                    <input class="btn btn-default btn-login" type="button" value="돌아가기" onclick="return_login()" id = "return_login_id2" style ="display:inline; background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
+                                    <input class="btn btn-default btn-login" type="button" value="돌아가기" onclick="return_login()" id = "return_login_id2" style ="background-color: #e8e8e8 !important;    font-family: 'BMHANNAAir' !important;font-size: 13px;    font-weight: 540; margin-top:3%">
                                     <input class="btn btn-default btn-login" type="button" value="로그인" onclick="return_login()" id = "return_login_id" style = "display:none">
                                     </form>
                                 </div>
@@ -272,6 +272,25 @@ function onSignIn() {
 //////////////////////////////////////	
 
 			reset_login = function(){
+				
+				//아이디찾기
+				$("#findid").val('');
+				$("#findid").show();
+				$("#findid_res").val('');
+				$("#findid_res").hide();
+				$('#idFindChk_res_id').show();
+				$('#return_login_id').hide();
+				$('#return_login_id2').show();
+				
+				//비밀번호 찾기
+				$("#findpwd_id").val("");
+				$("#findpwd_id").show();
+				$("#findpwd_email").val("");
+				$("#findpwd_email").show();
+				$("#findpwd_res").hide();
+				$("#idFindChk_res_pwd").show();
+				$('#return_login_pwd').hide();
+				$('#return_login_pwd2').show();
 				
 				$("#error_login").css("display","none");
 				$("#idfind").css("display","none");

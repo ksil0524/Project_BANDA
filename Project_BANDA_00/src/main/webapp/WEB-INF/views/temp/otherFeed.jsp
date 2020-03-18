@@ -165,7 +165,7 @@
          </aside>            
       </div><!--/ col-lg-3-->
       
-      <div class="col-lg-6" style="width: 1330px;margin-left:5%">
+      <div style="width: 66%;margin-left:7%;margin-top:3%">
        
        <div class="row">
        
@@ -180,7 +180,7 @@
 					<c:choose>
 					<c:when test = "${file_type ne 'mp4'}">	
 						
-						<div class="col-lg-6" style="width:33%">
+						<div style="width:30%;margin-right:3%">
          				 <a href="#myModal" data-toggle="modal" data-title = "${list.get(0)}" >
      					     <div class="explorebox" 
     				        	style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/feed/${list.get(0)}/${list.get(1)}') no-repeat;
@@ -338,7 +338,7 @@
 			   <div class="comment-body" style = "width:115%;margin-top:10%">
 				 <input class="form-control input-sm" type="text" placeholder="Write your comment..." style = "float:left" name = "comment" id = "comment">
 				 <div style = "float:left;margin-left:2%;margin-top:8%">
-				 	<a class="modal-comment" href="#" name = "insertcomment" id = "insertcomment" style = "float:right"><i class="fa fa-comments"></i></a>
+				 	<a class="modal-comment" href="javascript:void(0)" name = "insertcomment" id = "insertcomment" style = "float:right"><i class="fa fa-comments"></i></a>
 				 </div>
 			   </div><!--/ comment-body -->	
               </li>
@@ -573,12 +573,12 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "javascript:void(0)" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 								console.log(real_url);  									
@@ -661,7 +661,14 @@
 									$('#following_section').append(fstr);
 									
 								} else {
-									var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									
+									if(session_id == id){
+										var nfstr = '<a><i class="fas fa-user-alt" style = "color:#ff7f73;"></i></a>';
+									} else{
+									
+										var nfstr = '<a onclick = "following()" id = "following"><i class="fa fa-check-square" style = "cursor:pointer"></i></a>';
+									}
+									
 									$('#following_section').append(nfstr);
 								}
 								
@@ -1006,12 +1013,12 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "javascript:void(0)" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 							
@@ -1091,12 +1098,12 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "javascript:void(0)" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 								console.log(real_url);  									
@@ -1181,12 +1188,12 @@
 									var real_url = '<li><div class="comment-img"><img src="'+img_url+'" class="img-responsive img-circle" alt="Image" onerror="this.src ='+onerr+'"/></div>'+
 									'<div class="comment-text" style = "display:block" name = "before_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<p>'+list['com_content']+'</p>'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
-											'<a href = "#" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "update_comment('+i+')" style = "font-size:10px">수정</a>&nbsp;'+
+											'<a href = "javascript:void(0)" onclick = "delete_comment('+list['com_no']+','+list['com_pno']+');" style = "font-size:10px">삭제</a>'+
 											'</div>'+
 											'<div class="comment-text" style = "display:none" name = "after_update'+i+'"><strong><a href="main_otherfeed.do?id='+list['id']+'">'+list['id']+'</a></strong>'+
 											'<input name = "change_content'+i+'" value = "'+list['com_content']+'" style = "width:80%;font-size:11px;border:none">'+
-											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "#" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
+											'<span class="date sub-text">'+getFormatDate(new Date(list['com_regdate']))+'</span>&nbsp;<a href = "javascript:void(0)" onclick = "updateres_comment('+list['com_no']+','+list['com_pno']+','+i+')" style = "font-size:10px">수정완료</a>&nbsp;'+
 											'</div>'+
 											'</li>';
 								console.log(real_url);  									

@@ -186,7 +186,7 @@ $("#email").blur(function(){
 	//영문자 숫자 4~10
 	
 	var id_set = {
-			"email":id,
+			"email":id
 	}; 
 	
 	var loginIdRex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[0-9a-zA-Z]$/i;
@@ -200,8 +200,6 @@ $("#email").blur(function(){
 		$("#email").css({"font-size":"10px"})
 		return false;
 	}else{
-		alert("r");
-		
 		
 		$.ajax({
 			url: "emailoverlab.do",

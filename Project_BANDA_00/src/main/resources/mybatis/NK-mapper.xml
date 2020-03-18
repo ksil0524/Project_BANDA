@@ -113,7 +113,7 @@
 	<select id="pagingListSh" resultType="boardVo" parameterType="com.mvc.banda.common.SearchCriteria">	
 		SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW 
 		 FROM ( 
-		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW, 
+		        SELECT BOARD_NO, ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_FILE, BOARD_HASH, BOARD_VIEW,  
 		               ROW_NUMBER() OVER(ORDER BY BOARD_NO DESC) AS RNUM
 		         FROM BOARD 
 		         WHERE 1=1 AND BOARD_CATE='SH' AND BOARD_NYN='N'
@@ -156,11 +156,13 @@
 	<!-- 검색 -->
 	<sql id="boardSearch">
 		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">AND BOARD_TITLE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND ID LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'title'.toString()">AND BOARD_TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'content'.toString()">AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'writer'.toString()">AND ID LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tag'.toString()">AND BOARD_HASH LIKE '%' || #{keyword} || '%'</if>
 		</if>
 	</sql>
+	
 	
 	
 

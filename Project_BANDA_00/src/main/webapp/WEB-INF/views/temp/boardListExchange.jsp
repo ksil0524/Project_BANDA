@@ -61,11 +61,16 @@
 	  	<!-- 검색 부분 시작 -->
 		<span id="searchinputBox">
 		  	<select name="searchType" id="searchType">
-		  		<option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : '' }"/>>제목</option>
-		  		<option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : '' }"/>>내용</option>
-		  		<option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : '' }"/>>글쓴이</option>
+		  		<option value="title"<c:out value="${scri.searchType eq 'title' ? 'selected' : '' }"/>>제목</option>
+		  		<option value="content"<c:out value="${scri.searchType eq 'content' ? 'selected' : '' }"/>>내용</option>
+		  		<option value="writer"<c:out value="${scri.searchType eq 'writer' ? 'selected' : '' }"/>>글쓴이</option>
 		  	</select>
-			<input type="text" name="keyword" id="searchKeyword" value="${scri.keyword }" placeholder="검색어를 입력하세요"/>
+		  	<c:if test="${scri.searchType eq 'tag'}">
+				<input type="text" name="keyword" id="searchKeyword" value="" placeholder="검색어를 입력하세요"/>
+		  	</c:if>
+		  	<c:if test="${scri.searchType ne 'tag'}">
+				<input type="text" name="keyword" id="searchKeyword" value="${scri.keyword }" placeholder="검색어를 입력하세요"/>
+		  	</c:if>
 			<div id="searchBtn" onclick="boardSearch();"><i class="fas fa-search" style="width: 25px; height: 25px; color: #ff7f73 !important;"></i></div>
 		</span>
 		
@@ -86,7 +91,7 @@
 	  	<!-- 글쓰기 버튼 시작 -->
 	  	<form action="boardWriteForm.do">
 		  	<input type="hidden" name="board_cate" value="EX"/>
-		   	<button type="submit" class="kafe-btn pull-right btn-sm board-write-btn" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em;">글쓰기</button>
+		   	<button type="submit" class="kafe-btn pull-right btn-sm board-write-btn" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em; width: 7em;">글쓰기</button>
 	   	</form>
 	  	<!-- 글쓰기 버튼 끝 -->
 	  	
@@ -111,7 +116,7 @@
 	   	  	  <col style="width: 100px;">
 	   	  	  <col style="width: 100px;">
 	   	  	</colgroup>
-	   	  	<c:if test="${not empty list}">
+	   	  	<c:if test="${(not empty list) && (scri.searchType ne 'title') && (scri.searchType ne 'content') && (scri.searchType ne 'writer') && (scri.searchType ne 'tag')}">
 	   	  	  <c:if test="${not empty listExchangeNotice}">
 	   	  	    <thead>
 		   	      <tr>
@@ -144,14 +149,14 @@
 	   <div class="row">
 	     <c:choose>
 	       <c:when test="${empty list }">
-	         <h3 style="text-align:center;">등록된 게시물이 없습니다.</h3>
+	         <h3 style="text-align:center; color: #ff7f73;">등록된 게시물이 없습니다.</h3>
 	       </c:when>
 	       <c:when test="${not empty list }">
 	         <c:forEach items="${list}" var="listEx">
 			    <div class="col-lg-4">
 				 <a href="boardDetail.do?board_no=${listEx.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}">
 				 <div class="explorebox" 
-				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/board/${listEx.board_no }/boardImg.jpg'), url('<%=request.getContextPath() %>/resources/images/boardlist_noimg.png') no-repeat;
+				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/board/${listEx.board_no }/boardImg.jpg'), url('<%=request.getContextPath() %>/resources/images/logo_white.png') no-repeat;
 				          background-size: cover;
 		                  background-position: center center;
 		                  -webkit-background-size: cover;

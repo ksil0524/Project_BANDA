@@ -1783,7 +1783,6 @@ public class BandaController {
 	
 	//////////////////////////////////
 	//무나
-//	@RequestMapping(value = "/listTestSh.do", method = RequestMethod.GET)
 	@RequestMapping(value = "/boardListFree.do", method = RequestMethod.GET)
 	public String listSh(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
 		model.addAttribute("listShareNotice", biz.selectListShNotice());
@@ -1800,7 +1799,6 @@ public class BandaController {
 	}
 	
 	//물물교환
-//	@RequestMapping(value = "/listTestEx.do", method = RequestMethod.GET)
 	@RequestMapping(value = "/boardListExchange.do", method = RequestMethod.GET)
 	public String listEx(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
 		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
@@ -1817,7 +1815,6 @@ public class BandaController {
 	}
 	
 	//게시글 상세
-//	@RequestMapping(value = "/detailTest.do", method = RequestMethod.GET)
 	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
 	public String read(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
 		BoardVo vo2 = biz.selectOneBoard(vo.getBoard_no());
@@ -1826,8 +1823,6 @@ public class BandaController {
 		model.addAttribute("scri", scri);
 		return "temp/boardDetail";
 	}
-	
-	
 	
 	//////////////////////////////////	
 
@@ -1861,8 +1856,6 @@ public class BandaController {
 	@RequestMapping(value="/boardWriteForm.do")
 	public String boardWriteForm(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) {
 		model.addAttribute("category", vo.getBoard_cate());
-		System.out.println("카테고리 : "+vo.getBoard_cate());
-		
 		model.addAttribute("scri", scri);
 		
 		return "temp/boardWrite";
@@ -1881,8 +1874,6 @@ public class BandaController {
 			//저장경로 생성
 			String storagePath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+vo2.getBoard_no());
 			
-			System.out.println("저장경로 : "+storagePath);
-			
 			//저장경로 정보 셋팅
 			File folder = new File(storagePath);	
 			
@@ -1890,7 +1881,6 @@ public class BandaController {
 			if(!folder.exists()) {
 				try {
 					folder.mkdir();	//storagePath의 경로 생성
-					System.out.println("폴더가 생성되었습니다.");
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -1918,8 +1908,6 @@ public class BandaController {
 			return "redirect:boardDetail.do?board_no="+boardno;
 			
 		} else {
-			System.out.println("[ERROR] BOARD WRITE");
-			
 			return "rediect:boardWriteForm.do";
 		}
 		
@@ -1937,7 +1925,6 @@ public class BandaController {
 	//게시글 수정
 	@RequestMapping(value="/boardUpdateRes.do", method=RequestMethod.POST)
 	public String boardUpdate(HttpServletRequest request, Model model, BoardVo vo) throws IllegalStateException, IOException {
-		System.out.println("aaaaaaaaaaaaa: "+vo);
 		int res = biz.boardUpdate(vo);
 		
 		
@@ -1976,8 +1963,6 @@ public class BandaController {
 	//게시글 삭제
 	@RequestMapping(value="/boardDelete.do")
 	public String boardDelete(String board_cate, int board_no) {
-		System.out.println("삭제할 게시글의 카테고리 : " + board_cate);
-		
 		int res = biz.boardDelete(board_no);
 		if(res>0 && board_cate.equals("SH")) {
 			return "redirect:boardListFree.do";							
@@ -2021,6 +2006,15 @@ public class BandaController {
 		} else {
 			return "redirect:boardDetail.do?board_no="+board_no;			
 		}
+	}
+	
+	//아더피드
+	@RequestMapping(value="/otherFeed.do")
+	public String otherFeed(AccountVo vo) {
+		String accId = vo.getId();
+		
+		
+		return "temp/otherFeed";
 	}
 	
 	// < 하나경 파트  끝 > 

@@ -24,9 +24,10 @@
         var tag = document.createElement('span');
         tag.className = this.options.tagClass;
         tag.innerText = string;
-
+        
         var closeIcon = document.createElement('a');
-        closeIcon.innerHTML = '&times;';
+        closeIcon.innerHTML = 'x';
+        closeIcon.setAttribute('class', 'write-tag-del');
         closeIcon.addEventListener('click' , function(e){
             e.preventDefault();
             var tag = this.parentNode;
@@ -42,8 +43,6 @@
         this.wrapper.insertBefore(tag , this.input);
         this.original_input.value = this.arr.join(',');
         
-        console.log("배열(this.arr)" + this.arr);
-        console.log("배열(string)" + string);	//얘를 배열에 담아서 리턴시켜줘야할듯
         document.getElementById("board_hash").value=this.arr;	//jsp페이지의 hidden value로 배열 넣어줌
 
         return this;
@@ -84,8 +83,6 @@
 
         array.forEach(function(string){
         	plugin.addTag(string);
-
-        	console.log("배열:"+array);
        	});
         
 

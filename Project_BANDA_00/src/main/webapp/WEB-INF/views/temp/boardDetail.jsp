@@ -332,9 +332,9 @@
 
 		for(var i=0 ; i<hash.length ; i++) {
 			if (category == 'SH') {
-				inner += '<a href="boardListFree.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';		
+				inner += '<a href="boardListFree.do?page=1&searchType=tag&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';		
 			} else if (category == 'EX') {
-				inner += '<a href="boardListExchange.do?page=1&searchType=c&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';						
+				inner += '<a href="boardListExchange.do?page=1&searchType=tag&keyword='+hash[i]+'" class="tagSearch" style="margin: 0 0.2em;"><span class="boardtag tagtext">'+hash[i]+'</span></a>';						
 			}
 		}
 		

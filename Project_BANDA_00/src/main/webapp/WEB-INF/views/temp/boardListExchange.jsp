@@ -61,11 +61,16 @@
 	  	<!-- 검색 부분 시작 -->
 		<span id="searchinputBox">
 		  	<select name="searchType" id="searchType">
-		  		<option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : '' }"/>>제목</option>
-		  		<option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : '' }"/>>내용</option>
-		  		<option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : '' }"/>>글쓴이</option>
+		  		<option value="title"<c:out value="${scri.searchType eq 'title' ? 'selected' : '' }"/>>제목</option>
+		  		<option value="content"<c:out value="${scri.searchType eq 'content' ? 'selected' : '' }"/>>내용</option>
+		  		<option value="writer"<c:out value="${scri.searchType eq 'writer' ? 'selected' : '' }"/>>글쓴이</option>
 		  	</select>
-			<input type="text" name="keyword" id="searchKeyword" value="${scri.keyword }" placeholder="검색어를 입력하세요"/>
+		  	<c:if test="${scri.searchType eq 'tag'}">
+				<input type="text" name="keyword" id="searchKeyword" value="" placeholder="검색어를 입력하세요"/>
+		  	</c:if>
+		  	<c:if test="${scri.searchType ne 'tag'}">
+				<input type="text" name="keyword" id="searchKeyword" value="${scri.keyword }" placeholder="검색어를 입력하세요"/>
+		  	</c:if>
 			<div id="searchBtn" onclick="boardSearch();"><i class="fas fa-search" style="width: 25px; height: 25px; color: #ff7f73 !important;"></i></div>
 		</span>
 		

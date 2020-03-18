@@ -156,9 +156,10 @@
 	<!-- 검색 -->
 	<sql id="boardSearch">
 		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">AND BOARD_TITLE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND ID LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'title'.toString()">AND BOARD_TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'content'.toString()">AND BOARD_CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'writer'.toString()">AND ID LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tag'.toString()">AND BOARD_HASH LIKE '%' || #{keyword} || '%'</if>
 		</if>
 	</sql>
 	

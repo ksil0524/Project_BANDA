@@ -232,6 +232,9 @@ $("#email").blur(function(){
 $("#phone").blur(function(){
 	var id = $("#joinForm #phone").val();
 	
+	var id_set = {
+			"email":id
+	}; 
 	var loginIdRex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 
 	if(!loginIdRex.test(id)){
@@ -243,7 +246,35 @@ $("#phone").blur(function(){
 		$("#phone").attr("placeholder","010-0000-0000 형식으로 입력해주세요");
 		$("#phone").css({"font-size":"10px"})
 		return false;
+	}else{
+		
+		$.ajax({
+			url: "emailoverlab.do",
+			type:"post",
+			data: JSON.stringify(id_set),
+			contentType:"application/json",
+			dataType:"json",
+			success : function(msg){
+				
+				var rres = msg.res;
+			
+				
+				if(rres){
+					$("#email").val("");		
+					$("#email").attr("placeholder","e-mail이 중복되었습니다.");
+				}
+			}, 
+			error:function(request,status,error){
+					
+					alert("통신실패");
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+				}
+		});
+		
+		
 	}
+	
 	
 })
 //id 중복체크로 변경된 placeholder 제자리

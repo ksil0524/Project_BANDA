@@ -642,6 +642,25 @@ public class BandaController {
 		
 		return resmap;
 	}
+	@RequestMapping(value = "/emailoverlab.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Boolean> emailoverlab(@RequestBody AccountVo vo) {
+		int res = 0;
+		String email = vo.getEmail();
+		res = biz.emailoverlab(email);
+		
+		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
+		
+		if(res >=1 ) {
+			resmap.put("res", true);
+		}else {
+			resmap.put("res", false);
+		}
+		
+		return resmap;
+	}
+	
+	
 	
 	@RequestMapping(value = "/joinregister.do", method = RequestMethod.POST)
 	@ResponseBody

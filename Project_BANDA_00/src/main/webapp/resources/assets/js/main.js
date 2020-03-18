@@ -184,8 +184,13 @@ function inputPhoneNumber(obj) {
 $("#email").blur(function(){
 	var id = $("#joinForm #email").val();
 	//영문자 숫자 4~10
+	
+	var id_set = {
+			"email":id,
+	}; 
+	
 	var loginIdRex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[0-9a-zA-Z]$/i;
-
+	
 	if(!loginIdRex.test(id)){
 	
 		isjoin++;
@@ -194,6 +199,35 @@ $("#email").blur(function(){
 		$("#email").attr("placeholder","이메일 형식으로 입력해주세요");
 		$("#email").css({"font-size":"10px"})
 		return false;
+	}else{
+		alert("r");
+		
+		
+		$.ajax({
+			url: "emailoverlab.do",
+			type:"post",
+			data: JSON.stringify(id_set),
+			contentType:"application/json",
+			dataType:"json",
+			success : function(msg){
+				
+				var rres = msg.res;
+			
+				
+				if(rres){
+					$("#email").val("");		
+					$("#email").attr("placeholder","e-mail이 중복되었습니다.");
+				}
+			}, 
+			error:function(request,status,error){
+					
+					alert("통신실패");
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
+				}
+		});
+		
+		
 	}
 	
 })

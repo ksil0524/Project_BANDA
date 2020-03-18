@@ -144,7 +144,12 @@ public class BandaBiz {
 		// TODO Auto-generated method stub
 		return ji_dao.joinregister(vo);
 	}
-	
+
+	public int emailoverlab(String email) {
+		// TODO Auto-generated method stub
+		return ji_dao.emailoverlab(email);
+	}
+
 	
 	
 	// < 김재익 파트  끝 > 

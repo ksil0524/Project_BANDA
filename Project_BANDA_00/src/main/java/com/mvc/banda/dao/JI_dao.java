@@ -54,4 +54,27 @@ public class JI_dao {
 		return res;
 	}
 
+	public int emailoverlab(String email) {
+		String res = null;
+		
+		try {
+			
+			res = sqlSession.selectOne(NAMESPACE + "emailoverlab", email);
+		
+
+			
+		} catch (Exception e) {
+			System.out.println("[ERROR] Board Set Board to Notice");
+			e.printStackTrace();
+		}
+	
+		
+		if(res != null) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
+	}
+
 }

@@ -35,7 +35,7 @@
 	</beans:bean>
 	
 	<beans:bean id="naverRedirectUrl" class="java.lang.String">
-        <beans:constructor-arg value="http://192.168.130.190:8787/banda/callback.do" />
+        <beans:constructor-arg value="http://sclass.iptime.org:8787/Project_BANDA_00/callback.do" />
 	</beans:bean>
     
     

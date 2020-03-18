@@ -86,7 +86,7 @@
 	  	<!-- 글쓰기 버튼 시작 -->
 	  	<form action="boardWriteForm.do">
 		  	<input type="hidden" name="board_cate" value="EX"/>
-		   	<button type="submit" class="kafe-btn pull-right btn-sm board-write-btn" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em;">글쓰기</button>
+		   	<button type="submit" class="kafe-btn pull-right btn-sm board-write-btn" onclick="location.href='boardWriteForm.do'" style="position: relative; top: -3.2em; width: 7em;">글쓰기</button>
 	   	</form>
 	  	<!-- 글쓰기 버튼 끝 -->
 	  	
@@ -144,14 +144,14 @@
 	   <div class="row">
 	     <c:choose>
 	       <c:when test="${empty list }">
-	         <h3 style="text-align:center;">등록된 게시물이 없습니다.</h3>
+	         <h3 style="text-align:center; color: #ff7f73;">등록된 게시물이 없습니다.</h3>
 	       </c:when>
 	       <c:when test="${not empty list }">
 	         <c:forEach items="${list}" var="listEx">
 			    <div class="col-lg-4">
 				 <a href="boardDetail.do?board_no=${listEx.board_no }&page=${scri.page}&searchType=${scri.searchType}&keyword=${scri.keyword}">
 				 <div class="explorebox" 
-				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/board/${listEx.board_no }/boardImg.jpg'), url('<%=request.getContextPath() %>/resources/images/boardlist_noimg.png') no-repeat;
+				   style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('<%=request.getContextPath() %>/resources/images/filemanager/board/${listEx.board_no }/boardImg.jpg'), url('<%=request.getContextPath() %>/resources/images/logo_white.png') no-repeat;
 				          background-size: cover;
 		                  background-position: center center;
 		                  -webkit-background-size: cover;

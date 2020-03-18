@@ -95,6 +95,9 @@
 		 
           <div class="cardbox-heading">
            <!-- START dropdown-->
+           
+           <c:if test='${("ADMIN" eq vo.id)||(detail.id eq vo.id)}'>
+           
            <div class="dropdown pull-right">
             <button class="btn btn-secondary btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
 		     <em class="fa fa-ellipsis-h"></em>
@@ -120,6 +123,9 @@
 			 </c:if>
             </div>
            </div><!--/ dropdown -->
+           
+           </c:if>
+           
            <!-- END dropdown-->
            <script type="text/javascript">
            $(function(){

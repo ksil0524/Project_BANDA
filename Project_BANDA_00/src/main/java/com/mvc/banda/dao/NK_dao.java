@@ -89,6 +89,11 @@ public class NK_dao {
 			
 		try {
 			list = sqlSession.selectList(NAMESPACE+"selectListShNotice");
+			
+			for(BoardVo vo : list) {
+				List<CommentVo> cList = selectBoardComList(vo.getBoard_no());
+				vo.setComment_list(cList);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -102,6 +107,11 @@ public class NK_dao {
 		
 		try {
 			list = sqlSession.selectList(NAMESPACE+"selectListExNotice");
+			
+			for(BoardVo vo : list) {
+				List<CommentVo> comList = selectBoardComList(vo.getBoard_no());
+				vo.setComment_list(comList);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

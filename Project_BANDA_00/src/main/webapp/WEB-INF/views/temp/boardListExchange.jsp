@@ -105,6 +105,13 @@
 	 <section class="boardlist">
 	  <div class="container">
 	  
+
+	   <c:if test="${(not empty list) && ((scri.searchType eq 'title') || (scri.searchType eq 'content') || (scri.searchType eq 'writer') || (scri.searchType eq 'tag'))}">
+	     <div class="row">
+	   	   <span style="font-size: 24px; color: #ff7f73;">&nbsp;<i class="fas fa-search"></i> 검색결과</span>
+	     </div>
+	   </c:if>
+	  
 	   <!-- 공지사항 부분 시작-->	   
 	   <div class="row">
 	   	<div class="upper-notice" style="padding: 1em;">

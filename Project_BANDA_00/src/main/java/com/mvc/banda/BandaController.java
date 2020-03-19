@@ -741,7 +741,8 @@ public class BandaController {
 	         
 	         String pwd = passwordEncoder.encode("1234");
 	         
-	         real_vo = new AccountVo(id, pwd, id, "010-1111-1111");
+	         real_vo = new AccountVo(id, pwd, id+"sns", "010-1111-1111");
+	         
 	         
 	         int res = biz.naver_register(real_vo);
 	         
@@ -1112,7 +1113,7 @@ public class BandaController {
 
 			String pwd = passwordEncoder.encode("1234");
 			
-			real_vo = new AccountVo(email, pwd, email, "010-1111-1111");
+			real_vo = new AccountVo(email, pwd, email+"sns", "010-1111-1111");
 			
 			int res = biz.naver_register(real_vo);
 			

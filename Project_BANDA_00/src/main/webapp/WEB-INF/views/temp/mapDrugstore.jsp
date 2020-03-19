@@ -90,7 +90,7 @@
 								  </select>
 								</div>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
-								<input id="searchInput" type="text" name="keyword" placeholder="병원명을 입력해주세요.">
+								<input id="searchInput" type="text" name="keyword" placeholder="약국명을 입력해주세요.">
 							</span>
 							<span class="col-lg-3 col-xs-12" style="text-align: left;">
 								<button id="topSearchBtn" onclick="searchFormSubmit()">Search<i id="searchIcon" class="fas fa-search"></i></button>

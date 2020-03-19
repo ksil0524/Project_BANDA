@@ -259,8 +259,6 @@ function onSignIn() {
 						},
 						error:function(request,status,error){
 							
-							alert("통신실패");
-							alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
 						}
 						
@@ -347,8 +345,6 @@ function onSignIn() {
 	  					},
 						error:function(request,status,error){
 							
-							alert("통신실패");
-							alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 	
 						}
 						
@@ -424,8 +420,6 @@ function onSignIn() {
 	  					},
 						error:function(request,status,error){
 							
-							alert("통신실패");
-							alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 	
 						}
 						

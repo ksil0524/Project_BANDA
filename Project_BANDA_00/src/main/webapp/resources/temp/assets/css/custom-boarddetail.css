@@ -122,6 +122,11 @@ div.m-0 {
 	cursor: pointer;
 }
 
+.comment-edit i:hover {
+	color: #ff7f73 !important;
+	cursor: pointer;
+}
+
 .list-btn {
 	position: relative;
 	padding: 30px 0px;

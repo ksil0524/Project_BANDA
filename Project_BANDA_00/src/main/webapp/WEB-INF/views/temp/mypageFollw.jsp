@@ -337,7 +337,7 @@
 								while(j<=followerlist.size()){
 									if(j == followerlist.size()){									
 %>
-										<a id="followbtn_fd_<%=fd_acclist.get(i).getId()%>" href="javascript:void(0);" class="add-butn" style="background: #0fc19e;" onclick="follow_func('f','<%=accvo.getId() %>','<%=fd_acclist.get(i).getId()%>');">add follow</a>
+										<a id="followbtn_fd_<%=fd_acclist.get(i).getId()%>" href="javascript:void(0);" class="add-butn" style="background: #ff7f73;" onclick="follow_func('f','<%=accvo.getId() %>','<%=fd_acclist.get(i).getId()%>');">add follow</a>
 <%
 										break;
 									}

@@ -63,9 +63,9 @@
 	<!-- ==============================================
 	Navbar Second Section
 	=============================================== -->
-		<section class="nav-sec" style="margin-top: 15px; height: 60px;">
+				<section class="nav-sec" style="margin-top: 15px; height: 60px;">
 	  <div class="d-flex justify-content-between">
-	   <div class="p-2 nav-icon-lg dark-black"style="height: 59px;">
+	   <div class="p-2 nav-icon-lg clean-black"style="height: 59px;">
 	   <a class="nav-icon" href="mypage_followpage.do" style="padding: 7px 6px 10px 6px; margin-top: 13px;">
 		<span>F / F</span>
 	   </a>
@@ -87,7 +87,7 @@
 	   </a>
 	   </div>
 	  </div>
-	</section>		
+	</section>	
 			
   
 	 <!-- ==============================================
@@ -441,7 +441,7 @@
 		</c:when>
 		
 		<c:otherwise>
-	            	<div style = "color : rgb(5,203,149);font-weight:bold;text-align : center;font-size : 20px; width : 100%;">
+	            	<div style = "color : #ff7f73; font-weight:bold;text-align : center;font-size : 20px; width : 100%;">
 	            		<br>
 	            		피드가 존재하지 않습니다.
 	            		<br><br><br>

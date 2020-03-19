@@ -59,8 +59,6 @@ function loginChk(){
 		},
 		error:function(request,status,error){
 			
-			alert("통신실패");
-			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
 		}
 		
@@ -87,9 +85,7 @@ function logout(){
 			
 		},
 		error : function(request,status,error){
-			
-			alert("통신실패");
-			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+
 		}
 		
 	});
@@ -159,8 +155,6 @@ $("#id").blur(function(){
 		}, 
 		error:function(request,status,error){
 				
-				alert("통신실패");
-				alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
 			}
 	});
@@ -266,8 +260,6 @@ $("#phone").blur(function(){
 			}, 
 			error:function(request,status,error){
 					
-					alert("통신실패");
-					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 
 				}
 		});
@@ -357,8 +349,6 @@ function joinChk(){
 				
 			}, 
 			error:function(request,status,error){
-				alert("통신실패");
-				alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 			}
 		});
 		

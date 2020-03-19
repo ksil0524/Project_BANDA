@@ -1,4 +1,5 @@
-﻿package com.mvc.banda;
+﻿//윈도우전용 컨트롤러
+package com.mvc.banda;
 
 import javax.crypto.Cipher;
 import javax.inject.Inject;
@@ -625,6 +626,25 @@ public class BandaController {
 	//------------------------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------
 	// < 김재익 파트  시작 >  
+	
+	@RequestMapping(value = "/emailoverlab.do", method = RequestMethod.POST)
+	   @ResponseBody
+	   public Map<String,Boolean> emailoverlab(@RequestBody AccountVo vo) {
+	      int res = 0;
+	      String email = vo.getEmail();
+	      res = biz.emailoverlab(email);
+	      
+	      Map<String,Boolean> resmap = new HashMap<String, Boolean>();
+	      
+	      if(res >=1 ) {
+	         resmap.put("res", true);
+	      }else {
+	         resmap.put("res", false);
+	      }
+	      
+	      return resmap;
+	   }
+	
 	@RequestMapping(value = "/idoverlab.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Boolean> idoverlab(@RequestBody AccountVo vo) {

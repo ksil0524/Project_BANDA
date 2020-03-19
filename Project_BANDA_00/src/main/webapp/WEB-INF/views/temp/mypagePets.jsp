@@ -330,7 +330,7 @@
 			      		<label for="name">NAME</label>
 			    	</div>
 			   		<div class="col-65">
-			      		<input type="text" id="name" name="p_Name" placeholder="이름을 입력하세요..">
+			      		<input type="text" id="name" name="p_Name" placeholder="이름을 입력하세요.." required="required">
 			        </div>
 			      </div>
 			      
@@ -339,7 +339,7 @@
 			      		<label for="birth">BIRTH</label>
 			    	</div>
 			   		<div class="col-65">
-			      		<input type="date" id="birth" name="p_birthtmp" placeholder="이름을 입력하세요..">
+			      		<input type="date" id="birth" name="p_birthtmp" placeholder="이름을 입력하세요.." required="required">
 			        </div>
 			      </div>
 			      
@@ -376,7 +376,7 @@
 			    </div> <!--/ col-65 -->
 			    
 				<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
-			      <input type="file" id="imgInp" name="insertimgInp" style="display: none;">
+			      <input type="file" id="imgInp" name="insertimgInp" style="display: none;" required="required">
 			     <!--  <img id="image_section" src="https://www.w3schools.com/css/img_5terre.jpg" /> -->
 			      <img id="image_section" style="width: 90%; height: 90%; border-radius: 70%;" src="<%=request.getContextPath() %>/resources/temp/assets/img/icon/profile_default.jpg" alt="user">
 			    </div> <!--/ col-35 -->
@@ -389,7 +389,7 @@
 			      <label for="species">KIND</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="species" name="p_kind" placeholder="종을 입력하세요..">
+			      <input type="text" id="species" name="p_kind" placeholder="종을 입력하세요.." required="required">
 			    </div>
 			  </div> 
 			  
@@ -398,7 +398,7 @@
 			      <label for="like">LIKE</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="like" name="p_like" placeholder="좋아하는 것을 입력하세요..">
+			      <input type="text" id="like" name="p_like" placeholder="좋아하는 것을 입력하세요.." required="required">
 			    </div>
 			  </div> 
 			  
@@ -407,7 +407,7 @@
 			      <label for="hate">HATE</label>
 			    </div>
 			    <div class="col-75">
-			      <input type="text" id="hate" name="p_hate" placeholder="싫어하는 것을 입력하세요..">
+			      <input type="text" id="hate" name="p_hate" placeholder="싫어하는 것을 입력하세요.." required="required">
 			    </div>
 			  </div> 
 			  
@@ -416,7 +416,7 @@
 			      <label for="introduce">ABOUT</label>
 			    </div>
 			    <div class="col-75">
-			      <textarea id="about" name="p_about" placeholder="소개를 입력하세요.." style="height:200px"></textarea>
+			      <textarea id="about" name="p_about" placeholder="소개를 입력하세요.." style="height:200px" required="required"></textarea>
 			    </div>
 			  </div>
 			</div><!--/ container -->
@@ -539,7 +539,7 @@
 					      		<label for="name">NAME</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="text" id="updatename" name="p_Name" value="" >
+					      		<input type="text" id="updatename" name="p_Name" value="" required="required">
 					        </div>
 					      </div>
 					      <div class="row">    
@@ -547,7 +547,7 @@
 					      		<label for="birth">BIRTH</label>
 					    	</div>
 					   		<div class="col-65">
-					      		<input type="date" id="updatebirth" name="p_birthtmp" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>">
+					      		<input type="date" id="updatebirth" name="p_birthtmp" value="<fmt:formatDate value="" pattern="yyyy-MM-dd"/>" required="required">
 					        </div>
 					      </div>
 					      <div class="row">
@@ -579,7 +579,7 @@
 					      	  <p align="right" style="font-size: 8pt">*이미지의 확장자는 .jpg/.JPG 만 가능합니다. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </p>
 					    </div> <!--/ col-65 -->
 						<div class="col-35" style="padding-left: 4px; padding-top: 10px; overflow: hidden; cursor:pointer;">
-			   			  <input type="file" id="updateimgInp" name="updateimgInp" src="" style="display: none;" onchange="readURL2(this);" accept=".jpg .JPG">
+			   			  <input type="file" id="updateimgInp" name="updateimgInp" src="" style="display: none;" onchange="readURL2(this);" accept=".jpg .JPG" required="required">
 					      <img id="updateimage" src="" style="width: 90%; height: 90%; border-radius: 70%;">
 					    </div> <!--/ col-35 -->
 					  </div><!--/ row -->
@@ -588,7 +588,7 @@
 					      <label for="species">KIND</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="updatespecies" name="p_kind" value="" >
+					      <input type="text" id="updatespecies" name="p_kind" value="" required="required">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -596,7 +596,7 @@
 					      <label for="like">LIKE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="updatelike" name=p_like value="">
+					      <input type="text" id="updatelike" name=p_like value="" required="required">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -604,7 +604,7 @@
 					      <label for="hate">HATE</label>
 					    </div>
 					    <div class="col-75">
-					      <input type="text" id="updatehate" name="p_hate" value="">
+					      <input type="text" id="updatehate" name="p_hate" value="" required="required">
 					    </div>
 					  </div> 
 					  <div class="row">
@@ -612,7 +612,7 @@
 					      <label for="introduce">ABOUT</label>
 					    </div>
 					    <div class="col-75">
-					      <textarea id="updateabout" name="p_about" style="height:200px"></textarea>
+					      <textarea id="updateabout" name="p_about" style="height:200px" required="required"></textarea>
 					    </div>
 					  </div>
 					</div><!--/ container -->

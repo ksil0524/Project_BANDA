@@ -1,4 +1,5 @@
-﻿package com.mvc.banda;
+﻿//리눅스용 컨트롤러
+package com.mvc.banda;
 
 import javax.crypto.Cipher;
 import javax.inject.Inject;
@@ -156,15 +157,15 @@ public class BandaController {
 			return "redirect:mypage_allselect.do";
 		}
 			
-		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+petVo.getP_no());
+		String savepath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/pet/pet_profile/"+petVo.getP_no());
 				
-		File updateimg = new File(savepath+"\\"+filename);
+		File updateimg = new File(savepath+"/"+filename);
 		
 		updateimgInp.transferTo(updateimg);
 		
 		//파일 이름 바꿔주기 작업
 		//image.jpg 가져오기
-		File imagefile = new File(savepath+"\\image.jpg");
+		File imagefile = new File(savepath+"/image.jpg");
 		//image.jpg 삭제
 		imagefile.delete();
 		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
@@ -218,7 +219,7 @@ public class BandaController {
 			int lastpno = biz.getLastPetSeq();
 			PetVo vo = biz.mypage_selectPet(lastpno);
 			
-			String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+vo.getP_no());
+			String savepath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/pet/pet_profile/"+vo.getP_no());
 			System.out.println("savepath : "+savepath);
 			
 			File folder = new File(savepath);
@@ -237,12 +238,12 @@ public class BandaController {
 
 	         String filename = insertimgInp.getOriginalFilename();
 	         
-	         File insertimg = new File(savepath+"\\"+filename);
+	         File insertimg = new File(savepath+"/"+filename);
 	         insertimgInp.transferTo(insertimg);
 	         
 	       //파일 이름 바꿔주기 작업
 	 		//image.jpg 만들긴
-	 		File imagefile = new File(savepath+"\\image.jpg");
+	 		File imagefile = new File(savepath+"/image.jpg");
 	 		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
 	 		insertimg.renameTo(imagefile);
 	 		//업로드한 이미지 삭제
@@ -285,18 +286,18 @@ public class BandaController {
 	public String mypage_acco_changeprofileimg(HttpServletRequest request, Model model, @RequestParam String account_id, MultipartFile profile_img) throws IllegalStateException, IOException {
 		
 		
-		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\account\\account_profile\\"+account_id);
+		String savepath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/account/account_profile/"+account_id);
 		System.out.println("savepath : "+savepath);
 		
 		String filename = profile_img.getOriginalFilename();
 		
 		System.out.println(filename);
 		
-		File updateprofileimg = new File(savepath+"\\"+filename);
+		File updateprofileimg = new File(savepath+"/"+filename);
 		profile_img.transferTo(updateprofileimg);
 		
 		//image.jpg 가지는 객체
-		File imagefile = new File(savepath+"\\image.jpg");
+		File imagefile = new File(savepath+"/image.jpg");
 		//image.jpg 삭제
 		imagefile.delete();
  		//업로드한 이미지 이름 image.jpg로 바꿔서 붙혀넣기
@@ -458,7 +459,7 @@ public class BandaController {
 		}
 		
 		for(int i=0; i<contentCount ; i++) {
-			String[] ext = filelist.get(i).getOriginalFilename().split("\\.");
+			String[] ext = filelist.get(i).getOriginalFilename().split("/.");
 			String extension = ext[1];
 			feed_file = feed_file+"@content_"+(1+i)+"."+extension;
 		}
@@ -474,7 +475,7 @@ public class BandaController {
 			
 			int lastfno = biz.getLastFeedSeq();
 			
-			String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\feed\\"+lastfno);
+			String savepath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/feed/"+lastfno);
 			
 			System.out.println("savepath : "+savepath);
 			
@@ -495,20 +496,20 @@ public class BandaController {
 			for(int i=0; i<contentCount; i++) {
 				
 				//확장자
-				String[] ext = filelist.get(i).getOriginalFilename().split("\\.");
+				String[] ext = filelist.get(i).getOriginalFilename().split("/.");
 				String extension = ext[1];
 				
 				//파일이름
 				String filename = filelist.get(i).getOriginalFilename();
 				
 				//실제 경로와 파일이름
-		        File insertcontent = new File(savepath+"\\"+filename);
+		        File insertcontent = new File(savepath+"/"+filename);
 		        
 		        //위치에 넣기
 		        filelist.get(i).transferTo(insertcontent);
 		        
 		        //변경할 이름으로 파일 객체 만들기
-		 		File renamefile = new File(savepath+"\\content_"+(1+i)+"."+extension);
+		 		File renamefile = new File(savepath+"/content_"+(1+i)+"."+extension);
 		 		//업로드한 컨텐스 이름 content_(번호).(확장자)로 바꿔서 붙혀넣기
 		 		insertcontent.renameTo(renamefile);
 		 		//업로드한 컨텐츠 삭제
@@ -528,7 +529,7 @@ public class BandaController {
 		
 		int res = biz.mypage_deletefeed(deletefeed_no);	
 		
-		String savepath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\feed\\"+deletefeed_no);
+		String savepath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/feed/"+deletefeed_no);
 		
 		if(res > 0) {		
 			File deletefile = new File(savepath);
@@ -642,25 +643,6 @@ public class BandaController {
 		
 		return resmap;
 	}
-	@RequestMapping(value = "/emailoverlab.do", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String,Boolean> emailoverlab(@RequestBody AccountVo vo) {
-		int res = 0;
-		String email = vo.getEmail();
-		res = biz.emailoverlab(email);
-		
-		Map<String,Boolean> resmap = new HashMap<String, Boolean>();
-		
-		if(res >=1 ) {
-			resmap.put("res", true);
-		}else {
-			resmap.put("res", false);
-		}
-		
-		return resmap;
-	}
-	
-	
 	
 	@RequestMapping(value = "/joinregister.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -679,7 +661,7 @@ public class BandaController {
 		}
 		////
 		String path = request.getSession().getServletContext()
-	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + vo.getId());
+	            .getRealPath("resources/images/filemanager/account/account_profile/" + vo.getId());
 
 	      File Folder = new File(path);
 
@@ -697,9 +679,9 @@ public class BandaController {
 
 	      // 원본 파일경로
 	      String oriFilePath = request.getSession().getServletContext()
-	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	            .getRealPath("resources/images/filemanager/account/account_profile/image.jpg");
 	      // 복사될 파일경로
-	      String copyFilePath = path + "\\image.jpg";
+	      String copyFilePath = path + "/image.jpg";
 
 	      // 파일객체생성
 	      File oriFile = new File(oriFilePath);
@@ -784,7 +766,7 @@ public class BandaController {
 	 
 	      
 	      String path = request.getSession().getServletContext()
-	               .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + real_vo.getId());
+	               .getRealPath("resources/images/filemanager/account/account_profile/" + real_vo.getId());
 
 	         File Folder = new File(path);
 
@@ -802,9 +784,9 @@ public class BandaController {
 
 	         // 원본 파일경로
 	         String oriFilePath = request.getSession().getServletContext()
-	               .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	               .getRealPath("resources/images/filemanager/account/account_profile/image.jpg");
 	         // 복사될 파일경로
-	         String copyFilePath = path + "\\image.jpg";
+	         String copyFilePath = path + "/image.jpg";
 
 	         // 파일객체생성
 	         File oriFile = new File(oriFilePath);
@@ -1152,7 +1134,7 @@ public class BandaController {
 		////////////
 		
 		String path = request.getSession().getServletContext()
-	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\" + real_vo.getId());
+	            .getRealPath("resources/images/filemanager/account/account_profile/" + real_vo.getId());
 
 	      File Folder = new File(path);
 
@@ -1168,9 +1150,9 @@ public class BandaController {
 
 	      // 원본 파일경로
 	      String oriFilePath = request.getSession().getServletContext()
-	            .getRealPath("resources\\images\\filemanager\\account\\account_profile\\image.jpg");
+	            .getRealPath("resources/images/filemanager/account/account_profile/image.jpg");
 	      // 복사될 파일경로
-	      String copyFilePath = path + "\\image.jpg";
+	      String copyFilePath = path + "/image.jpg";
 
 	      // 파일객체생성
 	      File oriFile = new File(oriFilePath);
@@ -1544,7 +1526,7 @@ public class BandaController {
 		 if(remove_feedno.size() != 0) {
 			 for(Integer feedno : remove_feedno) {
 				 
-				 String feed_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\feed\\"+feedno);
+				 String feed_path = request.getSession().getServletContext().getRealPath("resources/images/filemanager/feed/"+feedno);
 				 
 				 File feed_folder = new File(feed_path);
 				 File[] feed_folder_list = feed_folder.listFiles();
@@ -1566,7 +1548,7 @@ public class BandaController {
 		 if(remove_petno.size() != 0) {
 			 for(Integer petno : remove_petno) {
 				 
-				 String pet_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\pet\\pet_profile\\"+petno);
+				 String pet_path = request.getSession().getServletContext().getRealPath("resources/images/filemanager/pet/pet_profile/"+petno);
 				 
 				 File pet_folder = new File(pet_path);
 				 File[] pet_folder_list = pet_folder.listFiles();
@@ -1586,7 +1568,7 @@ public class BandaController {
 		 if(remove_boardno.size() != 0) {
 			 for(Integer boardno : remove_boardno) {
 				 
-				 String board_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+boardno);
+				 String board_path = request.getSession().getServletContext().getRealPath("resources/images/filemanager/board/"+boardno);
 				 
 				 File board_folder = new File(board_path);
 				 File[] board_folder_list = board_folder.listFiles();
@@ -1603,7 +1585,7 @@ public class BandaController {
 		 //account 삭제
 		 String remove_id = res.get("id").toString();
 		 
-		 String	account_path = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\account\\account_profile\\"+remove_id);
+		 String	account_path = request.getSession().getServletContext().getRealPath("resources/images/filemanager/account/account_profile/"+remove_id);
 
 		 File account_folder = new File(account_path);
 		 File[] acc_file_list = account_folder.listFiles();
@@ -1783,6 +1765,7 @@ public class BandaController {
 	
 	//////////////////////////////////
 	//무나
+//	@RequestMapping(value = "/listTestSh.do", method = RequestMethod.GET)
 	@RequestMapping(value = "/boardListFree.do", method = RequestMethod.GET)
 	public String listSh(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
 		model.addAttribute("listShareNotice", biz.selectListShNotice());
@@ -1799,6 +1782,7 @@ public class BandaController {
 	}
 	
 	//물물교환
+//	@RequestMapping(value = "/listTestEx.do", method = RequestMethod.GET)
 	@RequestMapping(value = "/boardListExchange.do", method = RequestMethod.GET)
 	public String listEx(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception{
 		model.addAttribute("listExchangeNotice", biz.selectListExNotice());
@@ -1815,6 +1799,7 @@ public class BandaController {
 	}
 	
 	//게시글 상세
+//	@RequestMapping(value = "/detailTest.do", method = RequestMethod.GET)
 	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
 	public String read(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) throws Exception{
 		BoardVo vo2 = biz.selectOneBoard(vo.getBoard_no());
@@ -1823,6 +1808,8 @@ public class BandaController {
 		model.addAttribute("scri", scri);
 		return "temp/boardDetail";
 	}
+	
+	
 	
 	//////////////////////////////////	
 
@@ -1856,6 +1843,8 @@ public class BandaController {
 	@RequestMapping(value="/boardWriteForm.do")
 	public String boardWriteForm(BoardVo vo, @ModelAttribute("scri") SearchCriteria scri, Model model) {
 		model.addAttribute("category", vo.getBoard_cate());
+		System.out.println("카테고리 : "+vo.getBoard_cate());
+		
 		model.addAttribute("scri", scri);
 		
 		return "temp/boardWrite";
@@ -1872,7 +1861,9 @@ public class BandaController {
 			BoardVo vo2 = biz.selectOneBoard(boardno);	//시퀀스 번호와 게시글 번호 일치하는지 확인
 			
 			//저장경로 생성
-			String storagePath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+vo2.getBoard_no());
+			String storagePath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/board/"+vo2.getBoard_no());
+			
+			System.out.println("저장경로 : "+storagePath);
 			
 			//저장경로 정보 셋팅
 			File folder = new File(storagePath);	
@@ -1881,6 +1872,7 @@ public class BandaController {
 			if(!folder.exists()) {
 				try {
 					folder.mkdir();	//storagePath의 경로 생성
+					System.out.println("폴더가 생성되었습니다.");
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -1890,13 +1882,13 @@ public class BandaController {
 			String fileName = boardfile.getOriginalFilename();
 			
 			//저장경로에 fileName까지 셋팅
-			File insertImg = new File(storagePath+"\\"+fileName);
+			File insertImg = new File(storagePath+"/"+fileName);
 			
 			//실제 가지고온 파일을 transerTo 메소드로 저장경로에 저장
 			boardfile.transferTo(insertImg);
 			
 			//파일 이름 바꿔주기
-			File imgFile = new File(storagePath+"\\boardImg.jpg");
+			File imgFile = new File(storagePath+"/boardImg.jpg");
 			
 			//실제로 가지고온 파일이름을 imgFile에서 셋팅해놓은 boardImg.jpg로 변경(복붙해서 이름 변경)
 			insertImg.renameTo(imgFile);
@@ -1908,6 +1900,8 @@ public class BandaController {
 			return "redirect:boardDetail.do?board_no="+boardno;
 			
 		} else {
+			System.out.println("[ERROR] BOARD WRITE");
+			
 			return "rediect:boardWriteForm.do";
 		}
 		
@@ -1925,6 +1919,7 @@ public class BandaController {
 	//게시글 수정
 	@RequestMapping(value="/boardUpdateRes.do", method=RequestMethod.POST)
 	public String boardUpdate(HttpServletRequest request, Model model, BoardVo vo) throws IllegalStateException, IOException {
+		System.out.println("aaaaaaaaaaaaa: "+vo);
 		int res = biz.boardUpdate(vo);
 		
 		
@@ -1935,15 +1930,15 @@ public class BandaController {
 			//기존 파일과 같을 경우
 			return "redirect:boardDetail_test.do?board_no="+vo.getBoard_no();
 		} else {			
-			String storagePath = request.getSession().getServletContext().getRealPath("resources\\images\\filemanager\\board\\"+vo.getBoard_no());
+			String storagePath = request.getSession().getServletContext().getRealPath("resources/images/filemanager/board/"+vo.getBoard_no());
 			
 			
-			File updateBoardImg = new File(storagePath+"\\"+fileName);
+			File updateBoardImg = new File(storagePath+"/"+fileName);
 			
 			updateboardfile.transferTo(updateBoardImg);
 			
 			//파일 이름 바꿔주기
-			File imgFile = new File(storagePath+"\\boardImg.jpg");
+			File imgFile = new File(storagePath+"/boardImg.jpg");
 			
 			//실제로 가지고온 파일이름을 imgFile에서 셋팅해놓은 boardImg.jpg로 변경(복붙해서 이름 변경)
 			updateBoardImg.renameTo(imgFile);
@@ -1963,6 +1958,8 @@ public class BandaController {
 	//게시글 삭제
 	@RequestMapping(value="/boardDelete.do")
 	public String boardDelete(String board_cate, int board_no) {
+		System.out.println("삭제할 게시글의 카테고리 : " + board_cate);
+		
 		int res = biz.boardDelete(board_no);
 		if(res>0 && board_cate.equals("SH")) {
 			return "redirect:boardListFree.do";							
@@ -2006,15 +2003,6 @@ public class BandaController {
 		} else {
 			return "redirect:boardDetail.do?board_no="+board_no;			
 		}
-	}
-	
-	//아더피드
-	@RequestMapping(value="/otherFeed.do")
-	public String otherFeed(AccountVo vo) {
-		String accId = vo.getId();
-		
-		
-		return "temp/otherFeed";
 	}
 	
 	// < 하나경 파트  끝 > 

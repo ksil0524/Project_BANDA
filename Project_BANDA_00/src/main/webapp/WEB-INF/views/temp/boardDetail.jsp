@@ -16,6 +16,8 @@
 
 	<%
 		AccountVo accvo = (AccountVo)session.getAttribute("vo");
+		pageContext.setAttribute("br", "<br/>");
+	    pageContext.setAttribute("cn", "\n");
 	%>
 	
 	<!-- ==============================================
@@ -162,7 +164,7 @@
 		    </div>
 		    <div class="cardbox-content">
 		     <div class="cardbox-text">
-		       	${detail.board_content }
+		       	${fn:replace(detail.board_content, cn, br) }
 		     </div>
 		     <div class="cardbox-hashtag">
 		      <p id="pHash">
@@ -237,7 +239,7 @@
 			 <div class="comment-edit" id="comment-edit" style="display: none;">
 			   <table style="width: 800px;">
 		   	    <tr>
-		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="Image" style="position: absolute; margin-left:0.5em;"></td>
+		   	     <td style="width: 50px;"><img class="align-self-end mr-3 img-responsive img-circle" src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${vo.id }/image.jpg" onerror="this.src='<%=request.getContextPath() %>/resources/images/user_default_profile.png'" alt="Image" style="margin-left:0.5em;"></td>
 		   	     <td>
 		   	       <form name="commentUpdateForm" id="commentUpdateForm" action="boardComUpdate.do">
 		   	         <input class="form-control input-sm" type="text" id="comEditor" name="com_content" placeholder="댓글을 입력하세요"/>

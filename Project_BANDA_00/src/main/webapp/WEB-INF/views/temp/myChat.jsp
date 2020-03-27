@@ -173,7 +173,7 @@
 						<li>
 						<div class="user-message-details" id="${(userid eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }" onclick="change_chatroom(this.id);">
 						 <div class="user-message-img">
-						  <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${chatvo.s_id }/image.jpg" class="img-responsive img-circle" alt="">
+						  <img src="<%=request.getContextPath() %>/resources/images/filemanager/account/account_profile/${chatvo.g_id }/image.jpg" class="img-responsive img-circle" alt="">
 						 </div>
 						 <div class="user-message-info">
 						  <h4>${(userid eq chatvo.s_id) ? chatvo.g_id : chatvo.s_id }</h4>

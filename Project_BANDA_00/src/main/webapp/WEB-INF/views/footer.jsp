@@ -16,8 +16,6 @@
 				<li><a href="#" class="icon"><span class="">PM 김성일</span></a></li>
 				<br>
 				<li><a href="#" class="icon"><span class="">김재익</span></a></li>
-				<li><a href="#" class="icon"><span class="">정유진</span></a></li>
-				<li><a href="#" class="icon"><span class="">정재호</span></a></li>
 				<li><a href="#" class="icon"><span class="">주희진</span></a></li>
 				<li><a href="#" class="icon"><span class="">최주예</span></a></li>
 				<li><a href="#" class="icon"><span class="">하나경</span></a></li>

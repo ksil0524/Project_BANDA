@@ -81,7 +81,7 @@
 	<!-- 
 	 ip바꿔주기
 	 -->
-	<script src="http://192.168.30.28:3000/socket.io/socket.io.js"></script>
+	<script src="http://172.30.1.12:3000/socket.io/socket.io.js"></script>
 
 	
 	<!-- ==============================================
@@ -221,11 +221,10 @@ var oid = "otherId";
 
 //현재 대화중인 사람의 아이디
 var aotherid = "";
- 
 var nowRnum = 0;
   
 const name = "<%=vo.getId() %>";
-const socket = io("http://192.168.30.28:3000");
+const socket = io("http://172.30.1.12:3000");
 let room = ['room0'];
 let num = 0;
 
